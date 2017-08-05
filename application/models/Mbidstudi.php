@@ -59,5 +59,22 @@ class Mbidstudi extends CI_Model
         // return $this->db->get()->result();
 	}
 
+	function query_matpal($id_bidang){
+		$this->db->select('id_matpal , nama_matpal , status');
+        $this->db->from('ms_mata_pelajaran');
+        $this->db->where('id_bidang',$id_bidang);
+        
+        return $this->db->get()->result();
+	}
+
+	function delete_item_matpal($id_bidang){
+		$this->db->where('id_bidang',$id_bidang);
+		$this->db->delete('ms_mata_pelajaran');
+	}
+
+	function simpan_item_matpal($detail_Matpal){
+
+		$this->db->replace('ms_mata_pelajaran',$detail_Matpal);
+	}
 	
 }

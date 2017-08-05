@@ -165,6 +165,8 @@ class bidstudi extends IO_Controller
 	{
 		$id_bidang 		    = $this->input->post('id_bidang');
 		$nama_bidang 		= $this->input->post('nama_bidang');
+		$nama_bidang 		= $this->input->post('nama_bidang');
+		$item_matpal 			= $this->input->post('hid_table_item_Matpal');
         $recdate            = date('y-m-d');
 	    $userid 			= $this->session->userdata('logged_in')['uid'];
 
@@ -174,18 +176,71 @@ class bidstudi extends IO_Controller
             'recdate'               => $recdate,
 			'userid' 				=> $userid
 		);
+		
         
 		if($status=='SAVE')	
 		{// cek apakah add new atau editdata
 			
 		// save data bidstudi
          	$this->model->simpan_data_bidstudi($data_bidstudi);
+			//save matapelajaran			
+			$item_matpal  = explode(';',$item_matpal);
+			foreach ($item_matpal as $i) {
+					$idetail = explode('#',$i);
+					if(count($idetail)>1){
+							if($idetail[2] == "AKTIF"){
+								$status = 1;
+							}
+							else{
+								$status = 0;
+							}
+							$detail_Matpal = array(
+
+								'id_matpal'			=> $idetail[0],
+								'nama_matpal'		=> $idetail[1],
+								'id_bidang'			=> $id_bidang,
+								'status'			=> $status,
+								'recdate'			=> $recdate,
+								'userid' 			=> $userid
+								
+							);
+							$this->model->simpan_item_matpal($detail_Matpal);
+
+					}
+			}
 
 		}
         else //update data
 		{		
 			// save data bidstudi
          	$this->model->update_data_bidstudi($id_bidang,$data_bidstudi);
+			
+			//save matapelajaran
+			$this->model->delete_item_matpal($id_bidang);			
+			$item_matpal  = explode(';',$item_matpal);
+			foreach ($item_matpal as $i) {
+					$idetail = explode('#',$i);
+					if(count($idetail)>1){
+							if($idetail[2] == "AKTIF"){
+								$status = 1;
+							}
+							else{
+								$status = 0;
+							}
+							$detail_Matpal = array(
+
+								'id_matpal'			=> $idetail[0],
+								'nama_matpal'		=> $idetail[1],
+								'id_bidang'			=> $id_bidang,
+								'status'			=> $status,
+								'recdate'			=> $recdate,
+								'userid' 			=> $userid
+								
+							);
+							$this->model->simpan_item_matpal($detail_Matpal);
+
+					}
+			}
         }	    
 
 			echo "true";
@@ -202,8 +257,16 @@ class bidstudi extends IO_Controller
 	{
 		$id_bidang = urldecode($id_bidang);
 		$this->model->delete_bidstudi($id_bidang);
+		$this->model->delete_item_matpal($id_bidang);
 	}
 
+	function get_data_matpal($id_bidang)
+	{
+		$data = $this->model->query_matpal($id_bidang);
+    	echo json_encode($data);
+		// var_dump($data);
+		// exit;
+	}
 
 }
 
