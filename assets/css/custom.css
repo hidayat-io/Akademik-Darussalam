@@ -1,0 +1,15 @@
+html, body{
+
+	font-family: 'Roboto', sans-serif;
+}
+
+/* here you can put your own css to customize and override the theme */
+.logo-menu{
+
+	height: 30px;
+}
+
+.bg-greends-light{
+
+	background-color: #0ba552;
+}

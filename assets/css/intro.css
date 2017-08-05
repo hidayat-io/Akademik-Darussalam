@@ -1,0 +1,42 @@
+/* here you can put your own css to customize and override the theme */
+
+html body{
+
+	background-color: #098040;
+}
+
+h1{
+
+	font-size: 180px;
+	text-shadow: 4px 4px #000;
+
+}
+
+h2{
+
+	letter-spacing: 60px;
+	padding-left: 15px;
+	text-shadow: 2px 2px #000;
+	font-weight: bold;
+	color: #fbde6c;
+}
+
+ html, body, .container-table {
+    height: 100%;
+}
+.container-table {
+    display: table;
+}
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#div-intro:hover{
+
+	cursor: pointer;
+}
+
+.logo{ width: 150px; margin-left: 80px; }
+
+hr{ width: 440px; }
