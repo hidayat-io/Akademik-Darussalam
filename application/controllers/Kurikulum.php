@@ -147,8 +147,8 @@ class Kurikulum extends IO_Controller
 				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->id_thn_ajar);
 				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->kode_kelas);
 				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->id_mapel);
-				$this->excel->getActiveSheet()->setCellValue('E'.$i, $sm_1);
-				$this->excel->getActiveSheet()->setCellValue('F'.$i, $sm_2);
+				$this->excel->getActiveSheet()->setCellValue('E'.$i, $row->sm_1);
+				$this->excel->getActiveSheet()->setCellValue('F'.$i, $row->sm_2);
 				
 				$i++;
 			}
