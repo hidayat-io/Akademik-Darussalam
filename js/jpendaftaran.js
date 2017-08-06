@@ -11,10 +11,13 @@ $(document).ready(function()
 		format: 'dd-mm-yyyy'
 	});
 	
-	 $(".select2").select2();
+	 $(".select2").select2({
+		 dropdownParent:$('#Modal_add_Santri')
+	 });
 	pilihItemGedung();
 	pilihItemKamar();
 	pilihItemKelas();
+	pilihItemBagian();
 	
 	$('.numbers-only').keypress(function(event) {
 		var charCode = (event.which) ? event.which : event.keyCode;
@@ -1396,7 +1399,6 @@ function OtomatisKapital(a){
 }
 
 function addSantri(){
-	
 	$('#hiddenidgedung').hide();
 	$('#spansearchclosegedung').hide();
 	$('#spansearchgedung').hide();
@@ -1406,6 +1408,9 @@ function addSantri(){
 	$('#hiddenidKelas').hide();
 	$('#spansearchcloseKelas').hide();
 	$('#spansearchKelas').hide();
+	$('#hiddenidBagian').hide();
+	$('#spansearchcloseBagian').hide();
+	$('#spansearchBagian').hide();
 	kosong();
 	mati();
 	mati_kel();
@@ -2398,6 +2403,9 @@ function view(no_registrasi){
 	$('#hiddenidKelas').hide();
 	$('#spansearchcloseKelas').hide();
 	$('#spansearchKelas').show();
+	$('#hiddenidBagian').hide();
+	$('#spansearchcloseBagian').hide();
+	$('#spansearchBagian').show();
 	kosong();
 	$('#image-holder').html('');
 	$.ajax({
@@ -2501,14 +2509,7 @@ function view(no_registrasi){
 			//show ijazah
 			if(data['lamp_ijazah']!=null){
 				var image_holder = $("#ijazahholder");
-				// var link = "./assets/images/uploadtemp/"+data['lamp_ijazah']+";
-
-				// var href = $('.cijazah a').attr('href');
-				// Replace the CURRENT_URL_GOES_HERE to CodeProject Url.
-				// var href = href.replace('LINKTARGET', base_url+'assets/images/fileupload/ijazah/'+data['lamp_ijazah']);
-				$('#link_ijazah').attr("href", base_url+'assets/images/fileupload/ijazah/'+data['lamp_ijazah']);
-				// Add that new href again to the anchor.
-				// $('.cijazah a').attr('href', href);
+				$('#ijazahholder').attr("href", base_url+'assets/images/fileupload/ijazah/'+data['lamp_ijazah']);
 				image_holder.show();
 				
 			}
@@ -2517,93 +2518,64 @@ function view(no_registrasi){
 				$('.cijazah').hide();
 			}
 			//show Akta Kelahiran 
-				$('#button_akelahiran').hide();
-				$("#aklahiranholder").hide();
 			if(data['lamp_akta_kelahiran']!=null){
 				var image_holder = $("#aklahiranholder");
-				// var link = "./assets/images/uploadtemp/"+data['lamp_ijazah']+";
-
-				var href = $('.cakelahiran a').attr('href');
-				// Replace the CURRENT_URL_GOES_HERE to CodeProject Url.
-				var href = href.replace('LINKTARGET', base_url+'assets/images/fileupload/akte_kelahiran/'+data['lamp_akta_kelahiran']);
-				// Add that new href again to the anchor.
-				$('.cakelahiran a').attr('href', href);
+				$('#aklahiranholder').attr("href", base_url+'assets/images/fileupload/akte_kelahiran/'+data['lamp_akta_kelahiran']);
 				image_holder.show();
+			}
+			else{
+
+				$('.cakelahiran').hide();
 			}
 			//show kk 
-				$('#button_kk').hide();
-				$("#kkholder").hide();
 			if(data['lamp_kk']!=null){
 				var image_holder = $("#kkholder");
-				// var link = "./assets/images/uploadtemp/"+data['lamp_ijazah']+";
-
-				var href = $('.ckk a').attr('href');
-				// Replace the CURRENT_URL_GOES_HERE to CodeProject Url.
-				var href = href.replace('LINKTARGET', base_url+'assets/images/fileupload/kartukeluarga/'+data['lamp_kk']);
-				// Add that new href again to the anchor.
-				$('.ckk a').attr('href', href);
+				$('#kkholder').attr("href", base_url+'assets/images/fileupload/kartukeluarga/'+data['lamp_kk']);
 				image_holder.show();
-				
+			}
+			else{
+
+				$('.ckk').hide();
 			}
 			//show skhun 
-				$('#button_skhun').hide();
-				$("#skhunholder").hide();
 			if(data['lamp_skhun']!=null){
 				var image_holder = $("#skhunholder");
-				// var link = "./assets/images/uploadtemp/"+data['lamp_ijazah']+";
-
-				var href = $('.cskhun a').attr('href');
-				// Replace the CURRENT_URL_GOES_HERE to CodeProject Url.
-				var href = href.replace('LINKTARGET', base_url+'assets/images/fileupload/skhun/'+data['lamp_skhun']);
-				// Add that new href again to the anchor.
-				$('.cskhun a').attr('href', href);
+				$('#skhunholder').attr("href", base_url+'assets/images/fileupload/skhun/'+data['lamp_skhun']);
 				image_holder.show();
-				
+			}
+			else{
+
+				$('.cskhun').hide();
 			}
 			//show ranskip 
-				$('#button_transkip').hide();
-				$("#transkipholder").hide();
 			if(data['lamp_transkip_nilai']!=null){
 				var image_holder = $("#transkipholder");
-				// var link = "./assets/images/uploadtemp/"+data['lamp_ijazah']+";
-
-				var href = $('.ctranskip a').attr('href');
-				// Replace the CURRENT_URL_GOES_HERE to CodeProject Url.
-				var href = href.replace('LINKTARGET', base_url+'assets/images/fileupload/transkip_nilai/'+data['lamp_transkip_nilai']);
-				// Add that new href again to the anchor.
-				$('.ctranskip a').attr('href', href);
+				$('#transkipholder').attr("href", base_url+'assets/images/fileupload/transkip_nilai/'+data['lamp_transkip_nilai']);
 				image_holder.show();
-				
+			}
+			else{
+
+				$('.ctranskip').hide();
 			}
 			//show skbb 
-				$('#button_skbb').hide();
-				$("#skbbholder").hide();
 			if(data['lamp_skkb']!=null){
 				var image_holder = $("#skbbholder");
-				// var link = "./assets/images/uploadtemp/"+data['lamp_ijazah']+";
-
-				var href = $('.cskbb a').attr('href');
-				// Replace the CURRENT_URL_GOES_HERE to CodeProject Url.
-				var href = href.replace('LINKTARGET', base_url+'assets/images/fileupload/skb/'+data['lamp_skkb']);
-				// Add that new href again to the anchor.
-				$('.cskbb a').attr('href', href);
+				$('#skbbholder').attr("href", base_url+'assets/images/fileupload/skb/'+data['lamp_skkb']);
 				image_holder.show();
-				
+			}
+			else{
+
+				$('.cskbb').hide();
 			}
 			//show skes 
-				$('#button_skes').hide();
-				$("#skesholder").hide();
 			if(data['lamp_surat_kesehatan']!=null){
 				var image_holder = $("#skesholder");
-				// var link = "./assets/images/uploadtemp/"+data['lamp_ijazah']+";
-
-				var href = $('.cskes a').attr('href');
-				// Replace the CURRENT_URL_GOES_HERE to CodeProject Url.
-				var href = href.replace('LINKTARGET', base_url+'assets/images/fileupload/surat_kesehatan/'+data['lamp_surat_kesehatan']);
-				// Add that new href again to the anchor.
-				$('.cskes a').attr('href', href);
+				$('#skesholder').attr("href", base_url+'assets/images/fileupload/surat_kesehatan/'+data['lamp_surat_kesehatan']);
 				image_holder.show();
-				
+			}
+			else{
+
+				$('.cskes').hide();
 			}
 		}
 	});
@@ -2779,6 +2751,9 @@ function edit(no_registrasi){
 	$('#hiddenidKelas').hide();
 	$('#spansearchcloseKelas').hide();
 	$('#spansearchKelas').hide();
+	$('#hiddenidBagian').hide();
+	$('#spansearchcloseBagian').hide();
+	$('#spansearchBagian').hide();
 	kosong();
 	$('#image-holder').html('');
 	$('#addto_button_header').hide();
@@ -2878,125 +2853,86 @@ function edit(no_registrasi){
 				$("#TfileUpload").val(data['lamp_photo']);
 			}
 			//show ijazah
-				$('#button_ijazah').hide();
-				$("#ijazahholder").hide();
 				$("#TfileUpload_ijazah").val('');
 				if(data['lamp_ijazah']!=null){
 					var image_holder = $("#ijazahholder");
-					// var link = "./assets/images/uploadtemp/"+data['lamp_ijazah']+";
-
-					var href = $('.cijazah a').attr('href');
-					// Replace the CURRENT_URL_GOES_HERE to CodeProject Url.
-					var href = href.replace('LINKTARGET', base_url+'assets/images/fileupload/ijazah/'+data['lamp_ijazah']);
-					// Add that new href again to the anchor.
-					$('.cijazah a').attr('href', href);
+					var image_holder = $("#ijazahholder");
+					$('#ijazahholder').attr("href", base_url+'assets/images/fileupload/ijazah/'+data['lamp_ijazah']);
 					image_holder.show();
-				$("#TfileUpload_ijazah").val(data['lamp_ijazah']);
-					
-					
+					$("#TfileUpload_ijazah").val(data['lamp_ijazah']);
+				}
+				else{
+
+					$('.cijazah').hide();
 				}
 			//show Akta Kelahiran 
-				$('#button_akelahiran').hide();
-				$("#aklahiranholder").hide();
 				$("#TfileUpload_akelahiran").val('');
 				if(data['lamp_akta_kelahiran']!=null){
 					var image_holder = $("#aklahiranholder");
-					// var link = "./assets/images/uploadtemp/"+data['lamp_ijazah']+";
-
-					var href = $('.cakelahiran a').attr('href');
-					// Replace the CURRENT_URL_GOES_HERE to CodeProject Url.
-					var href = href.replace('LINKTARGET', base_url+'assets/images/fileupload/akte_kelahiran/'+data['lamp_akta_kelahiran']);
-					// Add that new href again to the anchor.
-					$('.cakelahiran a').attr('href', href);
+					$('#aklahiranholder').attr("href", base_url+'assets/images/fileupload/akte_kelahiran/'+data['lamp_akta_kelahiran']);
 					image_holder.show();
 					$("#TfileUpload_akelahiran").val(data['lamp_akta_kelahiran']);
-					
+				}
+				else{
+
+					$('.cakelahiran').hide();
 				}
 			//show kk 
-				$('#button_kk').hide();
-				$("#kkholder").hide();
 				$("#TfileUpload_kk").val('');
 				if(data['lamp_kk']!=null){
-					var image_holder = $("#kkholder");
-					// var link = "./assets/images/uploadtemp/"+data['lamp_ijazah']+";
-
-					var href = $('.ckk a').attr('href');
-					// Replace the CURRENT_URL_GOES_HERE to CodeProject Url.
-					var href = href.replace('LINKTARGET', base_url+'assets/images/fileupload/kartukeluarga/'+data['lamp_kk']);
-					// Add that new href again to the anchor.
-					$('.ckk a').attr('href', href);
-					image_holder.show();
 					$("#TfileUpload_kk").val(data['lamp_kk']);
-					
+					var image_holder = $("#kkholder");
+					$('#kkholder').attr("href", base_url+'assets/images/fileupload/kartukeluarga/'+data['lamp_kk']);
+					image_holder.show();
+				}
+				else{
+
+					$('.ckk').hide();
 				}
 			//show skhun 
-				$('#button_skhun').hide();
-				$("#skhunholder").hide();
 				$("#TfileUpload_skhun").val('');
 				if(data['lamp_skhun']!=null){
-					var image_holder = $("#skhunholder");
-					// var link = "./assets/images/uploadtemp/"+data['lamp_ijazah']+";
-
-					var href = $('.cskhun a').attr('href');
-					// Replace the CURRENT_URL_GOES_HERE to CodeProject Url.
-					var href = href.replace('LINKTARGET', base_url+'assets/images/fileupload/skhun/'+data['lamp_skhun']);
-					// Add that new href again to the anchor.
-					$('.cskhun a').attr('href', href);
-					image_holder.show();
 					$("#TfileUpload_skhun").val(data['lamp_skhun']);
-					
+					var image_holder = $("#skhunholder");
+					$('#skhunholder').attr("href", base_url+'assets/images/fileupload/skhun/'+data['lamp_skhun']);
+					image_holder.show();
+				}
+				else{
+					$('.cskhun').hide();
 				}
 			//show ranskip 
-				$('#button_transkip').hide();
-				$("#transkipholder").hide();
 				$("#TfileUpload_transkip").val('');
 				if(data['lamp_transkip_nilai']!=null){
-					var image_holder = $("#transkipholder");
-					// var link = "./assets/images/uploadtemp/"+data['lamp_ijazah']+";
-
-					var href = $('.ctranskip a').attr('href');
-					// Replace the CURRENT_URL_GOES_HERE to CodeProject Url.
-					var href = href.replace('LINKTARGET', base_url+'assets/images/fileupload/transkip_nilai/'+data['lamp_transkip_nilai']);
-					// Add that new href again to the anchor.
-					$('.ctranskip a').attr('href', href);
-					image_holder.show();
 					 $("#TfileUpload_transkip").val(data['lamp_transkip_nilai']);
-					
+					var image_holder = $("#transkipholder");
+					$('#transkipholder').attr("href", base_url+'assets/images/fileupload/transkip_nilai/'+data['lamp_transkip_nilai']);
+					image_holder.show();
+				}
+				else{
+					$('.ctranskip').hide();
 				}
 			//show skbb 
-				$('#button_skbb').hide();
-				$("#skbbholder").hide();
 				 $("#TfileUpload_skbb").val('');
 				if(data['lamp_skkb']!=null){
-					var image_holder = $("#skbbholder");
-					// var link = "./assets/images/uploadtemp/"+data['lamp_ijazah']+";
-
-					var href = $('.cskbb a').attr('href');
-					// Replace the CURRENT_URL_GOES_HERE to CodeProject Url.
-					var href = href.replace('LINKTARGET', base_url+'assets/images/fileupload/skb/'+data['lamp_skkb']);
-					// Add that new href again to the anchor.
-					$('.cskbb a').attr('href', href);
-					image_holder.show();
 					$("#TfileUpload_skbb").val(data['lamp_skkb']);
-					
+					var image_holder = $("#skbbholder");
+					$('#skbbholder').attr("href", base_url+'assets/images/fileupload/skb/'+data['lamp_skkb']);
+					image_holder.show();
+				}
+				else{
+
+					$('.cskbb').hide();
 				}
 			//show skes 
-				$('#button_skes').hide();
-				$("#skesholder").hide();
 				$("#TfileUpload_skes").val('');
 				if(data['lamp_surat_kesehatan']!=null){
-					
-					var image_holder = $("#skesholder");
-					// var link = "./assets/images/uploadtemp/"+data['lamp_ijazah']+";
-
-					var href = $('.cskes a').attr('href');
-					// Replace the CURRENT_URL_GOES_HERE to CodeProject Url.
-					var href = href.replace('LINKTARGET', base_url+'assets/images/fileupload/surat_kesehatan/'+data['lamp_surat_kesehatan']);
-					// Add that new href again to the anchor.
-					$('.cskes a').attr('href', href);
-					image_holder.show();
 					$("#TfileUpload_skes").val(data['lamp_surat_kesehatan']);
-					
+					var image_holder = $("#skesholder");
+					$('#skesholder').attr("href", base_url+'assets/images/fileupload/surat_kesehatan/'+data['lamp_surat_kesehatan']);
+					image_holder.show();
+				}
+				else{
+					$('.cskes').hide();
 				}
 			mati();
 			mati_kel();
@@ -3247,7 +3183,7 @@ function downloadExcel(){
 function idgedungshow()
 {
 	$('#hiddenidgedung').show();
-	$('#rayon').hide();
+	// $('#rayon').hide();
 	$('#spansearchgedung').hide();
     $('#spansearchclosegedung').show();
 }
@@ -3255,7 +3191,7 @@ function idgedungshow()
 function idgedunghide()
 {
 	$('#hiddenidgedung').hide();
-	$('#rayon').show();
+	// $('#rayon').show();
 	$('#spansearchgedung').show();
     $('#spansearchclosegedung').hide();
 }
@@ -3267,7 +3203,7 @@ function pilihItemGedung(){
 
     $('#rayon').val($item[0]);
 	$('#hiddenidgedung').hide();
-	$('#rayon').show();
+	// $('#rayon').show();
     $('#spansearchgedung').show();
     $('#spansearchclosegedung').hide();
 }
@@ -3275,7 +3211,7 @@ function pilihItemGedung(){
 function idKamarshow()
 {
 	$('#hiddenidKamar').show();
-	$('#kamar').hide();
+	// $('#kamar').hide();
 	$('#spansearchKamar').hide();
     $('#spansearchcloseKamar').show();
 }
@@ -3283,7 +3219,7 @@ function idKamarshow()
 function idKamarhide()
 {
 	$('#hiddenidKamar').hide();
-	$('#kamar').show();
+	// $('#kamar').show();
 	$('#spansearchKamar').show();
     $('#spansearchcloseKamar').hide();
 }
@@ -3295,7 +3231,7 @@ function pilihItemKamar(){
 
     $('#kamar').val($item[0]);
 	$('#hiddenidKamar').hide();
-	$('#kamar').show();
+	// $('#kamar').show();
     $('#spansearchKamar').show();
     $('#spansearchcloseKamar').hide();
 }
@@ -3303,7 +3239,7 @@ function pilihItemKamar(){
 function idKelasshow()
 {
 	$('#hiddenidKelas').show();
-	$('#kel_sekarang').hide();
+	// $('#kel_sekarang').hide();
 	$('#spansearchKelas').hide();
     $('#spansearchcloseKelas').show();
 }
@@ -3311,7 +3247,7 @@ function idKelasshow()
 function idKelashide()
 {
 	$('#hiddenidKelas').hide();
-	$('#kel_sekarang').show();
+	// $('#kel_sekarang').show();
 	$('#spansearchKelas').show();
     $('#spansearchcloseKelas').hide();
 }
@@ -3323,10 +3259,39 @@ function pilihItemKelas(){
 
     $('#kel_sekarang').val($item[0]);
 	$('#hiddenidKelas').hide();
-	$('#kel_sekarang').show();
+	// $('#kel_sekarang').show();
     $('#spansearchKelas').show();
     $('#spansearchcloseKelas').hide();
 }
+
+function idBagianshow()
+{
+	$('#hiddenidBagian').show();
+	// $('#bagian').hide();
+	$('#spansearchBagian').hide();
+    $('#spansearchcloseBagian').show();
+}
+
+function idBagianhide()
+{
+	$('#hiddenidBagian').hide();
+	// $('#bagian').show();
+	$('#spansearchBagian').show();
+    $('#spansearchcloseBagian').hide();
+}
+
+function pilihItemBagian(){
+
+	$item  	= $('#hide_id_Bagian').val();
+	$item 	= $item.split('#');
+
+    $('#bagian').val($item[0]);
+	$('#hiddenidBagian').hide();
+	// $('#bagian').show();
+    $('#spansearchBagian').show();
+    $('#spansearchcloseBagian').hide();
+}
+
 
 
 

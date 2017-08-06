@@ -10,9 +10,6 @@ $(document).ready(function()
 		autoclose: true,
 		format: 'dd-mm-yyyy'
     });
-
-    $(".select2").select2();
-    pilihItem();
 	$('.numbers-only').keypress(function(event) {
 		var charCode = (event.which) ? event.which : event.keyCode;
 			if ((charCode >= 48 && charCode <= 57)
@@ -24,7 +21,7 @@ $(document).ready(function()
 	});
 
 	//validasi form modal add_kecakapan_khusus
-	$( "#add_mata_pelajaran" ).validate({
+	$( "#add_bagian" ).validate({
 		errorElement:"em",
 		// errorClass:"help-block help-block-error",
 			// rules:{
@@ -84,30 +81,6 @@ $(document).ready(function()
 
 });
 
-function idbidshow(){
-    $('#hiddenidbid').show();
-    $('#spansearch').hide();
-    $('#spansearchclose').show();
-    
-    
-}
-
-function closespan(){
-    $('#hiddenidbid').hide();
-    $('#spansearch').show();
-    $('#spansearchclose').hide();
-}
-
-function pilihItem(){
-
-	$item  	= $('#hide_id_bidangstudi').val();
-	$item 	= $item.split('#');
-
-    $('#id_bidangstudi').val($item[0]);
-    $('#hiddenidbid').hide();
-    $('#spansearch').show();
-    $('#spansearchclose').hide();
-}
 
 function setTable(){
 	 $('#tb_list').DataTable( {
@@ -115,7 +88,7 @@ function setTable(){
         "processing": true,
 		"serverSide": true,
 		ajax: {
-			'url':base_url+"mata_pelajaran/load_grid",
+			'url':base_url+"bagian/load_grid",
 			'type':'GET',
 			'data': function ( d ) {
                 d.param = $('#hid_param').val();
@@ -130,9 +103,9 @@ function Modalcari(){
 }
 
 function SearchAction(){
-    var id_matpal 	    = $('#s_id_matpal').val();
+    var kode_bagian 	    = $('#s_kodebagian').val();
     var nama_lengkap 	= $('#s_namalengkap').val();
-	var param 			= {'id_matpal':id_matpal};
+	var param 			= {'kode_bagian':kode_bagian};
 		param 			= JSON.stringify(param);
 
 	$('#hid_param').val(param);
@@ -145,17 +118,15 @@ function SearchAction(){
 }
 
 function kosong(){
-		$('#id_matpal').val('');
-		$('#nama_matpal').val('');
-		$('#id_bidangstudi').val('');
-		$('#status').val('');
+		$('#kode_bagian').val('');
+		$('#nama').val('');
 }
 
-function svmata_pelajaran(){
-	if($("#add_mata_pelajaran").valid()==true){
-        $id_matpal = $('#id_matpal').val();
+function svbagian(){
+	if($("#add_bagian").valid()==true){
+        $kode_bagian = $('#kode_bagian').val();
 		$status = $('#save_button').text();
-		var str_url  	= encodeURI(base_url+"mata_pelajaran/get_data_mata_pelajaran/"+$id_matpal);
+		var str_url  	= encodeURI(base_url+"bagian/get_data_bagian/"+$kode_bagian);
        $.ajax({
 		type:"POST",
 		url:str_url,
@@ -172,7 +143,7 @@ function svmata_pelajaran(){
                     
                 }
                 else{
-                    var iform = $('#add_mata_pelajaran')[0];
+                    var iform = $('#add_bagian')[0];
                     var data = new FormData(iform);
                     if ($status == 'UPDATE')
                         {
@@ -185,7 +156,7 @@ function svmata_pelajaran(){
                     $.ajax({
 
                         type:"POST",
-                        url:base_url+"mata_pelajaran/simpan_mata_pelajaran/"+$status,
+                        url:base_url+"bagian/simpan_bagian/"+$status,
                         enctype: 'multipart/form-data',
                         // dataType:"JSON",
                         contentType: false,
@@ -198,7 +169,7 @@ function svmata_pelajaran(){
                                 size: 'small',
                                 callback: function () {
 
-                                    window.location = base_url+'mata_pelajaran';
+                                    window.location = base_url+'bagian';
                                 }
                             });
                         }
@@ -215,14 +186,10 @@ function OtomatisKapital(a){
     }, 1);
 }
 
-function addmata_pelajaran(){
-    // kosong();
-    // $('#spansearchclose').hide();
-    // $('#hiddenidbid').hide();
-    // $('#save_button').text('SAVE');	
-    // $('#status').val('1');
-	// $('#Modal_add_mata_pelajaran').modal('show');
-	bootbox.alert("Silahkan Tambahkan di Menu Bidang Studi!");
+function addbagian(){
+    $('#save_button').text('SAVE');
+	// kosong();
+	$('#Modal_add_bagian').modal('show');
 }
 
 function ONprosses(){
@@ -236,10 +203,10 @@ function ONprosses(){
 	);
 }
 
-function edit(id_matpal){
-	var str_url  	= encodeURI(base_url+"mata_pelajaran/get_data_mata_pelajaran/"+id_matpal);
+function edit(kode_bagian){
+	var str_url  	= encodeURI(base_url+"bagian/get_data_bagian/"+kode_bagian);
     $('#save_button').text('UPDATE');
-    $('#id_matpal').attr('readonly',true);
+    $('#kode_bagian').attr('readonly',true);
 	$.ajax({
 
 		type:"POST",
@@ -248,13 +215,10 @@ function edit(id_matpal){
 		success:function(data){
 			
 			var data = $.parseJSON(data);
-			$('#id_matpal').val(data['id_matpal']);
-		    $('#nama_matpal').val(data['nama_matpal']);
-		    $('#id_bidangstudi').val(data['id_bidang']);
-		    $('#status').val(data['status']);
-            
+			$('#kode_bagian').val(data['kode_bagian']);//untuk membaca kategori saat update
+			$('#nama').val(data['nama']);
 			
-			$('#Modal_add_mata_pelajaran').modal('show');
+			$('#Modal_add_bagian').modal('show');
 			
 			
 		}
@@ -262,12 +226,11 @@ function edit(id_matpal){
 	
 }
 
-function hapus(id_matpal){
-	var str_url  	= encodeURI(base_url+"mata_pelajaran/Delmata_pelajaran/"+id_matpal);
-	bootbox.confirm("Anda yakin akan menghapus "+id_matpal+" ini ?",
+function hapus(kode_bagian){
+	var str_url  	= encodeURI(base_url+"bagian/Delbagian/"+kode_bagian);
+	bootbox.confirm("Anda yakin akan menghapus "+kode_bagian+" ini ?",
 		function(result){
-			if(result==true){
-				
+			if(result==true){				
 			$.ajax({
 			type:"POST",
 			url:str_url,
@@ -278,7 +241,7 @@ function hapus(id_matpal){
 						size: 'small',
 						callback: function () {
 
-							window.location = base_url+'mata_pelajaran';
+							window.location = base_url+'bagian';
 						}
 					});
 				}
@@ -290,7 +253,7 @@ function hapus(id_matpal){
 }
 
 function clearformcari(){
-	$('#s_id_matpal').val('');
+	$('#s_kodebagian').val('');
 	// $('#s_namalengkap').val('');
 }
 
@@ -299,6 +262,20 @@ function downloadExcel(){
 	var param 	= $('#hid_param').val();
 	param 		= ioEncode(param);
 
-	window.location = base_url+'mata_pelajaran/exportexcel/'+param;
+	window.location = base_url+'bagian/exportexcel/'+param;
 }
+
+function CekDuplicate(kode_bagian){
+	$.ajax({
+
+		type:"POST",
+		url:base_url+"bagian/get_data_bagian/"+kode_bagian,
+		dataType:"html",
+		success:function(data){				
+            var data =	 $.parseJSON(data)
+		}
+	});
+	
+}
+
 

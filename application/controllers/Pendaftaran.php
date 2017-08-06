@@ -35,6 +35,16 @@ class Pendaftaran extends IO_Controller
 					=$b->kode_kamar." | ".$b->nama;
 			}
 
+			//get ID Bagian
+			$hide_id_Bagian= $this->model->get_bagian()->result();
+
+			$vdata['kode_Bagian'][NULL] = '-';
+			foreach ($hide_id_Bagian as $b) {
+
+				$vdata['kode_Bagian'][$b->kode_bagian."#".$b->nama]
+					=$b->kode_bagian." | ".$b->nama;
+			}
+
 			//get ID Kelas
 			$hide_id_Kelas= $this->model->get_kelas()->result();
 
@@ -214,7 +224,7 @@ class Pendaftaran extends IO_Controller
 	function no_registrasi($kategori_santri)
 	{
 		$tahun_masehi 	= date('y');
-		$tahun_hijri 	= '38';
+		$tahun_hijri 	= io_get_hijri();
 		if($kategori_santri =='TMI') {
 			$data_sequence 	= $this->model->get_sequence_noreg_TMI();
 				if($data_sequence==null)

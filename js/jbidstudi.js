@@ -431,34 +431,52 @@ function TambahMatpal(){
 			else{
 				status = "TIDAK AKTIF"
 			}
+				//cek di table mata pelajaran sudah ada atau belum
+				$id_matpal = $('#id_matpal').val();
+				var str_url  	= encodeURI(base_url+"bidstudi/get_data_mata_pelajaran/"+$id_matpal);
+			$.ajax({
+				type:"POST",
+				url:str_url,
+				dataType:"html",
+				success:function(data){	
+					$data = $.parseJSON(data);
+						if( $data != null){
+								bootbox.alert("ID Mata Pelajarang Sudah ada di database!!");
+								return false;
+							
+						}
+						else{
+							var row_count 		= $('#tb_list_Matpal tr.tb-detail').length;
+							var content_data 	= '<tr class="tb-detail" id="row'+id_matpal+'">';
+								content_data 	+= "<td>"+(row_count+1)+"</td>";
+								content_data 	+= "<td>"+id_matpal+"</td>";
+								content_data 	+= "<td>"+nama_matpal+"</td>";
+								content_data 	+= "<td>"+status+"</td>";
+								content_data 	+= '<td><button type="button" class="btn btn-danger btn-xs" ';
+								content_data 	+= ' onclick="hapusItemMatpal(\''+id_matpal+'\')"><i class="fa fa-fw fa-trash"></i>Hapus</button></td>';
+								content_data 	+= "</tr>";
 
-			var row_count 		= $('#tb_list_Matpal tr.tb-detail').length;
-			var content_data 	= '<tr class="tb-detail" id="row'+id_matpal+'">';
-				content_data 	+= "<td>"+(row_count+1)+"</td>";
-				content_data 	+= "<td>"+id_matpal+"</td>";
-				content_data 	+= "<td>"+nama_matpal+"</td>";
-				content_data 	+= "<td>"+status+"</td>";
-				content_data 	+= '<td><button type="button" class="btn btn-danger btn-xs" ';
-				content_data 	+= ' onclick="hapusItemMatpal(\''+id_matpal+'\')"><i class="fa fa-fw fa-trash"></i>Hapus</button></td>';
-				content_data 	+= "</tr>";
+							if(row_count<1){
 
-			if(row_count<1){
+								$('#tb_list_Matpal tbody').html(content_data);
+							}
+							else{
 
-				$('#tb_list_Matpal tbody').html(content_data);
-			}
-			else{
+								$('#tb_list_Matpal tbody').append(content_data);
+							}
 
-				$('#tb_list_Matpal tbody').append(content_data);
-			}
+							$("#hid_jumlah_item_Matpal").val(row_count+1);
+							urutkanNomorMatpal();
 
-			$("#hid_jumlah_item_Matpal").val(row_count+1);
-			urutkanNomorMatpal();
-
-			$('#Modal_add_mata_pelajaran').modal('hide');
+							$('#Modal_add_mata_pelajaran').modal('hide');
+						}
+					}
+				});
+				
 		}
 		else{
 
-			bootbox.alert("<span class='glyphicon glyphicon-exclamation-sign'></span>&nbsp;"+id_matpal+" sudah ada di list.");
+			bootbox.alert("<span class='glyphicon glyphicon-exclamation-sign'></span>&nbsp;"+id_matpal+" sudah ada di List.");
 		}
 	}
 }

@@ -3,20 +3,21 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class bidstudi extends IO_Controller
+class bagian extends IO_Controller
 {
 
 	public function __construct()
 	{
-			$modul = 26;
+			$modul = 28;
 			parent::__construct($modul);
-		 	$this->load->model('mbidstudi','model');
+		 	$this->load->model('mbagian','model');
 	}
 
 	function index()
 	{
-        $vdata['title'] = 'DATA BIDANG STUDI';
-	    $data['content'] = $this->load->view('vbidstudi',$vdata,TRUE);
+		
+		$vdata['title'] = 'DATA BAGIAN';
+	    $data['content'] = $this->load->view('vbagian',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
 
@@ -27,7 +28,7 @@ class bidstudi extends IO_Controller
 
 		if($param!=null){
 
-			if(isset($param->id_bidang)) $string_param .= " id_bidang LIKE '%".$param->id_bidang."%' ";
+			if(isset($param->kode_bagian)) $string_param .= " kode_bagian LIKE '%".$param->kode_bagian."%' ";
 		}
 
 		return $string_param;
@@ -60,17 +61,17 @@ class bidstudi extends IO_Controller
 		$fdate = 'd-m-Y';
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_bidang.'\')">
+			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->kode_bagian.'\')">
 						<i class="fa fa-edit"></i>
 					</a>
-					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->id_bidang.'\')">
+					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->kode_bagian.'\')">
 						<i class="fa fa-remove"></i>
 					</a>';
 			
 			$records["data"][] = array(
 
-		     	$data[$i]->id_bidang,
-				$data[$i]->nama_bidang,
+		     	$data[$i]->kode_bagian,
+  				$data[$i]->nama,
                 $act
 		   );
 		
@@ -102,15 +103,15 @@ class bidstudi extends IO_Controller
 		//activate worksheet number 1
 		$this->excel->setActiveSheetIndex(0);
 		//name the worksheet
-		$this->excel->getActiveSheet()->setTitle('BIDANG STUDI');
-		$this->excel->getActiveSheet()->setCellValue('A1', "Master Data Bidang Studi");
+		$this->excel->getActiveSheet()->setTitle('Master_BAGIAN');
+		$this->excel->getActiveSheet()->setCellValue('A1', "Master Bagian");
 		$this->excel->getActiveSheet()->mergeCells('A1:C1');
 		$this->excel->getActiveSheet()->getStyle('A1:C1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 		//header
 		$this->excel->getActiveSheet()->setCellValue('A3', "No.");
-		$this->excel->getActiveSheet()->setCellValue('B3', "ID Bidang Studi");
-		$this->excel->getActiveSheet()->setCellValue('C3', "Nama Bidang Studi");
+		$this->excel->getActiveSheet()->setCellValue('B3', "Kode bagian");
+		$this->excel->getActiveSheet()->setCellValue('C3', "Nama bagian");
 
 		$fdate 	= "d-m-Y";
 		$i  	= 4;
@@ -118,16 +119,16 @@ class bidstudi extends IO_Controller
 		if($data != null){
 
 			foreach($data as $row){
-               
+
 				$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
-				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->id_bidang);
-				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->nama_bidang);
+				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->kode_bagian);
+				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->nama);
 				
 				$i++;
 			}
 		}
 
-		for($col = 'A'; $col !== 'E'; $col++) {
+		for($col = 'A'; $col !== 'G'; $col++) {
 
 		    $this->excel->getActiveSheet()
 		        ->getColumnDimension($col)
@@ -148,7 +149,7 @@ class bidstudi extends IO_Controller
 		$this->excel->getActiveSheet()->getStyle('A3:C3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
 		$this->excel->getActiveSheet()->getStyle('A3:C3')->getFill()->getStartColor()->setRGB('2CC30B');
 
-		$filename='Master-Bidang-Studi.xls'; //save our workbook as this file name
+		$filename='Master-Bagian.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
 		header('Cache-Control: max-age=0');//no cache
@@ -161,119 +162,52 @@ class bidstudi extends IO_Controller
 
 	}
 
-	function simpan_bidstudi($status)
+	function simpan_bagian($status)
 	{
-		$id_bidang 		    = $this->input->post('id_bidang');
-		$nama_bidang 		= $this->input->post('nama_bidang');
-		$nama_bidang 		= $this->input->post('nama_bidang');
-		$item_matpal 			= $this->input->post('hid_table_item_Matpal');
+		$kode_bagian 		= $this->input->post('kode_bagian');
+		$nama  		        = $this->input->post('nama');
         $recdate            = date('y-m-d');
 	    $userid 			= $this->session->userdata('logged_in')['uid'];
 
-		$data_bidstudi = array(
-			'id_bidang' 			=> $id_bidang,
-			'nama_bidang' 			=> $nama_bidang,
+		$data_bagian = array(
+			'kode_bagian' 			=> $kode_bagian,
+			'nama' 		            => $nama,
             'recdate'               => $recdate,
 			'userid' 				=> $userid
 		);
-		
         
 		if($status=='SAVE')	
 		{// cek apakah add new atau editdata
 			
-		// save data bidstudi
-         	$this->model->simpan_data_bidstudi($data_bidstudi);
-			//save matapelajaran			
-			$item_matpal  = explode(';',$item_matpal);
-			foreach ($item_matpal as $i) {
-					$idetail = explode('#',$i);
-					if(count($idetail)>1){
-							if($idetail[2] == "AKTIF"){
-								$status = 1;
-							}
-							else{
-								$status = 0;
-							}
-							$detail_Matpal = array(
-
-								'id_matpal'			=> $idetail[0],
-								'nama_matpal'		=> $idetail[1],
-								'id_bidang'			=> $id_bidang,
-								'status'			=> $status,
-								'recdate'			=> $recdate,
-								'userid' 			=> $userid
-								
-							);
-							$this->model->simpan_item_matpal($detail_Matpal);
-
-					}
-			}
+		// save data bagian
+         	$this->model->simpan_data_bagian($data_bagian);
 
 		}
         else //update data
 		{		
-			// save data bidstudi
-         	$this->model->update_data_bidstudi($id_bidang,$data_bidstudi);
-			
-			//save matapelajaran
-			$this->model->delete_item_matpal($id_bidang);			
-			$item_matpal  = explode(';',$item_matpal);
-			foreach ($item_matpal as $i) {
-					$idetail = explode('#',$i);
-					if(count($idetail)>1){
-							if($idetail[2] == "AKTIF"){
-								$status = 1;
-							}
-							else{
-								$status = 0;
-							}
-							$detail_Matpal = array(
-
-								'id_matpal'			=> $idetail[0],
-								'nama_matpal'		=> $idetail[1],
-								'id_bidang'			=> $id_bidang,
-								'status'			=> $status,
-								'recdate'			=> $recdate,
-								'userid' 			=> $userid
-								
-							);
-							$this->model->simpan_item_matpal($detail_Matpal);
-
-					}
-			}
+			// save data bagian
+         	$this->model->update_data_bagian($kode_bagian,$data_bagian);
         }	    
 
 			echo "true";
 	}
 
-	function get_data_bidstudi($id_bidang)
+	function get_data_bagian($kode_bagian)
 	{
-		$id_bidang = urldecode($id_bidang);
-		$data = $this->model->query_bidstudi($id_bidang);
+        $kode_bagian = urldecode($kode_bagian);
+		$data = $this->model->query_bagian($kode_bagian);
     	echo json_encode($data);
 	}
 
-	function Delbidstudi($id_bidang)
+	function Delbagian($kode_bagian)
 	{
-		$id_bidang = urldecode($id_bidang);
-		$this->model->delete_bidstudi($id_bidang);
-		$this->model->delete_item_matpal($id_bidang);
-	}
-
-	function get_data_matpal($id_bidang)
-	{
-		$data = $this->model->query_matpal($id_bidang);
-    	echo json_encode($data);
-		// var_dump($data);
-		// exit;
-	}
-
-	function get_data_mata_pelajaran($id_matpal)
-	{
-		$id_matpal = urldecode($id_matpal);
-		$data = $this->model->query_mata_pelajaran($id_matpal);
-    	echo json_encode($data);
+		$kode_bagian = urldecode($kode_bagian);
+		$this->model->delete_bagian($kode_bagian);
 	}
 
 
 }
+
+	
+
+	

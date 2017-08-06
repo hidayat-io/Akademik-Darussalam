@@ -336,6 +336,11 @@ class Mpendaftaran extends CI_Model
 		$data = $this->db->query ("SELECT * FROM ms_kelas ORDER BY kode_kelas");
 		return $data;
 	}
+
+	function get_bagian(){
+		$data = $this->db->query ("SELECT * FROM ms_bagian ORDER BY kode_bagian");
+		return $data;
+	}
 	
 	
 }

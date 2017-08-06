@@ -2,7 +2,7 @@
 <style type="text/css">.thumb-image{float:left;width:200px;position:relative;padding:5px;}</style>
 
 <script src="<?php echo base_url(); ?>assets/plugins/maskMoney/jquery.maskMoney.js"></script>
-<script src="<?php echo base_url(); ?>js/jmata_pelajaran.js"></script>
+<script src="<?php echo base_url(); ?>js/jkurikulum.js"></script>
 <script type="text/javascript">
     var base_url = "<?php echo base_url(); ?>";
 </script>
@@ -20,7 +20,7 @@
                     </div>
                     </div>
                     <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
-                        <button class="btn btn-default " type="button" data-toggle="dropdown" onclick="addmata_pelajaran()">
+                        <button class="btn btn-default " type="button" data-toggle="dropdown" onclick="addkurikulum()">
                             <i class="fa fa-edit"></i>&nbsp;Tambah Data&nbsp;<i class="fa fa-angle-down"></i>
                         </button>
                         <!-- <ul class="dropdown-menu" role="menu">
@@ -40,16 +40,17 @@
                     <table class="table table-striped table-bordered table-hover" id="tb_list">
                         <thead>
                             <tr>
+                                <th style="text-align:center">ID Tahun Ajar</th>
+                                <th style="text-align:center">ID Kelas</th>
                                 <th style="text-align:center">ID Mata Pelajaran</th>
-                                <th style="text-align:center">Nama Mata Pelajaran</th>
-                                <th style="text-align:center">ID Bidang</th>
-                                <th style="text-align:center">Status</th>
-                                <th style="text-align:center" width="10%">Action</th>
+                                <th style="text-align:center">SM1</th>
+                                <th style="text-align:center">SM2</th>
+                                <th style="text-align:center" width="20%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                            <td colspan="5" align="center">
+                            <td colspan="6" align="center">
                                 Tidak ada data ditemukan.
                             </td>
                         </tr>
@@ -64,8 +65,8 @@
         <!-- END EXAMPLE TABLE PORTLET-->
     </div>
 </div>
-<!-- modal add mata_pelajaran -->
-    <div class="modal fade draggable-modal" id="Modal_add_mata_pelajaran" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<!-- modal add kurikulum -->
+    <div class="modal fade draggable-modal" id="Modal_add_kurikulum" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -81,76 +82,100 @@
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class=" icon-layers font-red"></i>
-                                        <span class="caption-subject font-red sbold uppercase">INPUT DATA MATA PELAJARAN</span>
+                                        <span class="caption-subject font-red sbold uppercase">INPUT DATA KURIKULUM</span>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
                                     <div class="form-body">                                
                                         <!-- BEGIN FORM-->
-                                        <form action="#" id="add_mata_pelajaran">
+                                        <form action="#" id="add_kurikulum">
                                             <!--inputbox-->
                                                 <!--span-->
                                                     <div class="form-group">
                                                             <label class="control-label"></label>
                                                             <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                ID Mata Pelajaran
+                                                                ID Tahun Ajar
                                                             </span>
-                                                            <input type="text" class="form-control" name="id_matpal" id="id_matpal" onkeydown="OtomatisKapital(this)" maxlength="10" required></div>
+                                                            <input type="text" class="form-control numbers-only" name="id_thn_ajar" id="id_thn_ajar" maxlength="11" required></div>
                                                     </div>
-                                                <!--span-->
-                                                     <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            Nama Mata Pelajaran
-                                                        </span>
-                                                        <input type="text" class="form-control" name="nama_matpal" id="nama_matpal" onkeydown="OtomatisKapital(this)" maxlength="20" required></div>
-                                                    </div>
-                                                     
-                                                    <!--span-->
+                                                     <!--span-->
                                                     <div class="form-group">
                                                         <label class="control-label"></label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                ID Bidang Studi
+                                                                ID Kelas
                                                             </span>
-                                                            <div class="input" id= "hiddenidbid">
+                                                            <div class="input" id= "hiddenkode_kelas">
                                                             <?php
-                                                                $att_item = 'id="hide_id_bidangstudi"  class="form-control
-                                                                    select2" style="width:100%"  onchange="pilihItem()"';
-                                                                echo form_dropdown('hide_id_bidangstudi', $id_bidangstudi, null, $att_item);
+                                                                $att_item = 'id="hide_kode_kelas"  class="form-control
+                                                                    select2" style="width:100%"  onchange="pilihItemkode_kelas()"';
+                                                                echo form_dropdown('hide_kode_kelas', $kode_kelas, null, $att_item);
                                                             ?>
                                                                  </div>  
-                                                            <input type="text" class="form-control" name="id_bidangstudi" id="id_bidangstudi"  required readonly>
-                                                             <span class="input-group-btn" id="spansearch">
-                                                                <button class="btn btn-default" type="button" onclick="idbidshow()">
+                                                            <input type="text" class="form-control" name="kode_kelas" id="kode_kelas"  required readonly>
+                                                             <span class="input-group-btn" id="spansearchkode_kelas">
+                                                                <button class="btn btn-default" type="button" onclick="kode_kelasshow()">
                                                             <span class="glyphicon glyphicon-search" ></span>
                                                                 </button>
                                                             </span>
-                                                            <span class="input-group-btn" id="spansearchclose">
-                                                                <button class="btn btn-default" type="button" onclick="closespan()">
+                                                            <span class="input-group-btn" id="spansearchclosekode_kelas">
+                                                                <button class="btn btn-default" type="button" onclick="kode_kelasclosespan()">
                                                             <span class="glyphicon glyphicon-remove-sign " ></span>
                                                                 </button>
                                                             </span>
                                                         </div>
                                                     </div>    
-                                                      <!--span-->
+                                                    <!--span-->
+                                                    <!--span-->
+                                                    <div class="form-group">
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                ID Mata Pelajaran
+                                                            </span>
+                                                            <div class="input" id= "hiddenid_mapel">
+                                                            <?php
+                                                                $att_item = 'id="hide_id_mapel"  class="form-control
+                                                                    select2" style="width:100%"  onchange="pilihItemid_mapel()"';
+                                                                echo form_dropdown('hide_id_mapel', $id_matpal, null, $att_item);
+                                                            ?>
+                                                                 </div>  
+                                                            <input type="text" class="form-control" name="id_mapel" id="id_mapel"  required readonly>
+                                                             <span class="input-group-btn" id="spansearchid_mapel">
+                                                                <button class="btn btn-default" type="button" onclick="id_mapelshow()">
+                                                            <span class="glyphicon glyphicon-search" ></span>
+                                                                </button>
+                                                            </span>
+                                                            <span class="input-group-btn" id="spansearchcloseid_mapel">
+                                                                <button class="btn btn-default" type="button" onclick="id_mapelclosespan()">
+                                                            <span class="glyphicon glyphicon-remove-sign " ></span>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>    
+                                                    <!--span-->
                                                     <div class="form-group">
                                                         <label class="control-label"></label>
                                                         <div class="input-group">
                                                         <span class="input-group-addon">
-                                                            Status
+                                                            SM 1
                                                         </span>
-                                                       <select class="form-control" name="status" id="status" required >
-                                                                    <option value="1">AKTIF</option>
-                                                                    <option value="0">TIDAK AKTIF</option>
-                                                                </select></div>
-                                                    </div>    
+                                                        <input type="text" class="form-control" name="sm_1" id="sm_1"  required></div>
+                                                    </div>
+                                                    <!--span-->
+                                                    <div class="form-group">
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            SM 2
+                                                        </span>
+                                                        <input type="text" class="form-control" name="sm_2" id="sm_2"  required></div>
+                                                    </div>   
                                             <!--end inputbox-->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn green" id="save_button" onclick="svmata_pelajaran()">Save</button>
+                                                <button type="button" class="btn green" id="save_button" onclick="svkurikulum()">Save</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -166,7 +191,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-<!-- end of modal mata_pelajaran-->
+<!-- end of modal kurikulum-->
 <!-- modal Cari -->
     <div class="modal fade draggable-modal" id="Modal_cari" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
@@ -197,9 +222,9 @@
                                                             <label class="control-label"></label>
                                                             <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                Kode Mata Pelajaran
+                                                                ID Tahun Ajar
                                                             </span>
-                                                            <input type="text" class="form-control" name="s_id_matpal" id="s_id_matpal" onkeydown="OtomatisKapital(this)" required></div>
+                                                            <input type="text" class="form-control" name="s_id_thn_ajar" id="s_id_thn_ajar" onkeydown="OtomatisKapital(this)" required></div>
                                                     </div>
                                                 <!--span-->
                                                     <!-- <div class="form-group">
