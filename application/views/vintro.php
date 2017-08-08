@@ -28,46 +28,49 @@
         <!-- END THEME LAYOUT STYLES -->
         <link rel="shortcut icon" href="favicon.ico" /> </head>
 
-		<style type="text/css">
+        <style type="text/css">
 
-		html body{
+        html body{
 
-			background-color: #098040;
-		}
+            background-color: #098040;
+        }
 
-		h1{
+        h1{
 
-			font-size: 130px;
-			text-shadow: 4px 4px #000;
-		}
+            font-size: 200px;
+            text-shadow: 4px 4px #000;
+        }
 
-		h2{
+        h2{
 
-			letter-spacing: 25px;
-			text-shadow: 2px 2px #000;
-			font-weight: bold;
-			color: #fbde6c;
-		}
+            letter-spacing: 50px;
+            text-shadow: 2px 2px #000;
+            font-weight: bold;
+            color: #fbde6c;
+            padding-left: 30px;
+            font-size: 60px;
+            line-height: 0px;
+        }
 
-		.vertical-center {
+        .vertical-center {
 
-			min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-			min-height: 100vh; /* These two lines are counted as one :-)       */
+            min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+            min-height: 100vh; /* These two lines are counted as one :-)       */
 
-			display: flex;
-			align-items: center;
-		}
+            display: flex;
+            align-items: center;
+        }
 
-		#div-intro{
+        #div-intro{
 
-			position: relative;
-			width: 100%;
-			height: 100%;
-		}
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
 
 
 
-		</style>
+        </style>
 
     <!-- END HEAD -->
 
@@ -75,9 +78,9 @@
         <div class="container container-table vertical-center">
 
                 <div class="text-center" id="div-intro">
-					<img src="<?php echo base_url() ?>/assets/images/logo.png" style="width:120px" alt="docs-logo" />
+                    <img src="<?php echo base_url() ?>/assets/images/logo.png" style="width:200px" alt="docs-logo" />
                     <h1 class="font-white">ALTIS</h1>
-                    <h2>SISTEM</h2>
+                    <h2>SYSTEM</h2>
                 </div>
 
         </div>
@@ -102,7 +105,7 @@
                 }
             });
 
-			$('img').addClass('animated fadeInDown');
+            $('img').addClass('animated fadeInDown');
             $('h1').addClass('animated fadeInRight');
             $('h2').addClass('animated fadeInLeft');
 
@@ -113,7 +116,7 @@
 
             function goLogin(){
 
-				$('img').addClass('animated fadeOutUp');
+                $('img').addClass('animated fadeOutUp');
                 $('h1').addClass('animated fadeOutLeft');
                 $('h2').addClass('animated fadeOutRight');
 
