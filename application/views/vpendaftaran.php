@@ -79,8 +79,8 @@
                     <div class="btn pull-right" >
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn green" id="save_button_header" onclick="svSantri()">Simpan changes</button>
-                    <button type="button" class="btn blue" id="addto_button_header" onclick="AddTOSantri()">Jadikan Santri</button>
+                    <button type="button" class="btn green-jungle" id="save_button_header" onclick="svSantri()">Simpan changes</button>
+                    <button type="button" class="btn green-jungle" id="addto_button_header" onclick="AddTOSantri()">Jadikan Santri</button>
                     </div>
                 </div>
                     <div class="modal-body"> 
@@ -1387,7 +1387,7 @@
                                                                     <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput" id="RfileUpload_ijazah" name="RfileUpload_ijazah"> Remove </a>
                                                                 </div>
                                                             </div>
-                                                            <div class="cijazah" ><a id="ijazahholder" href="LINKTARGET" target="_blank"> <button type="button" class="btn dark btn-outline" >lihat ijazah</button></a></div>
+                                                            <div class="cijazah" ><a id="ijazahholder" href="LINKTARGET" target="_blank"> <button type="button" class="btn dark btn-outline" >Lihat Ijazah</button></a></div>
                                                             <input type="hidden"  id="TfileUpload_ijazah" name="TfileUpload_ijazah">
                                                             </div>
                                                         </div>
@@ -1410,7 +1410,7 @@
                                                                     <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput" id="RfileUpload_akelahiran" name="RfileUpload_akelahiran"> Remove </a>
                                                                 </div>
                                                             </div>
-                                                            <div class="cakelahiran" ><a id="aklahiranholder" href="LINKTARGET" target="_blank"> <button type="button" class="btn dark btn-outline" >lihat akte</button></a></div>
+                                                            <div class="cakelahiran" ><a id="aklahiranholder" href="LINKTARGET" target="_blank"> <button type="button" class="btn dark btn-outline" >Lihat Akte Lahir</button></a></div>
                                                             <input type="hidden"  id="TfileUpload_akelahiran" name="TfileUpload_akelahiran">
                                                             </div>
                                                         </div>
@@ -1434,7 +1434,7 @@
                                                                             <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput" id="RfileUpload_kk" name="RfileUpload_kk"> Remove </a>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="ckk" ><a id="kkholder" href="LINKTARGET" target="_blank"> <button type="button" class="btn dark btn-outline" >lihat kk</button></a></div>
+                                                                    <div class="ckk" ><a id="kkholder" href="LINKTARGET" target="_blank"> <button type="button" class="btn dark btn-outline" >Lihat Kartu Keluarga</button></a></div>
                                                                     <input type="hidden"  id="TfileUpload_kk" name="TfileUpload_kk">
                                                                 </div>
                                                             </div>
@@ -1457,7 +1457,7 @@
                                                                     <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput" id="RfileUpload_skhun" name="RfileUpload_skhun"> Remove </a>
                                                                 </div>
                                                             </div>
-                                                            <div class="cskhun" ><a id="skhunholder" href="LINKTARGET" target="_blank"> <button type="button" class="btn dark btn-outline" >lihat skhun</button></a></div>
+                                                            <div class="cskhun" ><a id="skhunholder" href="LINKTARGET" target="_blank"> <button type="button" class="btn dark btn-outline" >Lihat SKHUN</button></a></div>
                                                             <input type="hidden"  id="TfileUpload_skhun" name="TfileUpload_skhun">
                                                         </div>
                                                     </div>
@@ -1481,7 +1481,7 @@
                                                                     <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput" id="RfileUpload_transkip" name="RfileUpload_transkip"> Remove </a>
                                                                 </div>
                                                             </div>
-                                                            <div class="ctranskip"><a id="transkipholder" href="LINKTARGET" target="_blank"> <button type="button" class="btn dark btn-outline" >lihat transkip nilai</button></a></div>
+                                                            <div class="ctranskip"><a id="transkipholder" href="LINKTARGET" target="_blank"> <button type="button" class="btn dark btn-outline" >Lihat Transkip Nilai</button></a></div>
                                                             <input type="hidden"  id="TfileUpload_transkip" name="TfileUpload_transkip">
                                                         </div>
                                                     </div>
@@ -1504,7 +1504,7 @@
                                                                     <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput" id="RfileUpload_skbb" name="RfileUpload_skbb"> Remove </a>
                                                                 </div>
                                                             </div>
-                                                            <div class="cskbb"><a id="skbbholder" href="LINKTARGET" target="_blank"> <button type="button" class="btn dark btn-outline" >lihat skbb</button></a></div>
+                                                            <div class="cskbb"><a id="skbbholder" href="LINKTARGET" target="_blank"> <button type="button" class="btn dark btn-outline" >Lihat SKBB</button></a></div>
                                                             <input type="hidden"  id="TfileUpload_skbb" name="TfileUpload_skbb">
                                                         </div>
                                                     </div>
@@ -1527,7 +1527,7 @@
                                                                     <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput" id="RfileUpload_skes" name="RfileUpload_skes"> Remove </a>
                                                                 </div>
                                                             </div>
-                                                            <div class="cskes"><a id="skesholder" href="LINKTARGET" target="_blank"> <button type="button" class="btn dark btn-outline" >lihat Surat Kesehatan</button></a></div>
+                                                            <div class="cskes"><a id="skesholder" href="LINKTARGET" target="_blank"> <button type="button" class="btn dark btn-outline" >Lihat Surat Kesehatan</button></a></div>
                                                             <input type="hidden"  id="TfileUpload_skes" name="TfileUpload_skes">
                                                         </div>
                                                     </div>
@@ -1544,8 +1544,8 @@
                         <!--modal-body end-->
                         <div class="modal-footer">
                             <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn green" id="save_button_footer" onclick="svSantri()">Simpan changes</button>
-                            <button type="button" class="btn blue" id="addto_button_footer" onclick="AddTOSantri()">Jadikan Santri</button>
+                            <button type="button" class="btn green-jungle" id="save_button_footer" onclick="svSantri()">Simpan changes</button>
+                            <button type="button" class="btn green-jungle" id="addto_button_footer" onclick="AddTOSantri()">Jadikan Santri</button>
                         </div>
                     </form>
             </div>

@@ -161,7 +161,7 @@
                                                         <span class="input-group-addon">
                                                             SM 1
                                                         </span>
-                                                        <input type="text" class="form-control" name="sm_1" id="sm_1"  required></div>
+                                                        <input type="text" class="form-control" placeholder="BOBOT NILAI" name="sm_1" id="sm_1"  required></div>
                                                     </div>
                                                     <!--span-->
                                                     <div class="form-group">
@@ -170,12 +170,12 @@
                                                         <span class="input-group-addon">
                                                             SM 2
                                                         </span>
-                                                        <input type="text" class="form-control" name="sm_2" id="sm_2"  required></div>
+                                                        <input type="text" class="form-control" placeholder="BOBOT NILAI" name="sm_2" id="sm_2"  required></div>
                                                     </div>   
                                             <!--end inputbox-->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn green" id="save_button" onclick="svkurikulum()">Save</button>
+                                                <button type="button" class="btn green-jungle" id="save_button" onclick="svkurikulum()">Save</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->

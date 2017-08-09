@@ -108,7 +108,7 @@
                                             <!--end inputbox-->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn green" id="save_button" onclick="svgedung()">Save</button>
+                                                <button type="button" class="btn green-jungle" id="save_button" onclick="svgedung()">Save</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->

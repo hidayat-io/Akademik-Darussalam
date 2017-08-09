@@ -20,13 +20,9 @@
                     </div>
                     </div>
                     <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
-                        <button class="btn btn-default " type="button" data-toggle="dropdown" onclick="addmata_pelajaran()">
+                        <!-- <button class="btn btn-default " type="button" data-toggle="dropdown" onclick="addmata_pelajaran()">
                             <i class="fa fa-edit"></i>&nbsp;Tambah Data&nbsp;<i class="fa fa-angle-down"></i>
-                        </button>
-                        <!-- <ul class="dropdown-menu" role="menu">
-                        <li><a href="#" onclick="addSantri('TMI')"> TMI </a></li>
-                        <li><a href="#" onclick="addSantri('AITAM')"> AITAM </a></li>
-                        </ul> -->
+                        </button> -->
                         <button type="button" class="btn btn-default" title="Search Data" onclick="Modalcari()">
                             <i class="fa fa-search"></i>&nbsp;Search
                         </button>
@@ -150,7 +146,7 @@
                                             <!--end inputbox-->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn green" id="save_button" onclick="svmata_pelajaran()">Save</button>
+                                                <button type="button" class="btn green-jungle" id="save_button" onclick="svmata_pelajaran()">Save</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->

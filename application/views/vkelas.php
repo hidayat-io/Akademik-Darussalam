@@ -3,9 +3,7 @@
 
 <script src="<?php echo base_url(); ?>assets/plugins/maskMoney/jquery.maskMoney.js"></script>
 <script src="<?php echo base_url(); ?>js/jkelas.js"></script>
-<script type="text/javascript">
-    var base_url = "<?php echo base_url(); ?>";
-</script>
+
 <div class="row">
     <div class="col-md-12">
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
@@ -105,7 +103,16 @@
                                                         <span class="input-group-addon">
                                                             Tingkat
                                                         </span>
-                                                        <input type="text" class="form-control numbers-only" name="tingkat" id="tingkat" maxlength="3" required></div>
+                                                        <select class="form-control" name="tingkat" id="tingkat" required>
+                                                            <option value=""></option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                            <option value="6">6</option>
+                                                        </select>
+                                                        </div>
                                                     </div>
                                                       <!--span-->
                                                     <div class="form-group">
@@ -132,7 +139,7 @@
                                             <!--end inputbox-->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn green" id="save_button" onclick="svKelas()">Save</button>
+                                                <button type="button" class="btn green-jungle" id="save_button" onclick="svKelas()">Save</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->

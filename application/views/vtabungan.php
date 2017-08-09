@@ -153,7 +153,7 @@
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn dark btn-outline">Cancel</button>
 
-                <button type="button" class="btn green" onclick="simpantabungan()">Simpan</button>
+                <button type="button" class="btn green-jungle" onclick="simpantabungan()">Simpan</button>
             </div>
         </div>
     </div>

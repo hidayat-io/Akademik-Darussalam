@@ -153,7 +153,7 @@
                                         <!--kotak data kecakapan khusus End-->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn green" id="save_button" onclick="svbidstudi()">Save</button>
+                                                <button type="button" class="btn green-jungle" id="save_button" onclick="svbidstudi()">Save</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
