@@ -38,7 +38,7 @@ function populateSelectClient(){
         dataType: 'json',
         success: function(json) {
         	
-            var $el 		= $("#opt_client");
+            var $el 		= $("#opt_santri");
 
             $el.empty(); // remove old options
 
@@ -91,6 +91,12 @@ function searchdata(){
 	$('#m_search').modal('toggle');
 }
 
+function tipetrans(){
+
+$('#lbl_title').text('S');
+
+}
+
 
 // java script buat clear form nama pada form tabungan
 
@@ -107,15 +113,37 @@ function clearForm(){
 
 function simpantabungan(){
 
-	var nama 				= $("input[name='txtnama']").val();
+
+	var tipe = $('.nav-pills .active #hid_tipe').val();
+
+	$('#hid_tipetrans').val(tipe);
+
 	var hid_id_data 		= $("input[name='hid_id_data']").val();
+	var no_regis 			= $("input[name='txtnoregis']").val();
 	var saldotabungan 		= $("input[name='txtsaldotabungan']").val();
-	var no_registrasi 		= $("input[name='opt_client']").val();
 	var tanggal 			= $("input[name='txttgl']").val();
-	var tipe 				= $("input[name='optionsRadios']:checked").val();
 	var nominal 			= $("input[name='txtnominal']").val();
 	var keterangan 			= $("input[name='txtketerangan']").val();
 
+	 
+	if(no_regis==""){
+
+		var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
+		var str_message = "Keterangan, &amp; Nama Santi belum .";
+
+		bootbox.alert({
+			size:'small',
+			title:title,
+			message:str_message,
+			buttons:{
+				ok:{
+					label: 'OK',
+					className: 'btn-warning'
+				}
+			}
+		});
+		return false;
+	}
 
 	 if(tanggal==""){
 
@@ -191,6 +219,8 @@ function simpantabungan(){
 		}
 	});
 }
+
+
 
 function setTable(){
 
@@ -279,7 +309,7 @@ function downloadExcel(){
 
 function displaySaldo(){
 
-	var nosantri = $('#opt_client').val();
+	var nosantri = $('#opt_santri').val();
 
 	$.ajax({
 
@@ -291,7 +321,7 @@ function displaySaldo(){
 			var data = $.parseJSON(data);
 
 			$('input[name="txtsaldotabungan"]').val(data['saldo']);
-			$('input[name="txtnoregis"]').val(data['no_registrasi']);
+			$('input[name="txtnoregis"]').val(nosantri);
 
 		}
 	});

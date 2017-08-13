@@ -68,26 +68,27 @@ class Tabungan extends IO_Controller
 
 		$data = array(
 
-			'no_registrasi'		=> $input['opt_client'],
+			'no_registrasi'		=> $input['txtnoregis'],
 			'tgl_tabungan'		=> $tgl,
-			'tipe'				=> $input['optionsRadios'],
+			'tipe'				=> $input['hid_tipetrans'],
 			'nominal'			=> $input['txtnominal'],
 			'keterangan'		=> $input['txtketerangan'],
 			'userid'			=> $user
 		);
 
 
-
+		var_dump($data);
+		exit();
 
 		if($id_data==""){
 
 			$this->tabungan_model->insert_new($data);
-			$this->tabungan_model->update_saldo($input['txtnoreg'],$input['optionsRadios'],$input['txtnominal'],$user);
+			$this->tabungan_model->update_saldo($input['txtnoregis'],$input['hid_type'],$input['txtnominal'],$user);
 		}
 		else{
 
 			$this->tabungan_model->update_data($id_data,$data);
-			$this->tabungan_model->update_saldo_updt($input['txtnoreg'],$input['optionsRadios'],$input['txtnominal'],$user,$id_data_saldo);
+			$this->tabungan_model->update_saldo_updt($input['txtnoregis'],$input['hid_type'],$input['txtnominal'],$user,$id_data_saldo);
 		}
 	}
 

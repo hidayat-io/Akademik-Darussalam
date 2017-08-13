@@ -140,7 +140,10 @@ public function __construct(){
 
     function query_getdatasaldo($nosantri){
      	
-		$sql ="SELECT * from tabungan_temp Where no_registrasi='$nosantri'";
+		$sql ="SELECT a.no_registrasi,saldo 
+				FROM ms_santri a LEFT JOIN tabungan_temp b
+				ON a.no_registrasi=b.no_registrasi
+				WHERE a.no_registrasi='$nosantri'";
 
 		return $this->db->query($sql)->row();
     }

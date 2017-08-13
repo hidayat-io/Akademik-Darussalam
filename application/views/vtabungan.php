@@ -63,18 +63,19 @@
                                         <ul class="nav nav-pills">
                                             <li class="active">
                                                 <a href="#tab_2_1" data-toggle="tab">Simpan Tabungan</a>
+                                                <input type="hidden" id="hid_tipe" value="i" />
                                             </li>
                                             <li>
                                                 <a href="#tab_2_2" data-toggle="tab">Ambil Tabungan</a>
+                                                 <input type="hidden" id="hid_tipe" value="o" />
                                             </li>
                                         </ul>
                                         <div class="tab-content">
                                             <div class="tab-pane fade active in" id="tab_2_1">
                                                 <p>
 
-                                                <input type="hidden" name="hid_in" value="in" />
-                                                <input type="hidden" name="hid_iout" value="out" />
-
+                                                <input type="hidden" name="hid_tipetrans" id="hid_tipetrans" value="" />
+                                                 
                                                     <div class="form-group">
                                                         <label class="control-label col-md-2"></label>
                                                         <div class="col-md-8">
@@ -82,8 +83,8 @@
                                                                 <span class="input-group-addon">
                                                                     No Registrasi
                                                                 </span>
-                                                               <input class="form-control form-control-inline input-medium"  type="text" name="txtnoregistrasi"
-                                                                    value="" />
+                                                               <input class="form-control form-control-inline input-medium "  type="text" name="txtnoregis" id="txtnoregis" 
+                                                                    value="" readonly="true" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -93,7 +94,7 @@
                                                         <div class="col-md-8">
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">Nama</span>
-                                                                   <select class="form-control select2" style="width: 100%;" id="opt_client" name="opt_client" onchange="displaySaldo()">
+                                                                   <select class="form-control select2" style="width: 100%;" id="opt_santri" name="opt_santri" onchange="displaySaldo()">
                                                                    </select>
 
                                                             </div>
@@ -121,7 +122,7 @@
                                                                     Tabungan Saat Ini
                                                                 </span>
                                                                 <input type="text" class="form-control spinner numbers-only" placeholder="Saldo Tabungan"
-                                                                name="txtsaldotabungan" id="txtsaldotabungan">
+                                                                name="txtsaldotabungan" id="txtsaldotabungan" readonly="true">
                                                             </div>
                                                                
                                                         </div>
