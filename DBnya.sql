@@ -814,6 +814,12 @@ VALUES
 /*!40000 ALTER TABLE `ms_jabatan_guru` ENABLE KEYS */;
 UNLOCK TABLES;
 
+CREATE TABLE `trans_jabatan_guru` (
+  `id_jabatan` int(11) NOT NULL,
+  `id_guru` int(11) NOT NULL,
+  UNIQUE KEY `key` (`id_guru`,`id_jabatan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
