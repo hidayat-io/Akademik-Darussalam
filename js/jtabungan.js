@@ -2,6 +2,11 @@
 $(document).ready(function(){
 
 	setTable();
+	populateSelectClient();
+
+	$("#opt_client").select2({
+		dropdownParent: $('#m_add')
+	});
 
 	$('.datepicker').datepicker({
         rtl: App.isRTL(),
@@ -21,23 +26,35 @@ $(document).ready(function(){
 	    return false;
   	});
 
-    $('#txtnoreg').keyup(function(){
 
-       var nik = $('#txtnoreg').val();
-
-        if(nik.length=='9'){
-
-            lookUpNoreg();
-        }
-        else{
-
-            clearForm();
-        }
-    });
-   // $('#txtnominal').maskMoney({precision:0});
 
 });
 
+function populateSelectClient(){
+
+	$.ajax({
+        type: "POST",
+        url: base_url+'tabungan/get_list_santri',
+        dataType: 'json',
+        success: function(json) {
+        	
+            var $el 		= $("#opt_client");
+
+            $el.empty(); // remove old options
+
+            $el.append($("<option></option>")
+                    .attr("value", '').text('- Please Select -'));
+
+
+            $.each(json, function(index, value) {
+
+                $el.append($("<option></option>")
+                        .attr("value", value['no_registrasi']).text(value['nama_lengkap']));
+            });
+            
+        }
+    });
+}
 function pnladd(){
 
 	$('#txtnoreg').val('');
@@ -58,6 +75,7 @@ function modalSearch(){
 
 }
 
+// JS Cari data
 function searchdata(){
 
 	var nama_santri = $('#txtnamasearch').val();
@@ -73,35 +91,7 @@ function searchdata(){
 	$('#m_search').modal('toggle');
 }
 
-function lookUpNoreg(){
 
-    var noreg = $("#txtnoreg").val();
-
-    var str_data = 'noreg='+noreg;
-
-    $.ajax({
-
-        type:"POST",
-        url:base_url+"Tabungan/lookup_noreg",
-        dataType:"json",
-        data:str_data,
-        cache:false,
-        success:function(result){
-
-            if(result!=null){
-
-                $('#txtnama').val(result.nama_lengkap);
-                $('#txtsaldotabungan').val(result.saldo);
-
-
-            }
-            else{
-
-                clearForm();
-            }
-        }
-    });
-}
 // java script buat clear form nama pada form tabungan
 
 function clearForm(){
@@ -117,33 +107,17 @@ function clearForm(){
 
 function simpantabungan(){
 
+	var nama 				= $("input[name='txtnama']").val();
 	var hid_id_data 		= $("input[name='hid_id_data']").val();
 	var saldotabungan 		= $("input[name='txtsaldotabungan']").val();
-	var no_registrasi 		= $("input[name='txtnoreg']").val();
+	var no_registrasi 		= $("input[name='opt_client']").val();
 	var tanggal 			= $("input[name='txttgl']").val();
 	var tipe 				= $("input[name='optionsRadios']:checked").val();
 	var nominal 			= $("input[name='txtnominal']").val();
 	var keterangan 			= $("input[name='txtketerangan']").val();
 
-	if(no_registrasi==""){
 
-		var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
-		var str_message = "Keterangan, &amp; No Registrasi santri tidak boleh kosong.";
-
-		bootbox.alert({
-			size:'small',
-			title:title,
-			message:str_message,
-			buttons:{
-				ok:{
-					label: 'OK',
-					className: 'btn-warning'
-				}
-			}
-		});
-		return false;
-	}
-	else if(tanggal==""){
+	 if(tanggal==""){
 
 		var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
 		var str_message = "Keterangan, &amp; Tanggal tidak boleh kosong.";
@@ -280,8 +254,7 @@ function editdata(id){
 
 			$('input[name="hid_id_data"]').val(data['id']);
 			$('input[name="hid_data_saldo"]').val(data['saldo']);
-			$('input[name="txtnoreg"]').val(data['no_registrasi']);
-			$('input[name="txtnama"]').val(data['nama_lengkap']);
+			$("#opt_client").val(data['no_registrasi']).trigger("change");
 			$("input[name='optionsRadios']").filter('[value='+data['tipe']+']').prop('checked', true).trigger("click");
 			$('input[name="txttgl"]').val(data['itgl']);
 			$('input[name="txtnominal"]').val(data['nominal']);
@@ -295,6 +268,7 @@ function editdata(id){
 	});
 }
 
+
 function downloadExcel(){
 
 	var param 	= $('#hid_param').val();
@@ -303,3 +277,22 @@ function downloadExcel(){
 	window.location = base_url+'tabungan/excel_tabungan/'+param;
 }
 
+function displaySaldo(){
+
+	var nosantri = $('#opt_client').val();
+
+	$.ajax({
+
+		type:"POST",
+		url:base_url+"tabungan/get_saldo/"+nosantri,
+		dataType:"html",
+		success:function(data){
+
+			var data = $.parseJSON(data);
+
+			$('input[name="txtsaldotabungan"]').val(data['saldo']);
+			$('input[name="txtnoregis"]').val(data['no_registrasi']);
+
+		}
+	});
+}

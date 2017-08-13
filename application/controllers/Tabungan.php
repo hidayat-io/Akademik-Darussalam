@@ -8,7 +8,7 @@ class Tabungan extends IO_Controller
 		{
     $modul = 2;
 		parent::__construct($modul);
-		 $this->load->model('tabungan_model','model');
+		 $this->load->model('tabungan_model');
 	  }
 
 	function index()
@@ -21,7 +21,7 @@ class Tabungan extends IO_Controller
 	function lookup_noreg(){
 
         $noreg    	= $this->input->post('noreg');
-        $emp     	= $this->model->query_data_noreg($noreg);
+        $emp     	= $this->tabungan_model->query_data_noreg($noreg);
         $ar_emp 	= array();
 
         if($emp!=null){
@@ -37,6 +37,26 @@ class Tabungan extends IO_Controller
         echo json_encode($ar_emp);
     }
 
+    function lookUpNoregsrch(){
+
+        $noreg    	= $this->input->post('noreg');
+        $emp     	= $this->tabungan_model->query_data_noregsrch($noreg);
+        $ar_emp 	= array();
+
+        if($emp!=null){
+
+            $ar_emp = array(
+
+                'no_registrasi'   	=> $emp->no_registrasi,
+                'nama_lengkap'  	=> $emp->nama_lengkap,
+                'saldo'  			=> $emp->saldo
+            );
+        }
+
+        echo json_encode($ar_emp);
+    }
+    
+
     function save_data(){
 
 		$input = $this->input->post();
@@ -48,7 +68,7 @@ class Tabungan extends IO_Controller
 
 		$data = array(
 
-			'no_registrasi'		=> $input['txtnoreg'],
+			'no_registrasi'		=> $input['opt_client'],
 			'tgl_tabungan'		=> $tgl,
 			'tipe'				=> $input['optionsRadios'],
 			'nominal'			=> $input['txtnominal'],
@@ -57,15 +77,17 @@ class Tabungan extends IO_Controller
 		);
 
 
+
+
 		if($id_data==""){
 
-			$this->model->insert_new($data);
-			$this->model->update_saldo($input['txtnoreg'],$input['optionsRadios'],$input['txtnominal'],$user);
+			$this->tabungan_model->insert_new($data);
+			$this->tabungan_model->update_saldo($input['txtnoreg'],$input['optionsRadios'],$input['txtnominal'],$user);
 		}
 		else{
 
-			$this->model->update_data($id_data,$data);
-			$this->model->update_saldo_updt($input['txtnoreg'],$input['optionsRadios'],$input['txtnominal'],$user,$id_data_saldo);
+			$this->tabungan_model->update_data($id_data,$data);
+			$this->tabungan_model->update_saldo_updt($input['txtnoreg'],$input['optionsRadios'],$input['txtnominal'],$user,$id_data_saldo);
 		}
 	}
 
@@ -78,7 +100,7 @@ class Tabungan extends IO_Controller
 		$sort_by 		= $_REQUEST['order'][0]['column'];
 		$sort_type 		= $_REQUEST['order'][0]['dir'];
 
-		$data 				= $this->model->get_list_data($string_param,$sort_by,$sort_type);
+		$data 				= $this->tabungan_model->get_list_data($string_param,$sort_by,$sort_type);
 		$iTotalRecords  	= count($data);
 		$iDisplayLength 	= intval($_REQUEST['length']);
 		$iDisplayLength 	= $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
@@ -135,12 +157,12 @@ class Tabungan extends IO_Controller
 
 		// melempar data ke model untuk execute berdasarkan //
 		// parameter yang diberikan //
-		$this->model->m_hapus_data($id,$tipe,$nom,$noregis,$user,$saldo_temp);
+		$this->tabungan_model->m_hapus_data($id,$tipe,$nom,$noregis,$user,$saldo_temp);
 	}
 
 	function get_data($id){
 
-		$data = $this->model->query_getdata($id);
+		$data = $this->tabungan_model->query_getdata($id);
 
 		echo json_encode($data);
 	}
@@ -151,7 +173,7 @@ class Tabungan extends IO_Controller
 
 		if($param!=null){
 
-			if(isset($param->nama)) $string_param .= " s.nama_lengkap LIKE '%".$param->nama."%' ";
+			if(isset($param->nama)) $string_param .= "nama_lengkap LIKE '%".$param->nama."%' ";
 		}
 
 		return $string_param;
@@ -168,7 +190,7 @@ class Tabungan extends IO_Controller
 		// agar json menjadi parameter query //
 		$str = $this->build_param($str);
 
-		$data= $this->model->get_list_data($str);
+		$data= $this->tabungan_model->get_list_data($str);
 
 		//load our new PHPExcel library
 		$this->load->library('excel');
@@ -246,5 +268,22 @@ class Tabungan extends IO_Controller
 		$objWriter->save('php://output');
 
 	}
+
+
+	function get_list_santri(){
+
+    	$data_santri = $this->mcommon->query_list_santri();
+
+    	echo json_encode($data_santri);
+    }
+
+    function get_saldo($nosantri){
+
+    
+		$data = $this->tabungan_model->query_getdatasaldo($nosantri);
+
+		echo json_encode($data);
+	}
+
 	
 }

@@ -8,7 +8,7 @@ public function __construct(){
         parent::__construct();
     }
 
-	    function get_list_data($param,$sortby=0,$sorttype='desc'){
+	function get_list_data($param,$sortby=0,$sorttype='desc'){
 
         $cols = array('id','tgl_tabungan','t.no_registrasi','nama_lengkap','kel_sekarang','tipe','nominal','keterangan');
 
@@ -56,6 +56,21 @@ public function __construct(){
 
 		return $r;
 	}
+
+		function query_data_noregsrch($noreg){
+
+
+		$sql="SELECT id,a.no_registrasi,nama_lengkap,tgl_tabungan,tipe,nominal,keterangan,saldo
+				FROM ms_santri a LEFT JOIN ms_tabungan b
+				ON a.no_registrasi = b.no_registrasi LEFT JOIN tabungan_temp c
+				ON a.no_registrasi = c.no_registrasi
+				WHERE a.no_registrasi='$noreg'";
+
+		$r = $this->db->query($sql)->row();
+
+		return $r;
+	}
+
 
 	function insert_new($data){
 
@@ -112,18 +127,20 @@ public function __construct(){
 	    }
 
 	function query_getdata($id){
-     	//var_dump($id);
-     	//exit();
-       // return $this->db->get_where('ms_tabungan',array('id'=>$id))->row();
-
-        //$sql="SELECT id,a.no_registrasi,nama_lengkap,tgl_tabungan,tipe,nominal,keterangan,DATE_FORMAT(tgl_tabungan,'%d-%m-%Y') as itgl
-		//		FROM ms_tabungan a INNER JOIN ms_santri b
-		//		ON a.no_registrasi = b.no_registrasi Where id=$id";
+     	
 
 		$sql ="SELECT id,a.no_registrasi,nama_lengkap,tgl_tabungan,tipe,nominal,keterangan,saldo,DATE_FORMAT(tgl_tabungan,'%d-%m-%Y') as itgl
 				FROM ms_tabungan a INNER JOIN ms_santri b
 				ON a.no_registrasi = b.no_registrasi INNER JOIN tabungan_temp c
 				ON a.no_registrasi = c.no_registrasi Where id=$id";
+
+		return $this->db->query($sql)->row();
+    }
+
+
+    function query_getdatasaldo($nosantri){
+     	
+		$sql ="SELECT * from tabungan_temp Where no_registrasi='$nosantri'";
 
 		return $this->db->query($sql)->row();
     }

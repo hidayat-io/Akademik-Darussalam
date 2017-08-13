@@ -1,4 +1,6 @@
 <script src="<?php echo base_url(); ?>js/jtabungan.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js" type="text/javascript"></script>
+
 <input type="hidden" name="hid_param" id="hid_param" value='' />
     <div class="row">
         <div class="col-md-12">
@@ -45,8 +47,8 @@
   <!-- modal add -->
 
 
-<div id="m_add" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
+<div id="m_add" class="modal fade bs-modal-lg" tabindex="-1" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -57,103 +59,117 @@
                     <input type="hidden" name="hid_id_data" value="" />
                     <input type="hidden" name="hid_data_saldo" value="" id="hid_data_saldo" />
                     <div class="form-body">
+                        <div class="portlet-body">
+                                        <ul class="nav nav-pills">
+                                            <li class="active">
+                                                <a href="#tab_2_1" data-toggle="tab">Simpan Tabungan</a>
+                                            </li>
+                                            <li>
+                                                <a href="#tab_2_2" data-toggle="tab">Ambil Tabungan</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade active in" id="tab_2_1">
+                                                <p>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-2"></label>
-                            <div class="col-md-8">
-                             <div class="input-group">
-                                <span class="input-group-addon">
-                                    No Register
-                                </span>
-                                <input type="text" class="form-control spinner numbers-only" placeholder="No Register" name="txtnoreg" maxlength="8"
-                                    id="txtnoreg"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2"></label>
-                            <div class="col-md-8">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    Nama
-                                </span>
-                               <input type="text" class="form-control spinner" placeholder="Nama" name="txtnama" readonly="readonly"
-                                id="txtnama"></div>
-                            </div>
-                             </div>
-                        </div>
+                                                <input type="hidden" name="hid_in" value="in" />
+                                                <input type="hidden" name="hid_iout" value="out" />
 
-                        <div class="form-group">
-                            <label class="control-label col-md-2"></label>
-                            <div class="col-md-8">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    Tanggal
-                                </span>
-                               <input class="form-control form-control-inline input-medium datepicker"  type="text" name="txttgl"
-                                    value="<?php echo date('d-m-Y'); ?>" /></div>
-                            </div>
-                        </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-2"></label>
+                                                        <div class="col-md-8">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    No Registrasi
+                                                                </span>
+                                                               <input class="form-control form-control-inline input-medium"  type="text" name="txtnoregistrasi"
+                                                                    value="" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Tipe</label>
-                            <div class="col-md-8">
-                                <div class="mt-radio-inline">
-                                    <label class="mt-radio">
-                                        <input type="radio" name="optionsRadios" id="optsimpan" value="i" checked="checked">Simpan
-                                        <span></span>
-                                    </label>
-                                    <label class="mt-radio">
-                                        <input type="radio" name="optionsRadios" id="optkeluar" value="o">Keluar
-                                        <span></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-2"></label>
+                                                        <div class="col-md-8">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">Nama</span>
+                                                                   <select class="form-control select2" style="width: 100%;" id="opt_client" name="opt_client" onchange="displaySaldo()">
+                                                                   </select>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-2 "></label>
-                            <div class="col-md-8">
-                             <div class="input-group">
-                                <span class="input-group-addon">
-                                    Tabungan Saat Ini
-                                </span>
-                                <input type="text" class="form-control spinner numbers-only" placeholder="Saldo Tabungan"
-                                name="txtsaldotabungan" id="txtsaldotabungan"></div>
-                               
-                            </div>
-                        </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-2"></label>
+                                                        <div class="col-md-8">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Tanggal
+                                                                </span>
+                                                               <input class="form-control form-control-inline input-medium datepicker"  type="text" name="txttgl"
+                                                                    value="<?php echo date('d-m-Y'); ?>" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-2"></label>
-                            <div class="col-md-8">
-                             <div class="input-group">
-                                <span class="input-group-addon">
-                                   Nominal
-                                </span>
-                                 <input type="text" class="form-control spinner numbers-only" placeholder="Nominal" name="txtnominal"
-                                id="txtnominal"></div>
-                              
-                            </div>
-                        </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-2 "></label>
+                                                        <div class="col-md-8">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Tabungan Saat Ini
+                                                                </span>
+                                                                <input type="text" class="form-control spinner numbers-only" placeholder="Saldo Tabungan"
+                                                                name="txtsaldotabungan" id="txtsaldotabungan">
+                                                            </div>
+                                                               
+                                                        </div>
+                                                    </div>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-2"></label>
-                            <div class="col-md-8">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                   Keterangan
-                                </span>
-                                 <textarea class="form-control" rows="3" name="txtketerangan" id="txtketerangan"></textarea></div>
-                            </div>
-                        </div>
-                    </form>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-2"></label>
+                                                        <div class="col-md-8">
+                                                             <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                   Nominal
+                                                                </span>
+                                                                 <input type="text" class="form-control spinner numbers-only" placeholder="Nominal" name="txtnominal"
+                                                                id="txtnominal">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-2"></label>
+                                                        <div class="col-md-8">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                   Keterangan
+                                                                </span>
+                                                                 <textarea class="form-control" rows="3" name="txtketerangan" id="txtketerangan"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </p>
+                                            </div>
+                                            <div class="tab-pane fade" id="tab_2_2">
+                                                <p> Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table
+                                                    craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar
+                                                    helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art
+                                                    party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park. </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                    </div>
+                </form>
             </div>
 
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn dark btn-outline">Cancel</button>
 
-                <button type="button" class="btn green-jungle" onclick="simpantabungan()">Simpan</button>
+                <button type="button" class="btn green" onclick="simpantabungan()">Simpan</button>
             </div>
         </div>
     </div>

@@ -12,4 +12,10 @@ class Mcommon extends CI_Model {
 
 		return $this->db->get()->row();
 	}
+
+	function query_list_santri(){
+        $this->db->order_by('nama_lengkap');
+        return $this->db->get('ms_santri')->result();
+    }
+
 }
