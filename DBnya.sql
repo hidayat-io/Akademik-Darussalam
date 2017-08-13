@@ -283,8 +283,8 @@ insert  into `ms_gedung`(`kode_gedung`,`nama`,`userid`,`recdate`) values ('GD02'
 DROP TABLE IF EXISTS `ms_guru`;
 
 CREATE TABLE `ms_guru` (
-  `id_guru` int(11) DEFAULT NULL,
-  `no_reg` varchar(30) DEFAULT NULL,
+  `id_guru` varchar(11) DEFAULT NULL,
+  `no_reg` int(11) DEFAULT NULL,
   `nama_lengkap` varchar(50) DEFAULT NULL,
   `nama_arab` varchar(50) DEFAULT NULL,
   `no_ptk` varchar(30) DEFAULT NULL,
@@ -310,10 +310,9 @@ CREATE TABLE `ms_guru` (
   `tgl_pasangan` date DEFAULT NULL,
   `jml_anak` int(11) DEFAULT NULL,
   `akedemik` varchar(50) DEFAULT NULL,
-  `STATUS` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
   `pendidikan_terakhir` varchar(30) DEFAULT NULL,
   `alumni` varchar(3) DEFAULT NULL,
-  `id_jabatan` varchar(10) DEFAULT NULL,
   `no_sk` varchar(50) DEFAULT NULL,
   `id_gapok` int(11) DEFAULT NULL,
   `masa_abdi` mediumtext,
@@ -322,7 +321,8 @@ CREATE TABLE `ms_guru` (
   `sertifikasi` varchar(50) DEFAULT NULL,
   `file_sertifikasi` varchar(50) DEFAULT NULL,
   `userid` varchar(20) DEFAULT NULL,
-  `recdate` datetime DEFAULT NULL
+  `recdate` datetime DEFAULT NULL,
+  `status_aktif` tinyint(4) DEFAULT '1'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Data for the table `ms_guru` */
@@ -792,6 +792,27 @@ CREATE TABLE `user` (
 /*Data for the table `user` */
 
 insert  into `user`(`user_id`,`password`,`nama_lengkap`) values ('admin','61abf45697b7432','Administrator');
+
+DROP TABLE IF EXISTS `ms_jabatan_guru`;
+
+CREATE TABLE `ms_jabatan_guru` (
+  `id_jabatan` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nama_jabatan` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`id_jabatan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `ms_jabatan_guru` WRITE;
+/*!40000 ALTER TABLE `ms_jabatan_guru` DISABLE KEYS */;
+
+INSERT INTO `ms_jabatan_guru` (`id_jabatan`, `nama_jabatan`)
+VALUES
+	(1,'Majelis Guru'),
+	(2,'Sekertariat Pondok'),
+	(3,'Database & Publikasi'),
+	(4,'Adm & Tata Usaha');
+
+/*!40000 ALTER TABLE `ms_jabatan_guru` ENABLE KEYS */;
+UNLOCK TABLES;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
