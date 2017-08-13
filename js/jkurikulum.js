@@ -351,11 +351,13 @@ function downloadExcel(){
 	window.location = base_url+'kurikulum/exportexcel/'+param;
 }
 
-function jmlkpsm1($sm1)
-{
-	if ($('#$sm1').val() != null | $('#$sm1').val() != 0)
+function jmlkpsm1(sm1,JMLKSM1)
+{	
+	var sm_1 = sm1;
+	var JMLKSM1 = JMLKSM1;
+	if ($('#sm_1').val() != null | $('#sm_1').val() != 0)
 		{
-			$('#$JMLPSM1').val() +1;
+			$('#JMLKSM1').val('99');
 		}
 }
 
