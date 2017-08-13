@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+	modalNew();
 	setTable();
 	$('.datepicker').datepicker({
 	
@@ -7,7 +8,7 @@ $(document).ready(function(){
 		format: 'dd-mm-yyyy'
 	});
 	
-	$(".select2").select2();
+	$(".select2-multiple").select2();
 	
 	$('.numbers-only').keypress(function(event) {
 		var charCode = (event.which) ? event.which : event.keyCode;
@@ -18,6 +19,8 @@ $(document).ready(function(){
 				return true;
 		return false;
 	});
+
+	$('.nav-tabs').tabdrop();
 });
 
 function modalNew(){
