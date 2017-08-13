@@ -77,8 +77,6 @@ class Tabungan extends IO_Controller
 		);
 
 
-		var_dump($data);
-		exit();
 
 		if($id_data==""){
 

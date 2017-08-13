@@ -57,9 +57,10 @@ function populateSelectClient(){
 }
 function pnladd(){
 
-	$('#txtnoreg').val('');
+	$('#txtnoregis').val('');
 	$('#hid_data_saldo').val('');
 	$('#txtsaldotabungan').val('');
+	$('#opt_santri').val('');
 	$('#txtnama').val('');
 	$("#txttgl").val('');
 	$('#txtnominal').val('');
