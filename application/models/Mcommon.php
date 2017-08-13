@@ -15,6 +15,8 @@ class Mcommon extends CI_Model {
 
 	function query_list_santri(){
         $this->db->order_by('nama_lengkap');
+		$this->db->like('no_registrasi','T');
+		$this->db->not_like('no_registrasi','C');
         return $this->db->get('ms_santri')->result();
     }
 

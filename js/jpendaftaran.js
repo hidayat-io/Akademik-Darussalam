@@ -1892,23 +1892,6 @@ function TambahKeluarga(){
 		var kdkel 	= kategori_keluarga;
 		if(cekItem(kdkel)==true)
 		{
-			// if(itemcountayah=="1" && kategori_keluarga=='AYAH')
-			// {
-			// 	bootbox.alert("<span class='glyphicon glyphicon-exclamation-sign'></span>&nbsp;Data Ayah  sudah ada di list.");
-			// 	return false;
-			// }
-			// else if(itemcountibu=="1" && kategori_keluarga=='IBU')
-			// {
-			// 	bootbox.alert("<span class='glyphicon glyphicon-exclamation-sign'></span>&nbsp;Data Ibu  sudah ada di list.");
-			// 	return false;
-			// }
-			// else if(itemcountwali=="1" && kategori_keluarga=='WALI')
-			// {
-			// 	bootbox.alert("<span class='glyphicon glyphicon-exclamation-sign'></span>&nbsp;Data WALI  sudah ada di list.");
-			// 	return false;
-			// }
-			// else
-			// {
 					//upload file ke temp folder
 					var iform = $('#add_keluarga_santri')[0];
 					var data = new FormData(iform);

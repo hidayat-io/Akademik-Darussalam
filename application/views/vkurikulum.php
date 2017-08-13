@@ -66,7 +66,7 @@
     </div>
 </div>
 <!-- modal add kurikulum -->
-    <div class="modal fade draggable-modal" id="Modal_add_kurikulum" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade draggable-modal" id="Modal_add_kurikulumX" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -255,3 +255,125 @@
         <!-- /.modal-dialog -->
     </div>
 <!-- end of modal cari-->
+
+<!-- modal nEW kURIKULUM -->
+    <div class="modal fade draggable-modal" id="Modal_add_kurikulum" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog-LG">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <!--<h4 class="modal-title">Start Dragging Here</h4>-->
+                </div>
+                <div class="modal-body">
+                     <!-- isi body modal mulai -->
+                    <div class="row">
+                        <div class="col-md-12">
+                        <!-- BEGIN VALIDATION STATES-->
+                        <div class="portlet light portlet-fit portlet-form bordered">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class=" icon-layers font-red"></i>
+                                        <span class="caption-subject font-red sbold uppercase">STRUKTUR KURIKULUM DAN ALOKASI WAKTU DI TMI PELAJARAN SORE DAN KITAB</span>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="form-body">                                
+                                        <!-- BEGIN FORM-->
+                                        <form action="#" id="form_Kurikulum">
+                                            <div class="portlet-title">
+                                                <!-- <div class="caption">
+                                                    <i class="fa fa-database"></i><?php echo $title;?> 
+                                                </div> -->
+                                            </div>
+                                            <input type="hidden" name="hid_param_kurikulum" id="hid_param_kurikulum" />
+                                            <div class="portlet-body">
+                                                <table class="table table-striped table-bordered table-hover" id="tb_list_kurikulum">
+                                                    <thead>                                                                    
+                                                    <tr>
+                                                        <td width="173" rowspan="3">NO</td>
+                                                        <td width="272" rowspan="3">Bidang Studi</td>
+                                                        <td width="348" rowspan="3">Mata Pelajaran</td>
+                                                            <?php  $nos =5;
+                                                            foreach ($headertablekurikulum as $rowheader) { ?>
+                                                        <?php $nos++; } ?>
+                                                        <td colspan="<?php echo $nos?>">Kelas</td>
+                                                    </tr>
+                                                            <?php  $no =1;
+                                                            foreach ($headertablekurikulum as $rowheader) { ?>
+                                                            <td colspan="2"><?php echo $rowheader['nama'] ?></td>
+                                                        <?php $no++; } ?>
+                                                    <tr>
+                                                        <?php  $no =1*2;
+                                                            foreach ($headertablekurikulum as $rowheader) { ?>
+                                                            <td width="38">SM1</td>
+                                                            <td width="51">SM2</td>
+                                                            <?php $no++; } ?>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php  $no =1;
+                                                                foreach ($bodytablekurikulum as $rowbody) { ?>
+                                                        <tr>
+                                                            <td><?php echo $no ?></td>
+                                                            <td width="348" colspan="<?php $no?>"><?php echo $rowbody['nama_bidang']; ?></td>
+                                                            <td><?php echo $rowbody['id_matpal']; ?></td>
+                                                            <?php  ;
+                                                            foreach ($headertablekurikulum as $rowheader) { 
+                                                            $sm1 = 'sm_1'.$rowbody['id_matpal'].$rowheader['kode_kelas'];
+                                                            $sm2 = 'sm_2'.$rowbody['id_matpal'].$rowheader['kode_kelas'];
+                                                            ?>                                                                
+                                                                <td><?php echo '<input type="text" class="form-control numbers-only" placeholder="'.$sm1.'" name="'.$sm1.'" id="'.$sm1.'" value="0"  style="width:80px onchange="jmlkpsm1($sm1)" required>'?></td>
+                                                                <td><?php echo '<input type="text" class="form-control numbers-only" placeholder="Bobot" name="'.$sm2.'" id="'.$sm2.'" value="0"  style="width:80px onchange="jmlkpsm2($sm2)" required>'?></td>
+                                                            <?php $rowheader++; } ?>                                                                            
+                                                        </tr>
+                                                            <?php $no++; } ?>
+                                                        <tr>
+                                                            <td width="173" colspan="3">Jumlah Khisos</td>
+                                                                <?php  ;
+                                                                foreach ($headertablekurikulum as $rowheader) { 
+                                                                $JMLKSM1 = 'JMLKSM1'.$rowbody['id_matpal'].$rowheader['kode_kelas'];
+                                                                $JMLKSM2 = 'JMLKSM2'.$rowbody['id_matpal'].$rowheader['kode_kelas'];
+                                                                ?>
+                                                                <td><?php echo '<input type="text" class="form-control numbers-only" placeholder="JMLKSM1" name="'.$JMLKSM1.'" id="'.$JMLKSM1.'" value="0" readonly="true" style="width:80px">'?></td>
+                                                                <td><?php echo '<input type="text" class="form-control numbers-only" placeholder="JMLKSM2" name="'.$JMLKSM2.'" id="'.$JMLKSM2.'" value="0"  readonly="true" style="width:80px">'?></td>
+                                                            <?php $rowheader++; } ?>   
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="173" colspan="3">Jumlah Pelajaran</td>
+                                                                <?php  ;
+                                                                foreach ($headertablekurikulum as $rowheader) { 
+                                                                $JMLPSM1 = 'JMLPSM1'.$rowbody['id_matpal'].$rowheader['kode_kelas'];
+                                                                $JMLPSM2 = 'JMLPSM2'.$rowbody['id_matpal'].$rowheader['kode_kelas'];
+                                                                ?>
+                                                                <td><?php echo '<input type="text" class="form-control numbers-only" placeholder="JMLPSM1" name="'.$JMLPSM1.'" id="'.$JMLPSM1.'" value="0" readonly="true" style="width:80px">'?></td>
+                                                                <td><?php echo '<input type="text" class="form-control numbers-only" placeholder="JMLPSM2"name="'.$JMLPSM2.'" id="'.$JMLPSM2.'" value="0" readonly="true" style="width:80px">'?></td>
+                                                            <?php $rowheader++; } ?>   
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                            <!--end Table-->
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn green-jungle" id="save_button" onclick="svkurikulum()">Save</button>
+                                            </div>
+                                        </form>
+                                            <!-- END FORM-->
+                                        </div>
+                                    </div>
+                            </div>
+                            <!-- END VALIDATION STATES-->
+                            </div>
+                     </div>
+                </div><!--end modal-body-->
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+<!-- end of modal nEW kURIKULUM -->
+

@@ -268,10 +268,10 @@ class bidstudi extends IO_Controller
 		// exit;
 	}
 
-	function get_data_mata_pelajaran($id_matpal)
+	function get_data_mata_pelajaran($id_matpal,$nama_matpal)
 	{
 		$id_matpal = urldecode($id_matpal);
-		$data = $this->model->query_mata_pelajaran($id_matpal);
+		$data = $this->model->query_mata_pelajaran($id_matpal,$nama_matpal);
     	echo json_encode($data);
 	}
 
