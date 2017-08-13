@@ -280,7 +280,10 @@ function addbidstudi(){
     kosong();
     // $('#spansearchclose').hide();
     // $('#hiddenidbid').hide();
-    $('#save_button').text('SAVE');	
+	$('#save_button').text('SAVE');	
+	$('#id_bidang').attr('readonly',false);
+	$('#tb_list_Matpal tbody').html('');
+	$("#hid_jumlah_item_Matpal").val(0);
     // $('#status').val('1');
 	$('#Modal_add_bidstudi').modal('show');
 }
@@ -432,8 +435,9 @@ function TambahMatpal(){
 				status = "TIDAK AKTIF"
 			}
 				//cek di table mata pelajaran sudah ada atau belum
-				$id_matpal = $('#id_matpal').val();
-				var str_url  	= encodeURI(base_url+"bidstudi/get_data_mata_pelajaran/"+$id_matpal);
+				$id_matpal 		= $('#id_matpal').val();
+				$nama_matpal 	= $('#nama_matpal').val();
+				var str_url  	= encodeURI(base_url+"bidstudi/get_data_mata_pelajaran/"+$id_matpal+"/"+$nama_matpal);
 			$.ajax({
 				type:"POST",
 				url:str_url,

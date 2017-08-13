@@ -3,6 +3,7 @@ $(document).ready(function()
 {
 	// addSantri("TMI");
 	setTable();
+	// setTableKurikulum();
 	$('.datepicker').datepicker(
 	{
 		rtl: App.isRTL(),
@@ -149,6 +150,25 @@ function setTable(){
     } );
 }
 
+// function setTableKurikulum(){
+// 	 $('#tb_list_kurikulum').DataTable( {
+// 		// "order": [[ 0, "desc" ]],
+//         "processing": true,
+// 		"serverSide": true,
+// 		"paging": false,
+// 		"searching": false,
+// 		 "bInfo" : false,
+// 		  "ordering": false,
+// 		ajax: {
+// 			'url':base_url+"kurikulum/AddKurikulum",
+// 			'type':'GET',
+// 			'data': function ( d ) {
+//                 d.param = $('#hid_param_kurikulum').val();
+//             }
+// 		},
+//     } );
+// }
+
 function Modalcari(){
 	clearformcari();
 	$('#Modal_cari').modal('show');
@@ -242,6 +262,7 @@ function OtomatisKapital(a){
 }
 
 function addkurikulum(){
+	// setTableKurikulum();
     kosong();
     kode_kelasclosespan();
     id_mapelclosespan();
@@ -330,3 +351,17 @@ function downloadExcel(){
 	window.location = base_url+'kurikulum/exportexcel/'+param;
 }
 
+function jmlkpsm1(sm1,JMLKSM1)
+{	
+	var sm_1 = sm1;
+	var JMLKSM1 = JMLKSM1;
+	if ($('#sm_1').val() != null | $('#sm_1').val() != 0)
+		{
+			$('#JMLKSM1').val('99');
+		}
+}
+
+function jmlkpsm2()
+{
+	
+}

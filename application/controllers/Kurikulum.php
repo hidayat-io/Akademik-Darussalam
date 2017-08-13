@@ -33,6 +33,12 @@ class Kurikulum extends IO_Controller
             $vdata['id_matpal'][$b->id_matpal."#".$b->nama_matpal."#".$b->id_bidang."#".$b->status]
                 =$b->id_matpal." | ".$b->nama_matpal." | ".$b->id_bidang." | ".$b->status;
         }
+
+		//get isi header table
+		$vdata['headertablekurikulum'] = $this->model->get_headertable_kurikulum();
+
+		//get isi body table
+		$vdata['bodytablekurikulum'] = $this->model->get_bodytable_kurikulum();
 		
 		$vdata['title'] = 'KURIKULUM';
 	    $data['content'] = $this->load->view('vkurikulum',$vdata,TRUE);
@@ -101,6 +107,68 @@ class Kurikulum extends IO_Controller
 		$records["draw"]            	= $sEcho;
 		$records["recordsTotal"]    	= $iTotalRecords;
 		$records["recordsFiltered"] 	= $iTotalRecords;
+
+		echo json_encode($records);
+		
+	}
+
+	function build_param_kurikulum($param)
+	{        
+		// merubah hasil json menjadi parameter Query //
+		$string_param = NULL;
+
+		if($param!=null){
+
+			if(isset($param->id_thn_ajar)) $string_param .= " a.id_bidang LIKE '%".$param->id_bidang."%' ";
+		}
+
+		return $string_param;
+	}
+
+	function AddKurikulum()
+	{
+		$iparam 		= json_decode($_REQUEST['param']);
+		$string_param 	= $this->build_param_kurikulum($iparam);
+		
+		//sorting
+		// $sort_by 		= $_REQUEST['order'][0]['column'];
+		// $sort_type 		= $_REQUEST['order'][0]['dir'];
+		// var_dump($_REQUEST['order']);
+		// exit();
+
+
+		$data 				= $this->model->get_list_data_kurikulum($string_param);
+		$iTotalRecords  	= count($data);
+		$iDisplayLength 	= intval($_REQUEST['length']);
+		$iDisplayLength 	= $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
+		$iDisplayStart  	= intval($_REQUEST['start']);
+		$sEcho				= intval($_REQUEST['draw']);
+
+		$records            = array();
+		$records["data"]    = array();
+
+		$end = $iDisplayStart + $iDisplayLength;
+		$end = $end > $iTotalRecords ? $iTotalRecords : $end;
+		$fdate = 'd-m-Y';
+
+		for($i = $iDisplayStart; $i < $end; $i++) {
+			$idname = $i+1;
+			$input = '<input type="text" class="form-control" placeholder="BOBOT NILAI"'.$idname.' name="sm_1" id="sm_1" style="width:80px" required></div>';
+			$input2 = '<input type="text" class="form-control" placeholder="BOBOT NILAI"'.$idname.' name="sm_2" id="sm_2" style="width:80px" required></div>';
+   			
+			$records["data"][] = array(
+				$i+1,
+		     	$data[$i]->nama_bidang,
+				$data[$i]->nama_matpal,
+                $input,
+				$input2
+		   );
+		
+		}
+
+		// $records["draw"]            	= $sEcho;
+		// $records["recordsTotal"]    	= $iTotalRecords;
+		// $records["recordsFiltered"] 	= $iTotalRecords;
 
 		echo json_encode($records);
 		

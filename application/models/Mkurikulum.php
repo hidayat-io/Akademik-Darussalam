@@ -20,9 +20,22 @@ class Mkurikulum extends CI_Model
 		return $data;
 	}
 
+	function get_headertable_kurikulum(){
+		$data = array();
+		$data = $this->db->query ("SELECT * from ms_kelas")->result_array();
+		return $data;
+	}
+
+	function get_bodytable_kurikulum(){
+		$data = array();
+		$data = $this->db->query ("SELECT a.id_bidang, a.nama_bidang, b.id_matpal, b.nama_matpal, b.status
+									FROM ms_bidang_study a 
+									INNER JOIN ms_mata_pelajaran b ON a.id_bidang = b.id_bidang 
+									WHERE b.status = 1")->result_array();
+		return $data;
+	}
+
     function get_list_data($param,$sortby=0,$sorttype='desc'){
-        // var_dump($param);
-        // exit();
 		
         $cols = array('id_thn_ajar','kode_kelas','id_mapel','sm_1','sm_2');
 
@@ -37,6 +50,29 @@ class Mkurikulum extends CI_Model
 		
 
 		$sql.= " ORDER BY ".$cols[$sortby]." ".$sorttype;
+		
+
+		return $this->db->query($sql)->result();
+	}
+
+	 function get_list_data_kurikulum($param){
+		
+        $cols = array('a.id_bidang, a.nama_bidang, b.id_matpal, b.nama_matpal, b.status');
+
+        $sql = "SELECT a.id_bidang, a.nama_bidang, b.id_matpal, b.nama_matpal, b.status
+				FROM ms_bidang_study a 
+				INNER JOIN ms_mata_pelajaran b ON a.id_bidang = b.id_bidang 
+				WHERE b.status = 1";
+                    
+
+            if($param!=null){
+
+                $sql .= " WHERE ".$param;
+                
+            }
+		
+		// var_dump($sql);
+		// exit();
 		
 
 		return $this->db->query($sql)->result();
