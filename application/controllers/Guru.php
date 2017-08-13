@@ -9,15 +9,19 @@ class Guru extends IO_Controller{
 	 	$this->load->model('mguru','model');
 	}
 
-	function hijri(){
-
-		
-		var_dump(io_get_hijri("2017/08/06",true));
-	}
-
 	function index(){			
 
+
 		$vdata['title'] = 'DATA GURU & KARYAWAN';
+
+		/* data master guru */
+		$mguru = $this->mcommon->mget_list_jabatan_guru()->result();
+
+		foreach ($mguru as $g) {
+			
+			$vdata['opt_jabatan'][$g->id_jabatan] = $g->nama_jabatan;
+		}
+
 	    $data['content'] = $this->load->view('vguru',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
