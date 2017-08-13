@@ -1,10 +1,1 @@
-/application/config/config.php
-<<<<<<< HEAD
-/application/config/database.php
-=======
-application/config/config.php
->>>>>>> origin/master
-
-application/config/database.php
-
 application/config/database.php
