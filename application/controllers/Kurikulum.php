@@ -305,6 +305,12 @@ class Kurikulum extends IO_Controller
 		$this->model->delete_kurikulum($id_thn_ajar);
 	}
 
+	function Get_Row_Column_Table()
+	{
+		$data = $this->model->query_Row_Column();
+    	echo json_encode($data);
+	}
+
 
 }
 

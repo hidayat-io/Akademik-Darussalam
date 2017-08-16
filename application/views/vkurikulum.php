@@ -319,16 +319,21 @@
                                                             <td><?php echo $rowbody['id_matpal']; ?></td>
                                                             <?php  ;
                                                             foreach ($headertablekurikulum as $rowheader) { 
-                                                            $sm1 = 'sm1_'.$rowbody['id_matpal'].'_'.$rowheader['kode_kelas'];
-                                                            $sm2 = 'sm2_'.$rowbody['id_matpal'].'_'.$rowheader['kode_kelas'];
-                                                            // $JMLKSM1 = 'JMLKSM1_'.$rowheader['nama'];
-                                                            // $JMLKSM2 = 'JMLKSM2_'.$rowheader['nama'];
-                                                            // $JMLPSM1 = 'JMLPSM1_'.$rowheader['nama'];
-                                                            // $JMLPSM2 = 'JMLPSM2_'.$rowheader['nama'];
+                                                            // $sm1 = 'SM1_'.$rowbody['id_matpal'].'_'.$rowheader['kode_kelas'];
+                                                            // $sm2 = 'SM2_'.$rowbody['id_matpal'].'_'.$rowheader['kode_kelas'];
+                                                            // $JKSM1 = 'JK_SM1_'.$rowheader['kode_kelas'];
+                                                            // $JKSM2 = 'JK_SM2_'.$rowheader['kode_kelas'];
+                                                            // $JPSM1 = 'JP_SM1_'.$rowheader['kode_kelas'];
+                                                            // $JPSM2 = 'JP_SM2_'.$rowheader['kode_kelas'];
+                                                            $mp1    = 'txt_mp1_'.$rowheader['kode_kelas'];
+                                                            $mp2    = 'txt_mp2_'.$rowheader['kode_kelas'];
+                                                            $kdkls  = $rowheader['kode_kelas'];
+                                                            $tmp1    ='mp1';
+                                                            $tmp2    ='mp2';
                                                             ?>                                                                
-                                                                <td><?php echo '<input type="text" class="form-control" placeholder="'.$sm1.'" name="'.$sm1.'" id="'.$sm1.'" value="'.$sm1.'"  style="width:80px" onchange="jmlkpsm1(\''.$sm1.'\')" required>'?></td>
-                                                                <td><?php echo '<input type="text" class="form-control" placeholder="Bobot" name="'.$sm2.'" id="'.$sm2.'" value="0"  style="width:80px" onchange="jmlkpsm2(\''.$sm2.'\')" required>'?></td>
-                                                            <?php $rowheader++; } ?>                                                                            
+                                                                <td><?php echo '<input type="number" class="form-control" name="'.$mp1.'[]" id="'.$mp1.'[]" value="0"  style="width:80px" onchange="loopMataPelajaran(\''.$mp1.'\',\''.$kdkls.'\',\''.$tmp1.'\')" required>'?></td>
+                                                                <td><?php echo '<input type="number" class="form-control" name="'.$mp2.'[]" id="'.$mp2.'[]" value="0"  style="width:80px" onchange="loopMataPelajaran(\''.$mp2.'\',\''.$kdkls.'\',\''.$tmp2.'\')" required>'?></td>
+                                                            <?php } ?>                                                                            
                                                         </tr>
                                                             <?php $no++; } ?>
                                                         <tr>
@@ -338,9 +343,9 @@
                                                                 $JK_SM1 = 'JK_SM1_'.$rowheader['kode_kelas'];
                                                                 $JK_SM2 = 'JK_SM2_'.$rowheader['kode_kelas'];
                                                                 ?>
-                                                                <td><?php echo '<input type="text" class="form-control" placeholder="'.$JK_SM1.'" value="'.$JK_SM1.'" readonly="true" style="width:80px">'?></td>
-                                                                <td><?php echo '<input type="text" class="form-control" placeholder="JMLKSM2" value="'.$JK_SM2.'"  readonly="true" style="width:80px">'?></td>
-                                                            <?php $rowheader++; } ?>   
+                                                                <td><?php echo '<input type="text" class="form-control" name="'.$JK_SM1.'" id="'.$JK_SM1.'" readonly="true"  style="width:80px" value="0">'?></td>
+                                                                <td><?php echo '<input type="text" class="form-control"  name="'.$JK_SM2.'" id="'.$JK_SM2.'" readonly="true" style="width:80px" value="0">'?></td>
+                                                            <?php } ?>   
                                                         </tr>
                                                         <tr>
                                                             <td width="80" colspan="3">Jumlah Pelajaran</td>
@@ -349,9 +354,9 @@
                                                                 $JP_SM1 = 'JP_SM1_'.$rowheader['kode_kelas'];
                                                                 $JP_SM2 = 'JP_SM2_'.$rowheader['kode_kelas'];
                                                                 ?>
-                                                                <td><?php echo '<input type="text" class="form-control" placeholder="'.$JP_SM1.'" value="'.$JP_SM1.'" readonly="true" style="width:80px">'?></td>
-                                                                <td><?php echo '<input type="text" class="form-control" placeholder="JMLPSM2" value="'.$JP_SM2.'" readonly="true" style="width:80px">'?></td>
-                                                            <?php $rowheader++; } ?>   
+                                                                <td><?php echo '<input type="text" class="form-control"  name="'.$JP_SM1.'" id="'.$JP_SM1.'" readonly="true" style="width:80px" value="0">'?></td>
+                                                                <td><?php echo '<input type="text" class="form-control"  name="'.$JP_SM2.'" id="'.$JP_SM2.'" readonly="true" style="width:80px" value="0">'?></td>
+                                                            <?php } ?>   
                                                         </tr>
                                                     </tbody>
                                                     <tfoot>

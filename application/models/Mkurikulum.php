@@ -100,5 +100,21 @@ class Mkurikulum extends CI_Model
 		return $data;
 	}
 
+	function query_Row_Column(){
+        // $data = array();
+		// $data=$this->db->query("SELECT a.id_bidang, a.nama_bidang, b.id_matpal, b.nama_matpal, b.status, c.kode_kelas
+		// 						FROM ms_bidang_study a 
+		// 						INNER JOIN ms_mata_pelajaran b ON a.id_bidang = b.id_bidang
+		// 						JOIN ms_kelas c
+		// 						WHERE b.status = 1")->row_array();
+		// return $data;
+		$this->db->select('ms_bidang_study.id_bidang , ms_bidang_study.nama_bidang ,ms_mata_pelajaran.id_matpal ,ms_mata_pelajaran.nama_matpal , ms_mata_pelajaran.status , ms_kelas.kode_kelas');
+		$this->db->from('ms_bidang_study');
+		$this->db->join('ms_mata_pelajaran', 'ms_mata_pelajaran.id_bidang = ms_bidang_study.id_bidang');
+		$this->db->join('ms_kelas');
+        
+        return $this->db->get()->result();
+	}
+
 	
 }

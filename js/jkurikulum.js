@@ -351,17 +351,39 @@ function downloadExcel(){
 	window.location = base_url+'kurikulum/exportexcel/'+param;
 }
 
-function jmlkpsm1(sm1,JMLKSM1)
-{	
-	var sm_1 = sm1;
-	var JMLKSM1 = JMLKSM1;
-	if ($('#sm_1').val() != null | $('#sm_1').val() != 0)
-		{
-			$('#JMLKSM1').val('99');
-		}
-}
 
-function jmlkpsm2()
-{
+function loopMataPelajaran(textbox_id,kdkls,tmp){
+
+	var mapel 			= document.getElementsByName(textbox_id+"[]");
+	var ilength 		= mapel.length;
+	var jml_kisos		= 0;
+	var jml_matpel  	= 0;
+	
+	if (tmp == 'mp1'){
+		var txt_kisos 	= 'JK_SM1_'+kdkls;
+		var txt_matpal 	= 'JP_SM1_'+kdkls;
+	}
+	else if (tmp =='mp2')
+	{
+		var txt_kisos 	= 'JK_SM2_'+kdkls;	
+		var txt_matpal 	= 'JP_SM2_'+kdkls;
+	}
+	
+	for(i=0;i<ilength;i++){
+		if((mapel[i].value) == '')
+			{
+				bootbox.alert('Boto Nilai Tidak Boleh Kosong');
+				return false;
+			}
+		jml_kisos=jml_kisos+parseInt(mapel[i].value);
+		if (parseInt(mapel[i].value) != 0)
+			{
+				jml_matpel=jml_matpel+1;
+			}
+	}
+	$('#'+txt_kisos).val(jml_kisos);
+	$('#'+txt_matpal).val(jml_matpel);
+
+
 	
 }
