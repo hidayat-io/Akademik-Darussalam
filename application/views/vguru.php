@@ -1,6 +1,8 @@
 <link href="<?=base_url()?>assets/css/v_guru.css" rel="stylesheet" type="text/css">
 
+<script src="<?=base_url()?>assets/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js" type="text/javascript"></script>
 <script src="<?=base_url()?>assets/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js" type="text/javascript"></script>
+<script src="<?=base_url()?>assets/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
 <script src="<?=base_url()?>js/jguru.js"></script>
 
 <div class="row">
@@ -29,7 +31,7 @@
                 </div>
             </div>
             <input type="hidden" name="hid_param" id="hid_param" />
-            <div class="portlet-body">
+            <div class="portlet-body">            
                 <table class="table table-striped table-bordered table-hover" id="tb_list">
                     <thead>
                         <tr>
@@ -60,9 +62,13 @@
             <div class="modal-body-form">
                 <div class="portlet-form">
                     <form id="form_editing">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            <i class="fa fa-exclamation-triangle"></i>&nbsp;Mohon cek kembali data yang Anda input, masih ada form yang wajib diisi.
+                        </div>
                         <div class="tabbable-custom ">
                             <ul class="nav nav-tabs ">
-                                <li class="active">
+                                <li>
                                     <a href="#data_guru" data-toggle="tab"><i class="fa fa-user"></i>&nbsp;Biodata Guru</a>
                                 </li>
                                 <li>
@@ -71,13 +77,13 @@
                                 <li>
                                     <a href="#data_anak" data-toggle="tab"><i class="fa fa-child"></i>&nbsp;Data Anak</a>
                                 </li>
-                                <li>
+                                <li class="active">
                                     <a href="#data_pendidikan" data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Pendidikan</a>
                                 </li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane" id="data_guru">
-                                    <div class="form-body">                                
+                                    <div class="form-body">                           
                                         <div class="row">
                                             <div class="col-md-6 text-center">
                                                 <div class="fileinput fileinput-new" data-provides="fileinput" style="padding-bottom: 5px;">
@@ -89,19 +95,24 @@
                                                             <span class="fileinput-new">Pilih Foto</span>
                                                             <span class="fileinput-exists"> Ubah </span>
                                                             <input type="file" name="..."> </span>
-                                                        <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                        <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput">Remove</a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">No.Registrasi</span>
-                                                    <input type="text" class="form-control medium-width" placeholder="No.Registrasi" name="txt_noreg">
+                                                    <input type="text" class="form-control input-small" placeholder="No.Registrasi" name="txt_noreg" readonly>
                                                 </div>
                                                 <br>
                                                 <div class="input-group">
-                                                    <span class="input-group-addon">Nama Lengkap</span>
-                                                    <input type="text" class="form-control" placeholder="Nama Lengkap" name="txt_nama_lengkap">
+                                                    <span class="input-group-addon">
+                                                        Nama Lengkap
+                                                        <span class="required">*</span>
+                                                    </span>
+                                                    <div class="input-icon right">
+                                                        <i class="fa"></i><input type="text" class="form-control" name="txt_nama_lengkap" placeholder="Nama Lengkap" />
+                                                    </div>
                                                 </div>
                                                 <br>
                                                 <div class="input-group">
@@ -142,8 +153,13 @@
                                             
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    <span class="input-group-addon">No.KTP</span>
-                                                    <input type="text" class="form-control medium-width" placeholder="No.KTP" name="txt_no_ktp">
+                                                    <span class="input-group-addon">
+                                                        No.KTP
+                                                        <span class="required">*</span>
+                                                    </span>
+                                                    <div class="input-icon right">
+                                                        <i class="fa"></i><input type="text" class="form-control medium-width" name="txt_no_ktp" placeholder="No.KTP" />
+                                                    </div>                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -234,7 +250,7 @@
                                     </div>
                                 </div>
 
-                                <div class="tab-pane active" id="data_akademik">
+                                <div class="tab-pane" id="data_akademik">
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-md-6">
@@ -259,6 +275,30 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="input-group">
+                                                    <span class="input-group-addon">Status</span>
+                                                    <select name="opt_status" class="form-control input-medium">
+                                                        <option>- Belum Dipilih -</option>
+                                                        <option value="s">Pengabdian</option>
+                                                        <option value="m">Tetap</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Jabatan Struktural</span>
+                                                    <?php
+
+                                                        $att_jabatan = 'class="form-control select2-multiple input-xlarge" id="opt_jabatan" multiple';
+                                                        echo form_dropdown('opt_jabatan', $opt_jabatan, null, $att_jabatan);
+                                                    ?>                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="input-group">
                                                     <span class="input-group-addon">No.SK Pengangkatan</span>
                                                     <input type="text" class="form-control input-medium" placeholder="No.SK Pengangkatan" name="txt_sk_angkat">
                                                 </div>
@@ -267,7 +307,7 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Tanggal SK.</span>
-                                                    <div class="input-group input-medium date datepicker" data-date-format="dd-mm-yyyy">
+                                                    <div class="input-group input-small date datepicker" data-date-format="dd-mm-yyyy">
                                                         <input type="text" class="form-control" readonly="" name="dtp_tgl_sk">
                                                         <span class="input-group-btn">
                                                             <button class="btn default" type="button">
@@ -309,99 +349,71 @@
                                                     <input type="text" class="form-control input-medium" placeholder="Sertifikasi" name="txt_sertifikasi">
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">Status</span>
-                                                    <select name="opt_status" class="form-control">
-                                                        <option>- Belum Dipilih -</option>
-                                                        <option value="s">Pengabdian</option>
-                                                        <option value="m">Tetap</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">Jabatan Struktural</span>
-                                                    <?php
-
-                                                        $att_jabatan = 'class="form-control select2-multiple input-xlarge" id="opt_jabatan" multiple';
-                                                        echo form_dropdown('opt_jabatan', $opt_jabatan, null, $att_jabatan);
-                                                    ?>                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <h4  class="form-section">Struktural</h4>
+                                        </div>                                        
                                     </div>
                                 </div>
+
                                 <div class="tab-pane" id="data_anak">
-                                    <table class="table table-bordered table-hover">
+                                    <a href="javascript:;" class="btn btn-xs btn-circle blue-soft pull-right" style="margin-bottom: 5px" onclick="modalAddAnak()">
+                                        <i class="fa fa-plus"></i>&nbsp;Tambah Data
+                                    </a>
+                                    <table class="table table-bordered" id="tb_data_anak">
                                         <thead>
-                                            <tr>
-                                                <th>No</th>
+                                            <tr class="active">
+                                                <th width="5%">No</th>
                                                 <th>Nama</th>
-                                                <th>Pendidikan</th>
-                                                <th>Usia</th>
-                                                <th>Action</th>
+                                                <th width="30%">Pendidikan</th>
+                                                <th width="15%">Tgl.Lahir</th>
+                                                <th width="10%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Adong</td>
-                                                <td>Sarjana</td>
-                                                <td>28</td>
-                                                <td>- BUTTON -</td>
-                                            </tr>
+                                            <tr><td colspan="5" class="text-center">Tidak ada data.</td></tr>
                                         </tbody>
                                     </table>                                    
                                 </div>
-                                <div class="tab-pane" id="data_pendidikan">
-                                    <h4  class="form-section">Pendidikan Formal<i class="fa fa-plus pull-right"></i></h4>
-                                    <table class="table table-bordered table-hover">
+                                <div class="tab-pane active" id="data_pendidikan">
+                                    <h4  class="form-section">
+                                        Pendidikan Formal
+                                        <a href="javascript:;" class="btn btn-xs btn-circle blue-soft pull-right" onclick="modalAddEduFormal()">
+                                            <i class="fa fa-plus"></i>&nbsp;Tambah Data
+                                        </a>
+                                    </h4>
+                                    <table class="table table-bordered" id="tb_data_pformal">
                                         <thead>
-                                            <tr>
+                                            <tr class="active">
                                                 <th>No</th>
                                                 <th>Pendidikan</th>
                                                 <th>Tempat</th>
                                                 <th>Lulus Tahun</th>
+                                                <th>Lampiran</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Adong</td>
-                                                <td>Sarjana</td>
-                                                <td>28</td>
-                                                <td>- BUTTON -</td>
-                                            </tr>
+                                            <tr><td colspan="6" class="text-center">Tidak ada data.</td></tr>
                                         </tbody>
                                     </table>
 
-                                    <h4  class="form-section">Pendidikan Non Formal</h4>
-                                    <table class="table table-bordered table-hover">                                        
+                                    <h4  class="form-section">
+                                        Pendidikan Non Formal
+                                        <a href="javascript:;" class="btn btn-xs btn-circle blue-soft pull-right" onclick="modalAddEduNonFormal()">
+                                            <i class="fa fa-plus"></i>&nbsp;Tambah Data
+                                        </a>
+                                    </h4>
+                                    <table class="table table-bordered" id="tb_data_pnonformal">
                                         <thead>
-                                            <tr>
+                                            <tr class="active">
                                                 <th>No</th>
                                                 <th>Pendidikan</th>
                                                 <th>Tempat</th>
                                                 <th>Lulus Tahun</th>
+                                                <th>Lampiran</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Adong</td>
-                                                <td>Sarjana</td>
-                                                <td>28</td>
-                                                <td>- BUTTON -</td>
-                                            </tr>
+                                            <tr><td colspan="6" class="text-center">Tidak ada data.</td></tr>
                                         </tbody>
                                     </table>                                    
                                 </div>
@@ -424,3 +436,129 @@
     </div>
 </div>
 <!-- End Modal Form Editing -->
+
+<!-- Modal add data anak -->
+<div class="modal fade" id="modal_data_anak" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Data Anak</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form_data_anak">
+                    <input type="text" id="id_detail_anak" class="hidden" />
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Nama Anak
+                                        <span class="required">*</span>
+                                    </span>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i><input type="text" class="form-control" name="txt_da_nama" id="txt_da_nama" placeholder="Nama Anak" />
+                                    </div>                                                    
+                                </div>
+                            </div>                        
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Pendidikan
+                                        <span class="required">*</span>
+                                    </span>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i><input type="text" class="form-control" name="txt_da_pendidikan" id="txt_da_pendidikan" placeholder="Pendidikan Anak" />
+                                    </div>                                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Usia
+                                        <span class="required">*</span>
+                                    </span>
+                                    <div class="input-icon right" data-date-format="dd-mm-yyyy">
+                                        <i class="fa"></i>
+                                        <input type="text" class="form-control input-small datepicker" data-date-format="dd-mm-yyyy" 
+                                            readonly="" name="dtp_da_birth" id="dtp_da_birth" placeholder="Tanggal Lahir">
+                                    </div>                                    
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn green-jungle" onclick="simpanDataAnak()">Simpan</button>
+            </div>
+        </div>        
+    </div>    
+</div>
+<!-- END Modal add data anak -->
+
+<!-- Modal add data pendidikan formal -->
+<div class="modal fade" id="modal_data_pformal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Data Pendidikan Formal</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form_data_pformal">
+                    <input type="text" id="id_detail_pformal" class="hidden" />
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Nama Pendidikan
+                                        <span class="required">*</span>
+                                    </span>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i><input type="text" class="form-control" name="txt_pformal_nama" id="txt_pformal_nama" placeholder="Nama Pendidikan" />
+                                    </div>                                                    
+                                </div>
+                            </div>                        
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Tempat
+                                        <span class="required">*</span>
+                                    </span>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i><input type="text" class="form-control" name="txt_pformal_tempat" id="txt_pformal_tempat" placeholder="Tempat Pedidikan" />
+                                    </div>                                              
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Lulus Tahun
+                                        <span class="required">*</span>
+                                    </span>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i><input type="text" class="form-control numbers-only" name="txt_pformal_lulus" id="txt_pformal_lulus" placeholder="Tahun Lulus" />
+                                    </div>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn green-jungle" onclick="simpanDataPformal()">Simpan</button>
+            </div>
+        </div>        
+    </div>    
+</div>
+<!-- END Modal add data pendidikan formal -->

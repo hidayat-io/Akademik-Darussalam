@@ -2,6 +2,11 @@ body, html {
     height: 100%;
 }
 
+.form-section{
+
+  font-weight: bold;
+}
+
 #tb_list th,
 #tb_list td {
   white-space: nowrap;
@@ -138,4 +143,9 @@ body, html {
 .row{
 
   margin-bottom: 15px;
+}
+
+.form-body{
+
+  padding: 5px 20px;
 }
