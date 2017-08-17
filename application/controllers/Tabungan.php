@@ -68,9 +68,9 @@ class Tabungan extends IO_Controller
 
 		$data = array(
 
-			'no_registrasi'		=> $input['txtnoregis'],
+			'no_registrasi'		=> $input['opt_client'],
 			'tgl_tabungan'		=> $tgl,
-			'tipe'				=> $input['hid_tipetrans'],
+			'tipe'				=> $input['optionsRadios'],
 			'nominal'			=> $input['txtnominal'],
 			'keterangan'		=> $input['txtketerangan'],
 			'userid'			=> $user
@@ -78,15 +78,16 @@ class Tabungan extends IO_Controller
 
 
 
+
 		if($id_data==""){
 
 			$this->tabungan_model->insert_new($data);
-			$this->tabungan_model->update_saldo($input['txtnoregis'],$input['hid_type'],$input['txtnominal'],$user);
+			$this->tabungan_model->update_saldo($input['txtnoreg'],$input['optionsRadios'],$input['txtnominal'],$user);
 		}
 		else{
 
 			$this->tabungan_model->update_data($id_data,$data);
-			$this->tabungan_model->update_saldo_updt($input['txtnoregis'],$input['hid_type'],$input['txtnominal'],$user,$id_data_saldo);
+			$this->tabungan_model->update_saldo_updt($input['txtnoreg'],$input['optionsRadios'],$input['txtnominal'],$user,$id_data_saldo);
 		}
 	}
 
@@ -282,6 +283,53 @@ class Tabungan extends IO_Controller
 		$data = $this->tabungan_model->query_getdatasaldo($nosantri);
 
 		echo json_encode($data);
+	}
+
+	function load_data_santri(){
+
+		$iparam 		= json_decode($_REQUEST['param']);
+		$string_param 	= $this->build_param($iparam);
+
+		//sorting
+		$sort_by 		= $_REQUEST['order'][0]['column'];
+		$sort_type 		= $_REQUEST['order'][0]['dir'];
+
+		$data 				= $this->tabungan_model->get_list_data_santri($string_param,$sort_by,$sort_type);
+		$iTotalRecords  	= count($data);
+		$iDisplayLength 	= intval($_REQUEST['length']);
+		$iDisplayLength 	= $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
+		$iDisplayStart  	= intval($_REQUEST['start']);
+		$sEcho				= intval($_REQUEST['draw']);
+
+		$records            = array();
+		$records["data"]    = array();
+
+		$end = $iDisplayStart + $iDisplayLength;
+		$end = $end > $iTotalRecords ? $iTotalRecords : $end;
+
+		$fdate 	= 'd-M-Y';
+
+		for($i = $iDisplayStart; $i < $end; $i++) {
+
+			$act = '<a class="btn btn-primary btn-xs btn-flat" href="#" onclick="editdata(\''.$data[$i]->no_registrasi.'\')">Edit</a>&nbsp;';
+			$act .= '<a class="btn btn-danger btn-xs btn-flat" href="#" onclick="deleteData(\''.$data[$i]->no_registrasi.'\')">Delete</a>&nbsp;';
+
+			$records["data"][] = array(
+				$data[$i]->no_registrasi,
+				$data[$i]->no_registrasi,
+				$data[$i]->nama_lengkap,
+				$data[$i]->kelas_sekolah,
+				$data[$i]->saldo,
+				$data[$i]->nominal,
+				$act
+			);
+		}
+
+		$records["draw"]            	= $sEcho;
+		$records["recordsTotal"]    	= $iTotalRecords;
+		$records["recordsFiltered"] 	= $iTotalRecords;
+
+		echo json_encode($records);
 	}
 
 	

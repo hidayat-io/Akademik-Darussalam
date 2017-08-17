@@ -63,38 +63,24 @@
                                         <ul class="nav nav-pills">
                                             <li class="active">
                                                 <a href="#tab_2_1" data-toggle="tab">Simpan Tabungan</a>
-                                                <input type="hidden" id="hid_tipe" value="i" />
                                             </li>
                                             <li>
                                                 <a href="#tab_2_2" data-toggle="tab">Ambil Tabungan</a>
-                                                 <input type="hidden" id="hid_tipe" value="o" />
                                             </li>
                                         </ul>
                                         <div class="tab-content">
                                             <div class="tab-pane fade active in" id="tab_2_1">
                                                 <p>
 
-                                                <input type="hidden" name="hid_tipetrans" id="hid_tipetrans" value="" />
-                                                 
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-2"></label>
-                                                        <div class="col-md-8">
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon">
-                                                                    No Registrasi
-                                                                </span>
-                                                               <input class="form-control form-control-inline input-medium "  type="text" name="txtnoregis" id="txtnoregis" 
-                                                                    value="" readonly="true" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <input type="hidden" name="hid_in" value="in" />
+                                                <input type="hidden" name="hid_iout" value="out" />
 
                                                     <div class="form-group">
                                                         <label class="control-label col-md-2"></label>
                                                         <div class="col-md-8">
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">Nama</span>
-                                                                   <select class="form-control select2" style="width: 100%;" id="opt_santri" name="opt_santri" onchange="displaySaldo()">
+                                                                   <select class="form-control select2" style="width: 100%;" id="opt_client" name="opt_client" onchange="displaySaldo()">
                                                                    </select>
 
                                                             </div>
@@ -122,7 +108,7 @@
                                                                     Tabungan Saat Ini
                                                                 </span>
                                                                 <input type="text" class="form-control spinner numbers-only" placeholder="Saldo Tabungan"
-                                                                name="txtsaldotabungan" id="txtsaldotabungan" readonly="true">
+                                                                name="txtsaldotabungan" id="txtsaldotabungan">
                                                             </div>
                                                                
                                                         </div>
@@ -154,11 +140,42 @@
                                                     </div>
                                                 </p>
                                             </div>
+
                                             <div class="tab-pane fade" id="tab_2_2">
-                                                <p> Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table
-                                                    craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar
-                                                    helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art
-                                                    party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park. </p>
+                                                <p>
+                                                <div class="row">
+                                                        <div class="col-md-12">
+                                                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                                                            <div class="portlet light bordered">
+                                                                <div class="portlet-title">
+                                                                    <div class="caption font-dark">
+                                                                        <i class="icon-settings font-dark"></i>
+                                                                        <span class="caption-subject bold uppercase">Data Santri</span>
+                                                                    </div>
+                                                                </div>
+                                                                    <table class="table table-striped table-bordered table-hover table-checkable order-column" id="tbl_santri">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>                                                                                <input name="select_all" value="1" type="checkbox">
+                                                                                </th>
+                                                                                <th>No Registrasi</th>
+                                                                                <th>Nama Lengkap</th>
+                                                                                <th>Kelas</th>
+                                                                                <th>Saldo Tabungan</th>
+                                                                                <th>Maksima Pengeluaran</th>
+                                                                                <th>Action</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            <!-- END EXAMPLE TABLE PORTLET-->
+                                                        </div>
+                                                    </div>
+
+                                                </p>
                                             </div>
                                         </div>
                                     </div>

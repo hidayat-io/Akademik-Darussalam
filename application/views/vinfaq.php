@@ -52,7 +52,7 @@
                 <h4 class="modal-title" id="lbl_titel"></h4>
             </div>
             <div class="modal-body">
-                <form action="#" id="frmtabungan" class="form-horizontal">
+                <form action="#" id="frminfaq" class="form-horizontal">
                     <input type="hidden" name="hid_id_data" value="" />
                     <input type="hidden" name="hid_id_key" value="S" />
                     <input type="hidden" name="hid_data_saldo" value="" id="hid_data_saldo" />
@@ -62,11 +62,11 @@
                         <div class="col-md-5">
                             <div class="mt-radio-inline">
                                 <label class="mt-radio">
-                                    <input type="radio" name="optionsRadios" id="optsimpan" value="i" checked="checked" onclick="hide()">Simpan
+                                    <input type="radio" name="optionsRadios" id="optsimpan" value="i" checked="checked" >Simpan
                                     <span></span>
                                 </label>
                                 <label class="mt-radio">
-                                    <input type="radio" name="optionsRadios" id="optkeluar" value="o" onclick="hide()">Keluar
+                                    <input type="radio" name="optionsRadios" id="optkeluar" value="o">Keluar
                                     <span></span>
                                 </label>
                             </div>
@@ -90,7 +90,7 @@
                     <!--span-->
 
                     <!--inputbbox-->
-                    <div class="row">
+                    <div class="row" id="almt">
                         <div class="col-md-9">
                             <div class="form-group">
                                 <label class="control-label col-md-3"></label>
@@ -158,7 +158,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn dark btn-outline">Cancel</button>
-                <button type="button" class="btn green-jungle" onclick="simpaninfaq()">Simpan</button>
+                <button type="button" class="btn green" onclick="simpaninfaq()">Simpan</button>
             </div>
         </div>
     </div>
@@ -176,9 +176,9 @@
                     <div class="form-body">
 
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Nama Santri</label>
+                            <label class="col-md-3 control-label">Nama</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control spinner" placeholder="Nama Santri" name="txtnamasearch"
+                                <input type="text" class="form-control spinner" placeholder="Nama" name="txtnamasearch"
                                 id="txtnamasearch">
                             </div>
                         </div>

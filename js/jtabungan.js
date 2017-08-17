@@ -2,7 +2,10 @@
 $(document).ready(function(){
 
 	setTable();
+	//setdatasantri();
 	populateSelectClient();
+
+	updateDataTableSelectAllCtrl();
 
 	$("#opt_client").select2({
 		dropdownParent: $('#m_add')
@@ -38,7 +41,7 @@ function populateSelectClient(){
         dataType: 'json',
         success: function(json) {
         	
-            var $el 		= $("#opt_santri");
+            var $el 		= $("#opt_client");
 
             $el.empty(); // remove old options
 
@@ -55,12 +58,12 @@ function populateSelectClient(){
         }
     });
 }
+
 function pnladd(){
 
-	$('#txtnoregis').val('');
+	$('#txtnoreg').val('');
 	$('#hid_data_saldo').val('');
 	$('#txtsaldotabungan').val('');
-	$('#opt_santri').val('');
 	$('#txtnama').val('');
 	$("#txttgl").val('');
 	$('#txtnominal').val('');
@@ -92,12 +95,6 @@ function searchdata(){
 	$('#m_search').modal('toggle');
 }
 
-function tipetrans(){
-
-$('#lbl_title').text('S');
-
-}
-
 
 // java script buat clear form nama pada form tabungan
 
@@ -114,37 +111,15 @@ function clearForm(){
 
 function simpantabungan(){
 
-
-	var tipe = $('.nav-pills .active #hid_tipe').val();
-
-	$('#hid_tipetrans').val(tipe);
-
+	var nama 				= $("input[name='txtnama']").val();
 	var hid_id_data 		= $("input[name='hid_id_data']").val();
-	var no_regis 			= $("input[name='txtnoregis']").val();
 	var saldotabungan 		= $("input[name='txtsaldotabungan']").val();
+	var no_registrasi 		= $("input[name='opt_client']").val();
 	var tanggal 			= $("input[name='txttgl']").val();
+	var tipe 				= $("input[name='optionsRadios']:checked").val();
 	var nominal 			= $("input[name='txtnominal']").val();
 	var keterangan 			= $("input[name='txtketerangan']").val();
 
-	 
-	if(no_regis==""){
-
-		var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
-		var str_message = "Keterangan, &amp; Nama Santi belum .";
-
-		bootbox.alert({
-			size:'small',
-			title:title,
-			message:str_message,
-			buttons:{
-				ok:{
-					label: 'OK',
-					className: 'btn-warning'
-				}
-			}
-		});
-		return false;
-	}
 
 	 if(tanggal==""){
 
@@ -221,8 +196,6 @@ function simpantabungan(){
 	});
 }
 
-
-
 function setTable(){
 
 	var my_table = $('#tb-list').DataTable({
@@ -249,6 +222,7 @@ function setTable(){
         ],
 	});
 }
+
 
 function deleteData(id){
 
@@ -310,7 +284,7 @@ function downloadExcel(){
 
 function displaySaldo(){
 
-	var nosantri = $('#opt_santri').val();
+	var nosantri = $('#opt_client').val();
 
 	$.ajax({
 
@@ -322,8 +296,33 @@ function displaySaldo(){
 			var data = $.parseJSON(data);
 
 			$('input[name="txtsaldotabungan"]').val(data['saldo']);
-			$('input[name="txtnoregis"]').val(nosantri);
-
 		}
+	});
+}
+
+function setdatasantri(){
+
+	var my_table = $('#tbl_santri').DataTable({
+		scrollY:'70vh',
+		scrollCollapse: true,
+		processing: true,
+		serverSide: true,
+		ajax: {
+			'url':base_url+"/tabungan/load_data_santri",
+			'type':'GET',
+			'data': function ( d ) {
+                d.param = $('#hid_param').val();
+            }
+		},
+		bFilter:false,
+		order: [[ 0, "desc" ]],
+		dom: "<'row'<'col-sm-12'tr>>" +
+				"<'row'<'col-sm-5'l><'col-sm-7'pi>>",
+		columnDefs: [
+	        {
+	            targets: [0],
+	            visible: false
+	        }
+        ],
 	});
 }

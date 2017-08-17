@@ -6,9 +6,9 @@ class Infaq extends IO_Controller
 
 	public function __construct()
 		{
-    $modul = 8;
+    $modul = 2;
 		parent::__construct($modul);
-		$this->load->model('infaq_model','model');
+		$this->load->model('infaq_model');
 	  }
 
 	function index()
@@ -26,6 +26,7 @@ class Infaq extends IO_Controller
 		$id_key			= $input['hid_id_key'];
 		$id_data_saldo 	= $input['hid_data_saldo'];
 		$tgl 			= io_return_date('d-m-Y',$input['txttgl']);
+
 		$user 			= $this->session->userdata('logged_in')['uid'];
 
 		$data = array(
@@ -40,16 +41,15 @@ class Infaq extends IO_Controller
 		);
 
 
-
 		if($id_data==""){
 
-			$this->model->insert_new($data);
-			$this->model->update_saldo($id_key,$input['optionsRadios'],$input['txtnominal'],$user);
+			$this->infaq_model->insert_new($data);
+			$this->infaq_model->update_saldo($id_key,$input['optionsRadios'],$input['txtnominal'],$user);
 		}
 		else{
 
-			$this->model->update_data($id_data,$data);
-			$this->model->update_saldo_updt($id_key,$input['optionsRadios'],$input['txtnominal'],$user,$id_data_saldo);
+			$this->infaq_model->update_data($id_data,$data);
+			$this->infaq_model->update_saldo_updt($id_key,$input['optionsRadios'],$input['txtnominal'],$user,$id_data_saldo);
 		}
 	}
 
@@ -62,7 +62,7 @@ class Infaq extends IO_Controller
 		$sort_by 		= $_REQUEST['order'][0]['column'];
 		$sort_type 		= $_REQUEST['order'][0]['dir'];
 
-		$data 			= $this->model->get_list_data($string_param,$sort_by,$sort_type);
+		$data 			= $this->infaq_model->get_list_data($string_param,$sort_by,$sort_type);
 		$iTotalRecords  	= count($data);
 		$iDisplayLength 	= intval($_REQUEST['length']);
 		$iDisplayLength 	= $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
@@ -110,7 +110,7 @@ class Infaq extends IO_Controller
 
 		if($param!=null){
 
-			if(isset($param->nama)) $string_param .= " s.nama LIKE '%".$param->nama."%' ";
+			if(isset($param->nama)) $string_param .= "nama LIKE '%".$param->nama."%' ";
 		}
 
 		return $string_param;
@@ -118,9 +118,118 @@ class Infaq extends IO_Controller
 
 	function get_data($id){
 
-		$data = $this->model->query_getdata($id);
+		$data = $this->infaq_model->query_getdata($id);
 
 		echo json_encode($data);
+	}
+
+	function hapus_data($str){
+
+
+		$param = explode('|', urldecode($str));
+
+
+		$id 		= $param[0];
+		$tipe 		= $param[1];
+		$nom 		= $param[2];
+		//$keytrans 	= $param[3];
+		//$saldo_temp	= $param[4];
+		$user 		= $this->session->userdata('logged_in')['uid'];
+
+		// melempar data ke model untuk execute berdasarkan //
+		// parameter yang diberikan //
+		$this->infaq_model->m_hapus_data($id,$tipe,$nom,$user);
+	}
+
+
+	function excel_infaq(){
+		// hasil decode // 
+		$str = base64_decode($this->uri->segment(3));
+
+		// merubah hasil decode dari string ke json //
+		$str = json_decode($str);
+
+		// memasukan data json kedalam builparam //
+		// agar json menjadi parameter query //
+		$str = $this->build_param($str);
+
+		$data= $this->infaq_model->get_list_data($str);
+
+		//load our new PHPExcel library
+		$this->load->library('excel');
+		//activate worksheet number 1
+		$this->excel->setActiveSheetIndex(0);
+		//name the worksheet
+		$this->excel->getActiveSheet()->setTitle('Report-Infaq');
+		$this->excel->getActiveSheet()->setCellValue('A1', "Report Infaq");
+		$this->excel->getActiveSheet()->mergeCells('A1:L1');
+
+		//header
+		$this->excel->getActiveSheet()->setCellValue('A3', "No.");
+		$this->excel->getActiveSheet()->setCellValue('B3', "Tanggal");
+		$this->excel->getActiveSheet()->setCellValue('C3', "Nama");
+		$this->excel->getActiveSheet()->setCellValue('D3', "Alamat");
+		$this->excel->getActiveSheet()->setCellValue('E3', "Tipe");
+		$this->excel->getActiveSheet()->setCellValue('F3', "Nominimal");
+		$this->excel->getActiveSheet()->setCellValue('G3', "Keterangan");
+
+		$fdate 	= "d-M-Y";
+		$i  	= 4;
+
+		if($data != null){
+
+			foreach($data as $row){
+
+				if($row->tipe=='i'){
+					$tp="IN";
+				}else{
+					$tp="OUT";
+				}
+
+				$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
+				$this->excel->getActiveSheet()->setCellValue('B'.$i, io_date_format($row->tgl_infaq,$fdate));
+				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->nama);
+				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->alamat);
+				$this->excel->getActiveSheet()->setCellValue('E'.$i, $tp);
+				$this->excel->getActiveSheet()->setCellValue('F'.$i, $row->nominal);
+				$this->excel->getActiveSheet()->setCellValue('G'.$i, $row->keterangan);
+				
+				$i++;
+			}
+		}
+
+		for($col = 'A'; $col !== 'G'; $col++) {
+
+		    $this->excel->getActiveSheet()
+		        ->getColumnDimension($col)
+		        ->setAutoSize(true);
+		}
+
+		$styleArray = array(
+		  'borders' => array(
+		    'allborders' => array(
+		      'style' => PHPExcel_Style_Border::BORDER_THIN
+		    )
+		  )
+		);
+		$i = $i-1;
+		$cell_to = "G".$i;
+		$this->excel->getActiveSheet()->getStyle('A3:'.$cell_to)->applyFromArray($styleArray);
+		$this->excel->getActiveSheet()->getStyle('A1:G3')->getFont()->setBold(true);
+		$this->excel->getActiveSheet()->getStyle('A3:G3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+		$this->excel->getActiveSheet()->getStyle('A3:G3')->getFill()->getStartColor()->setRGB('2CC30B');
+
+		$filename='report-Ifaq.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0');//no cache
+
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		$objWriter->save('php://output');
+
 	}
 	
 }

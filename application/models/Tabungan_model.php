@@ -33,6 +33,7 @@ public function __construct(){
         return $this->db->query($sql)->result();
     }
 
+
 	function query_data_noreg($noreg){
 
 		//$this->db->select('no_registrasi,nama_lengkap');
@@ -57,7 +58,7 @@ public function __construct(){
 		return $r;
 	}
 
-		function query_data_noregsrch($noreg){
+	function query_data_noregsrch($noreg){
 
 
 		$sql="SELECT id,a.no_registrasi,nama_lengkap,tgl_tabungan,tipe,nominal,keterangan,saldo
@@ -70,7 +71,6 @@ public function __construct(){
 
 		return $r;
 	}
-
 
 	function insert_new($data){
 
@@ -137,15 +137,32 @@ public function __construct(){
 		return $this->db->query($sql)->row();
     }
 
-
     function query_getdatasaldo($nosantri){
      	
-		$sql ="SELECT a.no_registrasi,saldo 
-				FROM ms_santri a LEFT JOIN tabungan_temp b
-				ON a.no_registrasi=b.no_registrasi
-				WHERE a.no_registrasi='$nosantri'";
+		$sql ="SELECT * from tabungan_temp Where no_registrasi='$nosantri'";
 
 		return $this->db->query($sql)->row();
+    }
+
+    function get_list_data_santri($param,$sortby=0,$sorttype='desc'){
+
+        $cols = array('no_registrasi','nama_lengkap','kelas_sekolah','saldo','nominal');
+
+
+        $sql = "SELECT a.no_registrasi,nama_lengkap, kelas_sekolah, 		nominal, saldo 
+				FROM ms_santri a INNER JOIN ms_santri_pengeluaran b
+				ON a.no_registrasi=b.no_registrasi INNER JOIN tabungan_temp c
+				ON a.no_registrasi = c.no_registrasi";
+
+		if($param!=null){
+
+			$sql .= " WHERE ".$param;
+		}
+
+
+        $sql.= " ORDER BY ".$cols[$sortby]." ".$sorttype;
+
+        return $this->db->query($sql)->result();
     }
 
 }

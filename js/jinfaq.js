@@ -23,14 +23,31 @@ $(document).ready(function(){
 
   	$('input[name="optionsRadios"]').on('click', function() {
         if ($(this).val() == 'o') {
+        	
         	$('#nm').hide();
+        	$('#almt').hide();
             
         }
         else {
             
         	$('#nm').show();
+        	$('#almt').show();
         }
     });
+
+
+    $('input[name="optsrch"]').on('click', function() {
+        if ($(this).val() == 'o') {
+        	
+        	$('#nmsrc').hide();
+        }
+        else {
+            
+        	$('#nmsrc').show();
+        }
+    });
+
+
 
 
 });
@@ -38,10 +55,10 @@ $(document).ready(function(){
 
 function pnladd(){
 
-	$('#txtnoreg').val('');
 	$('#hid_data_saldo').val('');
 	$('#txtsaldotabungan').val('');
 	$('#txtnama').val('');
+	$('#txtalamat').val('');
 	$("#txttgl").val('');
 	$('#txtnominal').val('');
 	$('#txtketerangan').val('');
@@ -55,22 +72,6 @@ function modalSearch(){
 	$('#lbl_title').text('Search Data Infaq');
 	$('#m_search').modal('show');
 
-}
-
-// JS cari data
-function searchdata(){
-
-	var nama_santri = $('#txtnamasearch').val();
-	var param 		= {'nama':nama_santri};
-		param 		= JSON.stringify(param);
-
-	$('#hid_param').val(param);
-
-	var table = $('#tb-list').DataTable();
-	table.ajax.reload( null, false );
-	table.draw();
-
-	$('#m_search').modal('toggle');
 }
 
 
@@ -98,25 +99,25 @@ function simpaninfaq(){
 	var nominal 			= $("input[name='txtnominal']").val();
 	var keterangan 			= $("input[name='txtketerangan']").val();
 
-	if(nama==""){
-
-		var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
-		var str_message = "Keterangan, &amp; Nama tidak boleh kosong.";
-
-		bootbox.alert({
-			size:'small',
-			title:title,
-			message:str_message,
-			buttons:{
-				ok:{
-					label: 'OK',
-					className: 'btn-warning'
-				}
-			}
-		});
-		return false;
-	}
-	else if(tanggal==""){
+//	if(nama==""){
+//
+//		var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
+//		var str_message = "Keterangan, &amp; Nama tidak boleh kosong.";
+//
+//		bootbox.alert({
+//			size:'small',
+//			title:title,
+//			message:str_message,
+//			buttons:{
+//				ok:{
+//					label: 'OK',
+//					className: 'btn-warning'
+//				}
+//			}
+//		});
+//		return false;
+//	}
+	 if(tanggal==""){
 
 		var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
 		var str_message = "Keterangan, &amp; Tanggal tidak boleh kosong.";
@@ -134,6 +135,7 @@ function simpaninfaq(){
 		});
 		return false;
 	}
+
 
 	else if(nominal==""){
 
@@ -153,6 +155,7 @@ function simpaninfaq(){
 		});
 		return false;
 	}
+
 
 //	else if(tipe=="o"){
 
@@ -178,7 +181,7 @@ function simpaninfaq(){
 //		}
 //	}
 
-	$("#frmtabungan").ajaxSubmit({
+	$("#frminfaq").ajaxSubmit({
 		url:base_url+"infaq/save_data",
 		type: 'post',
 		success: function(){
@@ -239,7 +242,7 @@ function deleteData(id){
 
 function editdata(id){
 
-	$('#lbl_titel').text('Update Data Infaq');
+	$('#lbl_titel').text('Update Data Tabungan');
 
 	$.ajax({
 
@@ -250,11 +253,12 @@ function editdata(id){
 
 			var data = $.parseJSON(data);
 
+
 			$('input[name="hid_id_data"]').val(data['id_infaq']);
 			$('input[name="hid_data_saldo"]').val(data['saldo']);
-			$('input[name="txtnama"]').val(data['nama']);
-			$('textarea[name="txtalamat"]').val(data['alamat']);
 			$("input[name='optionsRadios']").filter('[value='+data['tipe']+']').prop('checked', true).trigger("click");
+			$('input[name="txtnama"]').val(data['nama']);
+			$('input[name="txtalamat"]').val(data['alamat']);
 			$('input[name="txttgl"]').val(data['itgl']);
 			$('input[name="txtnominal"]').val(data['nominal']);
 			$('textarea[name="txtketerangan"]').val(data['keterangan']);
@@ -264,11 +268,28 @@ function editdata(id){
 	});
 }
 
+// JS cari data
+function searchdata(){
+
+	var tipe_in		= $("input[name='optsrch']:checked").val();
+	var nama_in 	= $('#txtnamasearch').val();
+	var param 		= {'nama':nama_in,'tipe':tipe_in};
+		param 		= JSON.stringify(param);
+
+	$('#hid_param').val(param);
+
+	var table = $('#tb-list').DataTable();
+	table.ajax.reload( null, false );
+	table.draw();
+
+	$('#m_search').modal('toggle');
+}
+
 function downloadExcel(){
 
 	var param 	= $('#hid_param').val();
 	param 		= ioEncode(param);
 
-	window.location = base_url+'tabungan/excel_tabungan/'+param;
+	window.location = base_url+'infaq/excel_infaq/'+param;
 }
 

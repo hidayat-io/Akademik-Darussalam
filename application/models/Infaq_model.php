@@ -62,9 +62,6 @@ public function __construct(){
     }
 
     function query_getdata($id){
-        
-     //   var_dump($id);
-     //   exit();
 
         $sql="SELECT a.keytrans,id_infaq,nama,alamat,DATE_FORMAT(tgl_infaq,'%d-%m-%Y') as itgl,tipe,nominal,keterangan,saldo 
             FROM ms_infaq a INNER JOIN infaq_temp b
@@ -73,5 +70,23 @@ public function __construct(){
         return $this->db->query($sql)->row();
     }
 
+    function m_hapus_data($id,$tipe,$nom,$user){
+
+        // jika dapat data yang diminta //
+        // jika tipe == i maka saldo akan dikurangi //
+        // jika tipe == o maka saldo atau tabungan akan ditambahkan //
+
+        $operator=$tipe=='i'?'-':'+';
+
+            $sql = "INSERT INTO infaq_temp(keytrans,saldo,recuser)
+                        VALUES('S',".$nom.",'".$user."')
+                            ON DUPLICATE KEY UPDATE saldo=(saldo".$operator.$nom."),recuser='".$user."'";
+            
+            $this->db->query($sql);
+
+
+        $this->db->where('id_infaq',$id);
+        $this->db->delete('ms_infaq');
+    }
 
 }
