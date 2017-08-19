@@ -548,3 +548,8 @@ function hapusItemMatpal(row_id){
 		}
 	);
 }
+
+function RB_action()
+{
+	kosong();
+}

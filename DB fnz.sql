@@ -2,7 +2,8 @@
 SQLyog Ultimate v10.00 Beta1
 MySQL - 5.5.5-10.1.25-MariaDB : Database - hidayati_pesantren
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -296,6 +297,21 @@ CREATE TABLE `trans_pembiayaan_siswa` (
 /*Data for the table `trans_pembiayaan_siswa` */
 
 insert  into `trans_pembiayaan_siswa`(`no_registrasi`,`pembiaya`,`biaya_perbulan_min`,`biaya_perbulan_max`,`penghasilan`) values ('T38170001','AYAH',1000000,2000000,3500000),('T3817002','IBU',34534,34543,345),('CAArray170001',NULL,0,0,0);
+
+
+/*Table structure for table `ms_tahun_ajaran` */
+
+DROP TABLE IF EXISTS `ms_tahun_ajaran`;
+
+CREATE TABLE `ms_tahun_ajaran` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `deskripsi` varchar(9) CHARACTER SET latin1 DEFAULT NULL COMMENT 'yyyy/yyyy',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+/*Data for the table `ms_tahun_ajaran` */
+
+insert  into `ms_tahun_ajaran`(`id`,`deskripsi`) values (1,'2015-2016'),(2,'2016-2017'),(3,'2017-2018'),(4,'2018-2019');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
