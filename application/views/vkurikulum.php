@@ -30,9 +30,9 @@
                         <button type="button" class="btn btn-default" title="Search Data" onclick="Modalcari()">
                             <i class="fa fa-search"></i>&nbsp;Search
                         </button>
-                        <button type="button" class="btn btn-default" title="Export Data to Excel" onclick="downloadExcel()">
+                        <!-- <button type="button" class="btn btn-default" title="Export Data to Excel" onclick="downloadExcel()">
                             <i class="fa fa-file-excel-o"></i>&nbsp;Excel
-                        </button>
+                        </button> -->
                     </div>
                 </div>
                 <input type="hidden" name="hid_param" id="hid_param" />
@@ -40,11 +40,7 @@
                     <table class="table table-striped table-bordered table-hover" id="tb_list">
                         <thead>
                             <tr>
-                                <th style="text-align:center">ID Tahun Ajar</th>
-                                <th style="text-align:center">ID Kelas</th>
-                                <th style="text-align:center">ID Mata Pelajaran</th>
-                                <th style="text-align:center">SM1</th>
-                                <th style="text-align:center">SM2</th>
+                                <th style="text-align:center">Tahun Ajaran</th>
                                 <th style="text-align:center" width="20%">Action</th>
                             </tr>
                         </thead>
@@ -65,9 +61,9 @@
         <!-- END EXAMPLE TABLE PORTLET-->
     </div>
 </div>
-<!-- modal add kurikulum -->
-    <div class="modal fade draggable-modal" id="Modal_add_kurikulumX" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog">
+<!-- modal nEW kURIKULUM -->
+    <div class="modal fade draggable-modal" id="Modal_add_kurikulum" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog-LG">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -82,116 +78,137 @@
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class=" icon-layers font-red"></i>
-                                        <span class="caption-subject font-red sbold uppercase">INPUT DATA KURIKULUM</span>
+                                        <span class="caption-subject font-red sbold uppercase">STRUKTUR KURIKULUM DAN ALOKASI WAKTU DI TMI PELAJARAN SORE DAN KITAB</span>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
                                     <div class="form-body">                                
                                         <!-- BEGIN FORM-->
                                         <form action="#" id="add_kurikulum">
-                                            <!--inputbox-->
+                                            <div class="portlet-title">
+                                                <!-- <div class="caption">
+                                                    <i class="fa fa-database"></i><?php echo $title;?> 
+                                                </div> -->
+                                            </div>
+                                            <input type="hidden" name="hid_param_kurikulum" id="hid_param_kurikulum" />
+                                            <div class="portlet-body">
                                                 <!--span-->
-                                                    <div class="form-group">
-                                                            <label class="control-label"></label>
-                                                            <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                ID Tahun Ajar
-                                                            </span>
-                                                            <input type="text" class="form-control numbers-only" name="id_thn_ajar" id="id_thn_ajar" maxlength="11" required></div>
-                                                    </div>
-                                                     <!--span-->
+                                                <div class="col-md-4 col-sm-12">
                                                     <div class="form-group">
                                                         <label class="control-label"></label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                ID Kelas
+                                                                Tahun Ajaran
                                                             </span>
-                                                            <div class="input" id= "hiddenkode_kelas">
                                                             <?php
-                                                                $att_item = 'id="hide_kode_kelas"  class="form-control
-                                                                    select2" style="width:100%"  onchange="pilihItemkode_kelas()"';
-                                                                echo form_dropdown('hide_kode_kelas', $kode_kelas, null, $att_item);
+                                                                $att_item = ' type="text" class="form-control
+                                                                    select input-lg" id="id_thn_ajar" onclick="add_tohide()"  required';
+                                                                echo form_dropdown('select_thnajar', $kode_deskripsikelas, null, $att_item);
                                                             ?>
-                                                                 </div>  
-                                                            <input type="text" class="form-control" name="kode_kelas" id="kode_kelas"  required readonly>
-                                                             <span class="input-group-btn" id="spansearchkode_kelas">
-                                                                <button class="btn btn-default" type="button" onclick="kode_kelasshow()">
-                                                            <span class="glyphicon glyphicon-search" ></span>
-                                                                </button>
-                                                            </span>
-                                                            <span class="input-group-btn" id="spansearchclosekode_kelas">
-                                                                <button class="btn btn-default" type="button" onclick="kode_kelasclosespan()">
-                                                            <span class="glyphicon glyphicon-remove-sign " ></span>
-                                                                </button>
-                                                            </span>
+                                                            <input type="hidden" class="form-control" name="hide_id_thn_ajar" id="hide_id_thn_ajar" >
+                                                           
                                                         </div>
                                                     </div>    
+                                                </div>
                                                     <!--span-->
-                                                    <!--span-->
-                                                    <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                ID Mata Pelajaran
-                                                            </span>
-                                                            <div class="input" id= "hiddenid_mapel">
-                                                            <?php
-                                                                $att_item = 'id="hide_id_mapel"  class="form-control
-                                                                    select2" style="width:100%"  onchange="pilihItemid_mapel()"';
-                                                                echo form_dropdown('hide_id_mapel', $id_matpal, null, $att_item);
-                                                            ?>
-                                                                 </div>  
-                                                            <input type="text" class="form-control" name="id_mapel" id="id_mapel"  required readonly>
-                                                             <span class="input-group-btn" id="spansearchid_mapel">
-                                                                <button class="btn btn-default" type="button" onclick="id_mapelshow()">
-                                                            <span class="glyphicon glyphicon-search" ></span>
-                                                                </button>
-                                                            </span>
-                                                            <span class="input-group-btn" id="spansearchcloseid_mapel">
-                                                                <button class="btn btn-default" type="button" onclick="id_mapelclosespan()">
-                                                            <span class="glyphicon glyphicon-remove-sign " ></span>
-                                                                </button>
-                                                            </span>
-                                                        </div>
-                                                    </div>    
-                                                    <!--span-->
-                                                    <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            SM 1
-                                                        </span>
-                                                        <input type="text" class="form-control" placeholder="BOBOT NILAI" name="sm_1" id="sm_1"  required></div>
-                                                    </div>
-                                                    <!--span-->
-                                                    <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            SM 2
-                                                        </span>
-                                                        <input type="text" class="form-control" placeholder="BOBOT NILAI" name="sm_2" id="sm_2"  required></div>
-                                                    </div>   
-                                            <!--end inputbox-->
+                                                <table class="table table-striped table-bordered table-hover" id="tb_list_kurikulum">
+                                                    <thead>                                                                    
+                                                    <tr>
+                                                        <td width="173" rowspan="3">NO</td>
+                                                        <td width="272" rowspan="3">Bidang Studi</td>
+                                                        <td width="348" rowspan="3">Mata Pelajaran</td>
+                                                            <?php  $nos =5;
+                                                            foreach ($headertablekurikulum as $rowheader) { ?>
+                                                        <?php $nos++; } ?>
+                                                        <td colspan="<?php echo $nos?>">Kelas</td>
+                                                    </tr>
+                                                            <?php  $no =1;
+                                                            foreach ($headertablekurikulum as $rowheader) { ?>
+                                                            <td colspan="2"><?php echo $rowheader['nama'] ?></td>
+                                                        <?php $no++; } ?>
+                                                    <tr>
+                                                        <?php  $no =1*2;
+                                                            foreach ($headertablekurikulum as $rowheader) { ?>
+                                                            <td width="80">SM1</td>
+                                                            <td width="80">SM2</td>
+                                                            <?php $no++; } ?>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php  $no =1;
+                                                                foreach ($bodytablekurikulum as $rowbody) { ?>
+                                                        <tr>
+                                                            <td><?php echo $no ?></td>
+                                                            <td colspan="<?php $no?>"><?php echo $rowbody['nama_bidang']; ?></td>
+                                                            <td><?php echo $rowbody['id_matpal']; ?></td>
+                                                            <?php  ;
+                                                            foreach ($headertablekurikulum as $rowheader) { 
+                                                            $sm1 = 'SM1_'.$rowbody['id_matpal'].'_'.$rowheader['kode_kelas'];
+                                                            $sm2 = 'SM2_'.$rowbody['id_matpal'].'_'.$rowheader['kode_kelas'];
+                                                            // $JKSM1 = 'JK_SM1_'.$rowheader['kode_kelas'];
+                                                            // $JKSM2 = 'JK_SM2_'.$rowheader['kode_kelas'];
+                                                            // $JPSM1 = 'JP_SM1_'.$rowheader['kode_kelas'];
+                                                            // $JPSM2 = 'JP_SM2_'.$rowheader['kode_kelas'];
+                                                            $mp1    = 'txt_mp1_'.$rowheader['kode_kelas'];
+                                                            $mp2    = 'txt_mp2_'.$rowheader['kode_kelas'];
+                                                            $kdkls  = $rowheader['kode_kelas'];
+                                                            $tmp1    ='mp1';
+                                                            $tmp2    ='mp2';
+                                                            ?>                                                                
+                                                                <td><?php echo '<input type="number" class="form-control" name="'.$mp1.'[]" id="'.$sm1.'"  value="0"  style="width:80px" onchange="loopMataPelajaran(\''.$mp1.'\',\''.$kdkls.'\',\''.$tmp1.'\')" required>'?></td>
+                                                                <td><?php echo '<input type="number" class="form-control" name="'.$mp2.'[]" id="'.$sm2.'"  value="0"  style="width:80px" onchange="loopMataPelajaran(\''.$mp2.'\',\''.$kdkls.'\',\''.$tmp2.'\')" required>'?></td>
+                                                            <?php } ?>                                                                            
+                                                        </tr>
+                                                            <?php $no++; } ?>
+                                                        <tr>
+                                                            <td width="80" colspan="3">Jumlah Khisos</td>
+                                                                <?php  ;
+                                                                foreach ($headertablekurikulum as $rowheader) { 
+                                                                $JK_SM1 = 'JK_SM1_'.$rowheader['kode_kelas'];
+                                                                $JK_SM2 = 'JK_SM2_'.$rowheader['kode_kelas'];
+                                                                ?>
+                                                                <td><?php echo '<input type="text" class="form-control" name="'.$JK_SM1.'" id="'.$JK_SM1.'" readonly="true"  style="width:80px" value="0">'?></td>
+                                                                <td><?php echo '<input type="text" class="form-control"  name="'.$JK_SM2.'" id="'.$JK_SM2.'" readonly="true" style="width:80px" value="0">'?></td>
+                                                            <?php } ?>   
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" colspan="3">Jumlah Pelajaran</td>
+                                                                <?php  ;
+                                                                foreach ($headertablekurikulum as $rowheader) { 
+                                                                $JP_SM1 = 'JP_SM1_'.$rowheader['kode_kelas'];
+                                                                $JP_SM2 = 'JP_SM2_'.$rowheader['kode_kelas'];
+                                                                ?>
+                                                                <td><?php echo '<input type="text" class="form-control"  name="'.$JP_SM1.'" id="'.$JP_SM1.'" readonly="true" style="width:80px" value="0">'?></td>
+                                                                <td><?php echo '<input type="text" class="form-control"  name="'.$JP_SM2.'" id="'.$JP_SM2.'" readonly="true" style="width:80px" value="0">'?></td>
+                                                            <?php } ?>   
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                            <!--end Table-->
                                             <div class="modal-footer">
-                                                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn green-jungle" id="save_button" onclick="svkurikulum()">Save</button>
+                                            <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn green-jungle" id="save_button" onclick="svkurikulum()">Save</button>
                                             </div>
                                         </form>
-                                        <!-- END FORM-->
+                                            <!-- END FORM-->
+                                        </div>
                                     </div>
-                                </div>
-                        </div>
-                        <!-- END VALIDATION STATES-->
-                        </div>
-                    </div>
+                            </div>
+                            <!-- END VALIDATION STATES-->
+                            </div>
+                     </div>
                 </div><!--end modal-body-->
             </div>
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
     </div>
-<!-- end of modal kurikulum-->
+<!-- end of modal nEW kURIKULUM -->
 <!-- modal Cari -->
     <div class="modal fade draggable-modal" id="Modal_cari" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
@@ -256,133 +273,5 @@
     </div>
 <!-- end of modal cari-->
 
-<!-- modal nEW kURIKULUM -->
-    <div class="modal fade draggable-modal" id="Modal_add_kurikulum" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog-LG">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <!--<h4 class="modal-title">Start Dragging Here</h4>-->
-                </div>
-                <div class="modal-body">
-                     <!-- isi body modal mulai -->
-                    <div class="row">
-                        <div class="col-md-12">
-                        <!-- BEGIN VALIDATION STATES-->
-                        <div class="portlet light portlet-fit portlet-form bordered">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <i class=" icon-layers font-red"></i>
-                                        <span class="caption-subject font-red sbold uppercase">STRUKTUR KURIKULUM DAN ALOKASI WAKTU DI TMI PELAJARAN SORE DAN KITAB</span>
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                    <div class="form-body">                                
-                                        <!-- BEGIN FORM-->
-                                        <form action="#" id="form_Kurikulum">
-                                            <div class="portlet-title">
-                                                <!-- <div class="caption">
-                                                    <i class="fa fa-database"></i><?php echo $title;?> 
-                                                </div> -->
-                                            </div>
-                                            <input type="hidden" name="hid_param_kurikulum" id="hid_param_kurikulum" />
-                                            <div class="portlet-body">
-                                                <table class="table table-striped table-bordered table-hover" id="tb_list_kurikulum">
-                                                    <thead>                                                                    
-                                                    <tr>
-                                                        <td width="173" rowspan="3">NO</td>
-                                                        <td width="272" rowspan="3">Bidang Studi</td>
-                                                        <td width="348" rowspan="3">Mata Pelajaran</td>
-                                                            <?php  $nos =5;
-                                                            foreach ($headertablekurikulum as $rowheader) { ?>
-                                                        <?php $nos++; } ?>
-                                                        <td colspan="<?php echo $nos?>">Kelas</td>
-                                                    </tr>
-                                                            <?php  $no =1;
-                                                            foreach ($headertablekurikulum as $rowheader) { ?>
-                                                            <td colspan="2"><?php echo $rowheader['nama'] ?></td>
-                                                        <?php $no++; } ?>
-                                                    <tr>
-                                                        <?php  $no =1*2;
-                                                            foreach ($headertablekurikulum as $rowheader) { ?>
-                                                            <td width="80">SM1</td>
-                                                            <td width="80">SM2</td>
-                                                            <?php $no++; } ?>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php  $no =1;
-                                                                foreach ($bodytablekurikulum as $rowbody) { ?>
-                                                        <tr>
-                                                            <td><?php echo $no ?></td>
-                                                            <td colspan="<?php $no?>"><?php echo $rowbody['nama_bidang']; ?></td>
-                                                            <td><?php echo $rowbody['id_matpal']; ?></td>
-                                                            <?php  ;
-                                                            foreach ($headertablekurikulum as $rowheader) { 
-                                                            // $sm1 = 'SM1_'.$rowbody['id_matpal'].'_'.$rowheader['kode_kelas'];
-                                                            // $sm2 = 'SM2_'.$rowbody['id_matpal'].'_'.$rowheader['kode_kelas'];
-                                                            // $JKSM1 = 'JK_SM1_'.$rowheader['kode_kelas'];
-                                                            // $JKSM2 = 'JK_SM2_'.$rowheader['kode_kelas'];
-                                                            // $JPSM1 = 'JP_SM1_'.$rowheader['kode_kelas'];
-                                                            // $JPSM2 = 'JP_SM2_'.$rowheader['kode_kelas'];
-                                                            $mp1    = 'txt_mp1_'.$rowheader['kode_kelas'];
-                                                            $mp2    = 'txt_mp2_'.$rowheader['kode_kelas'];
-                                                            $kdkls  = $rowheader['kode_kelas'];
-                                                            $tmp1    ='mp1';
-                                                            $tmp2    ='mp2';
-                                                            ?>                                                                
-                                                                <td><?php echo '<input type="number" class="form-control" name="'.$mp1.'[]" id="'.$mp1.'[]" value="0"  style="width:80px" onchange="loopMataPelajaran(\''.$mp1.'\',\''.$kdkls.'\',\''.$tmp1.'\')" required>'?></td>
-                                                                <td><?php echo '<input type="number" class="form-control" name="'.$mp2.'[]" id="'.$mp2.'[]" value="0"  style="width:80px" onchange="loopMataPelajaran(\''.$mp2.'\',\''.$kdkls.'\',\''.$tmp2.'\')" required>'?></td>
-                                                            <?php } ?>                                                                            
-                                                        </tr>
-                                                            <?php $no++; } ?>
-                                                        <tr>
-                                                            <td width="80" colspan="3">Jumlah Khisos</td>
-                                                                <?php  ;
-                                                                foreach ($headertablekurikulum as $rowheader) { 
-                                                                $JK_SM1 = 'JK_SM1_'.$rowheader['kode_kelas'];
-                                                                $JK_SM2 = 'JK_SM2_'.$rowheader['kode_kelas'];
-                                                                ?>
-                                                                <td><?php echo '<input type="text" class="form-control" name="'.$JK_SM1.'" id="'.$JK_SM1.'" readonly="true"  style="width:80px" value="0">'?></td>
-                                                                <td><?php echo '<input type="text" class="form-control"  name="'.$JK_SM2.'" id="'.$JK_SM2.'" readonly="true" style="width:80px" value="0">'?></td>
-                                                            <?php } ?>   
-                                                        </tr>
-                                                        <tr>
-                                                            <td width="80" colspan="3">Jumlah Pelajaran</td>
-                                                                <?php  ;
-                                                                foreach ($headertablekurikulum as $rowheader) { 
-                                                                $JP_SM1 = 'JP_SM1_'.$rowheader['kode_kelas'];
-                                                                $JP_SM2 = 'JP_SM2_'.$rowheader['kode_kelas'];
-                                                                ?>
-                                                                <td><?php echo '<input type="text" class="form-control"  name="'.$JP_SM1.'" id="'.$JP_SM1.'" readonly="true" style="width:80px" value="0">'?></td>
-                                                                <td><?php echo '<input type="text" class="form-control"  name="'.$JP_SM2.'" id="'.$JP_SM2.'" readonly="true" style="width:80px" value="0">'?></td>
-                                                            <?php } ?>   
-                                                        </tr>
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
-                                            </div>
-                                            <!--end Table-->
-                                            <div class="modal-footer">
-                                            <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn green-jungle" id="save_button" onclick="svkurikulum()">Save</button>
-                                            </div>
-                                        </form>
-                                            <!-- END FORM-->
-                                        </div>
-                                    </div>
-                            </div>
-                            <!-- END VALIDATION STATES-->
-                            </div>
-                     </div>
-                </div><!--end modal-body-->
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-<!-- end of modal nEW kURIKULUM -->
+
 

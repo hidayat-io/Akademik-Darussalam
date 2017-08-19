@@ -15,24 +15,15 @@ class Kurikulum extends IO_Controller
 
 	function index()
 	{
-        //get ID Kelas
-			$hide_id_kelas= $this->model->get_kelas()->result();
+        //get Tahun Ajaran Data
+			$select_thnajar= $this->model->get_thn_ajar()->result();
 
-			$vdata['kode_kelas'][NULL] = '-';
-			foreach ($hide_id_kelas as $b) {
+			$vdata['kode_deskripsikelas'][NULL] = '';
+			foreach ($select_thnajar as $b) {
 
-				$vdata['kode_kelas'][$b->kode_kelas."#".$b->tingkat."#".$b->nama."#".$b->tipe_kelas]
-					=$b->kode_kelas." | ".$b->tingkat." | ".$b->nama." | ".$b->tipe_kelas;
+				$vdata['kode_deskripsikelas'][$b->deskripsi]
+					=$b->deskripsi;
 			}
-        //get ID Matpel
-        $hide_id_mapel= $this->model->get_mapel()->result();
-
-        $vdata['id_matpal'][NULL] = '-';
-        foreach ($hide_id_mapel as $b) {
-
-            $vdata['id_matpal'][$b->id_matpal."#".$b->nama_matpal."#".$b->id_bidang."#".$b->status]
-                =$b->id_matpal." | ".$b->nama_matpal." | ".$b->id_bidang." | ".$b->status;
-        }
 
 		//get isi header table
 		$vdata['headertablekurikulum'] = $this->model->get_headertable_kurikulum();
@@ -95,10 +86,6 @@ class Kurikulum extends IO_Controller
 			$records["data"][] = array(
 
 		     	$data[$i]->id_thn_ajar,
-				$data[$i]->kode_kelas,
-  				$data[$i]->id_mapel,
-				$data[$i]->sm_1,
-				$data[$i]->sm_2,
                 $act
 		   );
 		
@@ -258,44 +245,83 @@ class Kurikulum extends IO_Controller
 
 	function simpan_kurikulum($status)
 	{
-		$id_thn_ajar 		    = $this->input->post('id_thn_ajar');
-		$kode_kelas 		    = $this->input->post('kode_kelas');
-		$id_mapel               = $this->input->post('id_mapel');
-        $sm_1	                = $this->input->post('sm_1');
-		$sm_2	                = $this->input->post('sm_2');
-        $recdate                = date('y-m-d');
-	    $userid 			    = $this->session->userdata('logged_in')['uid'];
+		// $id_thn_ajar 		    = $this->input->post('id_thn_ajar');
+		// $kode_kelas 		    = $this->input->post('kode_kelas');
+		// $id_mapel               = $this->input->post('id_mapel');
+        // $sm_1	                = $this->input->post('sm_1');
+		// $sm_2	                = $this->input->post('sm_2');
+        // $recdate                = date('y-m-d');
+	    // $userid 			    = $this->session->userdata('logged_in')['uid'];
 
-		$data_kurikulum = array(
-			'id_thn_ajar' 			=> $id_thn_ajar,
-			'kode_kelas' 			=> $kode_kelas,
-			'id_mapel'              => $id_mapel,
-			'sm_1' 			        => $sm_1,
-			'sm_2' 			        => $sm_2,
-            'recdate'               => $recdate,
-			'userid' 				=> $userid
-		);
+		// $data_kurikulum = array(
+		// 	'id_thn_ajar' 			=> $id_thn_ajar,
+		// 	'kode_kelas' 			=> $kode_kelas,
+		// 	'id_mapel'              => $id_mapel,
+		// 	'sm_1' 			        => $sm_1,
+		// 	'sm_2' 			        => $sm_2,
+        //     'recdate'               => $recdate,
+		// 	'userid' 				=> $userid
+		// );
         
-		if($status=='SAVE')	
-		{// cek apakah add new atau editdata
+		// if($status=='SAVE')	
+		// {// cek apakah add new atau editdata
 			
-		// save data kurikulum
-         	$this->model->simpan_data_kurikulum($data_kurikulum);
+		// // save data kurikulum
+        //  	$this->model->simpan_data_kurikulum($data_kurikulum);
 
+		// }
+        // else //update data
+		// {		
+		// 	// save data kurikulum
+        //  	$this->model->update_data_kurikulum($id_thn_ajar,$data_kurikulum);
+        // }	    
+
+		// 	echo "true";
+		
+		$headertablekurikulum = $this->model->get_headertable_kurikulum();
+		$bodytablekurikulum = $this->model->get_bodytable_kurikulum();
+		foreach ($headertablekurikulum as $rowheader) { 
+			$sequence = 0;
+			foreach ($bodytablekurikulum as $rowbody) { 
+				$new_id_thn_ajar 		= $this->input->post('hide_id_thn_ajar');
+				$kode_kelas 		    = $rowheader['kode_kelas'];
+				$id_mapel               = $rowbody['id_matpal'];
+				$sm_1	                = $this->input->post('txt_mp1_'.$rowheader['kode_kelas'])[$sequence];
+				$sm_2	                = $this->input->post('txt_mp2_'.$rowheader['kode_kelas'])[$sequence];
+				$recdate                = date('y-m-d');
+	    		$userid 			    = $this->session->userdata('logged_in')['uid'];
+				
+
+				$data_kurikulum = array(
+				'id_thn_ajar' 			=> $new_id_thn_ajar,
+				'kode_kelas' 			=> $kode_kelas,
+				'id_mapel'              => $id_mapel,
+				'sm_1' 			        => $sm_1,
+				'sm_2' 			        => $sm_2,
+				'recdate'               => $recdate,
+				'userid' 				=> $userid
+				);
+
+				$this->model->simpan_data_kurikulum($data_kurikulum);
+				
+				$sequence++;
+			}
+			
 		}
-        else //update data
-		{		
-			// save data kurikulum
-         	$this->model->update_data_kurikulum($id_thn_ajar,$data_kurikulum);
-        }	    
-
-			echo "true";
+		echo "true";
 	}
 
 	function get_data_kurikulum($id_thn_ajar)
 	{
 		$id_thn_ajar = urldecode($id_thn_ajar);
 		$data = $this->model->query_kurikulum($id_thn_ajar);
+    	echo json_encode($data);
+	}
+
+	function get_data_kurikulum_byid($id_thn_ajar)
+	{
+		$id_thn_ajar = urldecode($id_thn_ajar);
+		$data = $this->model->query_kurikulum_byid($id_thn_ajar);
     	echo json_encode($data);
 	}
 

@@ -13,7 +13,7 @@ $(document).ready(function()
     });
 
     $(".select2").select2();
-    pilihItemkode_kelas();
+    // pilihItemkode_kelas();
 	$('.numbers-only').keypress(function(event) {
 		var charCode = (event.which) ? event.which : event.keyCode;
 			if ((charCode >= 48 && charCode <= 57)
@@ -48,92 +48,81 @@ $(document).ready(function()
 			},
 
 			errorPlacement: function ( error, element ) {
-					// Add the `help-block` class to the error element
-					error.addClass( "help-block" );
+				// Add the `help-block` class to the error element
+				error.addClass( "help-block" );
 
-					// Add `has-feedback` class to the parent div.form-group
-					// in order to add icons to inputs
-					$(element).closest(".form-group").addClass( "has-feedback" );
+				// Add `has-feedback` class to the parent div.form-group
+				// in order to add icons to inputs
+				$(element).closest(".form-group").addClass( "has-feedback" );
 
-					if ( element.prop( "type" ) === "checkbox" ) {
-						error.insertAfter( element.parent( "form-control" ) );
-					} else {
-						error.insertAfter( element );
-					}
-
-					// Add the span element, if doesn't exists, and apply the icon classes to it.
-					if ( !element.next( "span" )[ 0 ] ) {
-						$( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
-					}
-				},
-				success: function ( label, element ) {
-					// Add the span element, if doesn't exists, and apply the icon classes to it.
-					if ( !$( element ).next( "span" )[ 0 ] ) {
-						$( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
-					}
-				},
-				highlight: function ( element, errorClass, validClass ) {
-					$(element).closest(".form-group").addClass( "has-error" ).removeClass( "has-success" );
-					$( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
-				},
-				unhighlight: function ( element, errorClass, validClass ) {
-					$(element).closest(".form-group").addClass( "has-success" ).removeClass( "has-error" );
-					$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
+				if ( element.prop( "type" ) === "checkbox" ) {
+					error.insertAfter( element.parent( "form-control" ) );
+				} else {
+					error.insertAfter( element );
 				}
+					
+			},
+				
+			highlight: function ( element, errorClass, validClass ) {
+				$(element).closest(".form-group").addClass( "has-error" ).removeClass( "has-success" );
+			},
+			unhighlight: function ( element, errorClass, validClass ) {
+				$(element).closest(".form-group").addClass( "has-success" ).removeClass( "has-error" );
+			}
 
 	}); //end dari validasi form
 
 });
 
-function kode_kelasshow(){
-    $('#hiddenkode_kelas').show();
-    $('#spansearchkode_kelas').hide();
-    $('#spansearchclosekode_kelas').show();
+// function kode_kelasshow(){
+//     $('#hiddenkode_kelas').show();
+//     $('#spansearchkode_kelas').hide();
+//     $('#spansearchclosekode_kelas').show();
     
     
-}
+// }
 
-function kode_kelasclosespan(){
-    $('#hiddenkode_kelas').hide();
-    $('#spansearchkode_kelas').show();
-    $('#spansearchclosekode_kelas').hide();
-}
+// function kode_kelasclosespan(){
+//     $('#hiddenkode_kelas').hide();
+//     $('#spansearchkode_kelas').show();
+//     $('#spansearchclosekode_kelas').hide();
+// }
 
-function pilihItemkode_kelas(){
+// function pilihItemkode_kelas(){
 
-	$item  	= $('#hide_kode_kelas').val();
-	$item 	= $item.split('#');
+// 	$item  	= $('#hide_kode_kelas').val();
+// 	$item 	= $item.split('#');
 
-    $('#kode_kelas').val($item[0]);
-    $('#hiddenkode_kelas').hide();
-    $('#spansearchkode_kelas').show();
-    $('#spansearchclosekode_kelas').hide();
-}
+//     $('#kode_kelas').val($item[0]);
+//     $('#hiddenkode_kelas').hide();
+//     $('#spansearchkode_kelas').show();
+//     $('#spansearchclosekode_kelas').hide();
+// }
 
-function id_mapelshow(){
-    $('#hiddenid_mapel').show();
-    $('#spansearchid_mapel').hide();
-    $('#spansearchcloseid_mapel').show();
+// function id_mapelshow(){
+//     $('#hiddenid_mapel').show();
+//     $('#spansearchid_mapel').hide();
+//     $('#spansearchcloseid_mapel').show();
     
     
-}
+// }
 
-function id_mapelclosespan(){
-    $('#hiddenid_mapel').hide();
-    $('#spansearchid_mapel').show();
-    $('#spansearchcloseid_mapel').hide();
-}
+// function id_mapelclosespan(){
+//     $('#hiddenid_mapel').hide();
+//     $('#spansearchid_mapel').show();
+//     $('#spansearchcloseid_mapel').hide();
+// }
 
-function pilihItemid_mapel(){
+// function pilihItemid_mapel(){
 
-	$item  	= $('#hide_id_mapel').val();
-	$item 	= $item.split('#');
+// 	$item  	= $('#hide_id_mapel').val();
+// 	$item 	= $item.split('#');
 
-    $('#id_mapel').val($item[0]);
-    $('#hiddenid_mapel').hide();
-    $('#spansearchid_mapel').show();
-    $('#spansearchcloseid_mapel').hide();
-}
+//     $('#id_mapel').val($item[0]);
+//     $('#hiddenid_mapel').hide();
+//     $('#spansearchid_mapel').show();
+//     $('#spansearchcloseid_mapel').hide();
+// }
 
 function setTable(){
 	 $('#tb_list').DataTable( {
@@ -149,25 +138,6 @@ function setTable(){
 		},
     } );
 }
-
-// function setTableKurikulum(){
-// 	 $('#tb_list_kurikulum').DataTable( {
-// 		// "order": [[ 0, "desc" ]],
-//         "processing": true,
-// 		"serverSide": true,
-// 		"paging": false,
-// 		"searching": false,
-// 		 "bInfo" : false,
-// 		  "ordering": false,
-// 		ajax: {
-// 			'url':base_url+"kurikulum/AddKurikulum",
-// 			'type':'GET',
-// 			'data': function ( d ) {
-//                 d.param = $('#hid_param_kurikulum').val();
-//             }
-// 		},
-//     } );
-// }
 
 function Modalcari(){
 	clearformcari();
@@ -189,19 +159,11 @@ function SearchAction(){
 	$('#Modal_cari').modal('toggle');
 }
 
-function kosong(){
-		$('#id_thn_ajar').val('');
-		$('#kode_kelas').val('');
-		$('#id_mapel').val('');
-		$('#sm_1').val('');
-		$('#sm_2').val('');
-}
-
 function svkurikulum(){
 	if($("#add_kurikulum").valid()==true){
-        $id_thn_ajar = $('#id_thn_ajar').val();
+        $id_thn_ajar = $('#hide_id_thn_ajar').val();
 		$status = $('#save_button').text();
-		var str_url  	= encodeURI(base_url+"kurikulum/get_data_kurikulum/"+$id_thn_ajar);
+		var str_url  	= encodeURI(base_url+"kurikulum/get_data_kurikulum_byid/"+$id_thn_ajar);
        $.ajax({
 		type:"POST",
 		url:str_url,
@@ -209,7 +171,7 @@ function svkurikulum(){
 		success:function(data){	
             $data = $.parseJSON(data);
                 if( $data != null & $status =='SAVE'){
-                        bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>SUDAH ADA DI DATABASE! </div>",
+                        bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span> TAHUN AJARAN "+$id_thn_ajar+" SUDAH ADA!! </div>",
                             function(result){
                                 if(result==true){
                                 }
@@ -262,12 +224,9 @@ function OtomatisKapital(a){
 }
 
 function addkurikulum(){
-	// setTableKurikulum();
-    kosong();
-    kode_kelasclosespan();
-    id_mapelclosespan();
     $('#save_button').text('SAVE');	
-    $('#id_thn_ajar').attr('readonly',false);
+    $('#id_thn_ajar').attr('disabled',false);
+    $('#id_thn_ajar').val('');
 	$('#Modal_add_kurikulum').modal('show');
 }
 
@@ -282,12 +241,16 @@ function ONprosses(){
 	);
 }
 
+function add_tohide()
+{
+	$id_thn_ajar = $('#id_thn_ajar').val();
+	$('#hide_id_thn_ajar').val($id_thn_ajar);
+}
+
 function edit(id_thn_ajar){
-    kode_kelasclosespan();
-    id_mapelclosespan();
 	var str_url  	= encodeURI(base_url+"kurikulum/get_data_kurikulum/"+id_thn_ajar);
     $('#save_button').text('UPDATE');
-    $('#id_thn_ajar').attr('readonly',true);
+    $('#id_thn_ajar').attr('disabled',true);
 	$.ajax({
 
 		type:"POST",
@@ -296,14 +259,47 @@ function edit(id_thn_ajar){
 		success:function(data){
 			
 			var data = $.parseJSON(data);
-			$('#id_thn_ajar').val(data['id_thn_ajar']);
-		    $('#kode_kelas').val(data['kode_kelas']);
-		    $('#id_mapel').val(data['id_mapel']);
-		    $('#sm_1').val(data['sm_1']);
-		    $('#sm_2').val(data['sm_2']);
-            
+			$('#id_thn_ajar').val(data[0].id_thn_ajar);
+			$('#hide_id_thn_ajar').val(data[0].id_thn_ajar);
+			var jml_kisos =0;
+			var ilength = data.length;
+			for(i=0;i<ilength;i++){
+				var sm1 = 'SM1_'+data[i].id_mapel+'_'+data[i].kode_kelas;
+				var sm2 = 'SM2_'+data[i].id_mapel+'_'+data[i].kode_kelas;
+				$('#'+sm1).val(data[i].sm_1);
+				$('#'+sm2).val(data[i].sm_2);
+
+				//menampilkan jumlah kisos semester1
+				var txt_kisoss_m1 		= 'JK_SM1_'+data[i].kode_kelas;
+				var total_kisos_m1		= $('#'+txt_kisoss_m1).val();
+				$('#'+txt_kisoss_m1).val(parseInt(total_kisos_m1)+parseInt(data[i].sm_1));
+
+				//menampilkan jumlah kisos semester2
+				var txt_kisoss_m2 		= 'JK_SM2_'+data[i].kode_kelas;
+				var total_kisos_m2		= $('#'+txt_kisoss_m2).val();
+				$('#'+txt_kisoss_m2).val(parseInt(total_kisos_m2)+parseInt(data[i].sm_2));
+
+				// menampilkan jumlah matpal semester1
+				var txt_matpal_m1 		= 'JP_SM1_'+data[i].kode_kelas;
+				var total_matpal_m1		= $('#'+txt_matpal_m1).val();
+				if((data[i].sm_1) >0)
+					{
+						$('#'+txt_matpal_m1).val(parseInt(total_matpal_m1)+1);
+					}
+
+				// menampilkan jumlah matpal semester2
+				var txt_matpal_m2 		= 'JP_SM2_'+data[i].kode_kelas;
+				var total_matpal_m2		= $('#'+txt_matpal_m2).val();
+				if((data[i].sm_2) >0)
+					{
+						$('#'+txt_matpal_m2).val(parseInt(total_matpal_m2)+1);
+					}
+				
+			}
 			
 			$('#Modal_add_kurikulum').modal('show');
+			
+	
 			
 			
 		}
@@ -370,9 +366,10 @@ function loopMataPelajaran(textbox_id,kdkls,tmp){
 	}
 	
 	for(i=0;i<ilength;i++){
-		if((mapel[i].value) == '')
+		if((mapel[i].value) == '' || (mapel[i].value) <0)
 			{
-				bootbox.alert('Boto Nilai Tidak Boleh Kosong');
+				bootbox.alert('Bobot Nilai Tidak Boleh Kosong');
+				mapel[i].value=0;
 				return false;
 			}
 		jml_kisos=jml_kisos+parseInt(mapel[i].value);
