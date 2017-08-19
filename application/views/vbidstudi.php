@@ -42,7 +42,8 @@
                         <tr>
                             <th style="text-align:center">ID Bidang Studi</th>
                             <th style="text-align:center">Nama Bidang Studi</th>
-                            <th style="text-align:center" width="10%">Action</th>
+                            <th style="text-align:center">Kategori</th>
+                            <th style="text-align:center" width="20%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,6 +88,25 @@
                                         <!-- BEGIN FORM-->
                                         <form action="#" id="add_bidstudi">
                                         <!--inputbox-->
+                                                <!--span-->
+                                                    <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                Kategori
+                                                            </span>
+                                                                <!-- <div class="mt-radio-inline"> -->
+                                                                <label class="mt-radio">
+                                                                    <input type="radio" name="optionsRadios" id="r_utama" value="UTAMA" checked="checked" onclick="RB_action()">Utama
+                                                                    <span></span>
+                                                                </label>
+                                                                <label class="mt-radio">
+                                                                    <input type="radio" name="optionsRadios" id="r_sore" value="SORE" onclick="RB_action()">Sore
+                                                                    <span></span>
+                                                                </label>
+                                                            <!-- </div> -->
+                                                            </div>
+                                                    </div>
                                                 <!--span-->
                                                     <div class="form-group">
                                                             <label class="control-label"></label>

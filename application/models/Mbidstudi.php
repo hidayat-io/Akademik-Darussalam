@@ -14,7 +14,7 @@ class Mbidstudi extends CI_Model
         // var_dump($param);
         // exit();
 		
-        $cols = array('id_bidang','nama_bidang');
+        $cols = array('id_bidang','nama_bidang','kategori');
 
         $sql = "SELECT * FROM ms_bidang_study";
                     
@@ -67,10 +67,13 @@ class Mbidstudi extends CI_Model
         return $this->db->get()->result();
 	}
 
-	function query_mata_pelajaran($id_matpal,$nama_matpal)
+	function query_mata_pelajaran($id_matpal,$nama_matpal,$kategori)
 	{
         $data = array();
-		$data=$this->db->query("SELECT * from ms_mata_pelajaran where id_matpal ='$id_matpal' or nama_matpal ='$nama_matpal'")->row_array();
+		$data=$this->db->query("SELECT a.*, b.kategori 
+								FROM ms_mata_pelajaran a
+								INNER JOIN ms_bidang_study b ON a.id_bidang = b.id_bidang
+								where a.id_matpal ='$id_matpal' or a.nama_matpal ='$nama_matpal' or b.kategori='$kategori'")->row_array();
 		return $data;
 	}
 

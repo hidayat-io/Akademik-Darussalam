@@ -71,6 +71,7 @@ class bidstudi extends IO_Controller
 
 		     	$data[$i]->id_bidang,
 				$data[$i]->nama_bidang,
+				$data[$i]->kategori,
                 $act
 		   );
 		
@@ -161,7 +162,7 @@ class bidstudi extends IO_Controller
 
 	}
 
-	function simpan_bidstudi($status)
+	function simpan_bidstudi($status,$rbutton)
 	{
 		$id_bidang 		    = $this->input->post('id_bidang');
 		$nama_bidang 		= $this->input->post('nama_bidang');
@@ -173,6 +174,7 @@ class bidstudi extends IO_Controller
 		$data_bidstudi = array(
 			'id_bidang' 			=> $id_bidang,
 			'nama_bidang' 			=> $nama_bidang,
+			'kategori'				=> $rbutton,
             'recdate'               => $recdate,
 			'userid' 				=> $userid
 		);
@@ -268,10 +270,10 @@ class bidstudi extends IO_Controller
 		// exit;
 	}
 
-	function get_data_mata_pelajaran($id_matpal,$nama_matpal)
+	function get_data_mata_pelajaran($id_matpal,$nama_matpal,$kategori)
 	{
 		$id_matpal = urldecode($id_matpal);
-		$data = $this->model->query_mata_pelajaran($id_matpal,$nama_matpal);
+		$data = $this->model->query_mata_pelajaran($id_matpal,$nama_matpal,$kategori);
     	echo json_encode($data);
 	}
 

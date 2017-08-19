@@ -35,7 +35,7 @@ class Mkurikulum extends CI_Model
 		$data = $this->db->query ("SELECT a.id_bidang, a.nama_bidang, b.id_matpal, b.nama_matpal, b.status
 									FROM ms_bidang_study a 
 									INNER JOIN ms_mata_pelajaran b ON a.id_bidang = b.id_bidang 
-									WHERE b.status = 1")->result_array();
+									WHERE b.status = 1 and a.kategori = 'UTAMA'")->result_array();
 		return $data;
 	}
 
