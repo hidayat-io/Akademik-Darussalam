@@ -20,8 +20,8 @@
                   </div>
                 </div>
                 <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
-                    <button class="btn btn-default " type="button" data-toggle="dropdown" onclick="addSantri()">
-                        <i class="fa fa-edit"></i>&nbsp;Tambah Data&nbsp;<i class="fa fa-angle-down"></i>
+                    <button class="btn btn-default " type="button" onclick="addSantri()">
+                        <i class="fa fa-edit"></i>&nbsp;Tambah Data&nbsp;
                     </button>
                     <!-- <ul class="dropdown-menu" role="menu">
                       <li><a href="#" onclick="addSantri('TMI')"> TMI </a></li>
