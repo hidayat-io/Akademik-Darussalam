@@ -2,7 +2,7 @@
 <style type="text/css">.thumb-image{float:left;width:200px;position:relative;padding:5px;}</style>
 
 <script src="<?php echo base_url(); ?>assets/plugins/maskMoney/jquery.maskMoney.js"></script>
-<script src="<?php echo base_url(); ?>js/jkurikulum.js"></script>
+<script src="<?php echo base_url(); ?>js/jkurikulumsore.js"></script>
 <script type="text/javascript">
     var base_url = "<?php echo base_url(); ?>";
 </script>
@@ -20,7 +20,7 @@
                     </div>
                     </div>
                     <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
-                        <button class="btn btn-default " type="button" onclick="addkurikulum()">
+                        <button class="btn btn-default " type="button" onclick="addkurikulumsore()">
                             <i class="fa fa-edit"></i>&nbsp;Tambah Data&nbsp;
                         </button>
                         <!-- <ul class="dropdown-menu" role="menu">
@@ -62,8 +62,8 @@
         <!-- END EXAMPLE TABLE PORTLET-->
     </div>
 </div>
-<!-- modal nEW kURIKULUM -->
-    <div class="modal fade draggable-modal" id="Modal_add_kurikulum" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<!-- modal nEW kurikulumsore -->
+    <div class="modal fade draggable-modal" id="Modal_add_kurikulumsore" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog-LG">
             <div class="modal-content">
                 <div class="modal-header">
@@ -79,19 +79,19 @@
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class=" icon-layers font-red"></i>
-                                        <span class="caption-subject font-red sbold uppercase">STRUKTUR KURIKULUM DAN ALOKASI WAKTU DI TMI</span>
+                                        <span class="caption-subject font-red sbold uppercase">STRUKTUR KURIKULUM DAN ALOKASI WAKTU DI TMI PELAJARAN SORE DAN KITAB</span>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
                                     <div class="form-body">                                
                                         <!-- BEGIN FORM-->
-                                        <form action="#" id="add_kurikulum">
+                                        <form action="#" id="add_kurikulumsore">
                                             <div class="portlet-title">
                                                 <!-- <div class="caption">
                                                     <i class="fa fa-database"></i><?php echo $title;?> 
                                                 </div> -->
                                             </div>
-                                            <input type="hidden" name="hid_param_kurikulum" id="hid_param_kurikulum" />
+                                            <input type="hidden" name="hid_param_kurikulumsore" id="hid_param_kurikulumsore" />
                                             <div class="portlet-body">
                                                 <!--span-->
                                                 <div class="col-md-4 col-sm-12">
@@ -112,24 +112,24 @@
                                                     </div>    
                                                 </div>
                                                     <!--span-->
-                                                <table class="table table-striped table-bordered table-hover" id="tb_list_kurikulum">
+                                                <table class="table table-striped table-bordered table-hover" id="tb_list_kurikulumsore">
                                                     <thead>                                                                    
                                                     <tr>
                                                         <td width="173" rowspan="3">NO</td>
                                                         <td width="272" rowspan="3">Bidang Studi</td>
                                                         <td width="348" rowspan="3">Mata Pelajaran</td>
                                                             <?php  $nos =5;
-                                                            foreach ($headertablekurikulum as $rowheader) { ?>
+                                                            foreach ($headertablekurikulumsore as $rowheader) { ?>
                                                         <?php $nos++; } ?>
                                                         <td colspan="<?php echo $nos?>">Kelas</td>
                                                     </tr>
                                                             <?php  $no =1;
-                                                            foreach ($headertablekurikulum as $rowheader) { ?>
+                                                            foreach ($headertablekurikulumsore as $rowheader) { ?>
                                                             <td colspan="2"><?php echo $rowheader['nama'] ?></td>
                                                         <?php $no++; } ?>
                                                     <tr>
                                                         <?php  $no =1*2;
-                                                            foreach ($headertablekurikulum as $rowheader) { ?>
+                                                            foreach ($headertablekurikulumsore as $rowheader) { ?>
                                                             <td width="80">SM1</td>
                                                             <td width="80">SM2</td>
                                                             <?php $no++; } ?>
@@ -137,13 +137,13 @@
                                                     </thead>
                                                     <tbody>
                                                         <?php  $no =1;
-                                                                foreach ($bodytablekurikulum as $rowbody) { ?>
+                                                                foreach ($bodytablekurikulumsore as $rowbody) { ?>
                                                         <tr>
                                                             <td><?php echo $no ?></td>
                                                             <td colspan="<?php $no?>"><?php echo $rowbody['nama_bidang']; ?></td>
                                                             <td><?php echo $rowbody['id_matpal']; ?></td>
                                                             <?php  ;
-                                                            foreach ($headertablekurikulum as $rowheader) { 
+                                                            foreach ($headertablekurikulumsore as $rowheader) { 
                                                             $sm1 = 'SM1_'.$rowbody['id_matpal'].'_'.$rowheader['kode_kelas'];
                                                             $sm2 = 'SM2_'.$rowbody['id_matpal'].'_'.$rowheader['kode_kelas'];
                                                             // $JKSM1 = 'JK_SM1_'.$rowheader['kode_kelas'];
@@ -164,7 +164,7 @@
                                                         <tr>
                                                             <td width="80" colspan="3">Jumlah Khisos</td>
                                                                 <?php  ;
-                                                                foreach ($headertablekurikulum as $rowheader) { 
+                                                                foreach ($headertablekurikulumsore as $rowheader) { 
                                                                 $JK_SM1 = 'JK_SM1_'.$rowheader['kode_kelas'];
                                                                 $JK_SM2 = 'JK_SM2_'.$rowheader['kode_kelas'];
                                                                 ?>
@@ -175,7 +175,7 @@
                                                         <tr>
                                                             <td width="80" colspan="3">Jumlah Pelajaran</td>
                                                                 <?php  ;
-                                                                foreach ($headertablekurikulum as $rowheader) { 
+                                                                foreach ($headertablekurikulumsore as $rowheader) { 
                                                                 $JP_SM1 = 'JP_SM1_'.$rowheader['kode_kelas'];
                                                                 $JP_SM2 = 'JP_SM2_'.$rowheader['kode_kelas'];
                                                                 ?>
@@ -193,7 +193,7 @@
                                             <!--end Table-->
                                             <div class="modal-footer">
                                             <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn green-jungle" id="save_button" onclick="svkurikulum()">Save</button>
+                                            <button type="button" class="btn green-jungle" id="save_button" onclick="svkurikulumsore()">Save</button>
                                             </div>
                                         </form>
                                             <!-- END FORM-->
@@ -209,7 +209,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-<!-- end of modal nEW kURIKULUM -->
+<!-- end of modal nEW kurikulumsore -->
 <!-- modal Cari -->
     <div class="modal fade draggable-modal" id="Modal_cari" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">

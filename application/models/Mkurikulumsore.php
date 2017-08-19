@@ -1,6 +1,6 @@
 <?php
 
-class Mkurikulum extends CI_Model 
+class Mkurikulumsore extends CI_Model 
 {
 
 	public function __construct()
@@ -15,7 +15,7 @@ class Mkurikulum extends CI_Model
 		return $data;
 	}
     function get_thn_ajar(){
-		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='UTAMA' order by id desc Limit 2 ");
+		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='SORE' order by id desc Limit 2 ");
 		return $data;
 	}
 
@@ -24,39 +24,39 @@ class Mkurikulum extends CI_Model
 		return $data;
 	}
 
-	function get_headertable_kurikulum(){
+	function get_headertable_kurikulumsore(){
 		$data = array();
 		$data = $this->db->query ("SELECT * from ms_kelas")->result_array();
 		return $data;
 	}
 
-	function get_bodytable_kurikulum(){
+	function get_bodytable_kurikulumsore(){
 		$data = array();
 		$data = $this->db->query ("SELECT a.id_bidang, a.nama_bidang, b.id_matpal, b.nama_matpal, b.status
 									FROM ms_bidang_study a 
 									INNER JOIN ms_mata_pelajaran b ON a.id_bidang = b.id_bidang 
-									WHERE b.status = 1 and a.kategori = 'UTAMA'")->result_array();
+									WHERE b.status = 1 and a.kategori = 'SORE'")->result_array();
 		return $data;
 	}
 
     function get_list_data($param,$sortby=0,$sorttype='desc'){
 		
-        $cols = array('id_thn_ajar');
+        $cols = array('id_thn_ajar','deskripsi');
 
         $sql = "SELECT DISTINCT a.id_thn_ajar,  b.deskripsi, b.kategori  
-				FROM trans_kurikulum a
-				INNER JOIN ms_tahun_ajaran b ON b.id = a.id_thn_ajar";
+                FROM trans_kurikulum a
+                INNER JOIN ms_tahun_ajaran b ON b.id = a.id_thn_ajar";
                     
 
-            if($param!=null){
-
-                $sql .= " WHERE b.kategori ='UTAMA'".$param;
-                
-			}
-			else
-			{
-				$sql .= " WHERE b.kategori ='UTAMA'";
-			}
+                if($param!=null){
+                    
+                    $sql .= " WHERE b.kategori ='SORE'".$param;
+                    
+                }
+                else
+                {
+                    $sql .= " WHERE b.kategori ='SORE'";
+                }
 		
 
 		$sql.= " ORDER BY ".$cols[$sortby]." ".$sorttype;
@@ -65,7 +65,7 @@ class Mkurikulum extends CI_Model
 		return $this->db->query($sql)->result();
 	}
 
-	 function get_list_data_kurikulum($param){
+	 function get_list_data_kurikulumsore($param){
 		
         $cols = array('a.id_bidang, a.nama_bidang, b.id_matpal, b.nama_matpal, b.status');
 
@@ -85,29 +85,29 @@ class Mkurikulum extends CI_Model
 		return $this->db->query($sql)->result();
 	}
 	
-	function delete_kurikulum($id_thn_ajar){
+	function delete_kurikulumsore($id_thn_ajar){
 		$this->db->where('id_thn_ajar',$id_thn_ajar);
 		$this->db->delete('trans_kurikulum');
 	}
 
-	function simpan_data_kurikulum($data_kurikulum){
+	function simpan_data_kurikulumsore($data_kurikulumsore){
 
-		$this->db->replace('trans_kurikulum',$data_kurikulum);
+		$this->db->replace('trans_kurikulum',$data_kurikulumsore);
 	}
     
-    function update_data_kurikulum($id_thn_ajar,$data_kurikulum){
+    function update_data_kurikulumsore($id_thn_ajar,$data_kurikulumsore){
         
         $this->db->where('id_thn_ajar',$id_thn_ajar);
-		$this->db->update('trans_kurikulum',$data_kurikulum);
+		$this->db->update('trans_kurikulum',$data_kurikulumsore);
 	}
 
-    function query_kurikulum($id_thn_ajar){
+    function query_kurikulumsore($id_thn_ajar){
         $data = array();
 		$data=$this->db->query("SELECT * from trans_kurikulum where id_thn_ajar ='$id_thn_ajar'")->result_array();
 		return $data;
 	}
 
-	function query_kurikulum_byid($id_thn_ajar){
+	function query_kurikulumsore_byid($id_thn_ajar){
         $data = array();
 		$data=$this->db->query("SELECT * from trans_kurikulum where id_thn_ajar ='$id_thn_ajar'")->row_array();
 		return $data;

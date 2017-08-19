@@ -3,14 +3,14 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Kurikulum extends IO_Controller
+class Kurikulumsore extends IO_Controller
 {
 
 	public function __construct()
 	{
 			$modul = 19;
 			parent::__construct($modul);
-		 	$this->load->model('mkurikulum','model');
+		 	$this->load->model('mkurikulumsore','model');
 	}
 
 	function index()
@@ -26,13 +26,13 @@ class Kurikulum extends IO_Controller
 			}
 
 		//get isi header table
-		$vdata['headertablekurikulum'] = $this->model->get_headertable_kurikulum();
+		$vdata['headertablekurikulumsore'] = $this->model->get_headertable_kurikulumsore();
 
 		//get isi body table
-		$vdata['bodytablekurikulum'] = $this->model->get_bodytable_kurikulum();
+		$vdata['bodytablekurikulumsore'] = $this->model->get_bodytable_kurikulumsore();
 		
-		$vdata['title'] = 'KURIKULUM UTAMA';
-	    $data['content'] = $this->load->view('vkurikulum',$vdata,TRUE);
+		$vdata['title'] = 'KURIKULUM SORE';
+	    $data['content'] = $this->load->view('vkurikulumsore',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
 
@@ -85,8 +85,8 @@ class Kurikulum extends IO_Controller
    			
 			$records["data"][] = array(
 
-		     	$data[$i]->id_thn_ajar,
-		     	$data[$i]->deskripsi,
+                 $data[$i]->id_thn_ajar,
+                 $data[$i]->deskripsi,
                 $act
 		   );
 		
@@ -100,7 +100,7 @@ class Kurikulum extends IO_Controller
 		
 	}
 
-	function build_param_kurikulum($param)
+	function build_param_kurikulumsore($param)
 	{        
 		// merubah hasil json menjadi parameter Query //
 		$string_param = NULL;
@@ -113,10 +113,10 @@ class Kurikulum extends IO_Controller
 		return $string_param;
 	}
 
-	function AddKurikulum()
+	function Addkurikulumsore()
 	{
 		$iparam 		= json_decode($_REQUEST['param']);
-		$string_param 	= $this->build_param_kurikulum($iparam);
+		$string_param 	= $this->build_param_kurikulumsore($iparam);
 		
 		//sorting
 		// $sort_by 		= $_REQUEST['order'][0]['column'];
@@ -125,7 +125,7 @@ class Kurikulum extends IO_Controller
 		// exit();
 
 
-		$data 				= $this->model->get_list_data_kurikulum($string_param);
+		$data 				= $this->model->get_list_data_kurikulumsore($string_param);
 		$iTotalRecords  	= count($data);
 		$iDisplayLength 	= intval($_REQUEST['length']);
 		$iDisplayLength 	= $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
@@ -180,8 +180,8 @@ class Kurikulum extends IO_Controller
 		//activate worksheet number 1
 		$this->excel->setActiveSheetIndex(0);
 		//name the worksheet
-		$this->excel->getActiveSheet()->setTitle('KURIKULUM');
-		$this->excel->getActiveSheet()->setCellValue('A1', "DATA KURIKULUM");
+		$this->excel->getActiveSheet()->setTitle('KURIKULUM SORE');
+		$this->excel->getActiveSheet()->setCellValue('A1', "DATA KURIKULUM SORE");
 		$this->excel->getActiveSheet()->mergeCells('A1:F1');
 		$this->excel->getActiveSheet()->getStyle('A1:F1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
@@ -231,7 +231,7 @@ class Kurikulum extends IO_Controller
 		$this->excel->getActiveSheet()->getStyle('A3:F3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
 		$this->excel->getActiveSheet()->getStyle('A3:F3')->getFill()->getStartColor()->setRGB('2CC30B');
 
-		$filename='kurikulum.xls'; //save our workbook as this file name
+		$filename='kurikulum_sore.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
 		header('Cache-Control: max-age=0');//no cache
@@ -244,7 +244,7 @@ class Kurikulum extends IO_Controller
 
 	}
 
-	function simpan_kurikulum($status)
+	function simpan_kurikulumsore($status)
 	{
 		// $id_thn_ajar 		    = $this->input->post('id_thn_ajar');
 		// $kode_kelas 		    = $this->input->post('kode_kelas');
@@ -254,7 +254,7 @@ class Kurikulum extends IO_Controller
         // $recdate                = date('y-m-d');
 	    // $userid 			    = $this->session->userdata('logged_in')['uid'];
 
-		// $data_kurikulum = array(
+		// $data_kurikulumsore = array(
 		// 	'id_thn_ajar' 			=> $id_thn_ajar,
 		// 	'kode_kelas' 			=> $kode_kelas,
 		// 	'id_mapel'              => $id_mapel,
@@ -267,23 +267,23 @@ class Kurikulum extends IO_Controller
 		// if($status=='SAVE')	
 		// {// cek apakah add new atau editdata
 			
-		// // save data kurikulum
-        //  	$this->model->simpan_data_kurikulum($data_kurikulum);
+		// // save data kurikulumsore
+        //  	$this->model->simpan_data_kurikulumsore($data_kurikulumsore);
 
 		// }
         // else //update data
 		// {		
-		// 	// save data kurikulum
-        //  	$this->model->update_data_kurikulum($id_thn_ajar,$data_kurikulum);
+		// 	// save data kurikulumsore
+        //  	$this->model->update_data_kurikulumsore($id_thn_ajar,$data_kurikulumsore);
         // }	    
 
 		// 	echo "true";
 		
-		$headertablekurikulum = $this->model->get_headertable_kurikulum();
-		$bodytablekurikulum = $this->model->get_bodytable_kurikulum();
-		foreach ($headertablekurikulum as $rowheader) { 
+		$headertablekurikulumsore = $this->model->get_headertable_kurikulumsore();
+		$bodytablekurikulumsore = $this->model->get_bodytable_kurikulumsore();
+		foreach ($headertablekurikulumsore as $rowheader) { 
 			$sequence = 0;
-			foreach ($bodytablekurikulum as $rowbody) { 
+			foreach ($bodytablekurikulumsore as $rowbody) { 
 				$new_id_thn_ajar 		= $this->input->post('hide_id_thn_ajar');
 				$kode_kelas 		    = $rowheader['kode_kelas'];
 				$id_mapel               = $rowbody['id_matpal'];
@@ -293,7 +293,7 @@ class Kurikulum extends IO_Controller
 	    		$userid 			    = $this->session->userdata('logged_in')['uid'];
 				
 
-				$data_kurikulum = array(
+				$data_kurikulumsore = array(
 				'id_thn_ajar' 			=> $new_id_thn_ajar,
 				'kode_kelas' 			=> $kode_kelas,
 				'id_mapel'              => $id_mapel,
@@ -303,7 +303,7 @@ class Kurikulum extends IO_Controller
 				'userid' 				=> $userid
 				);
 
-				$this->model->simpan_data_kurikulum($data_kurikulum);
+				$this->model->simpan_data_kurikulumsore($data_kurikulumsore);
 				
 				$sequence++;
 			}
@@ -312,24 +312,24 @@ class Kurikulum extends IO_Controller
 		echo "true";
 	}
 
-	function get_data_kurikulum($id_thn_ajar)
+	function get_data_kurikulumsore($id_thn_ajar)
 	{
 		$id_thn_ajar = urldecode($id_thn_ajar);
-		$data = $this->model->query_kurikulum($id_thn_ajar);
+		$data = $this->model->query_kurikulumsore($id_thn_ajar);
     	echo json_encode($data);
 	}
 
-	function get_data_kurikulum_byid($id_thn_ajar)
+	function get_data_kurikulumsore_byid($id_thn_ajar)
 	{
 		$id_thn_ajar = urldecode($id_thn_ajar);
-		$data = $this->model->query_kurikulum_byid($id_thn_ajar);
+		$data = $this->model->query_kurikulumsore_byid($id_thn_ajar);
     	echo json_encode($data);
 	}
 
-	function Delkurikulum($id_thn_ajar)
+	function Delkurikulumsore($id_thn_ajar)
 	{
 		$id_thn_ajar = urldecode($id_thn_ajar);
-		$this->model->delete_kurikulum($id_thn_ajar);
+		$this->model->delete_kurikulumsore($id_thn_ajar);
 	}
 
 	function Get_Row_Column_Table()

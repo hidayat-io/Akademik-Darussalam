@@ -471,17 +471,22 @@ function TambahMatpal(){
 				dataType:"html",
 				success:function(data){	
 					$data = $.parseJSON(data);
-						if( $data['id_matpal'] == $('#id_matpal').val()){
-								bootbox.alert("ID Mata Pelajaran sudah ada di database!!");
+						if($data != null)
+						{
+							if( $data['id_matpal'] == $('#id_matpal').val()){
+									bootbox.alert("ID Mata Pelajaran sudah ada di database!!");
+									return false;
+								
+							}
+							else if( $data['nama_matpal'] == $('#nama_matpal').val() && $data['kategori'] == rbutton){
+								bootbox.alert("Nama Mata Pelajaran dengan kategori "+rbutton+" sudah ada di database!!");
 								return false;
 							
+							}
+							
 						}
-						else if( $data['nama_matpal'] == $('#nama_matpal').val() && $data['kategori'] == rbutton){
-							bootbox.alert("Nama Mata Pelajaran dengan kategori "+rbutton+" sudah ada di database!!");
-							return false;
-						
-						}
-						else{
+						else
+						{
 							var row_count 		= $('#tb_list_Matpal tr.tb-detail').length;
 							var content_data 	= '<tr class="tb-detail" id="row'+id_matpal+'">';
 								content_data 	+= "<td>"+(row_count+1)+"</td>";

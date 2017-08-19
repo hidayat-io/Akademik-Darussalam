@@ -73,7 +73,7 @@ class Mbidstudi extends CI_Model
 		$data=$this->db->query("SELECT a.*, b.kategori 
 								FROM ms_mata_pelajaran a
 								INNER JOIN ms_bidang_study b ON a.id_bidang = b.id_bidang
-								where a.id_matpal ='$id_matpal' or a.nama_matpal ='$nama_matpal' or b.kategori='$kategori'")->row_array();
+								where a.id_matpal ='$id_matpal' or a.nama_matpal ='$nama_matpal' and b.kategori='$kategori'")->row_array();
 		return $data;
 	}
 
