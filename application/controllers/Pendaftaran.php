@@ -224,8 +224,9 @@ class Pendaftaran extends IO_Controller
 	function no_registrasi($kategori_santri)
 	{
 		$tahun_masehi 	= date('y');
-		$hari_ini = date("Y/m/d");
-		$tahun_hijri 	= io_get_hijri($hari_ini);
+		$today 			= date("Y/m/d");
+		$tahun_hijri 	= io_get_hijri($today);
+		$tahun_hijri  	= substr($tahun_hijri['year'],-2);
 		if($kategori_santri =='TMI') {
 			$data_sequence 	= $this->model->get_sequence_noreg_TMI();
 				if($data_sequence==null)
@@ -1199,7 +1200,9 @@ class Pendaftaran extends IO_Controller
 	function new_no_registrasi($kategori_santri)
 	{
 		$tahun_masehi 	= date('y');
-		$tahun_hijri 	= '38';
+		$today 			= date("Y/m/d");
+		$tahun_hijri 	= io_get_hijri($today);
+		$tahun_hijri  	= substr($tahun_hijri['year'],-2);
 		if($kategori_santri =='TMI') {
 			$data_sequence 	= $this->model->new_get_sequence_noreg_TMI();
 				if($data_sequence==null)
