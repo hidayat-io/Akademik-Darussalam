@@ -1,11 +1,11 @@
 function makeid(ilen=10){
 
-    if(len>62)len=62;
+    if(ilen>62)ilen=62;
 
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    for( var i=0; i < len; i++ )
+    for( var i=0; i < ilen; i++ )
         text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;
@@ -70,4 +70,71 @@ function ioDecode(var_text){
     var decodedString = Base64.decode(var_text);
 
     return decodedString;
+}
+
+function upload_file(form_data){
+
+    var str_name = "";
+
+    $.ajax({
+        url: base_url+'common/upload_lampiran',
+        type: 'post',
+        enctype: 'multipart/form-data',
+        contentType: false,
+        processData: false,
+        data: form_data,
+        async: false,
+        success: function(response){
+
+            str_name = response;
+        },
+        error:function(){
+
+            bootbox.alert({
+                size:'small',
+                title:"<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Upload Gagal.",
+                message:"Upload Gagal.",
+                buttons:{
+                    ok:{
+                        label: 'OK',
+                        className: 'btn-error'
+                    }
+                }
+            });
+        }
+    });
+
+    return str_name;
+}
+
+function replace_json_item_data(json_data,key_id,key_value,item_data){
+
+    for(var k=0;k<json_data.length;++k) {
+
+        if(json_data[k][key_id]==key_value) {
+
+            for (var key in item_data) {
+
+                if(item_data.hasOwnProperty(key)){
+
+                    json_data[k][key] = item_data[key];
+                }
+            }
+        }
+    }
+
+    return json_data;
+}
+
+function delete_json_item(json_data,key_id,key_value){
+
+    for(var k=0;k<json_data.length;++k) {
+
+        if(json_data[k][key_id]==key_value) {
+
+            json_data.splice(k,1);
+        }
+    }
+
+    return json_data;
 }

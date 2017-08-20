@@ -62,13 +62,18 @@
             <div class="modal-body-form">
                 <div class="portlet-form">
                     <form id="form_editing">
+                        
+                        <input type="text" id="hid_anak" name="hid_anak" value="[]" class="hidden" />
+                        <input type="text" id="hid_formal_edu" name="hid_formal_edu" value="[]" class="hidden" />
+                        <input type="text" id="hid_nonformal_edu" name="hid_nonformal_edu" value="[]" class="hidden" />
+
                         <div class="alert alert-danger display-hide">
                             <button class="close" data-close="alert"></button>
                             <i class="fa fa-exclamation-triangle"></i>&nbsp;Mohon cek kembali data yang Anda input, masih ada form yang wajib diisi.
                         </div>
                         <div class="tabbable-custom ">
                             <ul class="nav nav-tabs ">
-                                <li>
+                                <li class="active">
                                     <a href="#data_guru" data-toggle="tab"><i class="fa fa-user"></i>&nbsp;Biodata Guru</a>
                                 </li>
                                 <li>
@@ -77,12 +82,12 @@
                                 <li>
                                     <a href="#data_anak" data-toggle="tab"><i class="fa fa-child"></i>&nbsp;Data Anak</a>
                                 </li>
-                                <li class="active">
+                                <li>
                                     <a href="#data_pendidikan" data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Pendidikan</a>
                                 </li>
                             </ul>
                             <div class="tab-content">
-                                <div class="tab-pane" id="data_guru">
+                                <div class="tab-pane active" id="data_guru">
                                     <div class="form-body">                           
                                         <div class="row">
                                             <div class="col-md-6 text-center">
@@ -236,7 +241,7 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Jumlah Anak</span>
-                                                    <input type="text" class="form-control small-width numbers-only" placeholder="Jumlah Anak" name="txt_jml_anak" readonly="">
+                                                    <input type="text" class="form-control small-width numbers-only" placeholder="Jumlah Anak" name="txt_jml_anak" id="txt_jml_anak" readonly="">
                                                 </div>
                                             </div>
                                             
@@ -299,31 +304,8 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    <span class="input-group-addon">No.SK Pengangkatan</span>
-                                                    <input type="text" class="form-control input-medium" placeholder="No.SK Pengangkatan" name="txt_sk_angkat">
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="col-md-6">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">Tanggal SK.</span>
-                                                    <div class="input-group input-small date datepicker" data-date-format="dd-mm-yyyy">
-                                                        <input type="text" class="form-control" readonly="" name="dtp_tgl_sk">
-                                                        <span class="input-group-btn">
-                                                            <button class="btn default" type="button">
-                                                                <i class="fa fa-calendar"></i>
-                                                            </button>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="input-group">
                                                     <span class="input-group-addon">Kesra / Gapok</span>
-                                                    <input type="text" class="form-control input-medium" placeholder="Gapok" name="txt_gapok">
+                                                    <input type="text" class="form-control input-medium numbers-only" placeholder="Gapok" name="txt_gapok">
                                                 </div>
                                             </div>
                                             
@@ -339,17 +321,71 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Ijazah Terakhir</span>
-                                                    <input type="text" class="form-control numbers-only input-medium" placeholder="Ijazah Terakhir" name="txt_ijazah)terakhir">
+                                                    <select class="form-control select2 input-medium" id="opt_ijazah_terakhir" name="opt_ijazah_terakhir"></select>
                                                 </div>
                                             </div>
 
+                                        </div>
+
+                                        <div class="row">
                                             <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Materi yang diampu</span>
+                                                    <textarea rows="4" cols="50" class="form-control" placeholder="Materi yang diampu"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h5 class="form-section">SK Pengangkatan</h5>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">No.SK Pengangkatan</span>
+                                                    <input type="text" class="form-control input-medium" placeholder="No.SK Pengangkatan" name="txt_sk_angkat">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Tanggal SK.</span>
+                                                    <div class="input-group input-medium date datepicker" data-date-format="dd-mm-yyyy">
+                                                        <input type="text" class="form-control" readonly="" name="dtp_tgl_sk">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn default" type="button">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">File SK Pengangkatan</span>
+                                                    <input type="text" class="form-control input-medium" placeholder="No.SK Pengangkatan" name="txt_sk_angkat">
+                                                </div>
+                                                <a href="#" class="btn btn-primary btn-xs" style="margin-top: 5px"><i class="fa fa-files-o"></i>&nbsp;Lihat Lampiran</a>
+                                            </div>
+                                        </div>
+
+                                        <h5 class="form-section">Sertifikasi</h5>
+                                        <div class="row">
+                                            
+                                            <div class="col-md-4">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Sertifikasi</span>
                                                     <input type="text" class="form-control input-medium" placeholder="Sertifikasi" name="txt_sertifikasi">
                                                 </div>
                                             </div>
-                                        </div>                                        
+
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">File Sertifikasi</span>
+                                                    <input type="text" class="form-control input-medium" placeholder="Sertifikasi" name="txt_sertifikasi">
+                                                </div>                                                
+                                                <a href="#" class="btn btn-primary btn-xs" style="margin-top: 5px"><i class="fa fa-files-o"></i>&nbsp;Lihat Lampiran</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -372,7 +408,7 @@
                                         </tbody>
                                     </table>                                    
                                 </div>
-                                <div class="tab-pane active" id="data_pendidikan">
+                                <div class="tab-pane" id="data_pendidikan">
                                     <h4  class="form-section">
                                         Pendidikan Formal
                                         <a href="javascript:;" class="btn btn-xs btn-circle blue-soft pull-right" onclick="modalAddEduFormal()">
@@ -382,12 +418,12 @@
                                     <table class="table table-bordered" id="tb_data_pformal">
                                         <thead>
                                             <tr class="active">
-                                                <th>No</th>
-                                                <th>Pendidikan</th>
+                                                <th width="5%">No</th>
+                                                <th width="30%">Pendidikan</th>
                                                 <th>Tempat</th>
-                                                <th>Lulus Tahun</th>
-                                                <th>Lampiran</th>
-                                                <th>Action</th>
+                                                <th width="10%">Lulus Tahun</th>
+                                                <th width="10%">Lampiran</th>
+                                                <th width="10%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -404,12 +440,12 @@
                                     <table class="table table-bordered" id="tb_data_pnonformal">
                                         <thead>
                                             <tr class="active">
-                                                <th>No</th>
-                                                <th>Pendidikan</th>
+                                                <th width="5%">No</th>
+                                                <th width="30%">Pendidikan</th>
                                                 <th>Tempat</th>
-                                                <th>Lulus Tahun</th>
-                                                <th>Lampiran</th>
-                                                <th>Action</th>
+                                                <th width="10%">Lulus Tahun</th>
+                                                <th width="10%">Lampiran</th>
+                                                <th width="10%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -546,10 +582,19 @@
                                         <span class="required">*</span>
                                     </span>
                                     <div class="input-icon right">
-                                        <i class="fa"></i><input type="text" class="form-control numbers-only" name="txt_pformal_lulus" id="txt_pformal_lulus" placeholder="Tahun Lulus" />
+                                        <i class="fa"></i><input type="text" class="form-control numbers-only" name="txt_pformal_lulus" id="txt_pformal_lulus" placeholder="Tahun Lulus" maxlength="4" />
                                     </div>
                                 </div>
                             </div>                        
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Lampiran</span>
+                                    <input type="file" class="form-control" name="att_file" id="att_pformal" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -562,3 +607,75 @@
     </div>    
 </div>
 <!-- END Modal add data pendidikan formal -->
+
+<!-- Modal add data pendidikan formal -->
+<div class="modal fade" id="modal_data_pnonformal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Data Pendidikan Non Formal</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form_data_pnonformal">
+                    <input type="text" id="id_detail_pnonformal" class="hidden" />                    
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Nama Pendidikan
+                                        <span class="required">*</span>
+                                    </span>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i><input type="text" class="form-control" name="txt_pnonformal_nama" id="txt_pnonformal_nama" placeholder="Nama Pendidikan" />
+                                    </div>                                                    
+                                </div>
+                            </div>                        
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Tempat
+                                        <span class="required">*</span>
+                                    </span>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i><input type="text" class="form-control" name="txt_pnonformal_tempat" id="txt_pnonformal_tempat" placeholder="Tempat Pedidikan" />
+                                    </div>                                              
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Lulus Tahun
+                                        <span class="required">*</span>
+                                    </span>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i><input type="text" class="form-control numbers-only" name="txt_pnonformal_lulus" id="txt_pnonformal_lulus" placeholder="Tahun Lulus" maxlength="4" />
+                                    </div>
+                                </div>
+                            </div>                        
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Lampiran</span>
+                                    <input type="file" class="form-control" name="att_file" id="att_pnonformal" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn green-jungle" onclick="simpanDataPnonformal()">Simpan</button>
+            </div>
+        </div>        
+    </div>    
+</div>
+<!-- END Modal add data pendidikan formal -->
+

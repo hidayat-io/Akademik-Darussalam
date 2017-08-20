@@ -4,6 +4,8 @@ $(document).ready(function(){
 	setTable();
 	handleValidation();
     validationFormAnak();
+    validationFormPformal();
+    validationFormpnonformal();
 
 	$('.datepicker').datepicker({
 	
@@ -26,6 +28,41 @@ $(document).ready(function(){
 	$('.nav-tabs').tabdrop();
 
 	$("#form_editing").validate();
+
+	$('input:file').change(function(e){
+
+		var files 		= e.originalEvent.target.files;
+		var id 			= e.currentTarget.id;
+		var sizemax 	= 5242880;
+
+	    for (var i=0, len=files.length; i<len; i++){
+	        var n = files[i].name,
+	            s = files[i].size,
+	            t = files[i].type;
+
+	        if ((s > sizemax) || (t!='application/pdf' && t!='image/jpeg')){
+	            
+	            var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
+				var str_message = "File tidak boleh lebih dari 5 MB.<br />";
+					str_message += "Extensi yang diijinkan adalah PDF, JPEG, JPG.";
+
+				bootbox.alert({
+					closeButton: false,
+					size:'small',
+					title:title,
+					message:str_message,
+					buttons:{
+						ok:{
+							label: 'OK',
+							className: 'btn-warning'
+						}
+					}
+				});
+
+	            $('input#'+id).val('');
+	        }
+	    }
+	});
 });
 
 function setTable(){
@@ -66,6 +103,14 @@ function redrawNumber(id_table){
 
 			no++;
 		}
+	}
+	else{
+
+		var column = $('#'+id_table+' th').length;
+
+		str_row = '<tr><td colspan="'+column+'" align="center">Tidak ada data ditemukan.</td></tr>';
+
+		$('#'+id_table+' tbody').append(str_row);
 	}
 }
 
@@ -225,6 +270,9 @@ function simpanDataAnak(){
 
     if(valid==true){
 
+    	var json_anak 	= $('#hid_anak').val();
+    		json_anak 	= JSON.parse(json_anak);
+
         var str_id          = makeid();
         var detail_count    = $('#tb_data_anak tr.tdetail').length;
         var id_detail_anak  = $('#id_detail_anak').val();
@@ -240,10 +288,28 @@ function simpanDataAnak(){
             row.cells[1].innerHTML = nama_anak;
             row.cells[2].innerHTML = pendidikan;            
             row.cells[3].innerHTML = tgl_lahir;
+
+            var json_item  = {
+
+        		"nama_anak"	:nama_anak,
+        		"pendidikan":pendidikan,
+        		"tgl_lahir"	:tgl_lahir
+        	};
+
+        	json_anak = replace_json_item_data(json_anak,"id",id_detail_anak,json_item);
         }
         else{
 
-        	
+        	var json_item  = {
+
+        		"id"		:str_id,
+        		"nama_anak"	:nama_anak,
+        		"pendidikan":pendidikan,
+        		"tgl_lahir"	:tgl_lahir
+        	};
+
+        	json_anak.push(json_item);
+
             var strbutton   =  "<a class='btn btn-primary btn-xs btn-flat' href='#' onclick='editDetailAnak(\""+str_data+"\")'><i class='fa fa-pencil'></i></a>&nbsp;";
             strbutton       += "<a class='btn btn-danger btn-xs btn-flat' href='#' data-toggle='confirmation' data-popout='true' onclick='delDetailAnak(\""+str_id+"\")'><i class='fa fa-trash'></i></a>";
 
@@ -266,6 +332,9 @@ function simpanDataAnak(){
         }
 
         $('#modal_data_anak').modal('toggle');
+
+        $('#hid_anak').val(JSON.stringify(json_anak));
+        $('#txt_jml_anak').val(json_anak.length);
     }
 }
 
@@ -288,7 +357,16 @@ function delDetailAnak(id_data){
 			if(result==true){
 
 				$('#row'+id_data).remove();
-				redrawNumber('tb_data_anak');			
+				redrawNumber('tb_data_anak');
+
+				//delete json_data
+				var json_anak = $('#hid_anak').val();
+    				json_anak = JSON.parse(json_anak);
+
+				json_data = delete_json_item(json_anak,'id',id_data);
+
+				$('#txt_jml_anak').val(json_data.length);
+				$('#hid_anak').val(JSON.stringify(json_data));		
 			}
 		}
 	);
@@ -309,7 +387,7 @@ function clearFormDataAnak(){
 //FORM DATA PENDIDIKAN FORMAL
 function modalAddEduFormal(){
 
-    clearFormDataEduFormal();
+    clearFormPformal();
 
     $('#modal_data_pformal').modal('show');
 
@@ -331,13 +409,13 @@ var validationFormPformal = function() {
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input
             rules: {
-                txt_da_nama: {                    
+                txt_pformal_nama: {                    
                     required: true
                 },
-                txt_da_pendidikan: {
+                txt_pformal_tempat: {
                     required: true
                 },
-                dtp_da_birth: {
+                txt_pformal_lulus: {
                     required: true
                 },
             },
@@ -381,14 +459,10 @@ function simpanDataPformal(){
 
     var valid = $('#form_data_pformal').valid();
 
-	// <th>No</th>
- //    <th>Pendidikan</th>
- //    <th>Tempat</th>
- //    <th>Lulus Tahun</th>
- //    <th>Lampiran</th>
- //    <th>Action</th>    
-
     if(valid==true){
+
+    	var json_pformal 	= $('#hid_formal_edu').val();
+    		json_pformal 	= JSON.parse(json_pformal);
 
         var str_id          	= makeid();
         var detail_count    	= $('#tb_data_pformal tr.tdetail').length;
@@ -396,7 +470,22 @@ function simpanDataPformal(){
         var nama_pfromal       	= $('#txt_pformal_nama').val();
         var tempat      		= $('#txt_pformal_tempat').val();
         var lulus				= $('#txt_pformal_lulus').val();
-        var str_data 			= str_id+'#'+nama_pfromal+'#'+tempat+'#'+tgl_lahir;
+        var str_data 			= str_id+'#'+nama_pfromal+'#'+tempat+'#'+lulus;
+
+        //upload lampiran
+        var iform 		= $('#form_data_pformal')[0];
+		var data 		= new FormData(iform);
+		var file_name 	= upload_file(data);
+
+        if(file_name!=""){
+
+        	var str_link 	= "<a href='"+base_url+"assets/images/uploadtemp/"+file_name+"' class='btn default btn-xs' target='_blank'><i class='fa fa-files-o'></i>&nbsp;File Lampiran</a>";
+        }
+        else{
+
+        	var str_link = "";
+        }
+		//end upload lampiran
 
         if(id_detail_pformal!=''){
 
@@ -404,69 +493,343 @@ function simpanDataPformal(){
 
             row.cells[1].innerHTML = nama_pfromal;
             row.cells[2].innerHTML = tempat;            
-            row.cells[3].innerHTML = tgl_lahir;
+            row.cells[3].innerHTML = lulus;	
+
+            var json_item  = {
+
+        		"nama"	:nama_pfromal,
+        		"tempat":tempat,
+        		"lulus"	:lulus
+        	};
+
+            // for existing item just update link when user upload file
+            if(str_link!=""){
+
+            	row.cells[4].innerHTML = str_link;
+
+            	json_item({"file":file_name});
+            }            
+
+            json_pformal = replace_json_item_data(json_pformal,"id",id_detail_pformal,json_item);
         }
         else{
 
+        	var json_item  = {
+
+        		"id"	:str_id,
+        		"nama"	:nama_pfromal,
+        		"tempat":tempat,
+        		"lulus"	:lulus,
+        		"file"	:file_name
+        	};
+
+        	json_pformal.push(json_item);
         	
-            var strbutton   =  "<a class='btn btn-primary btn-xs btn-flat' href='#' onclick='editDetailAnak(\""+str_data+"\")'><i class='fa fa-pencil'></i></a>&nbsp;";
-            strbutton       += "<a class='btn btn-danger btn-xs btn-flat' href='#' data-toggle='confirmation' data-popout='true' onclick='delDetailAnak(\""+str_id+"\")'><i class='fa fa-trash'></i></a>";
+            var strbutton   =  "<a class='btn btn-primary btn-xs btn-flat' href='#' onclick='editDetailPformal(\""+str_data+"\")'><i class='fa fa-pencil'></i></a>&nbsp;";
+            strbutton       += "<a class='btn btn-danger btn-xs btn-flat' href='#' data-toggle='confirmation' data-popout='true' onclick='delDetailPformal(\""+str_id+"\")'><i class='fa fa-trash'></i></a>";
 
             var content_data    = '<tr class="tdetail" id="row'+str_id+'">';
                 content_data    += "<td>"+(detail_count+1)+"</td>";
-                content_data    += "<td>"+nama_anak+"</td>";
-                content_data    += "<td>"+pendidikan+"</td>";
-                content_data    += "<td>"+tgl_lahir+"</td>";                
+                content_data    += "<td>"+nama_pfromal+"</td>";
+                content_data    += "<td>"+tempat+"</td>";
+                content_data    += "<td>"+lulus+"</td>";
+                content_data    += "<td>"+str_link+"</td>";    
                 content_data    += "<td>"+strbutton+"</td>";
                 content_data    += "</tr>";
 
             if(detail_count<1){
 
-                $('#tb_data_anak tbody').html(content_data);
+                $('#tb_data_pformal tbody').html(content_data);
             }
             else{
 
-                $('#tb_data_anak tbody').append(content_data);
+                $('#tb_data_pformal tbody').append(content_data);
             }
         }
 
         $('#modal_data_pformal').modal('toggle');
+
+        $('#hid_formal_edu').val(JSON.stringify(json_pformal));
+
+        redrawSelectPendidikanTerakhir();
     }
 }
 
-function editDetailAnak(str_data){
+function editDetailPformal(str_data){
+
+	clearFormPformal();
 
 	var idata 	= str_data.split('#');
 	
-	$("#id_detail_anak").val(idata[0]);
-	$("#txt_da_nama").val(idata[1]);
-	$("#txt_da_pendidikan").val(idata[2]);
-	$("#dtp_da_birth").val(idata[3]);
+	$("#id_detail_pformal").val(idata[0]);
+	$("#txt_pformal_nama").val(idata[1]);
+	$("#txt_pformal_tempat").val(idata[2]);
+	$("#txt_pformal_lulus").val(idata[3]);
 
-	$('#modal_data_anak').modal('show');
+	$('#modal_data_pformal').modal('show');
 }
 
-function delDetailAnak(id_data){
+function delDetailPformal(id_data){
 
 	bootbox.confirm("Anda yakin akan menghapus data ini ?",
 		function(result){
 			if(result==true){
 
 				$('#row'+id_data).remove();
-				redrawNumber('tb_data_anak');			
+				redrawNumber('tb_data_pformal');
+
+				//delete json_data
+				var json_pformal 	= $('#hid_formal_edu').val();
+    				json_pformal 	= JSON.parse(json_pformal);
+
+				json_data = delete_json_item(json_pformal,'id',id_data);
+
+				$('#hid_formal_edu').val(JSON.stringify(json_data));
+
+				redrawSelectPendidikanTerakhir();
 			}
 		}
 	);
 }
 
-function clearFormDataEduFormal(){
+function clearFormPformal(){
 
-	$("#form_data_anak div").removeClass('has-error');
-	$("#form_data_anak i").removeClass('fa-warning');
+	$("#form_data_pformal div").removeClass('has-error');
+	$("#form_data_pformal i").removeClass('fa-warning');
 
-	$("#form_data_anak div").removeClass('has-success');
-	$("#form_data_anak i").removeClass('fa-check');
+	$("#form_data_pformal div").removeClass('has-success');
+	$("#form_data_pformal i").removeClass('fa-check');
 
-    document.getElementById("form_data_anak").reset();
+    document.getElementById("form_data_pformal").reset();
 }
-//END FORM DATA ANAK
+
+function redrawSelectPendidikanTerakhir(){
+
+	var json_pformal 	= $('#hid_formal_edu').val();
+    	json_pformal 	= JSON.parse(json_pformal);
+
+    $("#opt_ijazah_terakhir").empty();
+
+	for(var k=0;k<json_pformal.length;++k) {
+
+		$("#opt_ijazah_terakhir").append($("<option></option>")
+			.attr("value", json_pformal[k]["id"]).text(json_pformal[k]["nama"]));
+    }
+}
+//END FORM DATA PENDIDIKAN FORMAL
+
+//FORM DATA PENDIDIKAN NON FORMAL
+function modalAddEduNonFormal(){
+
+    clearFormpnonformal();
+
+    $('#modal_data_pnonformal').modal('show');
+
+    $('#modal_data_pnonformal').on('shown.bs.modal', function() {
+
+        $("#txt_pnonformal_nama").focus();
+    })
+}
+
+var validationFormpnonformal = function() {
+
+        var form = $('#form_data_pnonformal');
+        var error2 = $('.alert-danger', form);
+        var success2 = $('.alert-success', form);
+
+        form.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input
+            rules: {
+                txt_pnonformal_nama: {                    
+                    required: true
+                },
+                txt_pnonformal_tempat: {
+                    required: true
+                },
+                txt_pnonformal_lulus: {
+                    required: true
+                },
+            },
+
+            invalidHandler: function (event, validator) { //display error alert on form submit              
+                success2.hide();
+                error2.show();
+                App.scrollTo(error2, -200);
+            },
+
+            errorPlacement: function (error, element) { // render error placement for each input type
+                var icon = $(element).parent('.input-icon').children('i');
+                icon.removeClass('fa-check').addClass("fa-warning");  
+                icon.attr("data-original-title", error.text()).tooltip({'container': 'body'});
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                    .closest('.input-group').removeClass("has-success").addClass('has-error'); // set error class to the control group   
+            },
+
+            unhighlight: function (element) { // revert the change done by hightlight
+                
+            },
+
+            success: function (label, element) {
+                var icon = $(element).parent('.input-icon').children('i');
+                $(element).closest('.input-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                icon.removeClass("fa-warning").addClass("fa-check");
+            },
+
+            submitHandler: function (form) {
+                success2.show();
+                error2.hide();
+                form[0].submit(); // submit the form
+            }
+        });
+}
+
+function simpanDataPnonformal(){
+
+    var valid = $('#form_data_pnonformal').valid();
+
+    if(valid==true){
+
+    	var json_pnonformal 	= $('#hid_nonformal_edu').val();
+    		json_pnonformal 	= JSON.parse(json_pnonformal);
+
+        var str_id          		= makeid();
+        var detail_count    		= $('#tb_data_pnonformal tr.tdetail').length;
+        var id_detail_pnonformal  	= $('#id_detail_pnonformal').val();
+        var nama_pfromal       		= $('#txt_pnonformal_nama').val();
+        var tempat      			= $('#txt_pnonformal_tempat').val();
+        var lulus					= $('#txt_pnonformal_lulus').val();
+        var str_data 				= str_id+'#'+nama_pfromal+'#'+tempat+'#'+lulus;
+
+        //upload lampiran
+        var iform 		= $('#form_data_pnonformal')[0];
+		var data 		= new FormData(iform);
+		var file_name 	= upload_file(data);
+
+        if(file_name!=""){
+
+        	var str_link 	= "<a href='"+base_url+"assets/images/uploadtemp/"+file_name+"' class='btn default btn-xs' target='_blank'><i class='fa fa-files-o'></i>&nbsp;File Lampiran</a>";
+        }
+        else{
+
+        	var str_link = "";
+        }
+		//end upload lampiran
+
+        if(id_detail_pnonformal!=''){
+
+            var row = document.getElementById('row'+id_detail_pnonformal);
+
+            row.cells[1].innerHTML = nama_pfromal;
+            row.cells[2].innerHTML = tempat;            
+            row.cells[3].innerHTML = lulus;	
+
+            var json_item  = {
+
+        		"nama"	:nama_pfromal,
+        		"tempat":tempat,
+        		"lulus"	:lulus        		
+        	};
+
+            // for existing item just update link when user upload file
+            if(str_link!=""){
+
+            	row.cells[4].innerHTML = str_link;
+
+            	json_item.push({"file":file_name})
+            }            
+
+            json_pnonformal = replace_json_item_data(json_pnonformal,"id",id_detail_pnonformal,json_item);
+        }
+        else{
+
+        	var json_item  = {
+
+        		"id"	:str_id,
+        		"nama"	:nama_pfromal,
+        		"tempat":tempat,
+        		"lulus"	:lulus,
+        		"file"	:file_name
+        	};
+
+        	json_pnonformal.push(json_item);
+        	
+            var strbutton   =  "<a class='btn btn-primary btn-xs btn-flat' href='#' onclick='editDetailpnonformal(\""+str_data+"\")'><i class='fa fa-pencil'></i></a>&nbsp;";
+            strbutton       += "<a class='btn btn-danger btn-xs btn-flat' href='#' data-toggle='confirmation' data-popout='true' onclick='delDetailpnonformal(\""+str_id+"\")'><i class='fa fa-trash'></i></a>";
+
+            var content_data    = '<tr class="tdetail" id="row'+str_id+'">';
+                content_data    += "<td>"+(detail_count+1)+"</td>";
+                content_data    += "<td>"+nama_pfromal+"</td>";
+                content_data    += "<td>"+tempat+"</td>";
+                content_data    += "<td>"+lulus+"</td>";
+                content_data    += "<td>"+str_link+"</td>";    
+                content_data    += "<td>"+strbutton+"</td>";
+                content_data    += "</tr>";
+
+            if(detail_count<1){
+
+                $('#tb_data_pnonformal tbody').html(content_data);
+            }
+            else{
+
+                $('#tb_data_pnonformal tbody').append(content_data);
+            }
+        }
+
+        $('#modal_data_pnonformal').modal('toggle');
+
+        $('#hid_nonformal_edu').val(JSON.stringify(json_pnonformal));
+    }
+}
+
+function editDetailpnonformal(str_data){
+
+	clearFormpnonformal();
+
+	var idata 	= str_data.split('#');
+	
+	$("#id_detail_pnonformal").val(idata[0]);
+	$("#txt_pnonformal_nama").val(idata[1]);
+	$("#txt_pnonformal_tempat").val(idata[2]);
+	$("#txt_pnonformal_lulus").val(idata[3]);
+
+	$('#modal_data_pnonformal').modal('show');
+}
+
+function delDetailpnonformal(id_data){
+
+	bootbox.confirm("Anda yakin akan menghapus data ini ?",
+		function(result){
+			if(result==true){
+
+				$('#row'+id_data).remove();
+				redrawNumber('tb_data_pnonformal');
+
+				//delete json_data
+				var json_pnonformal 	= $('#hid_nonformal_edu').val();
+    				json_pnonformal 	= JSON.parse(json_pnonformal);
+
+				json_data = delete_json_item(json_pnonformal,'id',id_data);
+
+				$('#hid_nonformal_edu').val(JSON.stringify(json_data));
+			}
+		}
+	);
+}
+
+function clearFormpnonformal(){
+
+	$("#form_data_pnonformal div").removeClass('has-error');
+	$("#form_data_pnonformal i").removeClass('fa-warning');
+
+	$("#form_data_pnonformal div").removeClass('has-success');
+	$("#form_data_pnonformal i").removeClass('fa-check');
+
+    document.getElementById("form_data_pnonformal").reset();
+}
+//END FORM DATA PENDIDIKAN NON FORMAL
