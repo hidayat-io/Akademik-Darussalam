@@ -8,7 +8,7 @@ class Kurikulumsore extends IO_Controller
 
 	public function __construct()
 	{
-			$modul = 19;
+			$modul = 31;
 			parent::__construct($modul);
 		 	$this->load->model('mkurikulumsore','model');
 	}
