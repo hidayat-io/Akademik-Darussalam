@@ -26,7 +26,7 @@ class Mkurikulumsore extends CI_Model
 
 	function get_headertable_kurikulumsore(){
 		$data = array();
-		$data = $this->db->query ("SELECT * from ms_kelas")->result_array();
+		$data = $this->db->query ("SELECT DISTINCT tingkat, tipe_kelas FROM ms_kelas ORDER BY tingkat")->result_array();
 		return $data;
 	}
 

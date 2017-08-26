@@ -125,7 +125,7 @@
                                                     </tr>
                                                             <?php  $no =1;
                                                             foreach ($headertablekurikulum as $rowheader) { ?>
-                                                            <td colspan="2"><?php echo $rowheader['nama'] ?></td>
+                                                            <td colspan="2"><?php echo $rowheader['tingkat'],' ',$rowheader['tipe_kelas'] ?></td>
                                                         <?php $no++; } ?>
                                                     <tr>
                                                         <?php  $no =1*2;
@@ -144,15 +144,15 @@
                                                             <td><?php echo $rowbody['id_matpal']; ?></td>
                                                             <?php  ;
                                                             foreach ($headertablekurikulum as $rowheader) { 
-                                                            $sm1 = 'SM1_'.$rowbody['id_matpal'].'_'.$rowheader['kode_kelas'];
-                                                            $sm2 = 'SM2_'.$rowbody['id_matpal'].'_'.$rowheader['kode_kelas'];
+                                                            $sm1 = 'SM1_'.$rowbody['id_matpal'].'_'.$rowheader['tingkat'].'_'.$rowheader['tipe_kelas'];
+                                                            $sm2 = 'SM2_'.$rowbody['id_matpal'].'_'.$rowheader['tingkat'].'_'.$rowheader['tipe_kelas'];
                                                             // $JKSM1 = 'JK_SM1_'.$rowheader['kode_kelas'];
                                                             // $JKSM2 = 'JK_SM2_'.$rowheader['kode_kelas'];
                                                             // $JPSM1 = 'JP_SM1_'.$rowheader['kode_kelas'];
                                                             // $JPSM2 = 'JP_SM2_'.$rowheader['kode_kelas'];
-                                                            $mp1    = 'txt_mp1_'.$rowheader['kode_kelas'];
-                                                            $mp2    = 'txt_mp2_'.$rowheader['kode_kelas'];
-                                                            $kdkls  = $rowheader['kode_kelas'];
+                                                            $mp1    = 'txt_mp1_'.$rowheader['tingkat'].'_'.$rowheader['tipe_kelas'];
+                                                            $mp2    = 'txt_mp2_'.$rowheader['tingkat'].'_'.$rowheader['tipe_kelas'];
+                                                            $kdkls  = $rowheader['tingkat'].'_'.$rowheader['tipe_kelas'];
                                                             $tmp1    ='mp1';
                                                             $tmp2    ='mp2';
                                                             ?>                                                                
@@ -165,8 +165,8 @@
                                                             <td width="80" colspan="3">Jumlah Khisos</td>
                                                                 <?php  ;
                                                                 foreach ($headertablekurikulum as $rowheader) { 
-                                                                $JK_SM1 = 'JK_SM1_'.$rowheader['kode_kelas'];
-                                                                $JK_SM2 = 'JK_SM2_'.$rowheader['kode_kelas'];
+                                                                $JK_SM1 = 'JK_SM1_'.$rowheader['tingkat'].'_'.$rowheader['tipe_kelas'];
+                                                                $JK_SM2 = 'JK_SM2_'.$rowheader['tingkat'].'_'.$rowheader['tipe_kelas'];
                                                                 ?>
                                                                 <td><?php echo '<input type="text" class="form-control" name="'.$JK_SM1.'" id="'.$JK_SM1.'" readonly="true"  style="width:80px" value="0">'?></td>
                                                                 <td><?php echo '<input type="text" class="form-control"  name="'.$JK_SM2.'" id="'.$JK_SM2.'" readonly="true" style="width:80px" value="0">'?></td>
@@ -176,8 +176,8 @@
                                                             <td width="80" colspan="3">Jumlah Pelajaran</td>
                                                                 <?php  ;
                                                                 foreach ($headertablekurikulum as $rowheader) { 
-                                                                $JP_SM1 = 'JP_SM1_'.$rowheader['kode_kelas'];
-                                                                $JP_SM2 = 'JP_SM2_'.$rowheader['kode_kelas'];
+                                                                $JP_SM1 = 'JP_SM1_'.$rowheader['tingkat'].'_'.$rowheader['tipe_kelas'];
+                                                                $JP_SM2 = 'JP_SM2_'.$rowheader['tingkat'].'_'.$rowheader['tipe_kelas'];
                                                                 ?>
                                                                 <td><?php echo '<input type="text" class="form-control"  name="'.$JP_SM1.'" id="'.$JP_SM1.'" readonly="true" style="width:80px" value="0">'?></td>
                                                                 <td><?php echo '<input type="text" class="form-control"  name="'.$JP_SM2.'" id="'.$JP_SM2.'" readonly="true" style="width:80px" value="0">'?></td>

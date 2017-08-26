@@ -13,7 +13,7 @@ $(document).ready(function()
     });
 
     $(".select2").select2();
-    // pilihItemkode_kelas();
+    // pilihItemtingkat();
 	$('.numbers-only').keypress(function(event) {
 		var charCode = (event.which) ? event.which : event.keyCode;
 			if ((charCode >= 48 && charCode <= 57)
@@ -214,23 +214,23 @@ function edit(id_thn_ajar){
 			var jml_kisos =0;
 			var ilength = data.length;
 			for(i=0;i<ilength;i++){
-				var sm1 = 'SM1_'+data[i].id_mapel+'_'+data[i].kode_kelas;
-				var sm2 = 'SM2_'+data[i].id_mapel+'_'+data[i].kode_kelas;
+				var sm1 = 'SM1_'+data[i].id_mapel+'_'+data[i].tingkat+'_'+data[i].tipe_kelas;
+				var sm2 = 'SM2_'+data[i].id_mapel+'_'+data[i].tingkat+'_'+data[i].tipe_kelas;
 				$('#'+sm1).val(data[i].sm_1);
 				$('#'+sm2).val(data[i].sm_2);
 
 				//menampilkan jumlah kisos semester1
-				var txt_kisoss_m1 		= 'JK_SM1_'+data[i].kode_kelas;
+				var txt_kisoss_m1 		= 'JK_SM1_'+data[i].tingkat+'_'+data[i].tipe_kelas;
 				var total_kisos_m1		= $('#'+txt_kisoss_m1).val();
 				$('#'+txt_kisoss_m1).val(parseInt(total_kisos_m1)+parseInt(data[i].sm_1));
 
 				//menampilkan jumlah kisos semester2
-				var txt_kisoss_m2 		= 'JK_SM2_'+data[i].kode_kelas;
+				var txt_kisoss_m2 		= 'JK_SM2_'+data[i].tingkat+'_'+data[i].tipe_kelas;
 				var total_kisos_m2		= $('#'+txt_kisoss_m2).val();
 				$('#'+txt_kisoss_m2).val(parseInt(total_kisos_m2)+parseInt(data[i].sm_2));
 
 				// menampilkan jumlah matpal semester1
-				var txt_matpal_m1 		= 'JP_SM1_'+data[i].kode_kelas;
+				var txt_matpal_m1 		= 'JP_SM1_'+data[i].tingkat+'_'+data[i].tipe_kelas;
 				var total_matpal_m1		= $('#'+txt_matpal_m1).val();
 				if((data[i].sm_1) >0)
 					{
@@ -238,7 +238,7 @@ function edit(id_thn_ajar){
 					}
 
 				// menampilkan jumlah matpal semester2
-				var txt_matpal_m2 		= 'JP_SM2_'+data[i].kode_kelas;
+				var txt_matpal_m2 		= 'JP_SM2_'+data[i].tingkat+'_'+data[i].tipe_kelas;
 				var total_matpal_m2		= $('#'+txt_matpal_m2).val();
 				if((data[i].sm_2) >0)
 					{

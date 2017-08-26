@@ -201,7 +201,7 @@ class Kurikulum extends IO_Controller
 			foreach($data as $row){
 				$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
 				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->id_thn_ajar);
-				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->kode_kelas);
+				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->tingkat);
 				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->id_mapel);
 				$this->excel->getActiveSheet()->setCellValue('E'.$i, $row->sm_1);
 				$this->excel->getActiveSheet()->setCellValue('F'.$i, $row->sm_2);
@@ -247,7 +247,7 @@ class Kurikulum extends IO_Controller
 	function simpan_kurikulum($status)
 	{
 		// $id_thn_ajar 		    = $this->input->post('id_thn_ajar');
-		// $kode_kelas 		    = $this->input->post('kode_kelas');
+		// $tingkat 		    = $this->input->post('tingkat');
 		// $id_mapel               = $this->input->post('id_mapel');
         // $sm_1	                = $this->input->post('sm_1');
 		// $sm_2	                = $this->input->post('sm_2');
@@ -256,7 +256,7 @@ class Kurikulum extends IO_Controller
 
 		// $data_kurikulum = array(
 		// 	'id_thn_ajar' 			=> $id_thn_ajar,
-		// 	'kode_kelas' 			=> $kode_kelas,
+		// 	'tingkat' 			=> $tingkat,
 		// 	'id_mapel'              => $id_mapel,
 		// 	'sm_1' 			        => $sm_1,
 		// 	'sm_2' 			        => $sm_2,
@@ -281,27 +281,32 @@ class Kurikulum extends IO_Controller
 		
 		$headertablekurikulum = $this->model->get_headertable_kurikulum();
 		$bodytablekurikulum = $this->model->get_bodytable_kurikulum();
+		// var_dump($headertablekurikulum);
+		// 		return false;
 		foreach ($headertablekurikulum as $rowheader) { 
 			$sequence = 0;
 			foreach ($bodytablekurikulum as $rowbody) { 
 				$new_id_thn_ajar 		= $this->input->post('hide_id_thn_ajar');
-				$kode_kelas 		    = $rowheader['kode_kelas'];
+				$tingkat 		   		= $rowheader['tingkat'];
+				$tipe_kelas				= $rowheader['tipe_kelas'];
 				$id_mapel               = $rowbody['id_matpal'];
-				$sm_1	                = $this->input->post('txt_mp1_'.$rowheader['kode_kelas'])[$sequence];
-				$sm_2	                = $this->input->post('txt_mp2_'.$rowheader['kode_kelas'])[$sequence];
+				$sm_1	                = $this->input->post('txt_mp1_'.$rowheader['tingkat'].'_'.$rowheader['tipe_kelas'])[$sequence];
+				$sm_2	                = $this->input->post('txt_mp2_'.$rowheader['tingkat'].'_'.$rowheader['tipe_kelas'])[$sequence];
 				$recdate                = date('y-m-d');
 	    		$userid 			    = $this->session->userdata('logged_in')['uid'];
 				
 
 				$data_kurikulum = array(
 				'id_thn_ajar' 			=> $new_id_thn_ajar,
-				'kode_kelas' 			=> $kode_kelas,
+				'tingkat' 				=> $tingkat,
+				'tipe_kelas' 			=> $tipe_kelas,
 				'id_mapel'              => $id_mapel,
 				'sm_1' 			        => $sm_1,
 				'sm_2' 			        => $sm_2,
 				'recdate'               => $recdate,
 				'userid' 				=> $userid
 				);
+				
 
 				$this->model->simpan_data_kurikulum($data_kurikulum);
 				
