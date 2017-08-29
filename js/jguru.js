@@ -6,6 +6,7 @@ $(document).ready(function(){
     validationFormAnak();
     validationFormPformal();
     validationFormpnonformal();
+    validationFormSKAngkat();
 
 	$('.datepicker').datepicker({
 	
@@ -33,35 +34,73 @@ $(document).ready(function(){
 
 		var files 		= e.originalEvent.target.files;
 		var id 			= e.currentTarget.id;
-		var sizemax 	= 5242880;
 
-	    for (var i=0, len=files.length; i<len; i++){
-	        var n = files[i].name,
-	            s = files[i].size,
-	            t = files[i].type;
+		if(id=="file_foto"){
 
-	        if ((s > sizemax) || (t!='application/pdf' && t!='image/jpeg')){
-	            
-	            var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
-				var str_message = "File tidak boleh lebih dari 5 MB.<br />";
-					str_message += "Extensi yang diijinkan adalah PDF, JPEG, JPG.";
+			var sizemax 	= 1048576;
 
-				bootbox.alert({
-					closeButton: false,
-					size:'small',
-					title:title,
-					message:str_message,
-					buttons:{
-						ok:{
-							label: 'OK',
-							className: 'btn-warning'
+		    for (var i=0, len=files.length; i<len; i++){
+
+		        var n = files[i].name,
+		            s = files[i].size,
+		            t = files[i].type;
+
+		        if ((s > sizemax) || (t!='image/jpeg')){
+		            
+		            var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
+					var str_message = "File tidak boleh lebih dari 1 MB.<br />";
+						str_message += "Extensi yang diijinkan JPEG, JPG.";
+
+					bootbox.alert({
+						closeButton: false,
+						size:'small',
+						title:title,
+						message:str_message,
+						buttons:{
+							ok:{
+								label: 'OK',
+								className: 'btn-warning'
+							}
 						}
-					}
-				});
+					});
 
-	            $('input#'+id).val('');
-	        }
-	    }
+		            $('input#'+id).val('');
+		        }
+		    }
+		}
+		else{
+
+			var sizemax 	= 5242880;
+
+		    for (var i=0, len=files.length; i<len; i++){
+
+		        var n = files[i].name,
+		            s = files[i].size,
+		            t = files[i].type;
+
+		        if ((s > sizemax) || (t!='application/pdf' && t!='image/jpeg')){
+		            
+		            var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
+					var str_message = "File tidak boleh lebih dari 5 MB.<br />";
+						str_message += "Extensi yang diijinkan adalah PDF, JPEG, JPG.";
+
+					bootbox.alert({
+						closeButton: false,
+						size:'small',
+						title:title,
+						message:str_message,
+						buttons:{
+							ok:{
+								label: 'OK',
+								className: 'btn-warning'
+							}
+						}
+					});
+
+		            $('input#'+id).val('');
+		        }
+		    }
+		}
 	});
 });
 
@@ -124,7 +163,42 @@ function validateForm(){
 
 	var valid = $("#form_editing").valid();
 
-    if(valid==true) $('.alert-danger').hide();
+    if(valid==true){
+
+    	$('.alert-danger').hide();
+    	saveFormGuru();
+    }
+}
+
+function saveFormGuru(){
+
+	var iform 	= $('#form_editing')[0];
+	var data 	= new FormData(iform);
+
+	$.ajax({
+		url: base_url+'Guru/save_data',
+		type: 'post',
+		enctype: 'multipart/form-data',
+		contentType: false,
+    	processData: false,
+    	data: data,
+		success: function(){
+
+			// $('#img-load').hide();
+			// $('#btn_simpan').show();
+
+			// var table = $('#tb_list').DataTable();
+			// table.ajax.reload( null, false );
+			// table.draw();
+			// $('#modal_edit').modal('toggle');
+			// clearFormInput();
+		},
+		error: function(){
+
+			// $('#img-load').hide();
+			// $('#btn_simpan').show();
+		}
+	});
 }
 
 var handleValidation = function() {
@@ -507,7 +581,7 @@ function simpanDataPformal(){
 
             	row.cells[4].innerHTML = str_link;
 
-            	json_item({"file":file_name});
+            	json_item["file"] = file_name;
             }            
 
             json_pformal = replace_json_item_data(json_pformal,"id",id_detail_pformal,json_item);
@@ -741,7 +815,7 @@ function simpanDataPnonformal(){
 
             	row.cells[4].innerHTML = str_link;
 
-            	json_item.push({"file":file_name})
+            	json_item["file"] = file_name;
             }            
 
             json_pnonformal = replace_json_item_data(json_pnonformal,"id",id_detail_pnonformal,json_item);
@@ -833,3 +907,211 @@ function clearFormpnonformal(){
     document.getElementById("form_data_pnonformal").reset();
 }
 //END FORM DATA PENDIDIKAN NON FORMAL
+
+//FORM DATA SK PENGANGKATAN
+function modalFormSK(){
+
+    clearFormpnonformal();
+
+    $('#modal_data_sk').modal('show');
+
+    $('#modal_data_sk').on('shown.bs.modal', function() {
+
+        $("#txt_sktugas_no").focus();
+    })
+}
+
+var validationFormSKAngkat = function() {
+
+        var form = $('#form_data_sk');
+        var error2 = $('.alert-danger', form);
+        var success2 = $('.alert-success', form);
+
+        form.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input
+            rules: {
+                txt_no_sk: {                    
+                    required: true
+                },
+                dtp_tgl_sk:{
+                    required: true
+                }                
+            },
+
+            invalidHandler: function (event, validator) { //display error alert on form submit              
+                success2.hide();
+                error2.show();
+                App.scrollTo(error2, -200);
+            },
+
+            errorPlacement: function (error, element) { // render error placement for each input type
+                var icon = $(element).parent('.input-icon').children('i');
+                icon.removeClass('fa-check').addClass("fa-warning");  
+                icon.attr("data-original-title", error.text()).tooltip({'container': 'body'});
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                    .closest('.input-group').removeClass("has-success").addClass('has-error'); // set error class to the control group   
+            },
+
+            unhighlight: function (element) { // revert the change done by hightlight
+                
+            },
+
+            success: function (label, element) {
+                var icon = $(element).parent('.input-icon').children('i');
+                $(element).closest('.input-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                icon.removeClass("fa-warning").addClass("fa-check");
+            },
+
+            submitHandler: function (form) {
+                success2.show();
+                error2.hide();
+                form[0].submit(); // submit the form
+            }
+        });
+}
+
+function simpanDataSK(){
+
+    var valid = $('#form_data_sk').valid();
+
+    if(valid==true){
+
+    	var json_data_sk 	= $('#hid_sk_angkat').val();
+    		json_data_sk 	= JSON.parse(json_data_sk);
+
+        var str_id          = makeid();
+        var detail_count    = $('#tb_data_sk_tugas tr.tdetail').length;
+        var id_detail_sk  	= $('#id_detail_sk').val();
+        var no_sk    		= $('#txt_no_sk').val();
+        var tgl_sk      	= $('#dtp_tgl_sk').val();
+        
+        var str_data 		= str_id+'#'+no_sk+'#'+tgl_sk;
+
+        //upload lampiran
+        var iform 		= $('#form_data_sk')[0];
+		var data 		= new FormData(iform);
+		var file_name 	= upload_file(data);
+
+        if(file_name!=""){
+
+        	var str_link 	= "<a href='"+base_url+"assets/images/uploadtemp/"+file_name+"' class='btn default btn-xs' target='_blank'><i class='fa fa-files-o'></i>&nbsp;File Lampiran</a>";
+        }
+        else{
+
+        	var str_link = "";
+        }
+		//end upload lampiran
+
+        if(id_detail_sk!=''){
+
+            var row = document.getElementById('row'+id_detail_sk);
+
+            row.cells[1].innerHTML = no_sk;
+            row.cells[2].innerHTML = tgl_sk;            
+
+            var json_item  = {
+
+        		"no_sk"	:no_sk,
+        		"tgl_sk":tgl_sk        		       		
+        	};
+
+            // for existing item just update link when user upload file
+            if(str_link!=""){
+
+            	row.cells[3].innerHTML = str_link;
+            	
+            	json_item["file"] = file_name;
+            }            
+
+            json_data_sk = replace_json_item_data(json_data_sk,"id",id_detail_sk,json_item);
+        }
+        else{
+
+        	var json_item  = {
+
+        		"id"		:str_id,
+        		"no_sk"		:no_sk,
+        		"tgl_sk"	:tgl_sk,        		
+        		"file_sk"	:file_name
+        	};
+
+        	json_data_sk.push(json_item);
+        	
+            var strbutton   =  "<a class='btn btn-primary btn-xs btn-flat' href='#' onclick='editDetailSK(\""+str_data+"\")'><i class='fa fa-pencil'></i></a>&nbsp;";
+            strbutton       += "<a class='btn btn-danger btn-xs btn-flat' href='#' data-toggle='confirmation' data-popout='true' onclick='delDetailSK(\""+str_id+"\")'><i class='fa fa-trash'></i></a>";
+
+            var content_data    = '<tr class="tdetail" id="row'+str_id+'">';
+                content_data    += "<td>"+(detail_count+1)+"</td>";
+                content_data    += "<td>"+no_sk+"</td>";
+                content_data    += "<td>"+tgl_sk+"</td>";                
+                content_data    += "<td>"+str_link+"</td>";    
+                content_data    += "<td>"+strbutton+"</td>";
+                content_data    += "</tr>";
+
+            if(detail_count<1){
+
+                $('#tb_data_sk_tugas tbody').html(content_data);
+            }
+            else{
+
+                $('#tb_data_sk_tugas tbody').append(content_data);
+            }
+        }
+
+        $('#modal_data_sk').modal('toggle');
+
+        $('#hid_sk_angkat').val(JSON.stringify(json_data_sk));
+    }
+}
+
+function editDetailSK(str_data){
+
+	clearFormSK();
+
+	var idata 	= str_data.split('#');
+	
+	$("#id_detail_sk").val(idata[0]);
+	$("#txt_no_sk").val(idata[1]);
+	$("#dtp_tgl_sk").val(idata[2]);
+
+	$('#modal_data_sk').modal('show');
+}
+
+function delDetailSK(id_data){
+
+	bootbox.confirm("Anda yakin akan menghapus data ini ?",
+		function(result){
+			if(result==true){
+
+				$('#row'+id_data).remove();
+				redrawNumber('tb_data_sk_tugas');
+
+				//delete json_data
+				var json_data_sk 	= $('#hid_sk_angkat').val();
+    				json_data_sk 	= JSON.parse(json_data_sk);
+
+				json_data = delete_json_item(json_data_sk,'id',id_data);
+
+				$('#hid_sk_angkat').val(JSON.stringify(json_data));
+			}
+		}
+	);
+}
+
+function clearFormSK(){
+
+	$("#form_data_sk div").removeClass('has-error');
+	$("#form_data_sk i").removeClass('fa-warning');
+
+	$("#form_data_sk div").removeClass('has-success');
+	$("#form_data_sk i").removeClass('fa-check');
+
+    document.getElementById("form_data_sk").reset();
+}
+//END FORM DATA SK PENGANGKATAN

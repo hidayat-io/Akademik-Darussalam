@@ -26,4 +26,10 @@ class Common extends CI_Controller {
 			echo null;
 		}
    	}
+
+   	function mget_guru_aktif(){
+
+   		$this->db->where('status_aktif','1');
+   		return $this->db->get('ms_guru')->result();
+   	}
 }
