@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	modalNew();
+//	modalNew();
 	setTable();
 	handleValidation();
     validationFormAnak();

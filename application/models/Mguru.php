@@ -17,7 +17,7 @@ class Mguru extends CI_Model {
 
 	function msimpan_data($data){
 
-		$id = $this->db->insert->('ms_guru',$data);
+		$id = $this->db->insert('ms_guru',$data);
 		
 		return $this->db->insert_id();
 	}

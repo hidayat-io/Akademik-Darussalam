@@ -121,7 +121,7 @@ class Guru extends IO_Controller{
 			"id_alumni" 			=> $input['txt_stambuk_alumni'],			
 			"masa_abdi" 			=> $input['txt_masa_pengabdian'],
 			"sertifikasi"			=> $input['txt_sertifikasi'],
-			"no_sk"					=> $input['txt_sk_angkat']
+			"no_sk"					=> $input['txt_sk_angkat'],
 			"tgl_sk"				=> $tgl_sk,
 			"materi_diampu"  		=> $input['txa_materi'],
 			"userid"				=> $this->session->userdata('logged_in')['uid'],
