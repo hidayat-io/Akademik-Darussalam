@@ -21,4 +21,38 @@ class Mguru extends CI_Model {
 		
 		return $this->db->insert_id();
 	}
+
+	function mupdate_data($id,$data){
+
+		$this->db->where('id_guru',$id);
+		$this->db->update('ms_guru',$data);
+	}
+
+	function mget_new_no(){
+
+		$this->db->select('nomor_terakhir');
+		$this->db->from('sequence');
+		$this->db->where('nama_field','no_reg_guru');
+
+		$no = $this->db->get()->row()->nomor_terakhir;
+
+		$ino = (int)$no;
+		$ino = $ino+=1;
+
+		$this->db->where('nama_field','no_reg_guru');
+		$this->db->update('sequence',array('nomor_terakhir'=>$ino));
+
+		return $no;
+	}
+
+	function mdelete_sk($id){
+
+		$this->db->where('id_guru',$id);
+		$this->db->delete('ms_guru_sk');
+	}
+
+	function minsert_sk($data){
+
+		$this->db->insert('ms_guru_sk',$data);
+	}
 }

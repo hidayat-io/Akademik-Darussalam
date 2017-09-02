@@ -35,7 +35,7 @@
                 <table class="table table-striped table-bordered table-hover" id="tb_list">
                     <thead>
                         <tr>
-                            <th>No.Registrasi</th>
+                            <th>No.Regis.</th>
                             <th>Nama Lengkap</th>
                             <th>NIG</th>
                             <th>Mulai Mengajar</th>
@@ -63,6 +63,7 @@
                 <div class="portlet-form">
                     <form id="form_editing" enctype="multipart/form-data">
 
+                        <input type="text" name="hid_id_data" class="hidden" />
                         <input type="text" id="hid_anak" name="hid_anak" value="[]" class="hidden" />
                         <input type="text" id="hid_sk_angkat" name="hid_sk_angkat" value="[]" class="hidden" />
                         <input type="text" id="hid_formal_edu" name="hid_formal_edu" value="[]" class="hidden" />
@@ -249,8 +250,7 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Status Pernikahan</span>
-                                                    <select name="opt_pernikahan" class="form-control input-medium">
-                                                        <option value="">- Belum Dipilih -</option>
+                                                    <select name="opt_pernikahan" class="form-control input-medium">                                                        
                                                         <option value="s">Belum Menikah</option>
                                                         <option value="m">Menikah</option>
                                                     </select>
@@ -305,9 +305,9 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Mengajar Sejak</span>
-                                                    <input type="text" class="form-control numbers-only" placeholder="Tahun Mulai" name="txt_tahun_mulai">
+                                                    <input type="text" class="form-control datepicker" placeholder="Tgl.Mulai" name="dtp_ajar_mulai" readonly>
                                                     <span class="input-group-addon" style="text-align: center;">s/d</span>
-                                                    <input type="text" class="form-control numbers-only" placeholder="Tahun Selesai" name="txt_tahun_akhir">
+                                                    <input type="text" class="form-control datepicker" placeholder="Tgl.Selesai" name="dtp_ajar_akhir" readonly>
                                                 </div>
                                             </div>
                                         </div>

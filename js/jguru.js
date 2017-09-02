@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-//	modalNew();
+	//modalNew();
 	setTable();
 	handleValidation();
     validationFormAnak();
@@ -117,11 +117,19 @@ function setTable(){
             }
 		},
 		columnDefs: [
-			{
-				"targets": [6],
-				"orderable": false				
-			}      
-		]
+            { width: 50, targets: 0 }, //no reg
+            { width: 130, targets: 1 }, //nama lengkap
+            { width: 70, targets: 2 }, //nig
+            { width: 60, targets: 3 }, //mulai mengajar
+            { width: 60, targets: 4 }, //gender
+            { width: 70, targets: 5 },  //status            
+            { 
+                targets: [6],         //action
+                orderable: false,
+                width: 90
+            }
+        ],
+        order: [[ 0, "desc" ]]
     });
 }
 
@@ -157,6 +165,20 @@ function redrawNumber(id_table){
 function modalNew(){
 
 	$('#modal_editing').modal('show');
+
+	//testing only
+    $('input[type=text]').each(function(){
+
+    	if(!$(this).hasClass('datepicker') && !$(this).parent().hasClass('datepicker') && !$(this).hasClass('hidden')){
+
+    		$(this).val(makeid());
+    	}    	
+	})
+
+	$("textarea").each(function(){
+        this.value = makeid();
+    });
+    //end testing only
 }
 
 function validateForm(){
@@ -187,11 +209,11 @@ function saveFormGuru(){
 			// $('#img-load').hide();
 			// $('#btn_simpan').show();
 
-			// var table = $('#tb_list').DataTable();
-			// table.ajax.reload( null, false );
-			// table.draw();
-			// $('#modal_edit').modal('toggle');
-			// clearFormInput();
+			var table = $('#tb_list').DataTable();
+			table.ajax.reload( null, false );
+			table.draw();
+			$('#modal_editing').modal('toggle');
+			clearFormInput();
 		},
 		error: function(){
 
@@ -255,17 +277,6 @@ var handleValidation = function() {
         });
 }
 //END MASTER FORM EDITING
-
-
-function modalAddEduFormal(){
-
-
-}
-
-function modalAddEduNonFormal(){
-
-
-}
 
 //FORM DATA ANAK
 function modalAddAnak(){
