@@ -50,7 +50,7 @@
                             <th style="text-align:center">NIK</th>
                             <th style="text-align:center">Tempat Lahir</th>
                             <th style="text-align:center">Tanggal Lahir</th>
-                            <th style="text-align:center" width="10%">Action</th>
+                            <th style="text-align:center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
