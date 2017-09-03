@@ -126,5 +126,88 @@ class Komponen extends IO_Controller
 		$this->Mkomponen->m_hapus_data($id);
 	}
 
+	function excel_komponen(){
+		// hasil decode // 
+		$str = base64_decode($this->uri->segment(3));
+
+		// merubah hasil decode dari string ke json //
+		$str = json_decode($str);
+
+		// memasukan data json kedalam builparam //
+		// agar json menjadi parameter query //
+		$str = $this->build_param($str);
+
+		$data= $this->Mkomponen->get_list_data($str);
+
+		//load our new PHPExcel library
+		$this->load->library('excel');
+		//activate worksheet number 1
+		$this->excel->setActiveSheetIndex(0);
+		//name the worksheet
+		$this->excel->getActiveSheet()->setTitle('Report-Komponen');
+		$this->excel->getActiveSheet()->setCellValue('A1', "Report Komponen");
+		$this->excel->getActiveSheet()->mergeCells('A1:L1');
+
+		//header
+		$this->excel->getActiveSheet()->setCellValue('A3', "No.");
+		$this->excel->getActiveSheet()->setCellValue('B3', "Nama Komponen");
+		$this->excel->getActiveSheet()->setCellValue('C3', "tipe");
+
+		$fdate 	= "d-M-Y";
+		$i  	= 4;
+
+		if($data != null){
+
+			foreach($data as $row){
+
+				if($row->tipe=='S'){
+					$tp="Semesteran";
+				}else{
+					$tp="Bulanan";
+				}
+
+				$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
+				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->nama_komponen);
+				$this->excel->getActiveSheet()->setCellValue('C'.$i, $tp);
+
+				
+				$i++;
+			}
+		}
+
+		for($col = 'A'; $col !== 'C'; $col++) {
+
+		    $this->excel->getActiveSheet()
+		        ->getColumnDimension($col)
+		        ->setAutoSize(true);
+		}
+
+		$styleArray = array(
+		  'borders' => array(
+		    'allborders' => array(
+		      'style' => PHPExcel_Style_Border::BORDER_THIN
+		    )
+		  )
+		);
+		$i = $i-1;
+		$cell_to = "C".$i;
+		$this->excel->getActiveSheet()->getStyle('A3:'.$cell_to)->applyFromArray($styleArray);
+		$this->excel->getActiveSheet()->getStyle('A1:C3')->getFont()->setBold(true);
+		$this->excel->getActiveSheet()->getStyle('A3:C3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+		$this->excel->getActiveSheet()->getStyle('A3:C3')->getFill()->getStartColor()->setRGB('2CC30B');
+
+		$filename='report-komponen.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0');//no cache
+
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		$objWriter->save('php://output');
+
+	}
+
 	
 }

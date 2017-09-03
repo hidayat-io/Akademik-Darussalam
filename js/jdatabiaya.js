@@ -4,17 +4,58 @@ $(document).ready(function(){
 	setTable();
 
 
+	$('.datepicker').datepicker({
+        rtl: App.isRTL(),
+        orientation: "left",
+        autoclose: true,
+        format: 'dd-mm-yyyy'
+    });
+
+
+        var counter = 2;
+        $("#addButton").click(function () {
+            var str_textbox = "<div>";
+            	str_textbox += "<label>Nama Komponen: </label><input type='textbox' name='txt_kompponen_sem[]' placeholder='Nama Komponen' >";
+            	str_textbox += "<label>Nominal: </label><input type='textbox' name='txt_nominal_sem[]' placeholder='Nominal' >";
+            	str_textbox	+= "<button onclick='removeKomponen(this)'>x</button>";
+            	str_textbox += "</div>";
+
+            $('#div_komponen_semester').append(str_textbox);
+        }); 
+
+
+         $("#addbtnbulanan").click(function () {
+    	var nom_textbox = "<div>";
+    		nom_textbox += "<label>Nama Komponen: </label><input type='textbox' name='txt_komponen_bln[]' placeholder='Nama Komponen' >";
+    		nom_textbox += "<label>Nominal: </label><input type='textbox' name='txt_nominal_bln[]' placeholder='Nominal' >";
+    		nom_textbox	+= "<button onclick='removeKmpbln(this)'>x</button>";
+    		nom_textbox += "</div>";
+
+            $('#div_komponen_bulanan').append(nom_textbox);
+        }); 
+
 });
+
+function removeKomponen(e){
+
+	$(e).closest('div').remove();
+}
+function removeKmpbln(e){
+
+	$(e).closest('div').remove();
+}
 
 
 function pnladd(){
 
 	$('#hid_id_data').val('');
 	$('#txtnama').val('');
-	$('#lbl_titel').text('TAMBAH KOMPONEN');
+	$('#lbl_titel').text('TAMBAH MASTER DATA BIAYA');
 
 	$('#m_add').modal('show');
 }
+
+
 
 // JS memanggil POP UP
 function modalSearch(){
