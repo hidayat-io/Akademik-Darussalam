@@ -54,7 +54,7 @@ class Guru extends IO_Controller{
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
 
-			$btn = '<button type="button" class="btn blue btn-xs" title="Lihat & Edit Data" onclick="edit(\''.$data[$i]->id_guru.'\')">
+			$btn = '<button type="button" class="btn blue btn-xs" title="Lihat & Edit Data" onclick="editData(\''.$data[$i]->id_guru.'\')">
 	                	<i class="fa fa-edit"></i>&nbsp;Edit
 	                </button>
 	                <button type="button" class="btn red btn-xs" title="Hapus Data" onclick="hapus(\''.$data[$i]->id_guru.'\')">
@@ -82,6 +82,8 @@ class Guru extends IO_Controller{
 	}
 
 	function save_data(){
+
+		$this->load->library('upload');
 
 		$input = $this->input->post();
 
@@ -125,6 +127,7 @@ class Guru extends IO_Controller{
 			"no_sk"					=> $input['txt_sk_angkat'],
 			"tgl_sk"				=> $tgl_sk,
 			"materi_diampu"  		=> $input['txa_materi'],
+			"gapok"					=> $input['txt_gapok'],
 			"userid"				=> $this->session->userdata('logged_in')['uid'],
 			"recdate" 				=> date('Y-m-d H:i:s'),
 			"status_aktif"			=> '1'
@@ -143,54 +146,187 @@ class Guru extends IO_Controller{
 			$this->model->mupdate_data($id,$data);
 		}
 
+		//save history data gapok
+		if(floatval($input['hid_old_gapok']) != floatval($input['txt_gapok'])){
+
+			$gapok = array(
+
+				'id_guru'	=> $id,
+				'nominal'	=> floatval($input['txt_gapok']),
+				'userid'	=> $this->session->userdata('logged_in')['uid'],
+				'recdate'	=> date('Y-m-d H:i:s')
+			);
+
+			$this->model->minsert_detail('ms_guru_gapok',$gapok);
+		}
+
 		//save data anak
 		$ar_anak = json_decode($input['hid_anak']);
 
-		if(count($ar_anak)>0){
+		$this->model->mdelete_detail('ms_guru_family',$id);
 
-			//delete existing data
-			$this->model->mdelete_anak($id);
+		foreach ($ar_anak as $anak) {
+			
+			$data_anak = array(
 
-			//insert new data
-			foreach ($ar_anak as $anak) {
-				
-				$data_anak = array(
+				'id_guru' 		=> $id,
+				'nama_anak' 	=> $anak->nama_anak,
+				'pendidikan' 	=> $anak->pendidikan,
+				'tanggal_lahir' => io_return_date('d-m-Y',$anak->tgl_lahir)					
+			);
 
-					'id_guru' 		=> $id,
-					'nama_anak' 	=> $anak->nama_anak,
-					'pendidikan' 	=> $anak->pendidikan,
-					'tanggal_lahir' => $anak->tgl_lahir,
-					'user_id' 		=> io_return_date('d-m-Y',$sk->tgl_sk),
-					'recdate' 		=> date('Y-m-d H:i:s')
-				);
-
-				$this->model->minsert_anak();
-			}
+			$this->model->minsert_detail('ms_guru_family',$data_anak);
 		}
 
 		//save data SK
 		$ar_sk = json_decode($input['hid_sk_angkat']);
 
-		if(count($ar_sk)>0){
+		$this->model->mdelete_detail('ms_guru_sk',$id);
+		
+		foreach ($ar_sk as $sk) {
+			
+			$sk_data = array(
 
-			//delete existing data
-			$this->model->mdelete_sk($id);
+				'id_guru'	=> $id,
+				'no_sk' 	=> $sk->no_sk,
+				'tgl_sk' 	=> io_return_date('d-m-Y',$sk->tgl_sk),
+				'file_sk'	=> $sk->file_sk
+			);
 
-			//insert new data
-			foreach ($ar_sk as $sk) {
-				
-				$sk_data = array(
+			$this->model->minsert_detail('ms_guru_sk',$sk_data);
 
-					'id_guru'	=> $id,
-					'no_sk' 	=> $sk->no_sk,
-					'tgl_sk' 	=> io_return_date('d-m-Y',$sk->tgl_sk),
-					'file_sk'	=> $sk->file_sk
-				);
+			//move temporary file
+			if(file_exists('./assets/images/uploadtemp/'.$sk->file_sk)){
 
-				$this->model->minsert_sk($sk_data);
+				rename('./assets/images/uploadtemp/'.$sk->file_sk,'./assets/images/fileupload/guru_sk/'.$sk->file_sk);	
+			}			
+		}
+
+		//save pendidikan formal
+		$ar_pformal = json_decode($input['hid_formal_edu']);
+
+		$this->model->mdelete_detail_edu($id,'f');
+
+		foreach ($ar_pformal as $pf) {
+			
+			$pformal = array(
+
+				'id_guru'		=> $id,
+				'tempat'		=> $pf->tempat,
+				'lulus'			=> $pf->lulus,
+				'kategori'		=> 'f',
+				'file_lampiran' => $pf->file
+			);
+
+			$this->model->minsert_detail('ms_guru_pendidikan',$pformal);
+
+			if(file_exists('./assets/images/uploadtemp/'.$pf->file)){
+
+				rename('./assets/images/uploadtemp/'.$pf->file,'./assets/images/fileupload/guru_pendidikan/'.$pf->file);	
 			}
 		}
-		
+
+		//save pendidikan non formal
+		$ar_pnonformal = json_decode($input['hid_nonformal_edu']);
+
+		$this->model->mdelete_detail_edu($id,'n');
+
+		foreach ($ar_pnonformal as $pf) {
+			
+			$pnonformal = array(
+
+				'id_guru'		=> $id,
+				'tempat'		=> $pf->tempat,
+				'lulus'			=> $pf->lulus,
+				'kategori'		=> 'n',
+				'file_lampiran' => $pf->file
+			);
+
+			$this->model->minsert_detail('ms_guru_pendidikan',$pnonformal);			
+
+			if(file_exists('./assets/images/uploadtemp/'.$pf->file)){
+
+				rename('./assets/images/uploadtemp/'.$pf->file,'./assets/images/fileupload/guru_pendidikan/'.$pf->file);	
+			}
+		}
+
+		//save struktur jabatan
+		$this->model->mdelete_jabatan($id);
+
+		if(isset($input['opt_jabatan'])){			
+
+			foreach($input['opt_jabatan'] as $jab){
+			
+				$jabatan = array(
+
+					'id_jabatan' 	=> $jab,
+					'id_guru'		=> $id
+				);
+
+				$this->model->minsert_detail('ms_guru_struktural',$jabatan);
+			}
+		}
+
+		//save file foto
+		if($_FILES['file_foto']){
+
+			$ioname		 				= $id;
+			$temp						= explode(".",$_FILES['file_foto']['name']);
+			$filename 					= $ioname.'.'.end($temp);
+			$config['upload_path']   	= './assets/images/fileupload/guru_foto';
+			$config['file_name'] 		= $filename;
+			$config['allowed_types']    = '*';
+
+			$this->upload->initialize($config);
+
+			if(!$this->upload->do_upload('file_foto')){
+
+				echo $this->upload->display_errors();
+			};
+		}
+
+		//save file sk pengangkatan
+		if($_FILES['file_sk_pengangkatan']){
+
+			$ioname		 				= date('dmyHis').io_random_string(4);;
+			$temp						= explode(".",$_FILES['file_sk_pengangkatan']['name']);
+			$filename 					= $ioname.'.'.end($temp);
+			$config['upload_path']   	= './assets/images/fileupload/guru_sk';
+			$config['file_name'] 		= $filename;
+			$config['allowed_types']    = '*';
+
+			$this->upload->initialize($config);
+
+			if(!$this->upload->do_upload('file_sk_pengangkatan')){
+
+				echo $this->upload->display_errors();
+			};
+
+			$iupdate['file_sk'] = $filename;
+		}
+
+		//save file sertifikasi
+		if($_FILES['file_sertifikasi']){
+
+			$ioname		 				= date('dmyHis').io_random_string(4);;
+			$temp						= explode(".",$_FILES['file_sertifikasi']['name']);
+			$filename 					= $ioname.'.'.end($temp);
+			$config['upload_path']   	= './assets/images/fileupload/guru_sertifikasi';
+			$config['file_name'] 		= $filename;
+			$config['allowed_types']    = '*';
+
+			$this->upload->initialize($config);
+
+			if(!$this->upload->do_upload('file_sertifikasi')){
+
+				echo $this->upload->display_errors();
+			};
+
+			$iupdate['file_sertifikasi'] = $filename;
+		}
+
+		//update link file
+		$this->model->mupdate_data($id,$iupdate);
 	}
 
 	function build_param($param){

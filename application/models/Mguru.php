@@ -45,14 +45,27 @@ class Mguru extends CI_Model {
 		return $no;
 	}
 
-	function mdelete_sk($id){
+	function mdelete_detail($table,$id){
 
 		$this->db->where('id_guru',$id);
-		$this->db->delete('ms_guru_sk');
+		$this->db->delete($table);
 	}
 
-	function minsert_sk($data){
+	function minsert_detail($table,$data){
 
-		$this->db->insert('ms_guru_sk',$data);
+		$this->db->insert($table,$data);
+	}
+
+	function mdelete_detail_edu($id,$type){
+
+		$this->db->where('kategori',$type);
+		$this->db->where('id_guru',$id);
+		$this->db->delete('ms_guru_pendidikan');
+	}
+
+	function mdelete_jabatan($id){
+
+		$this->db->where('id_guru',$id);
+		$this->db->delete('ms_guru_struktural');
 	}
 }

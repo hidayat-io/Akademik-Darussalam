@@ -68,6 +68,7 @@
                         <input type="text" id="hid_sk_angkat" name="hid_sk_angkat" value="[]" class="hidden" />
                         <input type="text" id="hid_formal_edu" name="hid_formal_edu" value="[]" class="hidden" />
                         <input type="text" id="hid_nonformal_edu" name="hid_nonformal_edu" value="[]" class="hidden" />
+                        <input type="text" id="hid_old_gapok" name="hid_old_gapok" class="hidden" value="" />
 
                         <div class="alert alert-danger display-hide">
                             <button class="close" data-close="alert"></button>
@@ -318,8 +319,8 @@
                                                     <span class="input-group-addon">Status</span>
                                                     <select name="opt_status" class="form-control input-medium">
                                                         <option value="">- Belum Dipilih -</option>
-                                                        <option value="s">Pengabdian</option>
-                                                        <option value="m">Tetap</option>
+                                                        <option value="Pengabdian">Pengabdian</option>
+                                                        <option value="Tetap">Tetap</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -330,7 +331,7 @@
                                                     <?php
 
                                                         $att_jabatan = 'class="form-control select2-multiple input-xlarge" id="opt_jabatan" multiple';
-                                                        echo form_dropdown('opt_jabatan', $opt_jabatan, null, $att_jabatan);
+                                                        echo form_dropdown('opt_jabatan[]', $opt_jabatan, null, $att_jabatan);
                                                     ?>
                                                 </div>
                                             </div>
@@ -403,7 +404,7 @@
                                             <div class="col-md-4">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">File SK Pengangkatan</span>
-                                                    <input type="file" class="form-control" name="file_sk_pengangkatan" id="att_pformal" />
+                                                    <input type="file" class="form-control" name="file_sk_pengangkatan" />
                                                 </div>
                                                 <a href="#" class="btn btn-primary btn-xs hide" style="margin-top: 5px" id="link_sk">
                                                     <i class="fa fa-files-o"></i>&nbsp;Lihat Lampiran
