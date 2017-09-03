@@ -20,7 +20,7 @@ class Mkurikulum extends CI_Model
 	}
 
     function get_mapel(){
-		$data = $this->db->query ("SELECT * FROM  	 ORDER BY id_matpal");
+		$data = $this->db->query ("SELECT * FROM ms_mata_pelajaran ORDER BY id_matpal");
 		return $data;
 	}
 
