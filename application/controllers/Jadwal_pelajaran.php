@@ -3,20 +3,39 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class bidstudi extends IO_Controller
+class jadwal_pelajaran extends IO_Controller
 {
 
 	public function __construct()
 	{
-			$modul = 26;
+			$modul = 20;
 			parent::__construct($modul);
-		 	$this->load->model('mbidstudi','model');
+		 	$this->load->model('mjadwal_pelajaran','model');
 	}
 
 	function index()
 	{
-        $vdata['title'] = 'DATA BIDANG STUDI';
-	    $data['content'] = $this->load->view('vbidstudi',$vdata,TRUE);
+        //get Tahun Ajaran Data
+			$select_thnajar= $this->model->get_thn_ajar()->result();
+            
+                        $vdata['kode_deskripsi'][NULL] = '';
+                        foreach ($select_thnajar as $b) {
+            
+                            $vdata['kode_deskripsi'][$b->id]
+                            =$b->deskripsi;
+                        }
+        //get Kelas
+			$select_kelas= $this->model->get_kelas()->result();
+            
+                        $vdata['kode_kelas'][NULL] = '';
+                        foreach ($select_kelas as $b) {
+            
+							$vdata['kode_kelas'][$b->kode_kelas."#".$b->nama."#".$b->tingkat."#".$b->tipe_kelas]
+							=$b->nama." | ".$b->tingkat." | ".$b->tipe_kelas;
+                        }
+		
+		$vdata['title'] = 'JADWAL PELAJARAN';
+	    $data['content'] = $this->load->view('vjadwal_pelajaran',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
 
@@ -27,7 +46,7 @@ class bidstudi extends IO_Controller
 
 		if($param!=null){
 
-			if(isset($param->id_bidang)) $string_param .= " id_bidang LIKE '%".$param->id_bidang."%' ";
+			if(isset($param->id_jadwal)) $string_param .= " id_jadwal LIKE '%".$param->id_jadwal."%' ";
 		}
 
 		return $string_param;
@@ -60,18 +79,20 @@ class bidstudi extends IO_Controller
 		$fdate = 'd-m-Y';
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_bidang.'\')">
+			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_jadwal.'\')">
 						<i class="fa fa-edit"></i>
 					</a>
-					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->id_bidang.'\')">
+					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->id_jadwal.'\')">
 						<i class="fa fa-remove"></i>
 					</a>';
 			
 			$records["data"][] = array(
 
-		     	$data[$i]->id_bidang,
-				$data[$i]->nama_bidang,
-				$data[$i]->kategori,
+		     	$data[$i]->id_jadwal,
+                 $data[$i]->nama,
+  				$data[$i]->santri,
+  				$data[$i]->deskripsi,
+  				$data[$i]->semester,
                 $act
 		   );
 		
@@ -103,15 +124,15 @@ class bidstudi extends IO_Controller
 		//activate worksheet number 1
 		$this->excel->setActiveSheetIndex(0);
 		//name the worksheet
-		$this->excel->getActiveSheet()->setTitle('BIDANG STUDI');
-		$this->excel->getActiveSheet()->setCellValue('A1', "Master Data Bidang Studi");
+		$this->excel->getActiveSheet()->setTitle('Master_jadwal_pelajaran');
+		$this->excel->getActiveSheet()->setCellValue('A1', "Master jadwal_pelajaran");
 		$this->excel->getActiveSheet()->mergeCells('A1:C1');
 		$this->excel->getActiveSheet()->getStyle('A1:C1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 		//header
 		$this->excel->getActiveSheet()->setCellValue('A3', "No.");
-		$this->excel->getActiveSheet()->setCellValue('B3', "ID Bidang Studi");
-		$this->excel->getActiveSheet()->setCellValue('C3', "Nama Bidang Studi");
+		$this->excel->getActiveSheet()->setCellValue('B3', "Kode jadwal_pelajaran");
+		$this->excel->getActiveSheet()->setCellValue('C3', "Nama jadwal_pelajaran");
 
 		$fdate 	= "d-m-Y";
 		$i  	= 4;
@@ -119,16 +140,16 @@ class bidstudi extends IO_Controller
 		if($data != null){
 
 			foreach($data as $row){
-               
+
 				$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
-				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->id_bidang);
-				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->nama_bidang);
+				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->id_jadwal);
+				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->nama);
 				
 				$i++;
 			}
 		}
 
-		for($col = 'A'; $col !== 'E'; $col++) {
+		for($col = 'A'; $col !== 'G'; $col++) {
 
 		    $this->excel->getActiveSheet()
 		        ->getColumnDimension($col)
@@ -149,7 +170,7 @@ class bidstudi extends IO_Controller
 		$this->excel->getActiveSheet()->getStyle('A3:C3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
 		$this->excel->getActiveSheet()->getStyle('A3:C3')->getFill()->getStartColor()->setRGB('2CC30B');
 
-		$filename='Master-Bidang-Studi.xls'; //save our workbook as this file name
+		$filename='Master-jadwal_pelajaran.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
 		header('Cache-Control: max-age=0');//no cache
@@ -162,120 +183,80 @@ class bidstudi extends IO_Controller
 
 	}
 
-	function simpan_bidstudi($status,$rbutton)
+	function simpan_jadwal_pelajaran($status)
 	{
-		$id_bidang 		    = $this->input->post('id_bidang');
-		$nama_bidang 		= $this->input->post('nama_bidang');
-		$nama_bidang 		= $this->input->post('nama_bidang');
-		$item_matpal 			= $this->input->post('hid_table_item_Matpal');
+		$id_jadwal 		= $this->input->post('id_jadwal');
+		$nama  		        = $this->input->post('nama');
         $recdate            = date('y-m-d');
 	    $userid 			= $this->session->userdata('logged_in')['uid'];
 
-		$data_bidstudi = array(
-			'id_bidang' 			=> $id_bidang,
-			'nama_bidang' 			=> $nama_bidang,
-			'kategori'				=> $rbutton,
+		$data_jadwal_pelajaran = array(
+			'id_jadwal' 			=> $id_jadwal,
+			'nama' 		            => $nama,
             'recdate'               => $recdate,
 			'userid' 				=> $userid
 		);
-		
         
 		if($status=='SAVE')	
 		{// cek apakah add new atau editdata
 			
-		// save data bidstudi
-         	$this->model->simpan_data_bidstudi($data_bidstudi);
-			//save matapelajaran			
-			$item_matpal  = explode(';',$item_matpal);
-			foreach ($item_matpal as $i) {
-					$idetail = explode('#',$i);
-					if(count($idetail)>1){
-							if($idetail[2] == "AKTIF"){
-								$status = 1;
-							}
-							else{
-								$status = 0;
-							}
-							$detail_Matpal = array(
-
-								'id_matpal'			=> $idetail[0],
-								'nama_matpal'		=> $idetail[1],
-								'id_bidang'			=> $id_bidang,
-								'status'			=> $status,
-								'recdate'			=> $recdate,
-								'userid' 			=> $userid
-								
-							);
-							$this->model->simpan_item_matpal($detail_Matpal);
-
-					}
-			}
+		// save data jadwal_pelajaran
+         	$this->model->simpan_data_jadwal_pelajaran($data_jadwal_pelajaran);
 
 		}
         else //update data
 		{		
-			// save data bidstudi
-         	$this->model->update_data_bidstudi($id_bidang,$data_bidstudi);
-			
-			//save matapelajaran
-			$this->model->delete_item_matpal($id_bidang);			
-			$item_matpal  = explode(';',$item_matpal);
-			foreach ($item_matpal as $i) {
-					$idetail = explode('#',$i);
-					if(count($idetail)>1){
-							if($idetail[2] == "AKTIF"){
-								$status = 1;
-							}
-							else{
-								$status = 0;
-							}
-							$detail_Matpal = array(
-
-								'id_matpal'			=> $idetail[0],
-								'nama_matpal'		=> $idetail[1],
-								'id_bidang'			=> $id_bidang,
-								'status'			=> $status,
-								'recdate'			=> $recdate,
-								'userid' 			=> $userid
-								
-							);
-							$this->model->simpan_item_matpal($detail_Matpal);
-
-					}
-			}
+			// save data jadwal_pelajaran
+         	$this->model->update_data_jadwal_pelajaran($id_jadwal,$data_jadwal_pelajaran);
         }	    
 
 			echo "true";
 	}
 
-	function get_data_bidstudi($id_bidang)
+	function get_data_jadwal_pelajaran($id_jadwal)
 	{
-		$id_bidang = urldecode($id_bidang);
-		$data = $this->model->query_bidstudi($id_bidang);
+        $id_jadwal = urldecode($id_jadwal);
+		$data = $this->model->query_jadwal_pelajaran($id_jadwal);
     	echo json_encode($data);
 	}
 
-	function Delbidstudi($id_bidang)
+	function cek_duplicate_data($id_thn_ajar,$santri,$semester,$kode_kelas)
 	{
-		$id_bidang = urldecode($id_bidang);
-		$this->model->delete_bidstudi($id_bidang);
-		$this->model->delete_item_matpal($id_bidang);
-	}
-
-	function get_data_matpal($id_bidang)
-	{
-		$data = $this->model->query_matpal($id_bidang);
-    	echo json_encode($data);
-		// var_dump($data);
-		// exit;
-	}
-
-	function get_data_mata_pelajaran($id_matpal,$nama_matpal,$kategori)
-	{
-		$id_matpal = urldecode($id_matpal);
-		$data = $this->model->query_mata_pelajaran($id_matpal,$nama_matpal,$kategori);
+        $id_thn_ajar 	= urldecode($id_thn_ajar);
+        $santri 		= urldecode($santri);
+        $semester 		= urldecode($semester);
+        $kode_kelas 	= urldecode($kode_kelas);
+		$data = $this->model->query_cek_duplicate_data($id_thn_ajar,$santri,$semester,$kode_kelas);
     	echo json_encode($data);
 	}
 
+	function Deljadwal_pelajaran($id_jadwal)
+	{
+		$id_jadwal = urldecode($id_jadwal);
+		$this->model->delete_jadwal_pelajaran($id_jadwal);
+	}
 
+	function GetKurikulum($id_thn_ajar,$semester,$tingkat,$tipe_kelas)
+	{
+		$id_thn_ajar 	= urldecode($id_thn_ajar);
+		$semester 		= urldecode($semester);
+		$tingkat 		= urldecode($tingkat);
+		$tipe_kelas 	= urldecode($tipe_kelas);
+		if ($semester == 1)
+		{
+			$data = $this->model->QueryGetKurikulumSM1($id_thn_ajar,$tingkat,$tipe_kelas);
+			
+		}
+		else if ($semester == 2)
+		{
+			$data = $this->model->QueryGetKurikulumSM2($id_thn_ajar,$tingkat,$tipe_kelas);
+			
+		}
+		echo json_encode($data);
+    	
+	}
 }
+
+	
+
+	

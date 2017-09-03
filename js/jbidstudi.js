@@ -243,10 +243,17 @@ function svbidstudi(){
 								{
 									msg="Simpan Data Berhasil"
 								}
+							if (document.getElementById('r_utama').checked) {
+								var rbutton = document.getElementById('r_utama').value;
+								}	
+								else if (document.getElementById('r_sore').checked) {
+								var rbutton = document.getElementById('r_sore').value;
+								
+								}
 							$.ajax({
 
 								type:"POST",
-								url:base_url+"bidstudi/simpan_bidstudi/"+$status,
+								url:base_url+"bidstudi/simpan_bidstudi/"+$status+"/"+rbutton,
 								enctype: 'multipart/form-data',
 								// dataType:"JSON",
 								contentType: false,
@@ -312,7 +319,17 @@ function edit(id_bidang){
 			
 			var data = $.parseJSON(data);
 			$('#id_bidang').val(data['id_bidang']);
-		    $('#nama_bidang').val(data['nama_bidang']);
+			$('#nama_bidang').val(data['nama_bidang']);
+
+			if (data['kategori'] == "UTAMA")
+			{
+				$('#r_utama').prop("checked", true)
+			}	
+			else if (data['kategori'] == "SORE")
+			{
+				$('#r_sore').prop("checked", true)
+			}
+			
             
 		}
 	});
@@ -424,8 +441,18 @@ function TambahMatpal(){
 	{
 		var id_matpal 				= $('#id_matpal').val()
 		var nama_matpal 			= $('#nama_matpal').val()
+		// var rbutton					= $('optionsRadios').filter(':checked').attr('value');
 		var status 					= $('#status').val()
 		var hid_jumlah_item 		= $('#hid_jumlah_item_Matpal').val()
+		
+		if (document.getElementById('r_utama').checked) {
+			var rbutton = document.getElementById('r_utama').value;
+		  }	
+		  else if (document.getElementById('r_sore').checked) {
+			var rbutton = document.getElementById('r_sore').value;
+		  
+		  }
+
 
 		if(cekItemMatpal(id_matpal)==true){
 			if (status ==1){
@@ -435,21 +462,31 @@ function TambahMatpal(){
 				status = "TIDAK AKTIF"
 			}
 				//cek di table mata pelajaran sudah ada atau belum
-				$id_matpal 		= $('#id_matpal').val();
-				$nama_matpal 	= $('#nama_matpal').val();
-				var str_url  	= encodeURI(base_url+"bidstudi/get_data_mata_pelajaran/"+$id_matpal+"/"+$nama_matpal);
+				// $id_matpal 		= $('#id_matpal').val();
+				// $nama_matpal 	= $('#nama_matpal').val();
+				var str_url  	= encodeURI(base_url+"bidstudi/get_data_mata_pelajaran/"+id_matpal+"/"+nama_matpal+"/"+rbutton);
 			$.ajax({
 				type:"POST",
 				url:str_url,
 				dataType:"html",
 				success:function(data){	
 					$data = $.parseJSON(data);
-						if( $data != null){
-								bootbox.alert("ID Mata Pelajarang Sudah ada di database!!");
+						if($data != null)
+						{
+							if( $data['id_matpal'] == $('#id_matpal').val()){
+									bootbox.alert("ID Mata Pelajaran sudah ada di database!!");
+									return false;
+								
+							}
+							else if( $data['nama_matpal'] == $('#nama_matpal').val() && $data['kategori'] == rbutton){
+								bootbox.alert("Nama Mata Pelajaran dengan kategori "+rbutton+" sudah ada di database!!");
 								return false;
 							
+							}
+							
 						}
-						else{
+						else
+						{
 							var row_count 		= $('#tb_list_Matpal tr.tb-detail').length;
 							var content_data 	= '<tr class="tb-detail" id="row'+id_matpal+'">';
 								content_data 	+= "<td>"+(row_count+1)+"</td>";
@@ -551,5 +588,9 @@ function hapusItemMatpal(row_id){
 
 function RB_action()
 {
-	kosong();
+	if ($('#save_button').text() == "SAVE")
+		{
+			kosong();
+			$('#tb_list_Matpal tbody').html('');
+		}	
 }

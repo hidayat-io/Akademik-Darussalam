@@ -21,7 +21,8 @@ class Mmata_pelajaran extends CI_Model
 		
         $cols = array('id_matpal','nama_matpal','id_bidang','status');
 
-        $sql = "SELECT * FROM ms_mata_pelajaran";
+        $sql = "SELECT a.*, b.kategori FROM ms_mata_pelajaran a
+		INNER JOIN ms_bidang_study b ON a.id_bidang = b.`id_bidang`";
                     
 
             if($param!=null){

@@ -39,6 +39,7 @@
                                 <th style="text-align:center">ID Mata Pelajaran</th>
                                 <th style="text-align:center">Nama Mata Pelajaran</th>
                                 <th style="text-align:center">ID Bidang</th>
+                                <th style="text-align:center">Kategori</th>
                                 <th style="text-align:center">Status</th>
                                 <th style="text-align:center" width="10%">Action</th>
                             </tr>

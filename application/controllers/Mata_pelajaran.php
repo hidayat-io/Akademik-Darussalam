@@ -88,6 +88,7 @@ class mata_pelajaran extends IO_Controller
 		     	$data[$i]->id_matpal,
 				$data[$i]->nama_matpal,
   				$data[$i]->id_bidang,
+  				$data[$i]->kategori,
 				$status,
                 $act
 		   );

@@ -15,13 +15,13 @@
                 </div>
                 <div class="tools">
                   <div class="btn-group pull-right">
-                      
+
                   </div>
                 </div>
                 <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
                     <button class="btn btn-default " type="button" data-toggle="dropdown" onclick="modalNew()">
                         <i class="icon-note"></i>&nbsp;Tambah Data&nbsp;
-                    </button>                    
+                    </button>
                     <button type="button" class="btn btn-default" title="Search Data" onclick="Modalcari()">
                         <i class="fa fa-search"></i>&nbsp;Search
                     </button>
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <input type="hidden" name="hid_param" id="hid_param" />
-            <div class="portlet-body">            
+            <div class="portlet-body">
                 <table class="table table-striped table-bordered table-hover" id="tb_list">
                     <thead>
                         <tr>
@@ -40,13 +40,13 @@
                             <th>NIG</th>
                             <th>Mulai Mengajar</th>
                             <th>Gender</th>
-                            <th>Status</th>                            
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr><td colspan="7" align="center">Tidak ada data ditemukan.</td></tr>
-                    </tbody>                    
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -55,20 +55,27 @@
 </div>
 
 <!-- Modal Form Editing -->
-<div id="modal_editing" class="modal modal-form fade bs-modal-lg modal-fullscreen force-fullscreen" 
+<div id="modal_editing" class="modal modal-form fade bs-modal-lg modal-fullscreen force-fullscreen"
     role="dialog" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-form modal-lg" id="portlet_form_scan">
         <div class="modal-content modal-content-form">
             <div class="modal-body-form">
                 <div class="portlet-form">
-                    <form id="form_editing">
+                    <form id="form_editing" enctype="multipart/form-data">
+
+                        <input type="text" id="hid_anak" name="hid_anak" value="[]" class="hidden" />
+                        <input type="text" id="hid_sk_angkat" name="hid_sk_angkat" value="[]" class="hidden" />
+                        <input type="text" id="hid_formal_edu" name="hid_formal_edu" value="[]" class="hidden" />
+                        <input type="text" id="hid_nonformal_edu" name="hid_nonformal_edu" value="[]" class="hidden" />
+
                         <div class="alert alert-danger display-hide">
                             <button class="close" data-close="alert"></button>
                             <i class="fa fa-exclamation-triangle"></i>&nbsp;Mohon cek kembali data yang Anda input, masih ada form yang wajib diisi.
                         </div>
-                        <div class="tabbable-custom ">
-                            <ul class="nav nav-tabs ">
-                                <li>
+                        <div class="tabbable-custom">
+
+                            <ul class="nav nav-tabs">
+                                <li class="active">
                                     <a href="#data_guru" data-toggle="tab"><i class="fa fa-user"></i>&nbsp;Biodata Guru</a>
                                 </li>
                                 <li>
@@ -77,13 +84,14 @@
                                 <li>
                                     <a href="#data_anak" data-toggle="tab"><i class="fa fa-child"></i>&nbsp;Data Anak</a>
                                 </li>
-                                <li class="active">
+                                <li>
                                     <a href="#data_pendidikan" data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Pendidikan</a>
                                 </li>
                             </ul>
+
                             <div class="tab-content">
-                                <div class="tab-pane" id="data_guru">
-                                    <div class="form-body">                           
+                                <div class="tab-pane active" id="data_guru">
+                                    <div class="form-body">
                                         <div class="row">
                                             <div class="col-md-6 text-center">
                                                 <div class="fileinput fileinput-new" data-provides="fileinput" style="padding-bottom: 5px;">
@@ -94,7 +102,8 @@
                                                         <span class="btn default btn-file">
                                                             <span class="fileinput-new">Pilih Foto</span>
                                                             <span class="fileinput-exists"> Ubah </span>
-                                                            <input type="file" name="..."> </span>
+                                                            <input type="file" name="file_foto" id="file_foto" accept="image/*">
+                                                        </span>
                                                         <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput">Remove</a>
                                                     </div>
                                                 </div>
@@ -122,7 +131,7 @@
                                                 <br>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">NUPTK</span>
-                                                    <input type="text" class="form-control medium-width" placeholder="NUPTK" name="txt_nuptk">
+                                                    <input type="text" class="form-control input-medium" placeholder="NUPTK" name="txt_nuptk">
                                                 </div>
                                             </div>
                                         </div>
@@ -134,7 +143,7 @@
                                                     <input type="text" class="form-control" placeholder="Tempat Lahir" name="txt_tmp_lahir">
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">NIG</span>
@@ -147,19 +156,23 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Tgl.Lahir</span>
-                                                    <input type="text" class="form-control medium-width" placeholder="Tgl.Lahir" name="dtp_tgl_lahir">
+                                                    <div class="input-group input-medium date datepicker" data-date-format="dd-mm-yyyy">
+                                                        <input type="text" class="form-control" readonly="" name="dtp_tgl_lahir">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn default" type="button">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        No.KTP
-                                                        <span class="required">*</span>
-                                                    </span>
-                                                    <div class="input-icon right">
+                                                    <span class="input-group-addon">No.KTP<span class="required">*</span></span>
+                                                    <div class="input-icon right input-medium">
                                                         <i class="fa"></i><input type="text" class="form-control medium-width" name="txt_no_ktp" placeholder="No.KTP" />
-                                                    </div>                                                    
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -167,15 +180,35 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="input-group">
+                                                    <span class="input-group-addon">Jenis Kelamin</span>
+                                                    <select name="opt_gender" class="form-control input-small">                                         
+                                                        <option value="l">Laki-laki</option>
+                                                        <option value="p">Perempuan</option>
+                                                    </select>
+                                                </div>                                                
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">No.KK</span>
+                                                    <input type="text" class="form-control input-medium" name="txt_no_kk" placeholder="No.KK" />
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">                       
+                                                <div class="input-group">
                                                     <span class="input-group-addon">Kewarganegaraan</span>
                                                     <input type="text" class="form-control" placeholder="Kewarganegaraan" name="txt_kewarganegaraan">
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Alamat Lengkap</span>
-                                                    <textarea rows="4" cols="50" class="form-control" placeholder="Alamat Lengkap"></textarea>
+                                                    <textarea name="txa_alamat" rows="4" cols="50" class="form-control" placeholder="Alamat Lengkap"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -184,10 +217,10 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Email</span>
-                                                    <input type="text" class="form-control" placeholder="Email" name="txt_email">
+                                                    <input type="text" class="form-control input-medium" placeholder="Email" name="txt_email">
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">No.Telp / HP.</span>
@@ -203,7 +236,7 @@
                                                     <input type="text" class="form-control" placeholder="Nama Ayah" name="txt_nama_ayah">
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Nama Ibu</span>
@@ -216,14 +249,14 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Status Pernikahan</span>
-                                                    <select name="opt_pernikahan" class="form-control">
-                                                        <option>- Belum Dipilih -</option>
+                                                    <select name="opt_pernikahan" class="form-control input-medium">
+                                                        <option value="">- Belum Dipilih -</option>
                                                         <option value="s">Belum Menikah</option>
                                                         <option value="m">Menikah</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Nama Pasangan</span>
@@ -236,14 +269,21 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Jumlah Anak</span>
-                                                    <input type="text" class="form-control small-width numbers-only" placeholder="Jumlah Anak" name="txt_jml_anak" readonly="">
+                                                    <input type="text" class="form-control small-width numbers-only input-medium" placeholder="Jumlah Anak" name="txt_jml_anak" id="txt_jml_anak" readonly="">
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    <span class="input-group-addon">Usia Pasangan</span>
-                                                    <input type="text" class="form-control small-width numbers-only" placeholder="Usia Pasangan" name="txt_usia_pasangan">
+                                                    <span class="input-group-addon">Tgl.Lahir Pasangan</span>
+                                                    <div class="input-group input-medium date datepicker" data-date-format="dd-mm-yyyy">
+                                                        <input type="text" class="form-control" readonly="" name="dtp_tgllahir_pasangan">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn default" type="button">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -261,7 +301,7 @@
                                                     <input type="text" class="form-control input-medium" placeholder="No.Stambuk Alumni" name="txt_stambuk_alumni">
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Mengajar Sejak</span>
@@ -277,7 +317,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Status</span>
                                                     <select name="opt_status" class="form-control input-medium">
-                                                        <option>- Belum Dipilih -</option>
+                                                        <option value="">- Belum Dipilih -</option>
                                                         <option value="s">Pengabdian</option>
                                                         <option value="m">Tetap</option>
                                                     </select>
@@ -291,30 +331,7 @@
 
                                                         $att_jabatan = 'class="form-control select2-multiple input-xlarge" id="opt_jabatan" multiple';
                                                         echo form_dropdown('opt_jabatan', $opt_jabatan, null, $att_jabatan);
-                                                    ?>                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">No.SK Pengangkatan</span>
-                                                    <input type="text" class="form-control input-medium" placeholder="No.SK Pengangkatan" name="txt_sk_angkat">
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="col-md-6">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">Tanggal SK.</span>
-                                                    <div class="input-group input-small date datepicker" data-date-format="dd-mm-yyyy">
-                                                        <input type="text" class="form-control" readonly="" name="dtp_tgl_sk">
-                                                        <span class="input-group-btn">
-                                                            <button class="btn default" type="button">
-                                                                <i class="fa fa-calendar"></i>
-                                                            </button>
-                                                        </span>
-                                                    </div>
+                                                    ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -323,10 +340,10 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Kesra / Gapok</span>
-                                                    <input type="text" class="form-control input-medium" placeholder="Gapok" name="txt_gapok">
+                                                    <input type="text" class="form-control input-medium numbers-only" placeholder="Gapok" name="txt_gapok">
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Masa Pengabdian</span>
@@ -339,17 +356,103 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Ijazah Terakhir</span>
-                                                    <input type="text" class="form-control numbers-only input-medium" placeholder="Ijazah Terakhir" name="txt_ijazah)terakhir">
+                                                    <select class="form-control select2 input-medium" id="opt_ijazah_terakhir" name="opt_ijazah_terakhir"></select>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="input-group">
+                                                    <span class="input-group-addon">Gelar Akademik</span>
+                                                    <input type="text" class="form-control input-medium" placeholder="Gelar Akademik" name="txt_gelar">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Materi yang diampu</span>
+                                                    <textarea name="txa_materi" rows="4" cols="50" class="form-control" placeholder="Materi yang diampu"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h5 class="form-section">SK Pengangkatan</h5>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">No.SK Pengangkatan</span>
+                                                    <input type="text" class="form-control input-medium" placeholder="No.SK Pengangkatan" name="txt_sk_angkat">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Tanggal SK.</span>
+                                                    <div class="input-group input-medium date datepicker" data-date-format="dd-mm-yyyy">
+                                                        <input type="text" class="form-control" readonly="" name="dtp_tgl_sk">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn default" type="button">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">File SK Pengangkatan</span>
+                                                    <input type="file" class="form-control" name="file_sk_pengangkatan" id="att_pformal" />
+                                                </div>
+                                                <a href="#" class="btn btn-primary btn-xs hide" style="margin-top: 5px" id="link_sk">
+                                                    <i class="fa fa-files-o"></i>&nbsp;Lihat Lampiran
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <h5 class="form-section">
+                                            SK Pemberian Tugas
+                                            <a href="javascript:;" class="btn btn-xs btn-circle blue-soft pull-right" onclick="modalFormSK()">
+                                                <i class="fa fa-plus"></i>&nbsp;Tambah SK
+                                            </a>
+                                        </h5>
+                                        <div class="row">
+                                            <table class="table table-bordered" id="tb_data_sk_tugas">
+                                                <thead>
+                                                    <tr class="active">
+                                                        <th width="5%">No</th>                                               
+                                                        <th width="30%">No.SK Pemberian Tugas</th>
+                                                        <th>Tgl.SK</th>
+                                                        <th width="10%">File SK</th>                                                        
+                                                        <th width="10%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr><td colspan="6" class="text-center">Tidak ada data.</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <h5 class="form-section">Sertifikasi</h5>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="input-group">
                                                     <span class="input-group-addon">Sertifikasi</span>
                                                     <input type="text" class="form-control input-medium" placeholder="Sertifikasi" name="txt_sertifikasi">
                                                 </div>
                                             </div>
-                                        </div>                                        
+
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">File Sertifikasi</span>
+                                                    <input type="file" class="form-control" name="file_sertifikasi" id="att_pformal" />
+                                                </div>
+                                                <a href="#" class="btn btn-primary btn-xs hide" style="margin-top: 5px" id="link_sertifikasi">
+                                                    <i class="fa fa-files-o"></i>&nbsp;Lihat Lampiran
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -370,9 +473,9 @@
                                         <tbody>
                                             <tr><td colspan="5" class="text-center">Tidak ada data.</td></tr>
                                         </tbody>
-                                    </table>                                    
+                                    </table>
                                 </div>
-                                <div class="tab-pane active" id="data_pendidikan">
+                                <div class="tab-pane" id="data_pendidikan">
                                     <h4  class="form-section">
                                         Pendidikan Formal
                                         <a href="javascript:;" class="btn btn-xs btn-circle blue-soft pull-right" onclick="modalAddEduFormal()">
@@ -382,12 +485,12 @@
                                     <table class="table table-bordered" id="tb_data_pformal">
                                         <thead>
                                             <tr class="active">
-                                                <th>No</th>
-                                                <th>Pendidikan</th>
+                                                <th width="5%">No</th>
+                                                <th width="30%">Pendidikan</th>
                                                 <th>Tempat</th>
-                                                <th>Lulus Tahun</th>
-                                                <th>Lampiran</th>
-                                                <th>Action</th>
+                                                <th width="10%">Lulus Tahun</th>
+                                                <th width="10%">Lampiran</th>
+                                                <th width="10%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -404,18 +507,18 @@
                                     <table class="table table-bordered" id="tb_data_pnonformal">
                                         <thead>
                                             <tr class="active">
-                                                <th>No</th>
-                                                <th>Pendidikan</th>
+                                                <th width="5%">No</th>
+                                                <th width="30%">Pendidikan</th>
                                                 <th>Tempat</th>
-                                                <th>Lulus Tahun</th>
-                                                <th>Lampiran</th>
-                                                <th>Action</th>
+                                                <th width="10%">Lulus Tahun</th>
+                                                <th width="10%">Lampiran</th>
+                                                <th width="10%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr><td colspan="6" class="text-center">Tidak ada data.</td></tr>
                                         </tbody>
-                                    </table>                                    
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -429,10 +532,10 @@
                 <a href="javascript:;" class="btn btn-sm green-jungle" onclick="validateForm()" id="cmd_save">
                     <i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;SIMPAN
                 </a>
-                <img id="load_save" style="margin-left:5px;display: none" 
+                <img id="load_save" style="margin-left:5px;display: none"
                     src="<?php echo base_url(); ?>images/pre_loader.gif" />
             </div>
-        </div>        
+        </div>
     </div>
 </div>
 <!-- End Modal Form Editing -->
@@ -457,9 +560,9 @@
                                     </span>
                                     <div class="input-icon right">
                                         <i class="fa"></i><input type="text" class="form-control" name="txt_da_nama" id="txt_da_nama" placeholder="Nama Anak" />
-                                    </div>                                                    
+                                    </div>
                                 </div>
-                            </div>                        
+                            </div>
                         </div>
 
                         <div class="row">
@@ -470,7 +573,7 @@
                                     </span>
                                     <div class="input-icon right">
                                         <i class="fa"></i><input type="text" class="form-control" name="txt_da_pendidikan" id="txt_da_pendidikan" placeholder="Pendidikan Anak" />
-                                    </div>                                                    
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -483,11 +586,11 @@
                                     </span>
                                     <div class="input-icon right" data-date-format="dd-mm-yyyy">
                                         <i class="fa"></i>
-                                        <input type="text" class="form-control input-small datepicker" data-date-format="dd-mm-yyyy" 
+                                        <input type="text" class="form-control input-small datepicker" data-date-format="dd-mm-yyyy"
                                             readonly="" name="dtp_da_birth" id="dtp_da_birth" placeholder="Tanggal Lahir">
-                                    </div>                                    
+                                    </div>
                                 </div>
-                            </div>                        
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -496,8 +599,8 @@
                 <button type="button" class="btn default" data-dismiss="modal">Batal</button>
                 <button type="button" class="btn green-jungle" onclick="simpanDataAnak()">Simpan</button>
             </div>
-        </div>        
-    </div>    
+        </div>
+    </div>
 </div>
 <!-- END Modal add data anak -->
 
@@ -521,9 +624,9 @@
                                     </span>
                                     <div class="input-icon right">
                                         <i class="fa"></i><input type="text" class="form-control" name="txt_pformal_nama" id="txt_pformal_nama" placeholder="Nama Pendidikan" />
-                                    </div>                                                    
+                                    </div>
                                 </div>
-                            </div>                        
+                            </div>
                         </div>
 
                         <div class="row">
@@ -534,7 +637,7 @@
                                     </span>
                                     <div class="input-icon right">
                                         <i class="fa"></i><input type="text" class="form-control" name="txt_pformal_tempat" id="txt_pformal_tempat" placeholder="Tempat Pedidikan" />
-                                    </div>                                              
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -546,10 +649,19 @@
                                         <span class="required">*</span>
                                     </span>
                                     <div class="input-icon right">
-                                        <i class="fa"></i><input type="text" class="form-control numbers-only" name="txt_pformal_lulus" id="txt_pformal_lulus" placeholder="Tahun Lulus" />
+                                        <i class="fa"></i><input type="text" class="form-control numbers-only" name="txt_pformal_lulus" id="txt_pformal_lulus" placeholder="Tahun Lulus" maxlength="4" />
                                     </div>
                                 </div>
-                            </div>                        
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Lampiran</span>
+                                    <input type="file" class="form-control" name="att_file" id="att_pformal" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -558,7 +670,139 @@
                 <button type="button" class="btn default" data-dismiss="modal">Batal</button>
                 <button type="button" class="btn green-jungle" onclick="simpanDataPformal()">Simpan</button>
             </div>
-        </div>        
-    </div>    
+        </div>
+    </div>
+</div>
+<!-- END Modal add data pendidikan formal -->
+
+<!-- Modal add data pendidikan formal -->
+<div class="modal fade" id="modal_data_pnonformal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Data Pendidikan Non Formal</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form_data_pnonformal">
+                    <input type="text" id="id_detail_pnonformal" class="hidden" />
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Nama Pendidikan
+                                        <span class="required">*</span>
+                                    </span>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i><input type="text" class="form-control" name="txt_pnonformal_nama" id="txt_pnonformal_nama" placeholder="Nama Pendidikan" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Tempat
+                                        <span class="required">*</span>
+                                    </span>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i><input type="text" class="form-control" name="txt_pnonformal_tempat" id="txt_pnonformal_tempat" placeholder="Tempat Pedidikan" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Lulus Tahun
+                                        <span class="required">*</span>
+                                    </span>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i><input type="text" class="form-control numbers-only" name="txt_pnonformal_lulus" id="txt_pnonformal_lulus" placeholder="Tahun Lulus" maxlength="4" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Lampiran</span>
+                                    <input type="file" class="form-control" name="att_file" id="att_pnonformal" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn green-jungle" onclick="simpanDataPnonformal()">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Modal add data pendidikan formal -->
+
+<!-- Modal add data pendidikan formal -->
+<div class="modal fade" id="modal_data_sk" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Data SK Pemberian Tugas</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form_data_sk">
+                    <input type="text" id="id_detail_sk" class="hidden" />
+                    <div class="form-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">No.SK
+                                        <span class="required">*</span>
+                                    </span>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i><input type="text" class="form-control" name="txt_no_sk" id="txt_no_sk" placeholder="No.SK" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Tgl.SK
+                                        <span class="required">*</span>
+                                    </span>
+                                    <div class="input-icon right" data-date-format="dd-mm-yyyy">
+                                        <i class="fa"></i>
+                                        <input type="text" class="form-control input-small datepicker" data-date-format="dd-mm-yyyy"
+                                            readonly="" name="dtp_tgl_sk" id="dtp_tgl_sk" placeholder="Tanggal SK">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Lampiran</span>
+                                    <input type="file" class="form-control" name="att_file" id="att_file" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn green-jungle" onclick="simpanDataSK()">Simpan</button>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- END Modal add data pendidikan formal -->

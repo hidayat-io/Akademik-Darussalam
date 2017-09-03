@@ -13,5 +13,12 @@ class Mguru extends CI_Model {
 		$sql.= " ORDER BY ".$cols[$sortby]." ".$sorttype;
 		
 		return $this->db->query($sql)->result();
-	}	
+	}
+
+	function msimpan_data($data){
+
+		$id = $this->db->insert('ms_guru',$data);
+		
+		return $this->db->insert_id();
+	}
 }

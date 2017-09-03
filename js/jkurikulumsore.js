@@ -3,7 +3,7 @@ $(document).ready(function()
 {
 	// addSantri("TMI");
 	setTable();
-	// setTableKurikulum();
+	// setTablekurikulumsore();
 	$('.datepicker').datepicker(
 	{
 		rtl: App.isRTL(),
@@ -25,7 +25,7 @@ $(document).ready(function()
 	});
 
 	//validasi form modal add_kecakapan_khusus
-	$( "#add_kurikulum" ).validate({
+	$( "#add_kurikulumsore" ).validate({
 		errorElement:"em",
 		// errorClass:"help-block help-block-error",
 			// rules:{
@@ -74,63 +74,13 @@ $(document).ready(function()
 
 });
 
-// function tingkatshow(){
-//     $('#hiddentingkat').show();
-//     $('#spansearchtingkat').hide();
-//     $('#spansearchclosetingkat').show();
-    
-    
-// }
-
-// function tingkatclosespan(){
-//     $('#hiddentingkat').hide();
-//     $('#spansearchtingkat').show();
-//     $('#spansearchclosetingkat').hide();
-// }
-
-// function pilihItemtingkat(){
-
-// 	$item  	= $('#hide_tingkat').val();
-// 	$item 	= $item.split('#');
-
-//     $('#tingkat').val($item[0]);
-//     $('#hiddentingkat').hide();
-//     $('#spansearchtingkat').show();
-//     $('#spansearchclosetingkat').hide();
-// }
-
-// function id_mapelshow(){
-//     $('#hiddenid_mapel').show();
-//     $('#spansearchid_mapel').hide();
-//     $('#spansearchcloseid_mapel').show();
-    
-    
-// }
-
-// function id_mapelclosespan(){
-//     $('#hiddenid_mapel').hide();
-//     $('#spansearchid_mapel').show();
-//     $('#spansearchcloseid_mapel').hide();
-// }
-
-// function pilihItemid_mapel(){
-
-// 	$item  	= $('#hide_id_mapel').val();
-// 	$item 	= $item.split('#');
-
-//     $('#id_mapel').val($item[0]);
-//     $('#hiddenid_mapel').hide();
-//     $('#spansearchid_mapel').show();
-//     $('#spansearchcloseid_mapel').hide();
-// }
-
 function setTable(){
 	 $('#tb_list').DataTable( {
 		"order": [[ 0, "desc" ]],
         "processing": true,
 		"serverSide": true,
 		ajax: {
-			'url':base_url+"kurikulum/load_grid",
+			'url':base_url+"kurikulumsore/load_grid",
 			'type':'GET',
 			'data': function ( d ) {
                 d.param = $('#hid_param').val();
@@ -159,11 +109,11 @@ function SearchAction(){
 	$('#Modal_cari').modal('toggle');
 }
 
-function svkurikulum(){
-	if($("#add_kurikulum").valid()==true){
+function svkurikulumsore(){
+	if($("#add_kurikulumsore").valid()==true){
         $id_thn_ajar = $('#hide_id_thn_ajar').val();
 		$status = $('#save_button').text();
-		var str_url  	= encodeURI(base_url+"kurikulum/get_data_kurikulum_byid/"+$id_thn_ajar);
+		var str_url  	= encodeURI(base_url+"kurikulumsore/get_data_kurikulumsore_byid/"+$id_thn_ajar);
        $.ajax({
 		type:"POST",
 		url:str_url,
@@ -180,7 +130,7 @@ function svkurikulum(){
                     
                 }
                 else{
-                    var iform = $('#add_kurikulum')[0];
+                    var iform = $('#add_kurikulumsore')[0];
                     var data = new FormData(iform);
                     if ($status == 'UPDATE')
                         {
@@ -193,7 +143,7 @@ function svkurikulum(){
                     $.ajax({
 
                         type:"POST",
-                        url:base_url+"kurikulum/simpan_kurikulum/"+$status,
+                        url:base_url+"kurikulumsore/simpan_kurikulumsore/"+$status,
                         enctype: 'multipart/form-data',
                         // dataType:"JSON",
                         contentType: false,
@@ -206,7 +156,7 @@ function svkurikulum(){
                                 size: 'small',
                                 callback: function () {
 
-                                    window.location = base_url+'kurikulum';
+                                    window.location = base_url+'kurikulumsore';
                                 }
                             });
                         }
@@ -223,11 +173,11 @@ function OtomatisKapital(a){
     }, 1);
 }
 
-function addkurikulum(){
+function addkurikulumsore(){
     $('#save_button').text('SAVE');	
     $('#id_thn_ajar').attr('disabled',false);
     $('#id_thn_ajar').val('');
-	$('#Modal_add_kurikulum').modal('show');
+	$('#Modal_add_kurikulumsore').modal('show');
 }
 
 function ONprosses(){
@@ -248,7 +198,7 @@ function add_tohide()
 }
 
 function edit(id_thn_ajar){
-	var str_url  	= encodeURI(base_url+"kurikulum/get_data_kurikulum/"+id_thn_ajar);
+	var str_url  	= encodeURI(base_url+"kurikulumsore/get_data_kurikulumsore/"+id_thn_ajar);
     $('#save_button').text('UPDATE');
     $('#id_thn_ajar').attr('disabled',true);
 	$.ajax({
@@ -297,7 +247,7 @@ function edit(id_thn_ajar){
 				
 			}
 			
-			$('#Modal_add_kurikulum').modal('show');
+			$('#Modal_add_kurikulumsore').modal('show');
 			
 	
 			
@@ -308,7 +258,7 @@ function edit(id_thn_ajar){
 }
 
 function hapus(id_thn_ajar){
-	var str_url  	= encodeURI(base_url+"kurikulum/Delkurikulum/"+id_thn_ajar);
+	var str_url  	= encodeURI(base_url+"kurikulumsore/Delkurikulumsore/"+id_thn_ajar);
 	bootbox.confirm("Anda yakin akan menghapus "+id_thn_ajar+" ini ?",
 		function(result){
 			if(result==true){
@@ -323,7 +273,7 @@ function hapus(id_thn_ajar){
 						size: 'small',
 						callback: function () {
 
-							window.location = base_url+'kurikulum';
+							window.location = base_url+'kurikulumsore';
 						}
 					});
 				}
@@ -344,7 +294,7 @@ function downloadExcel(){
 	var param 	= $('#hid_param').val();
 	param 		= ioEncode(param);
 
-	window.location = base_url+'kurikulum/exportexcel/'+param;
+	window.location = base_url+'kurikulumsore/exportexcel/'+param;
 }
 
 
