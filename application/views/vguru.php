@@ -113,7 +113,7 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">No.Registrasi</span>
-                                                    <input type="text" class="form-control input-small" placeholder="No.Registrasi" name="txt_noreg" readonly>
+                                                    <input type="text" class="form-control input-small" placeholder="No.Registrasi" name="txt_noreg" id="txt_noreg" readonly>
                                                 </div>
                                                 <br>
                                                 <div class="input-group">
@@ -122,18 +122,18 @@
                                                         <span class="required">*</span>
                                                     </span>
                                                     <div class="input-icon right">
-                                                        <i class="fa"></i><input type="text" class="form-control" name="txt_nama_lengkap" placeholder="Nama Lengkap" />
+                                                        <i class="fa"></i><input type="text" class="form-control" name="txt_nama_lengkap" id="txt_nama_lengkap" placeholder="Nama Lengkap" />
                                                     </div>
                                                 </div>
                                                 <br>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Nama Arab</span>
-                                                    <input type="text" class="form-control" placeholder="Nama Arab" name="txt_nama_arab">
+                                                    <input type="text" class="form-control" placeholder="Nama Arab" name="txt_nama_arab" id="txt_nama_arab">
                                                 </div>
                                                 <br>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">NUPTK</span>
-                                                    <input type="text" class="form-control input-medium" placeholder="NUPTK" name="txt_nuptk">
+                                                    <input type="text" class="form-control input-medium" placeholder="NUPTK" name="txt_nuptk" id="txt_nuptk">
                                                 </div>
                                             </div>
                                         </div>
@@ -142,14 +142,14 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Tempat Lahir</span>
-                                                    <input type="text" class="form-control" placeholder="Tempat Lahir" name="txt_tmp_lahir">
+                                                    <input type="text" class="form-control" placeholder="Tempat Lahir" name="txt_tmp_lahir" id="txt_tmp_lahir">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">NIG</span>
-                                                    <input type="text" class="form-control medium-width" placeholder="NIG" name="txt_no_nig">
+                                                    <input type="text" class="form-control medium-width" placeholder="NIG" name="txt_no_nig" id="txt_no_nig">
                                                 </div>
                                             </div>
                                         </div>
@@ -159,7 +159,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Tgl.Lahir</span>
                                                     <div class="input-group input-medium date datepicker" data-date-format="dd-mm-yyyy">
-                                                        <input type="text" class="form-control" readonly="" name="dtp_tgl_lahir">
+                                                        <input type="text" class="form-control" readonly="" name="dtp_tgl_lahir" id="dtp_tgl_lahir">
                                                         <span class="input-group-btn">
                                                             <button class="btn default" type="button">
                                                                 <i class="fa fa-calendar"></i>
@@ -173,7 +173,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon">No.KTP<span class="required">*</span></span>
                                                     <div class="input-icon right input-medium">
-                                                        <i class="fa"></i><input type="text" class="form-control medium-width" name="txt_no_ktp" placeholder="No.KTP" />
+                                                        <i class="fa"></i><input type="text" class="form-control medium-width" name="txt_no_ktp" id="txt_no_ktp" placeholder="No.KTP" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -183,7 +183,7 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Jenis Kelamin</span>
-                                                    <select name="opt_gender" class="form-control input-small">                                         
+                                                    <select name="opt_gender" id="opt_gender" class="form-control input-small">                                         
                                                         <option value="l">Laki-laki</option>
                                                         <option value="p">Perempuan</option>
                                                     </select>
@@ -193,7 +193,7 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">No.KK</span>
-                                                    <input type="text" class="form-control input-medium" name="txt_no_kk" placeholder="No.KK" />
+                                                    <input type="text" class="form-control input-medium" name="txt_no_kk" id="txt_no_kk" placeholder="No.KK" />
                                                     
                                                 </div>
                                             </div>
@@ -203,14 +203,14 @@
                                             <div class="col-md-6">                       
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Kewarganegaraan</span>
-                                                    <input type="text" class="form-control" placeholder="Kewarganegaraan" name="txt_kewarganegaraan">
+                                                    <input type="text" class="form-control" placeholder="Kewarganegaraan" name="txt_kewarganegaraan" id="txt_kewarganegaraan">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Alamat Lengkap</span>
-                                                    <textarea name="txa_alamat" rows="4" cols="50" class="form-control" placeholder="Alamat Lengkap"></textarea>
+                                                    <textarea name="txa_alamat" id="txa_alamat" rows="4" cols="50" class="form-control" placeholder="Alamat Lengkap"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -219,14 +219,14 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Email</span>
-                                                    <input type="text" class="form-control input-medium" placeholder="Email" name="txt_email">
+                                                    <input type="text" class="form-control input-medium" placeholder="Email" name="txt_email" id="txt_email">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">No.Telp / HP.</span>
-                                                    <input type="text" class="form-control" placeholder="No.Telp / HP." name="txt_notelp">
+                                                    <input type="text" class="form-control" placeholder="No.Telp / HP." name="txt_notelp" id="txt_notelp">
                                                 </div>
                                             </div>
                                         </div>
@@ -235,14 +235,14 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Nama Ayah</span>
-                                                    <input type="text" class="form-control" placeholder="Nama Ayah" name="txt_nama_ayah">
+                                                    <input type="text" class="form-control" placeholder="Nama Ayah" name="txt_nama_ayah" id="txt_nama_ayah">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Nama Ibu</span>
-                                                    <input type="text" class="form-control" placeholder="Nama Ibu" name="txt_nama_ibu">
+                                                    <input type="text" class="form-control" placeholder="Nama Ibu" name="txt_nama_ibu" id="txt_nama_ibu">
                                                 </div>
                                             </div>
                                         </div>
@@ -251,7 +251,7 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Status Pernikahan</span>
-                                                    <select name="opt_pernikahan" class="form-control input-medium">                                                        
+                                                    <select name="opt_pernikahan"  id="opt_pernikahan" class="form-control input-medium">
                                                         <option value="s">Belum Menikah</option>
                                                         <option value="m">Menikah</option>
                                                     </select>
@@ -261,7 +261,7 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Nama Pasangan</span>
-                                                    <input type="text" class="form-control" placeholder="Nama Pasangan" name="txt_nama_pasangan">
+                                                    <input type="text" class="form-control" placeholder="Nama Pasangan" name="txt_nama_pasangan" id="txt_nama_pasangan">
                                                 </div>
                                             </div>
                                         </div>
@@ -278,7 +278,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Tgl.Lahir Pasangan</span>
                                                     <div class="input-group input-medium date datepicker" data-date-format="dd-mm-yyyy">
-                                                        <input type="text" class="form-control" readonly="" name="dtp_tgllahir_pasangan">
+                                                        <input type="text" class="form-control" readonly="" name="dtp_tgllahir_pasangan" id="dtp_tgllahir_pasangan">
                                                         <span class="input-group-btn">
                                                             <button class="btn default" type="button">
                                                                 <i class="fa fa-calendar"></i>
@@ -299,16 +299,16 @@
                                                     <span class="input-group-addon">No.Stambuk
                                                         <small style="color:grey;font-style:italic">&nbsp;(*Jika alumni)</small>
                                                     </span>
-                                                    <input type="text" class="form-control input-medium" placeholder="No.Stambuk Alumni" name="txt_stambuk_alumni">
+                                                    <input type="text" class="form-control input-medium" placeholder="No.Stambuk Alumni" name="txt_stambuk_alumni" id="txt_stambuk_alumni">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Mengajar Sejak</span>
-                                                    <input type="text" class="form-control datepicker" placeholder="Tgl.Mulai" name="dtp_ajar_mulai" readonly>
+                                                    <input type="text" class="form-control datepicker" placeholder="Tgl.Mulai" name="dtp_ajar_mulai" id="dtp_ajar_mulai" readonly>
                                                     <span class="input-group-addon" style="text-align: center;">s/d</span>
-                                                    <input type="text" class="form-control datepicker" placeholder="Tgl.Selesai" name="dtp_ajar_akhir" readonly>
+                                                    <input type="text" class="form-control datepicker" placeholder="Tgl.Selesai" name="dtp_ajar_akhir" id="dtp_ajar_akhir" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -317,7 +317,7 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Status</span>
-                                                    <select name="opt_status" class="form-control input-medium">
+                                                    <select name="opt_status" id="opt_status" class="form-control input-medium">
                                                         <option value="">- Belum Dipilih -</option>
                                                         <option value="Pengabdian">Pengabdian</option>
                                                         <option value="Tetap">Tetap</option>
@@ -341,14 +341,14 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Kesra / Gapok</span>
-                                                    <input type="text" class="form-control input-medium numbers-only" placeholder="Gapok" name="txt_gapok">
+                                                    <input type="text" class="form-control input-medium numbers-only" placeholder="Gapok" name="txt_gapok" id="txt_gapok">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Masa Pengabdian</span>
-                                                    <input type="text" class="form-control numbers-only input-small" placeholder="Masa Pengabdian" name="txt_masa_pengabdian">
+                                                    <input type="text" class="form-control numbers-only input-small" placeholder="Masa Pengabdian" name="txt_masa_pengabdian" id="txt_masa_pengabdian">
                                                 </div>
                                             </div>
                                         </div>
@@ -364,7 +364,7 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Gelar Akademik</span>
-                                                    <input type="text" class="form-control input-medium" placeholder="Gelar Akademik" name="txt_gelar">
+                                                    <input type="text" class="form-control input-medium" placeholder="Gelar Akademik" name="txt_gelar" id="txt_gelar">
                                                 </div>
                                             </div>
                                         </div>
@@ -373,7 +373,7 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Materi yang diampu</span>
-                                                    <textarea name="txa_materi" rows="4" cols="50" class="form-control" placeholder="Materi yang diampu"></textarea>
+                                                    <textarea name="txa_materi" id="txa_materi" rows="4" cols="50" class="form-control" placeholder="Materi yang diampu"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -383,7 +383,7 @@
                                             <div class="col-md-4">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">No.SK Pengangkatan</span>
-                                                    <input type="text" class="form-control input-medium" placeholder="No.SK Pengangkatan" name="txt_sk_angkat">
+                                                    <input type="text" class="form-control input-medium" placeholder="No.SK Pengangkatan" name="txt_sk_angkat" id="txt_sk_angkat">
                                                 </div>
                                             </div>
 
@@ -391,7 +391,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Tanggal SK.</span>
                                                     <div class="input-group input-medium date datepicker" data-date-format="dd-mm-yyyy">
-                                                        <input type="text" class="form-control" readonly="" name="dtp_tgl_sk">
+                                                        <input type="text" class="form-control" readonly="" name="dtp_tgl_sk" id="dtp_tgl_sk">
                                                         <span class="input-group-btn">
                                                             <button class="btn default" type="button">
                                                                 <i class="fa fa-calendar"></i>
@@ -422,10 +422,10 @@
                                             <table class="table table-bordered" id="tb_data_sk_tugas">
                                                 <thead>
                                                     <tr class="active">
-                                                        <th width="5%">No</th>                                               
+                                                        <th width="5%">No</th>                         
                                                         <th width="30%">No.SK Pemberian Tugas</th>
                                                         <th>Tgl.SK</th>
-                                                        <th width="10%">File SK</th>                                                        
+                                                        <th width="10%">File SK</th>                                  
                                                         <th width="10%">Action</th>
                                                     </tr>
                                                 </thead>
@@ -440,7 +440,7 @@
                                             <div class="col-md-4">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Sertifikasi</span>
-                                                    <input type="text" class="form-control input-medium" placeholder="Sertifikasi" name="txt_sertifikasi">
+                                                    <input type="text" class="form-control input-medium" placeholder="Sertifikasi" name="txt_sertifikasi" id="txt_sertifikasi">
                                                 </div>
                                             </div>
 

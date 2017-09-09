@@ -1,6 +1,5 @@
 $(document).ready(function(){
 
-	//modalNew();
 	setTable();
 	handleValidation();
     validationFormAnak();
@@ -165,20 +164,7 @@ function redrawNumber(id_table){
 function modalNew(){
 
 	$('#modal_editing').modal('show');
-
-	//testing only
-    $('input[type=text]').each(function(){
-
-    	if(!$(this).hasClass('datepicker') && !$(this).parent().hasClass('datepicker') && !$(this).hasClass('hidden')){
-
-    		$(this).val(makeid());
-    	}    	
-	})
-
-	$("textarea").each(function(){
-        this.value = makeid();
-    });
-    //end testing only
+    $('.nav-tabs a[href="#data_guru"]').tab('show');
 }
 
 function validateForm(){
@@ -213,7 +199,7 @@ function saveFormGuru(){
 			table.ajax.reload( null, false );
 			table.draw();
 			$('#modal_editing').modal('toggle');
-			clearFormInput();
+			clearFormEditing();
 		},
 		error: function(){
 
@@ -225,9 +211,9 @@ function saveFormGuru(){
 
 var handleValidation = function() {
 
-        var form2 = $('#form_editing');
-        var error2 = $('.alert-danger', form2);
-        var success2 = $('.alert-success', form2);
+        var form2       = $('#form_editing');
+        var error2      = $('.alert-danger', form2);
+        var success2    = $('.alert-success', form2);
 
         form2.validate({
             errorElement: 'span', //default input error message container
@@ -275,6 +261,36 @@ var handleValidation = function() {
                 form[0].submit(); // submit the form
             }
         });
+}
+
+function clearFormEditing(){
+
+    document.getElementById("form_editing").reset();
+
+    $("#opt_jabatan").select2().val([]).trigger("change");
+    $("#opt_ijazah_terakhir").empty();
+
+    //clear all table
+    $('#tb_data_sk_tugas tbody').html('');
+    $('#tb_data_anak tbody').html('');
+    $('#tb_data_pformal tbody').html('');
+    $('#tb_data_pnonformal tbody').html('');
+    
+    redrawNumber('tb_data_sk_tugas');
+    redrawNumber('tb_data_anak');
+    redrawNumber('tb_data_pformal');
+    redrawNumber('tb_data_pnonformal');
+
+    //clear success sign
+    $("#form_editing div").removeClass('has-error');
+    $("#form_editing i").removeClass('fa-warning');
+
+    $("#form_editing div").removeClass('has-success');
+    $("#form_editing i").removeClass('fa-check');
+
+    //hide link
+    $('#link_sk').addClass('hide');
+    $('#link_sertifikasi').addClass('hide');
 }
 //END MASTER FORM EDITING
 
@@ -1126,3 +1142,88 @@ function clearFormSK(){
     document.getElementById("form_data_sk").reset();
 }
 //END FORM DATA SK PENGANGKATAN
+
+//MODAL EDIT MAIN FORM
+function modalEdit(id_guru){
+
+    $.ajax({
+
+        type:"POST",
+        url:base_url+"guru/get_bio_guru/"+id_guru,
+        dataType:"html",
+        success:function(data){
+
+            var data    = $.parseJSON(data);
+
+            //biodata
+            $('#hid_id_data').val(data.biodata.id_guru);
+            $('#hid_old_gapok').val(data.biodata.gapok);
+            $('#txt_noreg').val(data.biodata.no_reg);
+            $('#txt_nama_lengkap').val(data.biodata.nama_lengkap);
+            $('#txt_nama_arab').val(data.biodata.nama_arab);
+            $('#txt_nuptk').val(data.biodata.no_ptk);
+            $('#txt_tmp_lahir').val(data.biodata.tempat_lahir);
+            $('#txt_no_nig').val(data.biodata.nig);
+            $('#dtp_tgl_lahir').val(data.biodata.ibirth);
+            $('#txt_no_ktp').val(data.biodata.no_ktp);
+            $('#opt_gender').val(data.biodata.jns_kelamin);
+            $('#txt_no_kk').val(data.biodata.no_kk);
+            $('#txt_kewarganegaraan').val(data.biodata.kewarganegaraan);
+            $('textarea#txa_alamat').val(data.biodata.txa_alamat);
+            $('#txt_email').val(data.biodata.email);
+            $('#txt_notelp').val(data.biodata.no_telepon);
+            $('#txt_nama_ayah').val(data.biodata.nama_ayah);
+            $('#txt_nama_ibu').val(data.biodata.nama_ibu);
+            $('#opt_pernikahan').val(data.biodata.status_nikah);
+            $('#txt_jml_anak').val(data.biodata.jml_anak);
+            $('#txt_nama_pasangan').val(data.biodata.nama_pasangan);
+            $('#dtp_tgllahir_pasangan').val(data.biodata.ibirth_mate);
+            $('#txt_stambuk_alumni').val(data.biodata.id_alumni);            
+            $('#dtp_ajar_mulai').val(data.biodata.id_ajar_start);
+            $('#dtp_ajar_akhir').val(data.biodata.id_ajar_end);
+            $('#opt_status').val(data.biodata.status);
+            $('#txt_gapok').val(data.biodata.gapok);
+            $('#txt_masa_pengabdian').val(data.biodata.masa_abdi);
+            $('#opt_ijazah_terakhir').val(data.biodata.pendidikan_terakhir);
+            $('#txt_gelar').val(data.biodata.akademik);
+            $('#txa_materi').val(data.biodata.materi_diampu);
+            $('#txt_sk_angkat').val(data.biodata.no_sk);
+            $('#dtp_tgl_sk').val(data.biodata.isk);
+            $('#txt_sertifikasi').val(data.biodata.sertifikasi);
+
+            if(data.biodata.file_sk!=null){
+
+                $('#link_sk').attr('href',base_url+'assets/images/fileupload/guru_sk/'+data.biodata.file_sk);
+                $('#link_sk').removeClass('hide');
+            }
+
+            if(data.biodata.file_sertifikasi!=null){
+
+                $('#link_sertifikasi').attr('href',base_url+'assets/images/fileupload/guru_sertifikasi/'+data.biodata.file_sertifikasi);
+                $('#link_sertifikasi').removeClass('hide');
+            }
+
+            $('#modal_editing').modal('show');
+            $('.nav-tabs a[href="#data_guru"]').tab('show');
+        }
+    });
+
+}
+//END MODAL EDIT MAIN FORM
+
+function randomForm(){
+
+    //testing only
+    $('input[type=text]').each(function(){
+
+        if(!$(this).hasClass('datepicker') && !$(this).parent().hasClass('datepicker') && !$(this).hasClass('hidden')){
+
+            $(this).val(makeid());
+        }       
+    })
+
+    $("textarea").each(function(){
+        this.value = makeid();
+    });
+    //end testing only
+}

@@ -54,7 +54,7 @@ class Guru extends IO_Controller{
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
 
-			$btn = '<button type="button" class="btn blue btn-xs" title="Lihat & Edit Data" onclick="editData(\''.$data[$i]->id_guru.'\')">
+			$btn = '<button type="button" class="btn blue btn-xs" title="Lihat & Edit Data" onclick="modalEdit(\''.$data[$i]->id_guru.'\')">
 	                	<i class="fa fa-edit"></i>&nbsp;Edit
 	                </button>
 	                <button type="button" class="btn red btn-xs" title="Hapus Data" onclick="hapus(\''.$data[$i]->id_guru.'\')">
@@ -339,6 +339,26 @@ class Guru extends IO_Controller{
 		}
 
 		return $string_param;
+	}
+
+	function get_bio_guru($id_guru){
+
+		$bio 		= $this->model->mget_bio_guru($id_guru);
+		$sk  		= $this->model->mget_sk_guru($id_guru);
+		$family 	= $this->model->mget_guru_familiy($id_guru);
+		$edu 		= $this->model->mget_guru_edu($id_guru);
+		$structure 	= $this->model->mget_guru_structure($id_guru);
+
+		$data_guru = array(
+
+			'biodata' 	=> $bio,
+			'sk'		=> $sk,
+			'fam'		=> $family,
+			'edu'		=> $edu,
+			'struct'	=> $structure
+		);
+
+		echo json_encode($data_guru);
 	}
 }
 

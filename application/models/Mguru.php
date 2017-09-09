@@ -68,4 +68,51 @@ class Mguru extends CI_Model {
 		$this->db->where('id_guru',$id);
 		$this->db->delete('ms_guru_struktural');
 	}
+
+	function mget_bio_guru($id_guru){
+
+		$this->db->select('*');
+		$this->db->select("DATE_FORMAT(tanggal_lahir,'%d-%m-%Y') as ibirth",null,false);
+		$this->db->select("DATE_FORMAT(tgl_pasangan,'%d-%m-%Y') as ibirth_mate",null,false);
+		$this->db->select("DATE_FORMAT(mengajar_start,'%d-%m-%Y') as iajar_start",null,false);
+		$this->db->select("DATE_FORMAT(mengajar_end,'%d-%m-%Y') as iajar_end",null,false);
+		$this->db->select("DATE_FORMAT(tgl_sk,'%d-%m-%Y') as isk",null,false);
+		$this->db->where('id_guru',$id_guru);
+
+		return $this->db->get('ms_guru')->row();
+	}
+
+	function mget_sk_guru($id_guru){
+
+		$this->db->select('*');
+		$this->db->select("DATE_FORMAT(tgl_sk,'%d-%m-%Y') as itgl_sk",null,false);
+		$this->db->where('id_guru',$id_guru);
+
+		return $this->db->get('ms_guru_sk')->result_array();
+	}
+
+	function mget_guru_familiy($id_guru){
+
+		$this->db->select('*');
+		$this->db->select("DATE_FORMAT(tanggal_lahir,'%d-%m-%Y') as ibirth_fam",null,false);
+		$this->db->where('id_guru',$id_guru);
+
+		return $this->db->get('ms_guru_family')->result_array();
+	}
+
+	function mget_guru_edu($id_guru){
+
+		$this->db->where('id_guru',$id_guru);
+		$this->db->order_by('kategori');
+		$this->db->order_by('id');
+
+		return $this->db->get('ms_guru_pendidikan')->result_array();
+	}
+
+	function mget_guru_structure($id_guru){
+
+		$this->db->where('id_guru',$id_guru);
+		
+		return $this->db->get('ms_guru_struktural')->result_array();
+	}
 }
