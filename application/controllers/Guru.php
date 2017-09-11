@@ -87,12 +87,12 @@ class Guru extends IO_Controller{
 
 		$input = $this->input->post();
 
-		$id 				= $input['hid_id_data'];
+		$id 					= $input['hid_id_data'];
 		$tgl_lahir 			= $input['dtp_tgl_lahir']==''?null:io_return_date('d-m-Y',$input['dtp_tgl_lahir']);
-		$tgl_lahir_pasangan = $input['dtp_tgllahir_pasangan']==''?null:io_return_date('d-m-Y',$input['dtp_tgllahir_pasangan']);
-		$tgl_sk 			= $input['dtp_tgl_sk']==''?null:io_return_date('d-m-Y',$input['dtp_tgl_sk']);
+		$tgl_lahir_pasangan 	= $input['dtp_tgllahir_pasangan']==''?null:io_return_date('d-m-Y',$input['dtp_tgllahir_pasangan']);
+		$tgl_sk 				= $input['dtp_tgl_sk']==''?null:io_return_date('d-m-Y',$input['dtp_tgl_sk']);
 		$pend_terakhir 		= isset($input['opt_ijazah_terakhir'])?$input['opt_ijazah_terakhir']:null;
-		$start_ajar 		= $input['dtp_ajar_mulai']==''?null:io_return_date('d-m-Y',$input['dtp_ajar_mulai']);
+		$start_ajar 			= $input['dtp_ajar_mulai']==''?null:io_return_date('d-m-Y',$input['dtp_ajar_mulai']);
 		$end_ajar 			= $input['dtp_ajar_akhir']==''?null:io_return_date('d-m-Y',$input['dtp_ajar_akhir']);
 
 		$data = array(
@@ -102,14 +102,14 @@ class Guru extends IO_Controller{
 			"no_ptk"           		=> $input['txt_nuptk'],
 			"nig"              		=> $input['txt_no_nig'],
 			"tempat_lahir"     		=> $input['txt_tmp_lahir'],
-			"tanggal_lahir" 		=> $tgl_lahir,
+			"tanggal_lahir" 			=> $tgl_lahir,
 			"jns_kelamin" 			=> $input['opt_gender'],
 			"no_kk" 				=> $input['txt_no_kk'],
 			"no_ktp"  				=> $input['txt_no_ktp'],
 			"kewarganegaraan" 		=> $input['txt_kewarganegaraan'],
 			"alamat" 				=> $input['txa_alamat'],
 			"no_telepon" 			=> $input['txt_notelp'],
-			"email" 				=> $input['txt_email'],
+			"email" 					=> $input['txt_email'],
 			"status_nikah"			=> $input['opt_pernikahan'],
 			"nama_ayah" 			=> $input['txt_nama_ayah'],
 			"nama_ibu" 				=> $input['txt_nama_ibu'],
@@ -121,14 +121,14 @@ class Guru extends IO_Controller{
 			"pendidikan_terakhir" 	=> $pend_terakhir,
 			"mengajar_start" 		=> $start_ajar,
 			"mengajar_end" 			=> $end_ajar,
-			"id_alumni" 			=> $input['txt_stambuk_alumni'],			
-			"masa_abdi" 			=> $input['txt_masa_pengabdian'],
+			"id_alumni" 				=> $input['txt_stambuk_alumni'],			
+			"masa_abdi" 				=> $input['txt_masa_pengabdian'],
 			"sertifikasi"			=> $input['txt_sertifikasi'],
 			"no_sk"					=> $input['txt_sk_angkat'],
-			"tgl_sk"				=> $tgl_sk,
+			"tgl_sk"					=> $tgl_sk,
 			"materi_diampu"  		=> $input['txa_materi'],
 			"gapok"					=> $input['txt_gapok'],
-			"userid"				=> $this->session->userdata('logged_in')['uid'],
+			"userid"					=> $this->session->userdata('logged_in')['uid'],
 			"recdate" 				=> date('Y-m-d H:i:s'),
 			"status_aktif"			=> '1'
 		);
@@ -153,7 +153,7 @@ class Guru extends IO_Controller{
 
 				'id_guru'	=> $id,
 				'nominal'	=> floatval($input['txt_gapok']),
-				'userid'	=> $this->session->userdata('logged_in')['uid'],
+				'userid' 	=> $this->session->userdata('logged_in')['uid'],
 				'recdate'	=> date('Y-m-d H:i:s')
 			);
 
@@ -270,9 +270,8 @@ class Guru extends IO_Controller{
 		//save file foto
 		if($_FILES['file_foto']){
 
-			$ioname		 				= $id;
-			$temp						= explode(".",$_FILES['file_foto']['name']);
-			$filename 					= $ioname.'.'.end($temp);
+			$ioname		 				= $id;			
+			$filename 					= $ioname.'.jpg';
 			$config['upload_path']   	= './assets/images/fileupload/guru_foto';
 			$config['file_name'] 		= $filename;
 			$config['allowed_types']    = '*';
@@ -345,7 +344,7 @@ class Guru extends IO_Controller{
 
 		$bio 		= $this->model->mget_bio_guru($id_guru);
 		$sk  		= $this->model->mget_sk_guru($id_guru);
-		$family 	= $this->model->mget_guru_familiy($id_guru);
+		$family 		= $this->model->mget_guru_familiy($id_guru);
 		$edu 		= $this->model->mget_guru_edu($id_guru);
 		$structure 	= $this->model->mget_guru_structure($id_guru);
 

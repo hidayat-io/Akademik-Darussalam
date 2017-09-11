@@ -112,7 +112,6 @@ class Mguru extends CI_Model {
 	function mget_guru_structure($id_guru){
 
 		$this->db->where('id_guru',$id_guru);
-		
 		return $this->db->get('ms_guru_struktural')->result_array();
 	}
 }

@@ -98,7 +98,7 @@
                                             <div class="col-md-6 text-center">
                                                 <div class="fileinput fileinput-new" data-provides="fileinput" style="padding-bottom: 5px;">
                                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                                        <img src="" alt="" /> </div>
+                                                        <img src="<?php echo base_url(); ?>assets/images/fileupload/guru_f" alt="" /> </div>
                                                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
                                                     <div>
                                                         <span class="btn default btn-file">
@@ -406,7 +406,7 @@
                                                     <span class="input-group-addon">File SK Pengangkatan</span>
                                                     <input type="file" class="form-control" name="file_sk_pengangkatan" />
                                                 </div>
-                                                <a href="#" class="btn btn-primary btn-xs hide" style="margin-top: 5px" id="link_sk">
+                                                <a href="#" class="btn btn-primary btn-xs hide" style="margin-top: 5px" id="link_sk" target="_blank">
                                                     <i class="fa fa-files-o"></i>&nbsp;Lihat Lampiran
                                                 </a>
                                             </div>
@@ -449,7 +449,7 @@
                                                     <span class="input-group-addon">File Sertifikasi</span>
                                                     <input type="file" class="form-control" name="file_sertifikasi" id="att_pformal" />
                                                 </div>
-                                                <a href="#" class="btn btn-primary btn-xs hide" style="margin-top: 5px" id="link_sertifikasi">
+                                                <a href="#" class="btn btn-primary btn-xs hide" style="margin-top: 5px" id="link_sertifikasi" target="_blank">
                                                     <i class="fa fa-files-o"></i>&nbsp;Lihat Lampiran
                                                 </a>
                                             </div>
