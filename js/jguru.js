@@ -1150,6 +1150,8 @@ function clearFormSK(){
 //MODAL EDIT MAIN FORM
 function modalEdit(id_guru){
 
+    clearFormEditing();
+
 	$.ajax({
 
 		type:"POST",
@@ -1207,7 +1209,8 @@ function modalEdit(id_guru){
 				$('#link_sertifikasi').removeClass('hide');
 			}
 
-			$('#img_foto').attr("src",base_url+'assets/images/fileupload/guru_foto/'+id_guru+'.jpg');
+            var d = new Date();
+			$('#img_foto').attr("src",base_url+'assets/images/fileupload/guru_foto/'+id_guru+'.jpg?'+d.getTime());
 
 			//data SK Tugas
 			$.each(data.sk, function() {
@@ -1216,10 +1219,10 @@ function modalEdit(id_guru){
 				json_data_sk        = JSON.parse(json_data_sk);
 
 				var str_id 			= makeid();
-				var detail_count    	= $('#tb_data_sk_tugas tr.tdetail').length;
+				var detail_count    = $('#tb_data_sk_tugas tr.tdetail').length;
 				var id_detail_sk   	= this.id_sk;
 				var no_sk          	= this.no_sk;
-				var tgl_sk          	= this.itgl_sk;
+				var tgl_sk          = this.itgl_sk;
 				
 				var str_data        = str_id+'#'+no_sk+'#'+tgl_sk;
 
@@ -1267,6 +1270,55 @@ function modalEdit(id_guru){
 				$('#hid_sk_angkat').val(JSON.stringify(json_data_sk));
 			});
 			//end data SK Tugas
+
+            //data anak
+            $.each(data.sk, function() {
+
+                var json_anak   = $('#hid_anak').val();
+                    json_anak   = JSON.parse(json_anak);
+
+                var str_id          = makeid();
+                var detail_count    = $('#tb_data_anak tr.tdetail').length;
+                var nama_anak       = this.nama_anak;
+                var pendidikan      = this.pendidikan;
+                var tgl_lahir       = this.ibirth_fam;
+                var str_data        = str_id+'#'+nama_anak+'#'+pendidikan+'#'+tgl_lahir;
+
+                var json_item  = {
+
+                    "id"        :str_id,
+                    "nama_anak" :nama_anak,
+                    "pendidikan":pendidikan,
+                    "tgl_lahir" :tgl_lahir
+                };
+
+                json_anak.push(json_item);
+
+                var strbutton   =  "<a class='btn btn-primary btn-xs btn-flat' href='#' onclick='editDetailAnak(\""+str_data+"\")'><i class='fa fa-pencil'></i></a>&nbsp;";
+                strbutton       += "<a class='btn btn-danger btn-xs btn-flat' href='#' data-toggle='confirmation' data-popout='true' onclick='delDetailAnak(\""+str_id+"\")'><i class='fa fa-trash'></i></a>";
+
+                var content_data    = '<tr class="tdetail" id="row'+str_id+'">';
+                    content_data    += "<td>"+(detail_count+1)+"</td>";
+                    content_data    += "<td>"+nama_anak+"</td>";
+                    content_data    += "<td>"+pendidikan+"</td>";
+                    content_data    += "<td>"+tgl_lahir+"</td>";                
+                    content_data    += "<td>"+strbutton+"</td>";
+                    content_data    += "</tr>";
+
+                if(detail_count<1){
+
+                    $('#tb_data_anak tbody').html(content_data);
+                }
+                else{
+
+                    $('#tb_data_anak tbody').append(content_data);
+                }
+
+
+                $('#hid_anak').val(JSON.stringify(json_anak));
+                $('#txt_jml_anak').val(json_anak.length);
+            });
+            //end data anak
 
 			$('#modal_editing').modal('show');
 			$('.nav-tabs a[href="#data_guru"]').tab('show');
