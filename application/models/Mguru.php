@@ -114,4 +114,11 @@ class Mguru extends CI_Model {
 		$this->db->where('id_guru',$id_guru);
 		return $this->db->get('ms_guru_struktural')->result_array();
 	}
+
+	function mdelete_data_guru($id_guru){
+
+		$this->db->where('id_guru',$id_guru);
+		$this->db->set('is_delete','1');
+		$this->db->update('ms_guru');
+	}
 }

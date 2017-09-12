@@ -63,11 +63,11 @@
                 <div class="portlet-form">
                     <form id="form_editing" enctype="multipart/form-data">
 
-                        <input type="text" name="hid_id_data" class="hidden" />
+                        <input type="text" id="hid_id_data" name="hid_id_data" class="hidden" />
                         <input type="text" id="hid_anak" name="hid_anak" value="[]" class="hidden" />
                         <input type="text" id="hid_sk_angkat" name="hid_sk_angkat" value="[]" class="hidden" />
-                        <input type="text" id="hid_formal_edu" name="hid_formal_edu" value="[]" class="hidden" />
-                        <input type="text" id="hid_nonformal_edu" name="hid_nonformal_edu" value="[]" class="hidden" />
+                        <input type="text" id="hid_pformal_edu" name="hid_pformal_edu" value="[]" class="hidden" />
+                        <input type="text" id="hid_pnonformal_edu" name="hid_pnonformal_edu" value="[]" class="hidden" />
                         <input type="text" id="hid_old_gapok" name="hid_old_gapok" class="hidden" value="" />
 
                         <div class="alert alert-danger display-hide">
@@ -98,7 +98,7 @@
                                             <div class="col-md-6 text-center">
                                                 <div class="fileinput fileinput-new" data-provides="fileinput" style="padding-bottom: 5px;">
                                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                                        <img src="<?php echo base_url(); ?>assets/images/fileupload/guru_f" alt="" /> </div>
+                                                        <img src="" alt="" id="img_foto" /> </div>
                                                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
                                                     <div>
                                                         <span class="btn default btn-file">
@@ -425,7 +425,7 @@
                                                         <th width="5%">No</th>                         
                                                         <th width="30%">No.SK Pemberian Tugas</th>
                                                         <th>Tgl.SK</th>
-                                                        <th width="10%">File SK</th>                                  
+                                                        <th width="10%">File SK</th>    
                                                         <th width="10%">Action</th>
                                                     </tr>
                                                 </thead>

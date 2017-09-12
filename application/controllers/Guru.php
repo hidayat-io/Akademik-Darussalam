@@ -28,7 +28,7 @@ class Guru extends IO_Controller{
 
 	function load_grid(){
 
-		$iparam 			= json_decode($_REQUEST['param']);
+		$iparam 		= json_decode($_REQUEST['param']);
 		$string_param 	= $this->build_param($iparam);
 		
 		//sorting
@@ -57,7 +57,7 @@ class Guru extends IO_Controller{
 			$btn = '<button type="button" class="btn blue btn-xs" title="Lihat & Edit Data" onclick="modalEdit(\''.$data[$i]->id_guru.'\')">
 	                	<i class="fa fa-edit"></i>&nbsp;Edit
 	                </button>
-	                <button type="button" class="btn red btn-xs" title="Hapus Data" onclick="hapus(\''.$data[$i]->id_guru.'\')">
+	                <button type="button" class="btn red btn-xs" title="Hapus Data" onclick="hapus(\''.$data[$i]->nama_lengkap.'\',\''.$data[$i]->id_guru.'\')">
 	                	<i class="fa fa-trash"></i>&nbsp;Hapus
 	                </button>';
 					
@@ -203,7 +203,7 @@ class Guru extends IO_Controller{
 		}
 
 		//save pendidikan formal
-		$ar_pformal = json_decode($input['hid_formal_edu']);
+		$ar_pformal = json_decode($input['hid_pformal_edu']);
 
 		$this->model->mdelete_detail_edu($id,'f');
 
@@ -211,11 +211,12 @@ class Guru extends IO_Controller{
 			
 			$pformal = array(
 
-				'id_guru'		=> $id,
-				'tempat'		=> $pf->tempat,
-				'lulus'			=> $pf->lulus,
-				'kategori'		=> 'f',
-				'file_lampiran' => $pf->file
+				'id_guru'			=> $id,
+				'nama_pendidikan'	=> $pf->nama,
+				'tempat'			=> $pf->tempat,
+				'lulus'				=> $pf->lulus,
+				'kategori'			=> 'f',
+				'file_lampiran' 	=> $pf->file
 			);
 
 			$this->model->minsert_detail('ms_guru_pendidikan',$pformal);
@@ -227,7 +228,7 @@ class Guru extends IO_Controller{
 		}
 
 		//save pendidikan non formal
-		$ar_pnonformal = json_decode($input['hid_nonformal_edu']);
+		$ar_pnonformal = json_decode($input['hid_pnonformal_edu']);
 
 		$this->model->mdelete_detail_edu($id,'n');
 
@@ -235,11 +236,12 @@ class Guru extends IO_Controller{
 			
 			$pnonformal = array(
 
-				'id_guru'		=> $id,
-				'tempat'		=> $pf->tempat,
-				'lulus'			=> $pf->lulus,
-				'kategori'		=> 'n',
-				'file_lampiran' => $pf->file
+				'id_guru'			=> $id,
+				'nama_pendidikan'	=> $pf->nama,
+				'tempat'			=> $pf->tempat,
+				'lulus'				=> $pf->lulus,
+				'kategori'			=> 'n',
+				'file_lampiran' 	=> $pf->file
 			);
 
 			$this->model->minsert_detail('ms_guru_pendidikan',$pnonformal);			
@@ -268,7 +270,7 @@ class Guru extends IO_Controller{
 		}
 
 		//save file foto
-		if($_FILES['file_foto']){
+		if($_FILES['file_foto']['name']!=''){
 
 			$ioname		 				= $id;			
 			$filename 					= $ioname.'.jpg';
@@ -286,7 +288,7 @@ class Guru extends IO_Controller{
 		}
 
 		//save file sk pengangkatan
-		if($_FILES['file_sk_pengangkatan']){
+		if($_FILES['file_sk_pengangkatan']['name']!=''){
 
 			$ioname		 				= date('dmyHis').io_random_string(4);;
 			$temp						= explode(".",$_FILES['file_sk_pengangkatan']['name']);
@@ -306,7 +308,7 @@ class Guru extends IO_Controller{
 		}
 
 		//save file sertifikasi
-		if($_FILES['file_sertifikasi']){
+		if($_FILES['file_sertifikasi']['name']!=''){
 
 			$ioname		 				= date('dmyHis').io_random_string(4);;
 			$temp						= explode(".",$_FILES['file_sertifikasi']['name']);
@@ -326,15 +328,20 @@ class Guru extends IO_Controller{
 		}
 
 		//update link file
-		$this->model->mupdate_data($id,$iupdate);
+		if(isset($iupdate)){
+
+			$this->model->mupdate_data($id,$iupdate);	
+		}		
 	}
 
 	function build_param($param){
-	
-		$string_param = NULL;
+		
+
+		$string_param = " WHERE is_delete = '0' ";
 
 		if($param!=null){
 
+			$string_param .= " AND ";
 			if(isset($param->no_reg)) $string_param .= "no_reg LIKE '%".$param->no_reg."%' ";
 		}
 
@@ -359,5 +366,10 @@ class Guru extends IO_Controller{
 		);
 
 		echo json_encode($data_guru);
+	}
+
+	function delete_data($id_guru){
+
+		$this->model->mdelete_data_guru($id_guru);
 	}
 }
