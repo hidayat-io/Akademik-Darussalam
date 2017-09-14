@@ -11,7 +11,6 @@ class Guru extends IO_Controller{
 
 	function index(){			
 
-
 		$vdata['title'] = 'DATA GURU & KARYAWAN';
 
 		/* data master guru */
