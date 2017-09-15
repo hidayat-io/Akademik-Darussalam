@@ -26,6 +26,6 @@ class Mcommon extends CI_Model {
 
     	$this->db->order_by('nama_jabatan');
     	
-    	return $this->db->get('ms_jabatan_guru');
+    	return $this->db->get('ms_guru_jabatan');
     }
 }
