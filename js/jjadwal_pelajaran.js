@@ -117,6 +117,7 @@ function kosong_table()
 	$('#tb_mata_pelajaran tbody').html('');
 	$('#tb_mata_pelajaran > tbody').html('"<tr><td colspan=\"4\" align=\"center\">Belum Ada Data.</td></tr>"');
 }
+
 function refresh_table()
 {
     if($("#id_thn_ajar").val() == '')
@@ -144,7 +145,7 @@ function refresh_table()
 		var tipe_kelas 	= $('#tipe_kelas').val();
 		var kdrow 	= makeid();
 		
-		var str_url  	= encodeURI(base_url+"jadwal_pelajaran/GetKurikulum/"+id_thn_ajar+"/"+semester+"/"+tingkat+"/"+tipe_kelas);
+		var str_url  	= encodeURI(base_url+"jadwal_pelajaran/GetKurikulumTambah/"+id_thn_ajar+"/"+semester+"/"+tingkat+"/"+tipe_kelas);
 		$.ajax({
 			
 			type:"POST",
@@ -157,6 +158,7 @@ function refresh_table()
 				if (LengtData == 0){
 					$('#tb_mata_pelajaran tbody').html('');
 					$('#tb_mata_pelajaran > tbody').html('"<tr><td colspan=\"4\" align=\"center\">Belum Ada Data.</td></tr>"');
+					bootbox.alert('Tidak ada data, silahkan Cek Kurikulum!');
 				}
 				else
 				{
@@ -179,7 +181,7 @@ function refresh_table()
 							var jam = 'txtjam_'+data[i].id_mapel+y+i;
 							var content_data 	= '<tr class="tb-detail" id="row'+kdrow+'">';
 							content_data 	+= "<td>"+data[i].nama_matpal+"</td>"; //mata pelajaran
-							content_data 	+= '<td><select class="form-control" name="'+hari+'" id="hari" required>'
+							content_data 	+= '<td><select class="form-control" name="'+hari+'" id="hari" >'
 												+'<option value="">-Pilih Hari-</option>'
 												+'<option value="SENIN">SENIN</option>'
 												+'<option value="SELASA">SELASA</option>'
@@ -189,13 +191,13 @@ function refresh_table()
 												+'<option value="SABTU">SABTU</option>'
 												+'<option value="AHAD">AHAD</option>'
 												+'</select></td>'; //hari
-							content_data 	+= '<td><select class="form-control" name="'+guru+'" id="guru" required>'
+							content_data 	+= '<td><select class="form-control" name="'+guru+'" id="guru" >'
 												+'<option value="">-Pilih Guru-</option>'
-												+'<option value="G001">G001</option>'
-												+'<option value="G002">G002</option>'
-												+'<option value="G003">G003</option>'
+												+'<option value="1">G001</option>'
+												+'<option value="2">G002</option>'
+												+'<option value="3">G003</option>'
 												+'</select></td>'; //Guru
-							content_data 	+= '<td><select class="form-control" name="'+jam+'" id="hari" required>'
+							content_data 	+= '<td><select class="form-control" name="'+jam+'" id="hari" >'
 												+'<option value="">-Pilih Jam-</option>'
 												+'<option value="I">I</option>'
 												+'<option value="II">II</option>'
@@ -206,7 +208,7 @@ function refresh_table()
 												+'</select></td>'; //JAM
 							content_data 	+= "</tr>";
 										
-							if(i<1){
+							if(y<1 && i<1){
 								
 								$('#tb_mata_pelajaran tbody').html(content_data);
 							}
@@ -238,7 +240,7 @@ function kosong(){
 }
 
 function svjadwal_pelajaran(){
-	if($("#add_jadwal_pelajaran").valid()==true){
+	// if($("#add_jadwal_pelajaran").valid()==true){'
         $santri = $('#santri').val();
         $id_thn_ajar = $('#id_thn_ajar').val();
         $semester = $('#semester').val();
@@ -252,13 +254,7 @@ function svjadwal_pelajaran(){
 		success:function(data){	
             $data = $.parseJSON(data);
                 if( $data != null & $status =='SAVE'){
-                        bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>SUDAH ADA DI DATABASE! </div>",
-                            function(result){
-                                if(result==true){
-                                }
-                            }
-                        );
-                    
+                        bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>SUDAH ADA DI DATABASE! </div>");
                 }
                 else{
                     var iform = $('#add_jadwal_pelajaran')[0];
@@ -295,7 +291,7 @@ function svjadwal_pelajaran(){
                 }
             }
         });
-	}
+	// }
 }
 
 function OtomatisKapital(a){
@@ -307,6 +303,7 @@ function OtomatisKapital(a){
 function addjadwal_pelajaran(){
     $('#save_button').text('SAVE');
 	kosong();
+	$('#button_refresh').attr('disabled',false);
 	$('#Modal_add_jadwal_pelajaran').modal('show');
 }
 
@@ -321,32 +318,261 @@ function ONprosses(){
 	);
 }
 
-function edit(id_jadwal){
-	var str_url  	= encodeURI(base_url+"jadwal_pelajaran/get_data_jadwal_pelajaran/"+id_jadwal);
-    $('#save_button').text('UPDATE');
-    $('#id_jadwal').attr('readonly',true);
-	$.ajax({
+function edit(kode_kelas,tingkat, tipe_kelas,nama,santri,id_thn_ajar,deskripsi,semester){
+	$('#save_button').text('UPDATE');
+	$('#button_refresh').attr('disabled',true);
+	
+	$('#id_thn_ajar').val(id_thn_ajar);
+	$('#select_kelas').val(kode_kelas+'#'+nama+'#'+tingkat+'#'+tipe_kelas);
+	$('#hide_Kurikulum').val(id_thn_ajar);
+	$('#santri').val(santri);
+	$('#semester').val(semester);
+	$('#kode_kelas').val(kode_kelas);
+	$('#tingkat').val(tingkat);
+	$('#tipe_kelas').val(tipe_kelas);
 
+	//read only text box
+	// $('#id_thn_ajar').attr('disabled',true);
+	// $('#select_kelas').attr('disabled',true);
+	// $('#semester').attr('disabled',true);
+	// $('#santri').attr('disabled',true);
+		
+	$('#Modal_add_jadwal_pelajaran').modal('show');
+	
+	$('#tb_mata_pelajaran tbody').html('');
+	// var id_thn_ajar = $('#id_thn_ajar').val();
+	// var semester 	= $('#semester').val();
+	// var tingkat 	= $('#tingkat').val();
+	// var tipe_kelas 	= $('#tipe_kelas').val();
+	var kdrow 	= makeid();
+	
+	var str_url  	= encodeURI(base_url+"jadwal_pelajaran/GetKurikulum/"+id_thn_ajar+"/"+semester+"/"+tingkat+"/"+tipe_kelas+"/"+kode_kelas+"/"+santri);
+	$.ajax({
+		
 		type:"POST",
 		url:str_url,
 		dataType:"html",
-		success:function(data){
-			
+		success:function(data)
+		{
 			var data = $.parseJSON(data);
-			$('#id_jadwal').val(data['id_jadwal']);//untuk membaca kategori saat update
-			$('#nama').val(data['nama']);
-			
-			$('#Modal_add_jadwal_pelajaran').modal('show');
-			
-			
+			var LengtData = data.length;
+			if (LengtData == 0){
+				$('#tb_mata_pelajaran tbody').html('');
+				$('#tb_mata_pelajaran > tbody').html('"<tr><td colspan=\"4\" align=\"center\">Belum Ada Data.</td></tr>"');
+				bootbox.alert('Tidak ada data, silahkan Cek Kurikulum!');
+			}
+			else
+			{			
+				for(i=0;i<LengtData;i++)
+				{
+					if (semester == 1)
+						{
+							var sm = data[i].sm_1;
+						}
+						else if (semester ==2)
+						{
+							var sm = data[i].sm_2;
+						}
+					// for(y=0;y<sm;y++)
+					// {
+
+						var hari = 'txthari_'+data[i].id_mapel+i;
+						var guru = 'txtguru_'+data[i].id_mapel+i;
+						var jam = 'txtjam_'+data[i].id_mapel+i;
+						// var hari = 'txthari_'+data[i].id_mapel+y+i;
+						// var guru = 'txtguru_'+data[i].id_mapel+y+i;
+						// var jam = 'txtjam_'+data[i].id_mapel+y+i;
+						
+								var content_data 	= '<tr class="tb-detail" id="row'+kdrow+'">';
+								content_data 	+= "<td>"+data[i].nama_matpal+"</td>"; //mata pelajaran
+								content_data 	+= '<td><select class="form-control" name="'+hari+'" id="'+hari+'" >'
+													+'<option value="">-Pilih Hari-</option>'
+													+'<option value="SENIN">SENIN</option>'
+													+'<option value="SELASA">SELASA</option>'
+													+'<option value="RABU">RABU</option>'
+													+'<option value="KAMIS">KAMIS</option>'
+													+'<option value="JUMAT">JUMAT</option>'
+													+'<option value="SABTU">SABTU</option>'
+													+'<option value="AHAD">AHAD</option>'
+													+'</select></td>'; //hari
+								content_data 	+= '<td><select class="form-control" name="'+guru+'" id="'+guru+'" >'
+													+'<option value="">-Pilih Guru-</option>'
+													+'<option value="1">G001</option>'
+													+'<option value="2">G002</option>'
+													+'<option value="3">G003</option>'
+													+'</select></td>'; //Guru
+								content_data 	+= '<td><select class="form-control" name="'+jam+'" id="'+jam+'" >'
+													+'<option value="">-Pilih Jam-</option>'
+													+'<option value="I">I</option>'
+													+'<option value="II">II</option>'
+													+'<option value="III">III</option>'
+													+'<option value="IV">IV</option>'
+													+'<option value="V">V</option>'
+													+'<option value="VI">VI</option>'
+													+'</select></td>'; //JAM
+								content_data 	+= "</tr>";
+								
+								
+		
+								if(i<1){
+								// if(y<1 && i<1){
+									
+									$('#tb_mata_pelajaran tbody').html(content_data);
+								}
+								else{
+		
+									$('#tb_mata_pelajaran tbody').append(content_data);
+								}
+								$('#'+hari).val(data[i].hari);
+								$('#'+guru).val(data[i].id_guru);
+								$('#'+jam).val(data[i].jam);
+								
+						// 	}
+						// });
+						
+					// }
+					
+				}
+			}
+					
 		}
 	});
 	
 }
+// function edit(kode_kelas,tingkat, tipe_kelas,nama,santri,id_thn_ajar,deskripsi,semester){
+	// 	// var str_url  	= encodeURI(base_url+"jadwal_pelajaran/get_data_jadwal_pelajaran/"+kode_kelas+'/'+santri+'/'+id_thn_ajar+'/'+semester);
+	// 	$('#save_button').text('UPDATE');
+	// 	$('#button_refresh').attr('disabled',true);
+		
+	//     // $('#id_jadwal').attr('readonly',true);
+	// 	// $.ajax({
 
-function hapus(id_jadwal){
-	var str_url  	= encodeURI(base_url+"jadwal_pelajaran/Deljadwal_pelajaran/"+id_jadwal);
-	bootbox.confirm("Anda yakin akan menghapus "+id_jadwal+" ini ?",
+	// 	// 	type:"POST",
+	// 	// 	url:str_url,
+	// 	// 	dataType:"html",
+	// 	// 	success:function(data){
+				
+	// 	// 		var data = $.parseJSON(data);
+	// 			$('#id_thn_ajar').val(id_thn_ajar);
+	// 			$('#select_kelas').val(kode_kelas+'#'+nama+'#'+tingkat+'#'+tipe_kelas);
+	// 			$('#hide_Kurikulum').val(id_thn_ajar);
+	// 			$('#santri').val(santri);
+	// 			$('#semester').val(semester);
+	// 			$('#kode_kelas').val(kode_kelas);
+	// 			$('#tingkat').val(tingkat);
+	// 			$('#tipe_kelas').val(tipe_kelas);
+
+	// 			//read only text box
+	// 			// $('#id_thn_ajar').attr('disabled',true);
+	// 			// $('#select_kelas').attr('disabled',true);
+	// 			// $('#semester').attr('disabled',true);
+	// 			// $('#santri').attr('disabled',true);
+				
+				
+	// 			$('#Modal_add_jadwal_pelajaran').modal('show');
+				
+	// 			// //add to table
+	// 			// var id_thn_ajar = $('#id_thn_ajar').val();
+	// 			// var semester 	= $('#semester').val();
+	// 			// var tingkat 	= $('#tingkat').val();
+	// 			// var tipe_kelas 	= $('#tipe_kelas').val();
+	// 			// var id_thn_ajar = $('#id_thn_ajar').val();
+	// 			// var semester 	= $('#semester').val();
+	// 			// var tingkat 	= $('#tingkat').val();
+	// 			// var tipe_kelas 	= $('#tipe_kelas').val();
+	// 			var kdrow 	= makeid();
+				
+	// 			var str_url  	= encodeURI(base_url+"jadwal_pelajaran/GetKurikulum/"+id_thn_ajar+"/"+semester+"/"+tingkat+"/"+tipe_kelas);
+	// 			$.ajax({
+					
+	// 				type:"POST",
+	// 				url:str_url,
+	// 				dataType:"html",
+	// 				success:function(data)
+	// 				{
+	// 					var data = $.parseJSON(data);
+	// 					var LengtData = data.length;
+	// 					// if (LengtData == 0){
+	// 					// 	$('#tb_mata_pelajaran tbody').html('');
+	// 					// 	$('#tb_mata_pelajaran > tbody').html('"<tr><td colspan=\"4\" align=\"center\">Belum Ada Data.</td></tr>"');
+	// 					// 	bootbox.alert('Tidak ada data, silahkan Cek Kurikulum!');
+	// 					// }
+	// 					// else
+	// 					// {
+							
+							
+	// 						for(i=0;i<LengtData;i++)
+	// 						{
+	// 							if (semester == 1)
+	// 								{
+	// 									var sm = data[i].sm_1;
+	// 								}
+	// 								else if (semester ==2)
+	// 								{
+	// 									var sm = data[i].sm_2;
+	// 								}
+	// 							for(y=0;y<sm;y++)
+	// 							{
+	// 								var hari = 'txthari_'+data[i].id_mapel+y+i;
+	// 								var guru = 'txtguru_'+data[i].id_mapel+y+i;
+	// 								var jam = 'txtjam_'+data[i].id_mapel+y+i;
+	// 								var content_data 	= '<tr class="tb-detail" id="row'+kdrow+'">';
+	// 								content_data 	+= "<td>"+data[i].nama_matpal+"</td>"; //mata pelajaran
+	// 								content_data 	+= '<td><select class="form-control" name="'+hari+'" id="'+hari+'" >'
+	// 													+'<option value="">Pilih Hari</option>'
+	// 													+'<option value="SENIN">SENIN</option>'
+	// 													+'<option value="SELASA">SELASA</option>'
+	// 													+'<option value="RABU">RABU</option>'
+	// 													+'<option value="KAMIS">KAMIS</option>'
+	// 													+'<option value="JUMAT">JUMAT</option>'
+	// 													+'<option value="SABTU">SABTU</option>'
+	// 													+'<option value="AHAD">AHAD</option>'
+	// 													+'</select></td>'; //hari
+	// 								content_data 	+= '<td><select class="form-control" name="'+guru+'" id="guru" >'
+	// 													+'<option value="">-Pilih Guru-</option>'
+	// 													+'<option value="1">G001</option>'
+	// 													+'<option value="2">G002</option>'
+	// 													+'<option value="3">G003</option>'
+	// 													+'</select></td>'; //Guru
+	// 								content_data 	+= '<td><select class="form-control" name="'+jam+'" id="hari" >'
+	// 													+'<option value="">-Pilih Jam-</option>'
+	// 													+'<option value="I">I</option>'
+	// 													+'<option value="II">II</option>'
+	// 													+'<option value="III">III</option>'
+	// 													+'<option value="IV">IV</option>'
+	// 													+'<option value="V">V</option>'
+	// 													+'<option value="VI">VI</option>'
+	// 													+'</select></td>'; //JAM
+	// 								content_data 	+= "</tr>";
+
+									
+												
+	// 								if(y<1 && i<1){
+										
+	// 									$('#tb_mata_pelajaran tbody').html(content_data);
+	// 								}
+	// 								else{
+
+	// 									$('#tb_mata_pelajaran tbody').append(content_data);
+	// 								}
+
+	// 								$('#'+hari).val(dataS['hari']);
+	// 							}
+								
+	// 						}
+	// 					// }
+								
+	// 				}
+	// 			});
+				
+	// 		// }
+	// 	// });
+	
+// }
+
+function hapus(kode_kelas,santri,id_thn_ajar,deskripsi,semester){
+	var str_url  	= encodeURI(base_url+"jadwal_pelajaran/Deljadwal_pelajaran/"+kode_kelas+'/'+santri+'/'+id_thn_ajar+'/'+semester);
+	bootbox.confirm("Anda yakin akan menghapus Mata Pelajaran kurikulum "+deskripsi+", Kode Kelas "+kode_kelas+", Santri "+santri+", dan semester "+semester+"  ini ?",
 		function(result){
 			if(result==true){				
 			$.ajax({
@@ -355,7 +581,7 @@ function hapus(id_jadwal){
 			dataType:"html",
 			success:function(data){
 					bootbox.alert({
-						message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Hapus Berhasil Berhasil",
+						message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Berhasil dihapus",
 						size: 'small',
 						callback: function () {
 
@@ -383,15 +609,15 @@ function downloadExcel(){
 	window.location = base_url+'jadwal_pelajaran/exportexcel/'+param;
 }
 
-function CekDuplicate(id_jadwal){
-	$.ajax({
+// function CekDuplicate(id_jadwal){
+// 	$.ajax({
 
-		type:"POST",
-		url:base_url+"jadwal_pelajaran/get_data_jadwal_pelajaran/"+id_jadwal,
-		dataType:"html",
-		success:function(data){				
-            var data =	 $.parseJSON(data)
-		}
-	});
+// 		type:"POST",
+// 		url:base_url+"jadwal_pelajaran/get_data_jadwal_pelajaran/"+id_jadwal,
+// 		dataType:"html",
+// 		success:function(data){				
+//             var data =	 $.parseJSON(data)
+// 		}
+// 	});
 	
-}
+// }

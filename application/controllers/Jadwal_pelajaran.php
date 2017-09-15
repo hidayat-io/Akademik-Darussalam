@@ -79,16 +79,16 @@ class jadwal_pelajaran extends IO_Controller
 		$fdate = 'd-m-Y';
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_jadwal.'\')">
-						<i class="fa fa-edit"></i>
+			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->kode_kelas.'\',\''.$data[$i]->tingkat.'\',\''.$data[$i]->tipe_kelas.'\',\''.$data[$i]->nama.'\',\''.$data[$i]->santri.'\',\''.$data[$i]->id_thn_ajar.'\',\''.$data[$i]->deskripsi.'\',\''.$data[$i]->semester.'\')">
+					<i class="fa fa-edit"></i>
 					</a>
-					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->id_jadwal.'\')">
+					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->kode_kelas.'\',\''.$data[$i]->santri.'\',\''.$data[$i]->id_thn_ajar.'\',\''.$data[$i]->deskripsi.'\',\''.$data[$i]->semester.'\')">
 						<i class="fa fa-remove"></i>
 					</a>';
 			
 			$records["data"][] = array(
 
-		     	$data[$i]->id_jadwal,
+		     	$data[$i]->kode_kelas,
                  $data[$i]->nama,
   				$data[$i]->santri,
   				$data[$i]->deskripsi,
@@ -185,38 +185,81 @@ class jadwal_pelajaran extends IO_Controller
 
 	function simpan_jadwal_pelajaran($status)
 	{
-		$id_jadwal 		= $this->input->post('id_jadwal');
-		$nama  		        = $this->input->post('nama');
-        $recdate            = date('y-m-d');
+		$id_thn_ajar 		= $this->input->post('hide_Kurikulum');
+		$semester  		    = $this->input->post('semester');
+		$tingkat  		    = $this->input->post('tingkat');
+		$tipe_kelas  		= $this->input->post('tipe_kelas');
+		$kode_kelas  		= $this->input->post('kode_kelas');
+		$santri  			= $this->input->post('santri');
+		$recdate            = date('y-m-d');
 	    $userid 			= $this->session->userdata('logged_in')['uid'];
-
-		$data_jadwal_pelajaran = array(
-			'id_jadwal' 			=> $id_jadwal,
-			'nama' 		            => $nama,
-            'recdate'               => $recdate,
-			'userid' 				=> $userid
-		);
-        
-		if($status=='SAVE')	
-		{// cek apakah add new atau editdata
+				
+		if ($semester == 1)
+		{
+			$kolom_sm = $this->model->QueryGetKurikulumSM1($id_thn_ajar,$tingkat,$tipe_kelas);
 			
-		// save data jadwal_pelajaran
-         	$this->model->simpan_data_jadwal_pelajaran($data_jadwal_pelajaran);
-
 		}
-        else //update data
-		{		
-			// save data jadwal_pelajaran
-         	$this->model->update_data_jadwal_pelajaran($id_jadwal,$data_jadwal_pelajaran);
-        }	    
+		else if ($semester == 2)
+		{
+			$kolom_sm = $this->model->QueryGetKurikulumSM2($id_thn_ajar,$tingkat,$tipe_kelas);
+			
+		}
+		$row = $kolom_sm;
+		$ilength = count($kolom_sm);
+			for($i=0;$i<$ilength;$i++)
+			{
+			
 
-			echo "true";
+				if ($semester == 1)
+				{
+					$sm = $row[$i]['sm_1'];
+				}
+				else if ($semester ==2)
+				{
+					$sm = $row[$i]['sm_2'];
+				}
+
+				for($y=0;$y<$sm;$y++)
+				{
+					$id_mapel 		= $row[$i]['id_mapel'];
+					$input_hari 	= 'txthari_'.$row[$i]['id_mapel'].$y.$i;
+					$input_guru 	= 'txtguru_'.$row[$i]['id_mapel'].$y.$i;
+					$input_jam 		= 'txtjam_'.$row[$i]['id_mapel'].$y.$i;
+					// var_dump($input_hari);
+					// exit();
+					$hari 			= $this->input->post($input_hari);
+					$guru 			= $this->input->post($input_guru);
+					$jam 			= $this->input->post($input_jam);
+					$data_jadwal_pelajaran = array(
+						'santri' 			=> $santri,
+						'id_thn_ajar' 		=> $id_thn_ajar,
+						'semester' 		    => $semester,
+						'kode_kelas' 		=> $kode_kelas,
+						'id_guru' 		    => $guru,
+						'jam' 		      	=> $jam,
+						'hari' 		      	=> $hari,
+						'id_mapel' 		    => $id_mapel,
+						'recdate'           => $recdate,
+						'userid' 			=> $userid
+					);
+					$this->model->simpan_data_jadwal_pelajaran($data_jadwal_pelajaran);
+					
+				}
+				
+			}
+		echo "true";
+		
+		
 	}
 
-	function get_data_jadwal_pelajaran($id_jadwal)
+	function get_data_jadwal_pelajaran($kode_kelas,$santri,$id_thn_ajar,$semester,$id_mapel)
 	{
-        $id_jadwal = urldecode($id_jadwal);
-		$data = $this->model->query_jadwal_pelajaran($id_jadwal);
+        $kode_kelas 	= urldecode($kode_kelas);
+		$santri 		= urldecode($santri);
+		$id_thn_ajar 	= urldecode($id_thn_ajar);
+		$semester 		= urldecode($semester);
+		$id_mapel 		= urldecode($id_mapel);
+		$data = $this->model->query_jadwal_pelajaran($kode_kelas,$santri,$id_thn_ajar,$semester,$id_mapel);
     	echo json_encode($data);
 	}
 
@@ -230,13 +273,37 @@ class jadwal_pelajaran extends IO_Controller
     	echo json_encode($data);
 	}
 
-	function Deljadwal_pelajaran($id_jadwal)
+	function Deljadwal_pelajaran($kode_kelas,$santri,$id_thn_ajar,$semester)
 	{
-		$id_jadwal = urldecode($id_jadwal);
-		$this->model->delete_jadwal_pelajaran($id_jadwal);
+		$kode_kelas 	= urldecode($kode_kelas);
+		$santri 		= urldecode($santri);
+		$id_thn_ajar 	= urldecode($id_thn_ajar);
+		$semester 		= urldecode($semester);
+		$this->model->delete_jadwal_pelajaran($kode_kelas,$santri,$id_thn_ajar,$semester);
 	}
 
-	function GetKurikulum($id_thn_ajar,$semester,$tingkat,$tipe_kelas)
+	function GetKurikulum($id_thn_ajar,$semester,$tingkat,$tipe_kelas,$kode_kelas,$santri)
+	{
+		$id_thn_ajar 	= urldecode($id_thn_ajar);
+		$semester 		= urldecode($semester);
+		$tingkat 		= urldecode($tingkat);
+		$tipe_kelas 	= urldecode($tipe_kelas);
+		$kode_kelas 	= urldecode($kode_kelas);
+		$santri 	= urldecode($santri);
+		if ($semester == 1)
+		{
+			$data = $this->model->QueryGetKurikulumSM1($id_thn_ajar,$tingkat,$tipe_kelas,$kode_kelas,$santri);
+			
+		}
+		else if ($semester == 2)
+		{
+			$data = $this->model->QueryGetKurikulumSM2($id_thn_ajar,$tingkat,$tipe_kelas,$kode_kelas,$santri);
+			
+		}
+		echo json_encode($data);
+    	
+	}
+	function GetKurikulumTambah($id_thn_ajar,$semester,$tingkat,$tipe_kelas)
 	{
 		$id_thn_ajar 	= urldecode($id_thn_ajar);
 		$semester 		= urldecode($semester);
@@ -244,19 +311,15 @@ class jadwal_pelajaran extends IO_Controller
 		$tipe_kelas 	= urldecode($tipe_kelas);
 		if ($semester == 1)
 		{
-			$data = $this->model->QueryGetKurikulumSM1($id_thn_ajar,$tingkat,$tipe_kelas);
+			$data = $this->model->QueryGetKurikulumSM1Tambah($id_thn_ajar,$tingkat,$tipe_kelas);
 			
 		}
 		else if ($semester == 2)
 		{
-			$data = $this->model->QueryGetKurikulumSM2($id_thn_ajar,$tingkat,$tipe_kelas);
+			$data = $this->model->QueryGetKurikulumSM2Tambah($id_thn_ajar,$tingkat,$tipe_kelas);
 			
 		}
 		echo json_encode($data);
     	
 	}
 }
-
-	
-
-	

@@ -246,39 +246,6 @@ class Kurikulum extends IO_Controller
 
 	function simpan_kurikulum($status)
 	{
-		// $id_thn_ajar 		    = $this->input->post('id_thn_ajar');
-		// $tingkat 		    = $this->input->post('tingkat');
-		// $id_mapel               = $this->input->post('id_mapel');
-        // $sm_1	                = $this->input->post('sm_1');
-		// $sm_2	                = $this->input->post('sm_2');
-        // $recdate                = date('y-m-d');
-	    // $userid 			    = $this->session->userdata('logged_in')['uid'];
-
-		// $data_kurikulum = array(
-		// 	'id_thn_ajar' 			=> $id_thn_ajar,
-		// 	'tingkat' 			=> $tingkat,
-		// 	'id_mapel'              => $id_mapel,
-		// 	'sm_1' 			        => $sm_1,
-		// 	'sm_2' 			        => $sm_2,
-        //     'recdate'               => $recdate,
-		// 	'userid' 				=> $userid
-		// );
-        
-		// if($status=='SAVE')	
-		// {// cek apakah add new atau editdata
-			
-		// // save data kurikulum
-        //  	$this->model->simpan_data_kurikulum($data_kurikulum);
-
-		// }
-        // else //update data
-		// {		
-		// 	// save data kurikulum
-        //  	$this->model->update_data_kurikulum($id_thn_ajar,$data_kurikulum);
-        // }	    
-
-		// 	echo "true";
-		
 		$headertablekurikulum = $this->model->get_headertable_kurikulum();
 		$bodytablekurikulum = $this->model->get_bodytable_kurikulum();
 		// var_dump($headertablekurikulum);

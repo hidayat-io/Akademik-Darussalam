@@ -40,7 +40,7 @@
                 <table class="table table-striped table-bordered table-hover" id="tb_list">
                     <thead>
                         <tr>
-                            <th style="text-align:center">ID Jadwal</th>
+                            <th style="text-align:center">Kode kelas</th>
                             <th style="text-align:center">Kelas</th>
                             <th style="text-align:center">Santri</th>
                             <th style="text-align:center">Kurikulum</th>
@@ -100,10 +100,10 @@
                                                                     Kurikulum
                                                                 </span>
                                                                 <?php
-                                                                    $att_item = ' type="text" class="form-control select " id="id_thn_ajar" onclick="add_tohide()" onchange="kosong_table()" required';
+                                                                    $att_item = ' type="text" class="form-control select " id="id_thn_ajar" name="id_thn_ajar" onclick="add_tohide()" onchange="kosong_table()" required';
                                                                     echo form_dropdown('select_thnajar', $kode_deskripsi, null, $att_item);
                                                                 ?>
-                                                                <input type="hidden" class="form-control" name="hide_Kurikulum" id="hide_Kurikulum" >
+                                                                <input type="text" class="form-control" name="hide_Kurikulum" id="hide_Kurikulum" >
                                                             
                                                             </div>
                                                         </div>    
@@ -125,48 +125,9 @@
                                                             </div>
                                                         </div>    
                                                     </div>
-                                                    <!--span-->
-                                                    <!--span-->
-                                                    <!-- <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label class="control-label"></label>
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon">
-                                                                    Tingkat
-                                                                </span>
-                                                                <select class="form-control" name="tingkat" id="tingkat" onchange="kosong_table()" required>
-                                                                <option value="">-Pilih Tingkat-</option>
-                                                                <option value="1">1</option>
-                                                                <option value="2">2</option>
-                                                                <option value="3">3</option>
-                                                                <option value="4">4</option>
-                                                                <option value="5">5</option>
-                                                                <option value="6">6</option>
-                                                            </select>
-                                                            </div>
-                                                        </div>    
-                                                    </div> -->
-                                                    <!--span-->                                                    
-                                                </div>
+                                                    </div>
                                                 <div class="row">                                                   
-                                                    <!--span-->
-                                                    <!-- <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label class="control-label"></label>
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon">
-                                                                    Tipe Kelas
-                                                                </span>
-                                                                <select class="form-control" name="tipe_kelas" id="tipe_kelas" onchange="kosong_table()" required>
-                                                                <option value="">-Pilih Tipe Kelas-</option>
-                                                                <option value="REGULER">REGULER</option>
-                                                                <option value="INTENSIF">INTENSIF</option>
-                                                            </select>
-                                                            </div>
-                                                        </div>    
-                                                    </div> -->
-                                                     <!--span-->
-                                                     <div class="col-md-6">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="control-label"></label>
                                                             <div class="input-group">
@@ -174,15 +135,14 @@
                                                                     Kelas
                                                                 </span>
                                                                 <?php
-                                                                    $att_item = ' type="text" class="form-control select " id="select_kelas" onclick="add_tohidekelas()" onchange="kosong_table() onchange="kosong_table()" required';
+                                                                    $att_item = ' type="text" class="form-control select" id="select_kelas" onclick="add_tohidekelas()" onchange="kosong_table() onchange="kosong_table()" required';
                                                                     echo form_dropdown('select_kelas', $kode_kelas, null, $att_item);
                                                                 ?>
-                                                                <input type="hidden" class="form-control" name="hide_Kurikulum" id="hide_Kurikulum" >
                                                             
                                                             </div>
                                                         </div>    
                                                     </div>
-                                                        <!--span-->                                                
+                                                    <!--span-->                                                
                                                     <!--span-->
                                                     <div class="col-md-6">
                                                         <div class="form-group">
@@ -203,16 +163,16 @@
                                                 </div>
                                             <!--end inputbox-->                                            
                                             <!--kotak mata pelajaran-->
-                             <input type="hidden" id="kode_kelas"/>
-                             <input type="hidden" id="tingkat"/>
-                             <input type="hidden" id="tipe_kelas"/>
+                             <input type="text" id="kode_kelas" name="kode_kelas"/>
+                             <input type="text" id="tingkat" name="tingkat"/>
+                             <input type="text" id="tipe_kelas" name="tipe_kelas"/>
                             <div class="portlet box green-jungle">
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class="fa fa-gift"></i> Data Mata Pelajaran 
                                     </div>
                                         <div class="tools">
-                                             <button type="button" class="btn red-intense" id="button_kecakapankhusus" onclick="refresh_table()">
+                                             <button type="button" class="btn red-intense" id="button_refresh" onclick="refresh_table()">
                                                 <i class="glyphicon glyphicon-asterisk "> </i> Refresh Tables
                                             </button>
                                             <a href="javascript:;" class="collapse"></a>
