@@ -108,6 +108,7 @@ function setTable(){
     $('#tb_list').DataTable( {
         processing: true,
         serverSide: true,
+        bFilter:false,
         ajax: {
             'url':base_url+"guru/load_grid",
             'type':'GET',
@@ -117,7 +118,7 @@ function setTable(){
         },
         columnDefs: [
             { width: 50, targets: 0 }, //no reg
-            { width: 130, targets: 1 }, //nama lengkap
+            { width: 160, targets: 1 }, //nama lengkap
             { width: 70, targets: 2 }, //nig
             { width: 60, targets: 3 }, //mulai mengajar
             { width: 60, targets: 4 }, //gender
@@ -125,10 +126,12 @@ function setTable(){
             { 
                 targets: [6],         //action
                 orderable: false,
-                width: 90
+                width: 50
             }
         ],
-        order: [[ 0, "desc" ]]
+        order: [[ 0, "desc" ]],
+        dom: "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'l><'col-sm-7'pi>>"
     });
 }
 
@@ -1412,3 +1415,24 @@ function hapus(name,id){
 		}
 	);
 }
+
+//Modal Search
+function modalSearch(){
+
+    document.getElementById("form_search").reset();
+    $('#modal_search').modal('show');
+}
+
+function searchAct(){
+
+    var str_param = JSON.stringify($('#form_search').serializeArray());
+    
+    $('#hid_param').val(str_param);
+
+    var table = $('#tb_list').DataTable();
+    table.ajax.reload( null, false );
+    table.draw();
+
+    $('#modal_search').modal('toggle');
+}
+//End Modal Search

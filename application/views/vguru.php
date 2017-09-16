@@ -1,8 +1,11 @@
 <link href="<?=base_url()?>assets/css/v_guru.css" rel="stylesheet" type="text/css">
+<link href="<?=base_url()?>assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css">
 
 <script src="<?=base_url()?>assets/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js" type="text/javascript"></script>
 <script src="<?=base_url()?>assets/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js" type="text/javascript"></script>
 <script src="<?=base_url()?>assets/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+<script src="<?=base_url()?>assets/plugins/moment.min.js" type="text/javascript"></script>
+<script src="<?=base_url()?>assets/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
 <script src="<?=base_url()?>js/jguru.js"></script>
 
 <div class="row">
@@ -22,7 +25,7 @@
                     <button class="btn btn-default " type="button" data-toggle="dropdown" onclick="modalNew()">
                         <i class="icon-note"></i>&nbsp;Tambah Data&nbsp;
                     </button>
-                    <button type="button" class="btn btn-default" title="Search Data" onclick="Modalcari()">
+                    <button type="button" class="btn btn-default" title="Search Data" onclick="modalSearch()">
                         <i class="fa fa-search"></i>&nbsp;Search
                     </button>
                     <button type="button" class="btn btn-default" title="Export Data to Excel" onclick="downloadExcel()">
@@ -183,7 +186,7 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Jenis Kelamin</span>
-                                                    <select name="opt_gender" id="opt_gender" class="form-control input-small">                                         
+                                                    <select name="opt_gender" id="opt_gender" class="form-control input-small"> 
                                                         <option value="l">Laki-laki</option>
                                                         <option value="p">Perempuan</option>
                                                     </select>
@@ -807,3 +810,79 @@
     </div>
 </div>
 <!-- END Modal add data pendidikan formal -->
+
+<!-- Modal Search Data -->
+<div id="modal_search" class="modal fade" tabindex="-1">
+    <div class="modal-dialog" id="portlet_form_scan">
+        <div class="portlet box green-jungle">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-search"></i>Search Data
+                </div>                
+            </div>
+            <div class="portlet-body">
+                <form class="form-horizontal" role="form" id="form_search">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label pull-left" style="text-align: left;">No.Regis</label>
+                            <div class="col-md-4">
+                                <input type="text" name="txt_snoregis" class="form-control numbers-only input-small" placeholder="No.Regis" maxlength="4">                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label pull-left" style="text-align: left;">NIG</label>
+                            <div class="col-md-9">
+                                <input type="text" name="txt_snig" class="form-control numbers-only input-medium" placeholder="NIG">                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="text-align: left;">Nama Lengkap</label>
+                            <div class="col-md-9">
+                                <input type="text" name="txt_snama_lengkap" class="form-control" placeholder="Nama Lengkap">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label pull-left" style="text-align: left;">Mulai Mengajar</label>
+                            <div class="col-md-9">
+                                <div class="input-group input-large datepicker input-daterange">
+                                    <input type="text" class="form-control" name="dtp_sajar_start">
+                                    <span class="input-group-addon">to</span>
+                                    <input type="text" class="form-control" name="dtp_sajar_end">
+                                </div>
+                            </div>
+                        </div>                        
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="text-align: left;">Gender</label>
+                            <div class="col-md-9">
+                                <select name="opt_sgender" id="opt_sgender" class="form-control input-small"> 
+                                    <option value="">- Semua Gender-</option>
+                                    <option value="l">Laki-laki</option>
+                                    <option value="p">Perempuan</option>
+                                </select>                                 
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="text-align: left;">Status</label>
+                            <div class="col-md-9">
+                                <select name="opt_sstatus" id="opt_sstatus" class="form-control input-medium">
+                                    <option value="">- Semua Status -</option>
+                                    <option value="Pengabdian">Pengabdian</option>
+                                    <option value="Tetap">Tetap</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12" style="margin-left: 15px">
+                                <button type="button" class="btn green-jungle" onclick="searchAct()">Search</button>
+                                <button type="button" class="btn default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal Search Data -->
