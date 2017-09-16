@@ -53,13 +53,13 @@ class Guru extends IO_Controller{
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
 
-			$btn = '<button type="button" class="btn blue btn-xs" title="Lihat & Edit Data" onclick="modalEdit(\''.$data[$i]->id_guru.'\')">
-	                	<i class="fa fa-edit"></i>&nbsp;Edit
+			$btn = '<button type="button" class="btn blue btn-xs" title="LIHAT & EDIT DATA" onclick="modalEdit(\''.$data[$i]->id_guru.'\')">
+	                	<i class="fa fa-edit"></i>
 	                </button>
-	                <button type="button" class="btn red btn-xs" title="Hapus Data" onclick="hapus(\''.$data[$i]->nama_lengkap.'\',\''.$data[$i]->id_guru.'\')">
-	                	<i class="fa fa-trash"></i>&nbsp;Hapus
+	                <button type="button" class="btn red btn-xs" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->nama_lengkap.'\',\''.$data[$i]->id_guru.'\')">
+	                	<i class="fa fa-trash"></i>
 	                </button>';
-					
+	                					
 			$records["data"][] = array(
 
 		     	$data[$i]->no_reg,
@@ -334,14 +334,85 @@ class Guru extends IO_Controller{
 	}
 
 	function build_param($param){
-		
 
 		$string_param = " WHERE is_delete = '0' ";
-
+		
 		if($param!=null){
 
-			$string_param .= " AND ";
-			if(isset($param->no_reg)) $string_param .= "no_reg LIKE '%".$param->no_reg."%' ";
+			foreach ($param as $p) {
+			
+				$key = $p->name;
+				$val = $p->value;
+
+				switch ($key) {
+					
+					case "txt_snoregis":
+
+						if($val!=""){
+
+							$string_param .= " AND ";
+							$string_param .= "no_reg = '".$val."' ";
+						}
+						break;
+
+					case "txt_snig":
+
+						if($val!=""){
+
+							$string_param .= " AND ";
+							$string_param .= "nig LIKE '%".$val."%' ";
+						}
+						break;
+
+					case "txt_snama_lengkap":
+
+						if($val!=""){
+
+							$string_param .= " AND ";
+							$string_param .= "nama_lengkap LIKE '%".$val."%' ";
+						}
+						break;
+
+					case "dtp_sajar_start":
+					
+						if($val!=""){
+
+							$idate = io_return_date('d-m-Y',$val);
+
+							$string_param .= " AND ";
+							$string_param .= "mengajar_start BETWEEN '".$idate."' AND ";
+						}
+						break;
+
+					case "dtp_sajar_end":
+
+						if($val!=""){
+
+							$idate = io_return_date('d-m-Y',$val);
+
+							$string_param .= " '".$idate."' ";
+						}
+						break;
+
+					case "opt_sgender":
+
+						if($val!=""){
+
+							$string_param .= " AND ";
+							$string_param .= "jns_kelamin = '".$val."' ";
+						}
+						break;
+
+					case "opt_sstatus":
+
+						if($val!=""){
+
+							$string_param .= " AND ";
+							$string_param .= "status = '".$val."' ";
+						}
+						break;
+				}
+			}
 		}
 
 		return $string_param;
