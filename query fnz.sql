@@ -385,6 +385,23 @@ CREATE TABLE `ms_donatur` (
 
 insert  into `ms_donatur`(`id_donatur`,`nama_donatur`,`alamat`,`telpon`,`kategori`,`userid`,`recdate`) values (3,'DONATUR34','JALAN33','03454578','AITAM_ISLAH ','admin','2017-09-16 00:00:00'),(4,'DONATUR4','ALAMAT4','0545454','AITAM_AR_RAHMAH','admin','2017-09-16 00:00:00');
 
+DROP TABLE IF EXISTS `ms_config`;
+
+CREATE TABLE `ms_config` (
+  `id_config` int(11) NOT NULL AUTO_INCREMENT,
+  `nomor_statistik` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `NPSN` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nama` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `jenis_lembaga` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `userid` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `recdate` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_config`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `ms_config` */
+
+insert  into `ms_config`(`id_config`,`nomor_statistik`,`NPSN`,`nama`,`jenis_lembaga`,`userid`,`recdate`) values (1,'510232051432','69937270 - 69937240','TMI - Pondok Pesantren Darussalam','Mu\'allimin','admin','2017-09-16 00:00:00');
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
