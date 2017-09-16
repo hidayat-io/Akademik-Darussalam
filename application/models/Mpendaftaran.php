@@ -14,7 +14,7 @@ class Mpendaftaran extends CI_Model
 	{
 		
 
-		$cols = array('no_registrasi','thn_masuk','nama_lengkap','nama_panggilan','nama_arab');
+		$cols = array('no_registrasi','thn_masuk','nama_lengkap','nama_arab','nama_panggilan','uang_jajan_perbulan','no_kk','nik','tempat_lahir','tgl_lahir');
 
 		$sql = "SELECT *
 					FROM ms_santri where no_registrasi not like 'T%' and no_registrasi not like 'A%'";
