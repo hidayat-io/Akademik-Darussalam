@@ -40,11 +40,11 @@
                 <table class="table table-striped table-bordered table-hover" id="tb_list">
                     <thead>
                         <tr>
+                            <th style="text-align:center">Kurikulum</th>
+                            <th style="text-align:center">Semester</th>
                             <th style="text-align:center">Kode kelas</th>
                             <th style="text-align:center">Kelas</th>
                             <th style="text-align:center">Santri</th>
-                            <th style="text-align:center">Kurikulum</th>
-                            <th style="text-align:center">Semester</th>
                             <th style="text-align:center" width="20%">Action</th>
                         </tr>
                     </thead>
@@ -103,7 +103,7 @@
                                                                     $att_item = ' type="text" class="form-control select " id="id_thn_ajar" name="id_thn_ajar" onclick="add_tohide()" onchange="kosong_table()" required';
                                                                     echo form_dropdown('select_thnajar', $kode_deskripsi, null, $att_item);
                                                                 ?>
-                                                                <input type="text" class="form-control" name="hide_Kurikulum" id="hide_Kurikulum" >
+                                                                <input type="hidden" class="form-control" name="hide_Kurikulum" id="hide_Kurikulum" >
                                                             
                                                             </div>
                                                         </div>    
@@ -163,9 +163,9 @@
                                                 </div>
                                             <!--end inputbox-->                                            
                                             <!--kotak mata pelajaran-->
-                             <input type="text" id="kode_kelas" name="kode_kelas"/>
-                             <input type="text" id="tingkat" name="tingkat"/>
-                             <input type="text" id="tipe_kelas" name="tipe_kelas"/>
+                             <input type="hidden" id="kode_kelas" name="kode_kelas"/>
+                             <input type="hidden" id="tingkat" name="tingkat"/>
+                             <input type="hidden" id="tipe_kelas" name="tipe_kelas"/>
                             <div class="portlet box green-jungle">
                                 <div class="portlet-title">
                                     <div class="caption">

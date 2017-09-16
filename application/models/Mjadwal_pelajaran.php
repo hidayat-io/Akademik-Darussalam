@@ -105,7 +105,8 @@ class Mjadwal_pelajaran extends CI_Model
 								and b.kategori = 'UTAMA'
 								AND e.kode_kelas = '$kode_kelas' 
 								AND e.santri ='$santri'
-								and a.sm_1 > 0")->result_array();
+								and a.sm_1 > 0
+								ORDER BY b.id, e.id_mapel, e.kode_kelas, e.santri")->result_array();
 		// $data=$this->db->query("SELECT b.deskripsi, a.id_mapel, c.nama_matpal, a.tingkat, a.tipe_kelas,  a.sm_1, a.sm_2  
 		// 						from trans_kurikulum a
 		// 						inner join ms_tahun_ajaran b on a.id_thn_ajar = b.id
@@ -132,7 +133,8 @@ class Mjadwal_pelajaran extends CI_Model
 								and b.kategori = 'UTAMA'
 								AND e.kode_kelas = '$kode_kelas' 
 								AND e.santri ='$santri'
-								and a.sm_2 > 0")->result_array();
+								and a.sm_2 > 0
+								ORDER BY b.id, e.id_mapel, e.kode_kelas, e.santri")->result_array();
 								// echo $this->db->last_query();
 								// exit();
 		return $data;

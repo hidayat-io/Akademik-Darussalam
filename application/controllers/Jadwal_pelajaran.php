@@ -88,11 +88,11 @@ class jadwal_pelajaran extends IO_Controller
 			
 			$records["data"][] = array(
 
+				$data[$i]->deskripsi,
+				$data[$i]->semester,
 		     	$data[$i]->kode_kelas,
                  $data[$i]->nama,
   				$data[$i]->santri,
-  				$data[$i]->deskripsi,
-  				$data[$i]->semester,
                 $act
 		   );
 		
@@ -193,60 +193,121 @@ class jadwal_pelajaran extends IO_Controller
 		$santri  			= $this->input->post('santri');
 		$recdate            = date('y-m-d');
 	    $userid 			= $this->session->userdata('logged_in')['uid'];
-				
-		if ($semester == 1)
-		{
-			$kolom_sm = $this->model->QueryGetKurikulumSM1($id_thn_ajar,$tingkat,$tipe_kelas);
-			
-		}
-		else if ($semester == 2)
-		{
-			$kolom_sm = $this->model->QueryGetKurikulumSM2($id_thn_ajar,$tingkat,$tipe_kelas);
-			
-		}
-		$row = $kolom_sm;
-		$ilength = count($kolom_sm);
-			for($i=0;$i<$ilength;$i++)
-			{
-			
-
-				if ($semester == 1)
-				{
-					$sm = $row[$i]['sm_1'];
-				}
-				else if ($semester ==2)
-				{
-					$sm = $row[$i]['sm_2'];
-				}
-
-				for($y=0;$y<$sm;$y++)
-				{
-					$id_mapel 		= $row[$i]['id_mapel'];
-					$input_hari 	= 'txthari_'.$row[$i]['id_mapel'].$y.$i;
-					$input_guru 	= 'txtguru_'.$row[$i]['id_mapel'].$y.$i;
-					$input_jam 		= 'txtjam_'.$row[$i]['id_mapel'].$y.$i;
-					// var_dump($input_hari);
-					// exit();
-					$hari 			= $this->input->post($input_hari);
-					$guru 			= $this->input->post($input_guru);
-					$jam 			= $this->input->post($input_jam);
-					$data_jadwal_pelajaran = array(
-						'santri' 			=> $santri,
-						'id_thn_ajar' 		=> $id_thn_ajar,
-						'semester' 		    => $semester,
-						'kode_kelas' 		=> $kode_kelas,
-						'id_guru' 		    => $guru,
-						'jam' 		      	=> $jam,
-						'hari' 		      	=> $hari,
-						'id_mapel' 		    => $id_mapel,
-						'recdate'           => $recdate,
-						'userid' 			=> $userid
-					);
-					$this->model->simpan_data_jadwal_pelajaran($data_jadwal_pelajaran);
+		
+		if($status == 'SAVE')// proses simpan
+		{	
 					
-				}
+			if ($semester == 1)
+			{
+				$kolom_sm = $this->model->QueryGetKurikulumSM1Tambah($id_thn_ajar,$tingkat,$tipe_kelas);
 				
 			}
+			else if ($semester == 2)
+			{
+				$kolom_sm = $this->model->QueryGetKurikulumSM2Tambah($id_thn_ajar,$tingkat,$tipe_kelas);
+				
+			}
+			$row = $kolom_sm;
+			$ilength = count($kolom_sm);
+				for($i=0;$i<$ilength;$i++)
+				{
+				
+
+					if ($semester == 1)
+					{
+						$sm = $row[$i]['sm_1'];
+					}
+					else if ($semester ==2)
+					{
+						$sm = $row[$i]['sm_2'];
+					}
+
+					for($y=0;$y<$sm;$y++)
+					{
+						$id_mapel 		= $row[$i]['id_mapel'];
+						$input_hari 	= 'txthari_'.$row[$i]['id_mapel'].$y.$i;
+						$input_guru 	= 'txtguru_'.$row[$i]['id_mapel'].$y.$i;
+						$input_jam 		= 'txtjam_'.$row[$i]['id_mapel'].$y.$i;
+						// var_dump($input_hari);
+						// exit();
+						$hari 			= $this->input->post($input_hari);
+						$guru 			= $this->input->post($input_guru);
+						$jam 			= $this->input->post($input_jam);
+						$data_jadwal_pelajaran = array(
+							'santri' 			=> $santri,
+							'id_thn_ajar' 		=> $id_thn_ajar,
+							'semester' 		    => $semester,
+							'kode_kelas' 		=> $kode_kelas,
+							'id_guru' 		    => $guru,
+							'jam' 		      	=> $jam,
+							'hari' 		      	=> $hari,
+							'id_mapel' 		    => $id_mapel,
+							'recdate'           => $recdate,
+							'userid' 			=> $userid
+						);
+						$this->model->simpan_data_jadwal_pelajaran($data_jadwal_pelajaran);
+						
+					}
+					
+				}
+		}
+		else // proses update
+		{
+			
+			if ($semester == 1)
+			{
+				$kolom_sm_update = $this->model->QueryGetKurikulumSM1($id_thn_ajar,$tingkat,$tipe_kelas,$kode_kelas,$santri);
+				
+			}
+			else if ($semester == 2)
+			{
+				$kolom_sm_update = $this->model->QueryGetKurikulumSM2($id_thn_ajar,$tingkat,$tipe_kelas,$kode_kelas,$santri);
+			}
+				$this->model->delete_jadwal_pelajaran($kode_kelas,$santri,$id_thn_ajar,$semester);
+			$row = $kolom_sm_update;
+			$ilength = count($kolom_sm_update);
+				for($i=0;$i<$ilength;$i++)
+				{
+				
+
+					if ($semester == 1)
+					{
+						$sm = $row[$i]['sm_1'];
+					}
+					else if ($semester ==2)
+					{
+						$sm = $row[$i]['sm_2'];
+					}
+
+					// for($y=0;$y<$sm;$y++)
+					// {
+						$id_mapel 		= $row[$i]['id_mapel'];
+						$input_hari 	= 'txthari_'.$row[$i]['id_mapel'].$i;
+						$input_guru 	= 'txtguru_'.$row[$i]['id_mapel'].$i;
+						$input_jam 		= 'txtjam_'.$row[$i]['id_mapel'].$i;
+						// var_dump($input_hari);
+						// exit();
+						$hari 			= $this->input->post($input_hari);
+						$guru 			= $this->input->post($input_guru);
+						$jam 			= $this->input->post($input_jam);
+						$data_jadwal_pelajaran = array(
+							'santri' 			=> $santri,
+							'id_thn_ajar' 		=> $id_thn_ajar,
+							'semester' 		    => $semester,
+							'kode_kelas' 		=> $kode_kelas,
+							'id_guru' 		    => $guru,
+							'jam' 		      	=> $jam,
+							'hari' 		      	=> $hari,
+							'id_mapel' 		    => $id_mapel,
+							'recdate'           => $recdate,
+							'userid' 			=> $userid
+						);
+						$this->model->simpan_data_jadwal_pelajaran($data_jadwal_pelajaran);
+						
+					// }
+					
+				}
+		}
 		echo "true";
 		
 		
