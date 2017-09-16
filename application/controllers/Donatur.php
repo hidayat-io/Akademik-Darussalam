@@ -8,7 +8,7 @@ class donatur extends IO_Controller
 
 	public function __construct()
 	{
-			$modul = 26;
+			$modul = 33;
 			parent::__construct($modul);
 		 	$this->load->model('mdonatur','model');
 	}

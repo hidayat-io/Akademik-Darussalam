@@ -8,7 +8,7 @@ class msconfig extends IO_Controller
 
 	public function __construct()
 	{
-			$modul = 26;
+			$modul = 34;
 			parent::__construct($modul);
 		 	$this->load->model('mmsconfig','model');
 	}
