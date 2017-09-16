@@ -1,4 +1,4 @@
-/*
+﻿/*
 SQLyog Ultimate v10.00 Beta1
 MySQL - 5.5.5-10.1.25-MariaDB : Database - hidayati_pesantren
 *********************************************************************
@@ -367,6 +367,23 @@ CREATE TABLE `trans_kurikulum` (
 /*Data for the table `trans_kurikulum` */
 
 insert  into `trans_kurikulum`(`id_thn_ajar`,`tingkat`,`tipe_kelas`,`id_mapel`,`sm_1`,`sm_2`,`userid`,`recdate`) values ('3','1','INTENSIF','MPEK','2','0','admin','2017-09-02 00:00:00'),('3','1','INTENSIF','MPSO','2','0','admin','2017-09-02 00:00:00'),('3','1','INTENSIF','MP02','0','3','admin','2017-09-02 00:00:00'),('3','1','INTENSIF','MP01','0','3','admin','2017-09-02 00:00:00'),('3','1','INTENSIF','MPGEO','0','0','admin','2017-09-02 00:00:00'),('3','1','INTENSIF','MPSJ','0','0','admin','2017-09-02 00:00:00'),('3','1','INTENSIF','MP04','0','0','admin','2017-09-02 00:00:00'),('3','1','INTENSIF','MP05','0','0','admin','2017-09-02 00:00:00'),('3','1','INTENSIF','MPNI','0','0','admin','2017-09-02 00:00:00'),('3','1','REGULER','MPEK','0','0','admin','2017-09-02 00:00:00'),('3','1','REGULER','MPSO','0','0','admin','2017-09-02 00:00:00'),('3','1','REGULER','MP02','1','0','admin','2017-09-02 00:00:00'),('3','1','REGULER','MP01','1','0','admin','2017-09-02 00:00:00'),('3','1','REGULER','MPGEO','4','0','admin','2017-09-02 00:00:00'),('3','1','REGULER','MPSJ','4','0','admin','2017-09-02 00:00:00'),('3','1','REGULER','MP04','0','5','admin','2017-09-02 00:00:00'),('3','1','REGULER','MP05','0','5','admin','2017-09-02 00:00:00'),('3','1','REGULER','MPNI','0','0','admin','2017-09-02 00:00:00'),('3','2','REGULER','MPEK','0','0','admin','2017-09-02 00:00:00'),('3','2','REGULER','MPSO','0','0','admin','2017-09-02 00:00:00'),('3','2','REGULER','MP02','0','0','admin','2017-09-02 00:00:00'),('3','2','REGULER','MP01','0','0','admin','2017-09-02 00:00:00'),('3','2','REGULER','MPGEO','0','0','admin','2017-09-02 00:00:00'),('3','2','REGULER','MPSJ','0','0','admin','2017-09-02 00:00:00'),('3','2','REGULER','MP04','0','0','admin','2017-09-02 00:00:00'),('3','2','REGULER','MP05','0','0','admin','2017-09-02 00:00:00'),('3','2','REGULER','MPNI','0','0','admin','2017-09-02 00:00:00'),('3','3','REGULER','MPEK','0','0','admin','2017-09-02 00:00:00'),('3','3','REGULER','MPSO','0','0','admin','2017-09-02 00:00:00'),('3','3','REGULER','MP02','0','0','admin','2017-09-02 00:00:00'),('3','3','REGULER','MP01','0','0','admin','2017-09-02 00:00:00'),('3','3','REGULER','MPGEO','0','0','admin','2017-09-02 00:00:00'),('3','3','REGULER','MPSJ','0','0','admin','2017-09-02 00:00:00'),('3','3','REGULER','MP04','0','0','admin','2017-09-02 00:00:00'),('3','3','REGULER','MP05','0','0','admin','2017-09-02 00:00:00'),('3','3','REGULER','MPNI','0','0','admin','2017-09-02 00:00:00'),('7','1','INTENSIF','MPSSORE','1','1','admin','2017-08-25 00:00:00'),('7','1','INTENSIF','MPEKSORE2','0','0','admin','2017-08-25 00:00:00'),('7','1','REGULER','MPSSORE','0','0','admin','2017-08-25 00:00:00'),('7','1','REGULER','MPEKSORE2','2','2','admin','2017-08-25 00:00:00'),('7','2','REGULER','MPSSORE','3','3','admin','2017-08-25 00:00:00'),('7','2','REGULER','MPEKSORE2','3','3','admin','2017-08-25 00:00:00'),('7','3','REGULER','MPSSORE','1','1','admin','2017-08-25 00:00:00'),('7','3','REGULER','MPEKSORE2','2','2','admin','2017-08-25 00:00:00');
+
+DROP TABLE IF EXISTS `ms_donatur`;
+
+CREATE TABLE `ms_donatur` (
+  `id_donatur` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_donatur` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `alamat` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `telpon` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `kategori` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'AITAM AR RAHMAH/AITAM ISLAH /AITAM BAITUL ZAKAT',
+  `userid` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `recdate` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_donatur`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `ms_donatur` */
+
+insert  into `ms_donatur`(`id_donatur`,`nama_donatur`,`alamat`,`telpon`,`kategori`,`userid`,`recdate`) values (3,'DONATUR34','JALAN33','03454578','AITAM_ISLAH ','admin','2017-09-16 00:00:00'),(4,'DONATUR4','ALAMAT4','0545454','AITAM_AR_RAHMAH','admin','2017-09-16 00:00:00');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
