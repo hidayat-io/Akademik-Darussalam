@@ -113,7 +113,7 @@
                                                         <label class="control-label"></label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                Jennis Lembaga
+                                                                Jenis Lembaga
                                                             </span>
                                                             <input type="text" class="form-control" name="jenis_lembaga" id="jenis_lembaga" maxlength="15" required>
                                                         </div>
