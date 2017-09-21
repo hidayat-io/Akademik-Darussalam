@@ -8,7 +8,7 @@ class Infaq extends IO_Controller
 		{
     $modul = 2;
 		parent::__construct($modul);
-		$this->load->model('infaq_model');
+		$this->load->model('Minfaq');
 	  }
 
 	function index()
@@ -18,23 +18,33 @@ class Infaq extends IO_Controller
 	    	$this->load->view('main',$data);
 	  }
 
+
     function save_data(){
 
 		$input = $this->input->post();
 
+
 		$id_data 		= $input['hid_id_data'];
-		$id_key			= $input['hid_id_key'];
 		$id_data_saldo 	= $input['hid_data_saldo'];
+
+		$hid_id_data_tipe 	= $input['hid_id_data_tipe'];
+
 		$tgl 			= io_return_date('d-m-Y',$input['txttgl']);
 
 		$user 			= $this->session->userdata('logged_in')['uid'];
 
+
+		if($hid_id_data_tipe=="tab_in"){
+			$tipe="i";
+		}
+		else{
+			$tipe ="o";	
+		}
+
 		$data = array(
-			'keytrans'			=> $id_key,
-			'nama'				=> $input['txtnama'],
-			'alamat'			=> $input['txtalamat'],
+			'id_donatur'		=> $input['opt_donatur'],
 			'tgl_infaq'			=> $tgl,
-			'tipe'				=> $input['optionsRadios'],
+			'tipe'				=> $tipe,
 			'nominal'			=> $input['txtnominal'],
 			'keterangan'		=> $input['txtketerangan'],
 			'userid'			=> $user
@@ -43,16 +53,24 @@ class Infaq extends IO_Controller
 
 		if($id_data==""){
 
-			$this->infaq_model->insert_new($data);
-			$this->infaq_model->update_saldo($id_key,$input['optionsRadios'],$input['txtnominal'],$user);
+			$this->Minfaq->insert_new($data);
+			$this->Minfaq->update_saldo($input['opt_donatur'],$tipe,$input['txtnominal'],$user);
 		}
 		else{
 
-			$this->infaq_model->update_data($id_data,$data);
-			$this->infaq_model->update_saldo_updt($id_key,$input['optionsRadios'],$input['txtnominal'],$user,$id_data_saldo);
+			$this->Minfaq->update_data($id_data,$data);
+			$this->Minfaq->update_saldo_updt($input['opt_donatur'],$input['txtnominal'],$user,$id_data_saldo);
 		}
 	}
 
+	function get_list_donatur(){
+    	$data_donatur = $this->mcommon->mget_list_donatur();
+
+    	echo json_encode($data_donatur);
+    }
+
+	// menapilkan data kedalam
+	// grid
 	function load_grid(){
 
 		$iparam 		= json_decode($_REQUEST['param']);
@@ -62,7 +80,7 @@ class Infaq extends IO_Controller
 		$sort_by 		= $_REQUEST['order'][0]['column'];
 		$sort_type 		= $_REQUEST['order'][0]['dir'];
 
-		$data 			= $this->infaq_model->get_list_data($string_param,$sort_by,$sort_type);
+		$data 			= $this->Minfaq->get_list_data($string_param,$sort_by,$sort_type);
 		$iTotalRecords  	= count($data);
 		$iDisplayLength 	= intval($_REQUEST['length']);
 		$iDisplayLength 	= $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
@@ -86,7 +104,7 @@ class Infaq extends IO_Controller
 			$records["data"][] = array(
 
 				$data[$i]->id_infaq,
-				$data[$i]->nama,
+				$data[$i]->nama_donatur,
 				$data[$i]->alamat,
 				io_date_format($data[$i]->tgl_infaq,$fdate),
 				$tipe[$data[$i]->tipe],
@@ -103,6 +121,7 @@ class Infaq extends IO_Controller
 		echo json_encode($records);
 	}
 
+	//parameter yang dikirm
 	function build_param($param){
 
 		// merubah hasil json menjadi parameter Query //
@@ -116,13 +135,15 @@ class Infaq extends IO_Controller
 		return $string_param;
 	}
 
+	//menampilkan data
 	function get_data($id){
 
-		$data = $this->infaq_model->query_getdata($id);
+		$data = $this->Minfaq->query_getdata($id);
 
 		echo json_encode($data);
 	}
 
+	//menghapus data
 	function hapus_data($str){
 
 
@@ -138,10 +159,10 @@ class Infaq extends IO_Controller
 
 		// melempar data ke model untuk execute berdasarkan //
 		// parameter yang diberikan //
-		$this->infaq_model->m_hapus_data($id,$tipe,$nom,$user);
+		$this->Minfaq->m_hapus_data($id,$tipe,$nom,$user);
 	}
 
-
+	// menampilkan data ke dalam excel
 	function excel_infaq(){
 		// hasil decode // 
 		$str = base64_decode($this->uri->segment(3));
@@ -153,7 +174,7 @@ class Infaq extends IO_Controller
 		// agar json menjadi parameter query //
 		$str = $this->build_param($str);
 
-		$data= $this->infaq_model->get_list_data($str);
+		$data= $this->Minfaq->get_list_data($str);
 
 		//load our new PHPExcel library
 		$this->load->library('excel');

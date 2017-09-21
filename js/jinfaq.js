@@ -21,36 +21,39 @@ $(document).ready(function(){
 	    return false;
   	});
 
-  	$('input[name="optionsRadios"]').on('click', function() {
-        if ($(this).val() == 'o') {
-        	
-        	$('#nm').hide();
-        	$('#almt').hide();
-            
-        }
-        else {
-            
-        	$('#nm').show();
-        	$('#almt').show();
-        }
-    });
+	populateSelectdonatur();
 
-
-    $('input[name="optsrch"]').on('click', function() {
-        if ($(this).val() == 'o') {
-        	
-        	$('#nmsrc').hide();
-        }
-        else {
-            
-        	$('#nmsrc').show();
-        }
-    });
-
-
-
+	$("#opt_donatur").select2({ 
+		dropdownParent: $('#m_add')
+	});
 
 });
+
+function populateSelectdonatur(){
+
+	$.ajax({
+	        type: "POST",
+	        url: base_url+'infaq/get_list_donatur',
+	        dataType: 'json',
+	        success: function(json) {
+	        	
+	            var $el 		= $("#opt_donatur");
+
+	            $el.empty(); // remove old options
+
+	            $el.append($("<option></option>")
+	                    .attr("value", '').text('- Please Select -'));
+
+
+	            $.each(json, function(index, value) {
+
+	                $el.append($("<option></option>")
+	                        .attr("value", value['id_donatur']).text(value['nama_donatur']));
+	            });
+	            
+	        }
+	    });
+}
 
 
 function pnladd(){
@@ -74,50 +77,41 @@ function modalSearch(){
 
 }
 
-
 // java script buat clear form nama pada form tabungan
-
 function clearForm(){
-     $('#txtnama').val('');
-     $('#txtalamat').val('');
-     $("#txttgl").val('');
-     $('#txtnominal').val('');
-     $('#txtketerangan').val('');
-     $('#hid_data_saldo').val('');
+	$('#hid_id_data').val('');
+	$('#hid_data_saldo').val('');
+    $("#txttgl").val('');
+    $('#txtnominal').val('');
+    $('#txtketerangan').val('');
+     
 }
 
 
 // JS Simpan infaq
 function simpaninfaq(){
 
+	//alert($('.nav-pills .active')[0].id);
+	//return false;
+
+
+
 	var hid_id_data 		= $("input[name='hid_id_data']").val();
-	var hid_id_key			= $("input[name='hid_id_key']").val();
-	var nama 				= $("input[name='txtnama']").val();
-	var alamat				= $("input[name='txtalamat']").val();
+	var id_data_saldo		= $("input[name='hid_data_saldo']").val();
+	var tipe 				= $('.nav-pills .active')[0].id;
 	var tanggal 			= $("input[name='txttgl']").val();
-	var tipe 				= $("input[name='optionsRadios']:checked").val();
+	
 	var nominal 			= $("input[name='txtnominal']").val();
 	var keterangan 			= $("input[name='txtketerangan']").val();
 
-//	if(nama==""){
-//
-//		var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
-//		var str_message = "Keterangan, &amp; Nama tidak boleh kosong.";
-//
-//		bootbox.alert({
-//			size:'small',
-//			title:title,
-//			message:str_message,
-//			buttons:{
-//				ok:{
-//					label: 'OK',
-//					className: 'btn-warning'
-//				}
-//			}
-//		});
-//		return false;
-//	}
-	 if(tanggal==""){
+
+	$('input[name="hid_id_data_tipe"]').val(tipe);
+
+
+	//return false;
+
+
+	if(tanggal==""){
 
 		var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
 		var str_message = "Keterangan, &amp; Tanggal tidak boleh kosong.";
@@ -135,7 +129,6 @@ function simpaninfaq(){
 		});
 		return false;
 	}
-
 
 	else if(nominal==""){
 
@@ -156,31 +149,6 @@ function simpaninfaq(){
 		return false;
 	}
 
-
-//	else if(tipe=="o"){
-
-//		var nm = parseInt(nominal);
-//		var sldtbn = parseInt(saldo);
-
-//		if(nm > sldtbn){
-//			var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
-//		var str_message = "Keterangan, &amp; Pengeluaran lebih besar dari pada saldo saat ini.";
-//
-//		bootbox.alert({
-//			size:'small',
-//			title:title,
-///			message:str_message,
-//			buttons:{
-//				ok:{
-//					label: 'OK',
-//					className: 'btn-warning'
-//				}
-//			}
-//		});
-//		return false;
-//		}
-//	}
-
 	$("#frminfaq").ajaxSubmit({
 		url:base_url+"infaq/save_data",
 		type: 'post',
@@ -192,6 +160,7 @@ function simpaninfaq(){
 			$('#m_add').modal('toggle');
 		}
 	});
+	clearForm();
 }
 
 function setTable(){
@@ -256,14 +225,13 @@ function editdata(id){
 
 			$('input[name="hid_id_data"]').val(data['id_infaq']);
 			$('input[name="hid_data_saldo"]').val(data['saldo']);
-			$("input[name='optionsRadios']").filter('[value='+data['tipe']+']').prop('checked', true).trigger("click");
-			$('input[name="txtnama"]').val(data['nama']);
-			$('input[name="txtalamat"]').val(data['alamat']);
+			$("#opt_donatur").val(data['id_donatur']).trigger('change')
 			$('input[name="txttgl"]').val(data['itgl']);
 			$('input[name="txtnominal"]').val(data['nominal']);
 			$('textarea[name="txtketerangan"]').val(data['keterangan']);
 
 			$('#m_add').modal('show');
+
 		}
 	});
 }

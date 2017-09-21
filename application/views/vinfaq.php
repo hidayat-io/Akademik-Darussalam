@@ -43,126 +43,109 @@
 
   <!-- modal add -->
 
-
-<div id="m_add" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
+<div id="m_add" class="modal fade bs-modal-lg" tabindex="-1" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
+
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title" id="lbl_titel"></h4>
             </div>
+
             <div class="modal-body">
                 <form action="#" id="frminfaq" class="form-horizontal">
+                    <input type="hidden" name="hid_id_data_tipe" value="" />
+
                     <input type="hidden" name="hid_id_data" value="" />
-                    <input type="hidden" name="hid_id_key" value="S" />
                     <input type="hidden" name="hid_data_saldo" value="" id="hid_data_saldo" />
 
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Tipe</label>
-                        <div class="col-md-5">
-                            <div class="mt-radio-inline">
-                                <label class="mt-radio">
-                                    <input type="radio" name="optionsRadios" id="optsimpan" value="i" checked="checked" >Simpan
-                                    <span></span>
-                                </label>
-                                <label class="mt-radio">
-                                    <input type="radio" name="optionsRadios" id="optkeluar" value="o">Keluar
-                                    <span></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="form-body">
+                            <div class="portlet-body">
+                                <ul class="nav nav-pills">
+                                    <li class="active" id="tab_in">
+                                        <a href="#tab_2_1" data-toggle="tab">Uang Pemasukan Infaq</a>
+                                    </li>
+                                    <li id="tab_out">
+                                        <a href="#tab_2_2" data-toggle="tab">Uang Pengeluaran Infaq</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade active in" id="tab_2_1">
+                                        <p>
 
-                    <!--inputbbox-->
-                    <div class="row" id="nm">
-                        <div class="col-md-9">
-                            <div class="form-group">
-                                <label class="control-label col-md-3"></label>
-                                    <div class="col-md-9">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Nama</span>
-                                            <input type="text" class="form-control spinner"  name="txtnama" id="txtnama">
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--span-->
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2"></label>
+                                                <div class="col-md-9">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">Nama</span>
+                                                           <select class="form-control select2" style="width: 100%;" id="opt_donatur" name="opt_donatur">
+                                                           </select>
 
-                    <!--inputbbox-->
-                    <div class="row" id="almt">
-                        <div class="col-md-9">
-                            <div class="form-group">
-                                <label class="control-label col-md-3"></label>
-                                    <div class="col-md-9">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Alamat</span>
-                                            <textarea class="form-control" rows="2" name="txtalamat" id="txtalamat"></textarea>
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--span-->
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                    <!--inputbbox-->
-                    <div class="row">
-                        <div class="col-md-9">
-                            <div class="form-group">
-                                <label class="control-label col-md-3"></label>
-                                    <div class="col-md-9">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Tanggal</span>
-                                            <input class="form-control datepicker"  type="text" name="txttgl"
-                                value="<?php echo date('d-m-Y'); ?>" />
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--span-->
 
-                    <!--inputbbox-->
-                    <div class="row">
-                        <div class="col-md-9">
-                            <div class="form-group">
-                                <label class="control-label col-md-3"></label>
-                                    <div class="col-md-9">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Nominal</span>
-                                            <input type="text" class="form-control spinner numbers-only" name="txtnominal" 
-                            id="txtnominal">
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--span-->
+                                            <!--inputbbox-->
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2"></label>
+                                                <div class="col-md-9">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">Tanggal</span>
+                                                        <input class="form-control datepicker"  type="text" name="txttgl" value="<?php echo date('d-m-Y'); ?>" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--span-->
 
-                    <!--inputbbox-->
-                    <div class="row">
-                        <div class="col-md-9">
-                            <div class="form-group">
-                                <label class="control-label col-md-3"></label>
-                                    <div class="col-md-9">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Keterangan</span>
-                                            <textarea class="form-control" rows="2" name="txtketerangan" id="txtketerangan"></textarea>
-                                        </div>
+                                            <!--inputbbox-->
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2"></label>
+                                                <div class="col-md-9">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">Nominal</span>
+                                                        <input type="text" class="form-control spinner numbers-only" name="txtnominal" id="txtnominal">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--span-->
+
+                                            <!--inputbbox-->
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2"></label>
+                                                <div class="col-md-9">
+                                                    <div class="input-group">
+                                                        <sspan class="input-group-addon">Keterangan</span>
+                                                        <textarea class="form-control" rows="2" name="txtketerangan" id="txtketerangan"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--span-->
+
+                                        </p>
+                                    
                                     </div>
+
+                                    <div class="tab-pane fade" id="tab_2_2">
+                                        <p>        
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
                     </div>
-                    <!--span-->
                 </form>
             </div>
+
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn dark btn-outline">Cancel</button>
+
                 <button type="button" class="btn green" onclick="simpaninfaq()">Simpan</button>
             </div>
+
         </div>
     </div>
 </div>
+
 
 <div id="m_search" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
