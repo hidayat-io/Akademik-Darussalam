@@ -167,7 +167,7 @@ class bidstudi extends IO_Controller
 		$id_bidang 		    = $this->input->post('id_bidang');
 		$nama_bidang 		= $this->input->post('nama_bidang');
 		$nama_bidang 		= $this->input->post('nama_bidang');
-		$item_matpal 			= $this->input->post('hid_table_item_Matpal');
+		$item_matpal 		= $this->input->post('hid_table_item_Matpal');
         $recdate            = date('y-m-d');
 	    $userid 			= $this->session->userdata('logged_in')['uid'];
 

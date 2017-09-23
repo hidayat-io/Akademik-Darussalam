@@ -1,6 +1,6 @@
 <?php
 
-class Mjadwal_pelajaran extends CI_Model 
+class Mjadwal_pelajaran_sore extends CI_Model 
 {
 
 	public function __construct()
@@ -11,7 +11,7 @@ class Mjadwal_pelajaran extends CI_Model
     }
     
     function get_thn_ajar(){
-		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='UTAMA' order by id desc Limit 2 ");
+		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='SORE' order by id desc Limit 2 ");
 		return $data;
 	}
 
@@ -32,14 +32,14 @@ class Mjadwal_pelajaran extends CI_Model
                 INNER JOIN ms_kelas c ON c.kode_kelas=a.kode_kelas";
                     
 
-            if($param!=null){
+                if($param!=null){
                     
-                    $sql .= " WHERE b.kategori ='UTAMA'".$param;
+                    $sql .= " WHERE b.kategori ='SORE'".$param;
                     
                 }
                 else
                 {
-                    $sql .= " WHERE b.kategori ='UTAMA'";
+                    $sql .= " WHERE b.kategori ='SORE'";
                 }
 		
 
@@ -50,7 +50,7 @@ class Mjadwal_pelajaran extends CI_Model
 		return $this->db->query($sql)->result();
 	}
 	
-	function delete_jadwal_pelajaran($kode_kelas,$santri,$id_thn_ajar,$semester){
+	function delete_jadwal_pelajaran_sore($kode_kelas,$santri,$id_thn_ajar,$semester){
 		$this->db->where('kode_kelas',$kode_kelas);
 		$this->db->where('santri',$santri);
 		$this->db->where('id_thn_ajar',$id_thn_ajar);
@@ -58,18 +58,18 @@ class Mjadwal_pelajaran extends CI_Model
 		$this->db->delete('trans_jadwal_pelajaran');
 	}
 
-	function simpan_data_jadwal_pelajaran($data_jadwal_pelajaran){
+	function simpan_data_jadwal_pelajaran_sore($data_jadwal_pelajaran_sore){
 
-		$this->db->replace('trans_jadwal_pelajaran',$data_jadwal_pelajaran);
+		$this->db->replace('trans_jadwal_pelajaran',$data_jadwal_pelajaran_sore);
 	}
     
-    // function update_data_jadwal_pelajaran($id_jadwal,$data_jadwal_pelajaran){
+    // function update_data_jadwal_pelajaran_sore($id_jadwal,$data_jadwal_pelajaran_sore){
         
 		//     $this->db->where('id_jadwal',$id_jadwal);
-		// 	$this->db->update('ms_jadwal_pelajaran',$data_jadwal_pelajaran);
+		// 	$this->db->update('ms_jadwal_pelajaran',$data_jadwal_pelajaran_sore);
 	// }
 
-    function query_jadwal_pelajaran($kode_kelas,$santri,$id_thn_ajar,$semester,$id_mapel){
+    function query_jadwal_pelajaran_sore($kode_kelas,$santri,$id_thn_ajar,$semester,$id_mapel){
         $data = array();
 		$data=$this->db->query("SELECT a.kode_kelas,a.id_guru, a.jam, a.hari, a.id_mapel, d.nama_matpal 
 								FROM trans_jadwal_pelajaran a 
@@ -106,7 +106,7 @@ class Mjadwal_pelajaran extends CI_Model
 								where a.id_thn_ajar ='$id_thn_ajar'
 								and a.tingkat = '$tingkat'
 								and a.tipe_kelas = '$tipe_kelas'
-								and b.kategori = 'UTAMA'
+								and b.kategori = 'SORE'
 								AND e.kode_kelas = '$kode_kelas' 
 								AND e.santri ='$santri'
 								and a.sm_1 > 0
@@ -118,7 +118,7 @@ class Mjadwal_pelajaran extends CI_Model
 		// 						where a.id_thn_ajar ='$id_thn_ajar'
 		// 						and a.tingkat = '$tingkat'
 		// 						and a.tipe_kelas = '$tipe_kelas'
-		// 						and b.kategori = 'UTAMA'
+		// 						and b.kategori = 'SORE'
 		// 						and a.sm_1 > 0")->result_array();
 								// echo $this->db->last_query();
 								// exit();
@@ -134,7 +134,7 @@ class Mjadwal_pelajaran extends CI_Model
 								where a.id_thn_ajar ='$id_thn_ajar'
 								and a.tingkat = '$tingkat'
 								and a.tipe_kelas = '$tipe_kelas'
-								and b.kategori = 'UTAMA'
+								and b.kategori = 'SORE'
 								AND e.kode_kelas = '$kode_kelas' 
 								AND e.santri ='$santri'
 								and a.sm_2 > 0
@@ -152,7 +152,7 @@ class Mjadwal_pelajaran extends CI_Model
 								where a.id_thn_ajar ='$id_thn_ajar'
 								and a.tingkat = '$tingkat'
 								and a.tipe_kelas = '$tipe_kelas'
-								and b.kategori = 'UTAMA'
+								and b.kategori = 'SORE'
 								and a.sm_1 > 0")->result_array();
 								// echo $this->db->last_query();
 								// exit();
@@ -167,7 +167,7 @@ class Mjadwal_pelajaran extends CI_Model
 								where a.id_thn_ajar ='$id_thn_ajar'
 								and a.tingkat = '$tingkat'
 								and a.tipe_kelas = '$tipe_kelas'
-								and b.kategori = 'UTAMA'
+								and b.kategori = 'SORE'
 								and a.sm_2 > 0")->result_array();
 								// echo $this->db->last_query();
 								// exit();

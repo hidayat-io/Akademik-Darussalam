@@ -15,7 +15,7 @@ class Mkurikulumsore extends CI_Model
 		return $data;
 	}
     function get_thn_ajar(){
-		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='SORE' order by id desc Limit 2 ");
+		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='SORE' OR kategori='KITAB' order by id desc Limit 2 ");
 		return $data;
 	}
 
@@ -35,7 +35,7 @@ class Mkurikulumsore extends CI_Model
 		$data = $this->db->query ("SELECT a.id_bidang, a.nama_bidang, b.id_matpal, b.nama_matpal, b.status
 									FROM ms_bidang_study a 
 									INNER JOIN ms_mata_pelajaran b ON a.id_bidang = b.id_bidang 
-									WHERE b.status = 1 and a.kategori = 'SORE'")->result_array();
+									WHERE b.status = 1 and a.kategori = 'SORE' OR a.kategori = 'KITAB'")->result_array();
 		return $data;
 	}
 

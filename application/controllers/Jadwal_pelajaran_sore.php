@@ -3,14 +3,14 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class jadwal_pelajaran extends IO_Controller
+class jadwal_pelajaran_sore extends IO_Controller
 {
 
 	public function __construct()
 	{
 			$modul = 20;
 			parent::__construct($modul);
-		 	$this->load->model('mjadwal_pelajaran','model');
+		 	$this->load->model('mjadwal_pelajaran_sore','model');
 	}
 
 	function index()
@@ -34,8 +34,8 @@ class jadwal_pelajaran extends IO_Controller
 							=$b->nama." | ".$b->tingkat." | ".$b->tipe_kelas;
                         }
 		
-		$vdata['title'] = 'JADWAL PELAJARAN UTAMA';
-	    $data['content'] = $this->load->view('vjadwal_pelajaran',$vdata,TRUE);
+		$vdata['title'] = 'JADWAL PELAJARAN SORE & KITAB';
+	    $data['content'] = $this->load->view('vjadwal_pelajaran_sore',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
 
@@ -124,15 +124,15 @@ class jadwal_pelajaran extends IO_Controller
 		//activate worksheet number 1
 		$this->excel->setActiveSheetIndex(0);
 		//name the worksheet
-		$this->excel->getActiveSheet()->setTitle('Master_jadwal_pelajaran');
-		$this->excel->getActiveSheet()->setCellValue('A1', "Master jadwal_pelajaran");
+		$this->excel->getActiveSheet()->setTitle('Master_jadwal_pelajaran_sore');
+		$this->excel->getActiveSheet()->setCellValue('A1', "Master jadwal_pelajaran_sore");
 		$this->excel->getActiveSheet()->mergeCells('A1:C1');
 		$this->excel->getActiveSheet()->getStyle('A1:C1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 		//header
 		$this->excel->getActiveSheet()->setCellValue('A3', "No.");
-		$this->excel->getActiveSheet()->setCellValue('B3', "Kode jadwal_pelajaran");
-		$this->excel->getActiveSheet()->setCellValue('C3', "Nama jadwal_pelajaran");
+		$this->excel->getActiveSheet()->setCellValue('B3', "Kode jadwal_pelajaran_sore");
+		$this->excel->getActiveSheet()->setCellValue('C3', "Nama jadwal_pelajaran_sore");
 
 		$fdate 	= "d-m-Y";
 		$i  	= 4;
@@ -170,7 +170,7 @@ class jadwal_pelajaran extends IO_Controller
 		$this->excel->getActiveSheet()->getStyle('A3:C3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
 		$this->excel->getActiveSheet()->getStyle('A3:C3')->getFill()->getStartColor()->setRGB('2CC30B');
 
-		$filename='Master-jadwal_pelajaran.xls'; //save our workbook as this file name
+		$filename='Master-jadwal_pelajaran_sore.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
 		header('Cache-Control: max-age=0');//no cache
@@ -183,7 +183,7 @@ class jadwal_pelajaran extends IO_Controller
 
 	}
 
-	function simpan_jadwal_pelajaran($status)
+	function simpan_jadwal_pelajaran_sore($status)
 	{
 		$id_thn_ajar 		= $this->input->post('hide_Kurikulum');
 		$semester  		    = $this->input->post('semester');
@@ -233,7 +233,7 @@ class jadwal_pelajaran extends IO_Controller
 						$hari 			= $this->input->post($input_hari);
 						$guru 			= $this->input->post($input_guru);
 						$jam 			= $this->input->post($input_jam);
-						$data_jadwal_pelajaran = array(
+						$data_jadwal_pelajaran_sore = array(
 							'santri' 			=> $santri,
 							'id_thn_ajar' 		=> $id_thn_ajar,
 							'semester' 		    => $semester,
@@ -245,7 +245,7 @@ class jadwal_pelajaran extends IO_Controller
 							'recdate'           => $recdate,
 							'userid' 			=> $userid
 						);
-						$this->model->simpan_data_jadwal_pelajaran($data_jadwal_pelajaran);
+						$this->model->simpan_data_jadwal_pelajaran_sore($data_jadwal_pelajaran_sore);
 						
 					}
 					
@@ -263,7 +263,7 @@ class jadwal_pelajaran extends IO_Controller
 			{
 				$kolom_sm_update = $this->model->QueryGetKurikulumSM2($id_thn_ajar,$tingkat,$tipe_kelas,$kode_kelas,$santri);
 			}
-				$this->model->delete_jadwal_pelajaran($kode_kelas,$santri,$id_thn_ajar,$semester);
+				$this->model->delete_jadwal_pelajaran_sore($kode_kelas,$santri,$id_thn_ajar,$semester);
 			$row = $kolom_sm_update;
 			$ilength = count($kolom_sm_update);
 				for($i=0;$i<$ilength;$i++)
@@ -290,7 +290,7 @@ class jadwal_pelajaran extends IO_Controller
 						$hari 			= $this->input->post($input_hari);
 						$guru 			= $this->input->post($input_guru);
 						$jam 			= $this->input->post($input_jam);
-						$data_jadwal_pelajaran = array(
+						$data_jadwal_pelajaran_sore = array(
 							'santri' 			=> $santri,
 							'id_thn_ajar' 		=> $id_thn_ajar,
 							'semester' 		    => $semester,
@@ -302,7 +302,7 @@ class jadwal_pelajaran extends IO_Controller
 							'recdate'           => $recdate,
 							'userid' 			=> $userid
 						);
-						$this->model->simpan_data_jadwal_pelajaran($data_jadwal_pelajaran);
+						$this->model->simpan_data_jadwal_pelajaran_sore($data_jadwal_pelajaran_sore);
 						
 					// }
 					
@@ -313,14 +313,14 @@ class jadwal_pelajaran extends IO_Controller
 		
 	}
 
-	function get_data_jadwal_pelajaran($kode_kelas,$santri,$id_thn_ajar,$semester,$id_mapel)
+	function get_data_jadwal_pelajaran_sore($kode_kelas,$santri,$id_thn_ajar,$semester,$id_mapel)
 	{
         $kode_kelas 	= urldecode($kode_kelas);
 		$santri 		= urldecode($santri);
 		$id_thn_ajar 	= urldecode($id_thn_ajar);
 		$semester 		= urldecode($semester);
 		$id_mapel 		= urldecode($id_mapel);
-		$data = $this->model->query_jadwal_pelajaran($kode_kelas,$santri,$id_thn_ajar,$semester,$id_mapel);
+		$data = $this->model->query_jadwal_pelajaran_sore($kode_kelas,$santri,$id_thn_ajar,$semester,$id_mapel);
     	echo json_encode($data);
 	}
 
@@ -334,7 +334,7 @@ class jadwal_pelajaran extends IO_Controller
     	echo json_encode($data);
 	}
 
-	function Deljadwal_pelajaran($kode_kelas,$santri,$id_thn_ajar,$semester)
+	function Deljadwal_pelajaran_sore($kode_kelas,$santri,$id_thn_ajar,$semester)
 	{
 		$kode_kelas 	= urldecode($kode_kelas);
 		$santri 		= urldecode($santri);

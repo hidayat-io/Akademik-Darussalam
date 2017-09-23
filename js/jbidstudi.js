@@ -247,8 +247,10 @@ function svbidstudi(){
 								var rbutton = document.getElementById('r_utama').value;
 								}	
 								else if (document.getElementById('r_sore').checked) {
-								var rbutton = document.getElementById('r_sore').value;
-								
+								var rbutton = document.getElementById('r_sore').value;								
+								}
+								else if (document.getElementById('r_kitab').checked) {
+								var rbutton = document.getElementById('r_kitab').value;								
 								}
 							$.ajax({
 

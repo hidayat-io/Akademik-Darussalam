@@ -1,7 +1,7 @@
 <!-- بسم الله الرحمن الرحیم -->
 <style type="text/css">.thumb-image{float:left;width:200px;position:relative;padding:5px;}</style>
 <script src="<?php echo base_url(); ?>assets/plugins/maskMoney/jquery.maskMoney.js"></script>
-<script src="<?php echo base_url(); ?>js/jjadwal_pelajaran.js"></script>
+<script src="<?php echo base_url(); ?>js/jjadwal_pelajaran_sore.js"></script>
 <script type="text/javascript">
     var base_url = "<?php echo base_url(); ?>";
 </script>
@@ -19,7 +19,7 @@
                   </div>
                 </div>
                 <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
-                    <button class="btn btn-default " type="button" onclick="addjadwal_pelajaran()">
+                    <button class="btn btn-default " type="button" onclick="addjadwal_pelajaran_sore()">
                         <i class="fa fa-edit"></i>&nbsp;Tambah Data&nbsp;
                     </button>
                     <!-- <ul class="dropdown-menu" role="menu">
@@ -64,8 +64,8 @@
         <!-- END EXAMPLE TABLE PORTLET-->
     </div>
 </div>
-<!-- modal add jadwal_pelajaran -->
-    <div class="modal fade bs-modal-full in" id="Modal_add_jadwal_pelajaran" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" >
+<!-- modal add jadwal_pelajaran_sore -->
+    <div class="modal fade bs-modal-full in" id="Modal_add_jadwal_pelajaran_sore" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" >
         <div class="modal-dialog modal-full">
             <div class="modal-content">
                 <div class="modal-header">
@@ -87,7 +87,7 @@
                                 <div class="portlet-body">
                                     <div class="form-body">                                
                                         <!-- BEGIN FORM-->
-                                        <form action="#" id="add_jadwal_pelajaran">
+                                        <form action="#" id="add_jadwal_pelajaran_sore">
                                             <!--inputbox-->
                                                 <div class="row">
                                                     <!--span-->
@@ -220,7 +220,7 @@
                             <!--table mata pelajaran-->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn green-jungle" id="save_button" onclick="svjadwal_pelajaran()">Save</button>
+                                                <button type="button" class="btn green-jungle" id="save_button" onclick="svjadwal_pelajaran_sore()">Save</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -236,7 +236,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-<!-- end of modal jadwal_pelajaran-->
+<!-- end of modal jadwal_pelajaran_sore-->
 <!-- modal Cari -->
     <div class="modal fade draggable-modal" id="Modal_cari" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
@@ -267,9 +267,9 @@
                                                             <label class="control-label"></label>
                                                             <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                Kode jadwal_pelajaran
+                                                                Kode jadwal_pelajaran_sore
                                                             </span>
-                                                            <input type="text" class="form-control" name="s_kodejadwal_pelajaran" id="s_kodejadwal_pelajaran" onkeydown="OtomatisKapital(this)" required></div>
+                                                            <input type="text" class="form-control" name="s_kodejadwal_pelajaran_sore" id="s_kodejadwal_pelajaran_sore" onkeydown="OtomatisKapital(this)" required></div>
                                                     </div>
                                                 <!--span-->
                                                     <!-- <div class="form-group">

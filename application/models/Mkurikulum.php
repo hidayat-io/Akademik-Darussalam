@@ -41,7 +41,7 @@ class Mkurikulum extends CI_Model
 
     function get_list_data($param,$sortby=0,$sorttype='desc'){
 		
-        $cols = array('id_thn_ajar');
+        $cols = array('id_thn_ajar','deskripsi');
 
         $sql = "SELECT DISTINCT a.id_thn_ajar,  b.deskripsi, b.kategori  
 				FROM trans_kurikulum a

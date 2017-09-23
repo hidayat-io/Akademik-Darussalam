@@ -104,6 +104,10 @@
                                                                     <input type="radio" name="optionsRadios" id="r_sore" value="SORE" onclick="RB_action()">Sore
                                                                     <span></span>
                                                                 </label>
+                                                                <label class="mt-radio">
+                                                                    <input type="radio" name="optionsRadios" id="r_kitab" value="KITAB" onclick="RB_action()">Kitab
+                                                                    <span></span>
+                                                                </label>
                                                             <!-- </div> -->
                                                             </div>
                                                     </div>
