@@ -88,6 +88,7 @@
                                     <div class="form-body">                                
                                         <!-- BEGIN FORM-->
                                         <form action="#" id="add_jadwal_pelajaran">
+                                            <input type="text" id="hid_master_guru" class="hidden" value='<?php echo json_encode($master_guru); ?>' />
                                             <!--inputbox-->
                                                 <div class="row">
                                                     <!--span-->
@@ -134,7 +135,7 @@
                                                                     Kelas
                                                                 </span>
                                                                 <?php
-                                                                    $att_item = ' type="text" class="form-control select" id="select_kelas" onclick="add_tohidekelas()" onchange="kosong_table() onchange="kosong_table()" required';
+                                                                    $att_item = ' type="text" class="form-control select" id="select_kelas" onclick="add_tohidekelas()" onchange="kosong_table()" required';
                                                                     echo form_dropdown('select_kelas', $kode_kelas, null, $att_item);
                                                                 ?>
                                                             
@@ -162,9 +163,9 @@
                                                 </div>
                                             <!--end inputbox-->                                            
                                             <!--kotak mata pelajaran-->
-                             <input type="hidden" id="kode_kelas" name="kode_kelas"/>
-                             <input type="hidden" id="tingkat" name="tingkat"/>
-                             <input type="hidden" id="tipe_kelas" name="tipe_kelas"/>
+                             <input type="text" id="kode_kelas" name="kode_kelas"/>
+                             <input type="text" id="tingkat" name="tingkat"/>
+                             <input type="text" id="tipe_kelas" name="tipe_kelas"/>
                             <div class="portlet box green-jungle">
                                 <div class="portlet-title">
                                     <div class="caption">

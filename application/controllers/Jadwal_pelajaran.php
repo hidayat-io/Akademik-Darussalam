@@ -34,8 +34,23 @@ class jadwal_pelajaran extends IO_Controller
 							=$b->nama." | ".$b->tingkat." | ".$b->tipe_kelas;
                         }
 		
-		$vdata['title'] = 'JADWAL PELAJARAN UTAMA';
-	    $data['content'] = $this->load->view('vjadwal_pelajaran',$vdata,TRUE);
+		$vdata['title'] 		= 'JADWAL PELAJARAN UTAMA';
+
+		//json data guru
+		$mguru = $this->mcommon->mget_list_master_guru()->result();
+
+		foreach ($mguru as $g) {
+			
+			$data_guru[] = array(
+
+				'id_guru' 	=> $g->id_guru,
+				'nama_guru' => $g->nama_lengkap
+			);
+		}
+		//end json data guru
+
+		$vdata['master_guru'] 	= $data_guru;
+	    $data['content'] 		= $this->load->view('vjadwal_pelajaran',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
 

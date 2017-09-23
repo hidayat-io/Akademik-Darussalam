@@ -28,4 +28,10 @@ class Mcommon extends CI_Model {
     	
     	return $this->db->get('ms_guru_jabatan');
     }
+
+    function mget_list_master_guru(){
+
+    	$this->db->order_by('id_guru','desc');
+    	return $this->db->get('ms_guru');
+    }
 }

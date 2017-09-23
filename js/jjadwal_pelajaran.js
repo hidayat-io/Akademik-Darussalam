@@ -163,6 +163,16 @@ function refresh_table()
 				else
 				{
 					
+					//build selectbox master guru
+					var str_opt_guru 	= '';
+					var data_guru 		= $('#hid_master_guru').val();
+						data_guru 		= $.parseJSON(data_guru);
+
+					for(x = 0; x < data_guru.length; x++){
+
+					    str_opt_guru += '<option value="'+data_guru[x].id_guru+'">'+data_guru[x].id_guru+' - '+data_guru[x].nama_guru+'</option>';
+					}
+					//end build selectbox master guru
 					
 					for(i=0;i<LengtData;i++)
 					{
@@ -194,9 +204,7 @@ function refresh_table()
 												+'</select></td>'; //hari
 							content_data 	+= '<td><select class="form-control" name="'+guru+'" id="guru" >'
 												+'<option value="">-Pilih Guru-</option>'
-												+'<option value="1">G001</option>'
-												+'<option value="2">G002</option>'
-												+'<option value="3">G003</option>'
+												+str_opt_guru
 												+'</select></td>'; //Guru
 							content_data 	+= '<td><select class="form-control" name="'+jam+'" id="jam" >'
 												+'<option value="">-Pilih Jam-</option>'
