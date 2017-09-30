@@ -6,7 +6,10 @@ class Mguru extends CI_Model {
 		
 		$cols = array('no_reg','nama_lengkap','nig','mengajar_sejak','jns_kelamin','status');
 
-		$sql = "SELECT * FROM ms_guru ";
+		$sql = "SELECT g.*,p.nama_matpal 
+					FROM ms_guru g 
+						LEFT OUTER JOIN ms_mata_pelajaran p 
+							ON g.materi_diampu=p.id_matpal";
 				
 		if($param!=null) $sql .= $param;
 		

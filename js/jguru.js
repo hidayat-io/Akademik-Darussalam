@@ -29,6 +29,11 @@ $(document).ready(function(){
 
     $("#form_editing").validate();
 
+    $('#opt_mapel').change(function(){
+
+        refreshNoNIG();
+    });
+
     $('input:file').change(function(e){
 
         var files       = e.originalEvent.target.files;
@@ -1436,3 +1441,24 @@ function searchAct(){
     $('#modal_search').modal('toggle');
 }
 //End Modal Search
+
+function downloadExcel(){
+
+    var str_param       = JSON.stringify($('#form_search').serializeArray());
+    var str_encoded     = ioEncode(str_param);
+
+    window.open(base_url+'guru/excel_master_guru/'+str_encoded,'_blank');
+}
+
+function refreshNoNIG(){
+
+    var no_parameter    = $('#hid_no_statistik').val();
+    var kode_matkul     = $('#opt_mapel').val();
+    var no_reg          = $('#txt_noreg').val();
+        no_reg          = "000"+no_reg;
+        no_reg          = no_reg.slice(-3);
+
+    var nig             = no_parameter+kode_matkul+no_reg;
+
+    $('#txt_no_nig').val(nig);
+}

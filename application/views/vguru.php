@@ -72,6 +72,7 @@
                         <input type="text" id="hid_pformal_edu" name="hid_pformal_edu" value="[]" class="hidden" />
                         <input type="text" id="hid_pnonformal_edu" name="hid_pnonformal_edu" value="[]" class="hidden" />
                         <input type="text" id="hid_old_gapok" name="hid_old_gapok" class="hidden" value="" />
+                        <input type="text" id="hid_no_statistik" name="hid_no_statistik" class="hidden" value="<?=$nomor_statistik?>">
 
                         <div class="alert alert-danger display-hide">
                             <button class="close" data-close="alert"></button>
@@ -152,7 +153,7 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">NIG</span>
-                                                    <input type="text" class="form-control medium-width" placeholder="NIG" name="txt_no_nig" id="txt_no_nig">
+                                                    <input type="text" class="form-control medium-width" placeholder="NIG" name="txt_no_nig" id="txt_no_nig" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -376,7 +377,12 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Materi yang diampu</span>
-                                                    <textarea name="txa_materi" id="txa_materi" rows="4" cols="50" class="form-control" placeholder="Materi yang diampu"></textarea>
+                                                    <?php
+
+                                                        $att_mapel = 'class="form-control select2 input-medium" id="opt_mapel"';
+                                                        echo form_dropdown('opt_mapel', $opt_mapel, null, $att_mapel);
+                                                    ?>
+                                                    <!-- <textarea name="txa_materi" id="txa_materi" rows="4" cols="50" class="form-control" placeholder="Materi yang diampu"></textarea> -->
                                                 </div>
                                             </div>
                                         </div>

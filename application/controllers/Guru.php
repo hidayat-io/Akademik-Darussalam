@@ -13,13 +13,25 @@ class Guru extends IO_Controller{
 
 		$vdata['title'] = 'DATA GURU & KARYAWAN';
 
-		/* data master guru */
+		//data master jabatan
 		$mguru = $this->mcommon->mget_list_jabatan_guru()->result();
 
 		foreach ($mguru as $g) {
 			
 			$vdata['opt_jabatan'][$g->id_jabatan] = $g->nama_jabatan;
 		}
+
+		//data master mata pelajaran
+		$mpelajaran = $this->mcommon->mget_list_mata_pelajaran()->result();
+
+		foreach ($mpelajaran as $p) {
+			
+			$vdata['opt_mapel'][$p->id_matpal] = $p->id_matpal.' - '.$p->nama_matpal;
+		}
+
+		//default config data lembaga
+		$dconfig = $this->mcommon->mget_config_lembaga()->row();
+		$vdata['nomor_statistik'] = $dconfig->nomor_statistik;
 
 	    $data['content'] = $this->load->view('vguru',$vdata,TRUE);
 	    $this->load->view('main',$data);
@@ -125,7 +137,7 @@ class Guru extends IO_Controller{
 			"sertifikasi"			=> $input['txt_sertifikasi'],
 			"no_sk"					=> $input['txt_sk_angkat'],
 			"tgl_sk"				=> $tgl_sk,
-			"materi_diampu"  		=> $input['txa_materi'],
+			"materi_diampu"  		=> $input['opt_mapel'],
 			"gapok"					=> $input['txt_gapok'],
 			"userid"				=> $this->session->userdata('logged_in')['uid'],
 			"recdate" 				=> date('Y-m-d H:i:s'),
@@ -138,7 +150,15 @@ class Guru extends IO_Controller{
 
 			$data['no_reg'] = $no_reg;
 
-			$id 	= $this->model->msimpan_data($data);
+			$id = $this->model->msimpan_data($data);
+
+			//update NIG according to inserted ID
+			$no_stat 	= $input['hid_no_statistik'];
+			$mapel 		= $input['opt_mapel'];
+			$fixid 		= str_pad($id, 3, "0", STR_PAD_LEFT);
+			$nig 		= $no_stat.$mapel.$fixid;
+
+			$this->model->mupdate_data($id,array("nig"=>$nig));
 		}
 		else{
 
@@ -441,5 +461,138 @@ class Guru extends IO_Controller{
 	function delete_data($id_guru){
 
 		$this->model->mdelete_data_guru($id_guru);
+	}
+
+	function excel_master_guru($param){
+
+		$iparam 		= json_decode(base64_decode($param));		
+		$string_param 	= $this->build_param($iparam);
+
+		$data = $this->model->get_list_data($string_param);
+
+		//load our new PHPExcel library
+		$this->load->library('excel');
+		//activate worksheet number 1
+		$this->excel->setActiveSheetIndex(0);
+		//name the worksheet
+		$this->excel->getActiveSheet()->setTitle('Data Guru');
+		$this->excel->getActiveSheet()->setCellValue('A1', "MASTER DATA GURU");
+		$this->excel->getActiveSheet()->mergeCells('A1:AF1');
+
+		//header
+		$this->excel->getActiveSheet()->setCellValue('A3', "No.");
+		$this->excel->getActiveSheet()->setCellValue('B3', "No Register");
+		$this->excel->getActiveSheet()->setCellValue('C3', "Nama Lengkap");
+		$this->excel->getActiveSheet()->setCellValue('D3', "Nama Arab");
+		$this->excel->getActiveSheet()->setCellValue('E3', "NUPTK");
+		$this->excel->getActiveSheet()->setCellValue('F3', "NIG");
+		$this->excel->getActiveSheet()->setCellValue('G3', "Tanggal Lahir");
+		$this->excel->getActiveSheet()->setCellValue('H3', "Tempat Lahir");
+		$this->excel->getActiveSheet()->setCellValue('I3', "Jenis Kelamin");
+		$this->excel->getActiveSheet()->setCellValue('J3', "No.KK");
+		$this->excel->getActiveSheet()->setCellValue('K3', "No.KTP");
+		$this->excel->getActiveSheet()->setCellValue('L3', "Kewarganegaraan");
+		$this->excel->getActiveSheet()->setCellValue('M3', "Alamat");
+		$this->excel->getActiveSheet()->setCellValue('N3', "No.Telepon");
+		$this->excel->getActiveSheet()->setCellValue('O3', "Email");
+		$this->excel->getActiveSheet()->setCellValue('P3', "Status Nikah");
+		$this->excel->getActiveSheet()->setCellValue('Q3', "Nama Pasangan");
+		$this->excel->getActiveSheet()->setCellValue('R3', "Tgl.Lahir Pasangan");
+		$this->excel->getActiveSheet()->setCellValue('S3', "Jml.Anak");
+		$this->excel->getActiveSheet()->setCellValue('T3', "Nama Ayah");
+		$this->excel->getActiveSheet()->setCellValue('U3', "Nama Ibu");
+		$this->excel->getActiveSheet()->setCellValue('V3', "Gelar Akademik");
+		$this->excel->getActiveSheet()->setCellValue('W3', "Status");
+		$this->excel->getActiveSheet()->setCellValue('X3', "Pendidikan Terakhir");
+		$this->excel->getActiveSheet()->setCellValue('Y3', "Mulai Mengajar");
+		$this->excel->getActiveSheet()->setCellValue('Z3', "Selesai Mengajar");
+		$this->excel->getActiveSheet()->setCellValue('AA3', "ID Alumni");
+		$this->excel->getActiveSheet()->setCellValue('AB3', "No.SK");
+		$this->excel->getActiveSheet()->setCellValue('AC3', "Tgl.SK");
+		$this->excel->getActiveSheet()->setCellValue('AD3', "Gapok");
+		$this->excel->getActiveSheet()->setCellValue('AE3', "Masa Abdi");
+		$this->excel->getActiveSheet()->setCellValue('AF3', "Materi Diampu");
+
+
+		$fdate 	= "d-m-Y";
+		$i  	= 4;
+
+		if($data != null){
+
+			foreach($data as $row){
+
+				$start_ajar = ($row->mengajar_start!=null)?io_date_format($row->mengajar_start,$fdate):'';
+				$end_ajar 	= ($row->mengajar_end!=null)?io_date_format($row->mengajar_end,$fdate):'';
+				$tgl_sk 	= ($row->tgl_sk!=null)?io_date_format($row->tgl_sk,$fdate):'';
+				$tgl_psg 	= ($row->tgl_pasangan!=null)?io_date_format($row->tgl_pasangan,$fdate):'';
+
+				$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
+				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->no_reg);
+				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->nama_lengkap);
+				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->nama_arab);
+				$this->excel->getActiveSheet()->setCellValue('E'.$i, $row->no_ptk);
+				$this->excel->getActiveSheet()->setCellValue('F'.$i, $row->nig);
+				$this->excel->getActiveSheet()->setCellValue('G'.$i, io_date_format($row->tanggal_lahir,$fdate));
+				$this->excel->getActiveSheet()->setCellValue('H'.$i, $row->tempat_lahir);
+				$this->excel->getActiveSheet()->setCellValue('I'.$i, $row->jns_kelamin);
+				$this->excel->getActiveSheet()->setCellValue('J'.$i, $row->no_kk);
+				$this->excel->getActiveSheet()->setCellValue('K'.$i, $row->no_ktp);
+				$this->excel->getActiveSheet()->setCellValue('L'.$i, $row->kewarganegaraan);
+				$this->excel->getActiveSheet()->setCellValue('M'.$i, $row->alamat);
+				$this->excel->getActiveSheet()->setCellValue('N'.$i, $row->no_telepon);
+				$this->excel->getActiveSheet()->setCellValue('O'.$i, $row->email);
+				$this->excel->getActiveSheet()->setCellValue('P'.$i, $row->status_nikah);
+				$this->excel->getActiveSheet()->setCellValue('Q'.$i, $row->nama_pasangan);
+				$this->excel->getActiveSheet()->setCellValue('R'.$i, $tgl_psg,$fdate);
+				$this->excel->getActiveSheet()->setCellValue('S'.$i, $row->jml_anak);
+				$this->excel->getActiveSheet()->setCellValue('T'.$i, $row->nama_ayah);
+				$this->excel->getActiveSheet()->setCellValue('U'.$i, $row->nama_ibu);
+				$this->excel->getActiveSheet()->setCellValue('V'.$i, $row->akademik);
+				$this->excel->getActiveSheet()->setCellValue('W'.$i, $row->status);
+				$this->excel->getActiveSheet()->setCellValue('X'.$i, $row->pendidikan_terakhir);
+				$this->excel->getActiveSheet()->setCellValue('Y'.$i, $start_ajar);
+				$this->excel->getActiveSheet()->setCellValue('Z'.$i, $end_ajar);
+				$this->excel->getActiveSheet()->setCellValue('AA'.$i, $row->id_alumni);
+				$this->excel->getActiveSheet()->setCellValue('AB'.$i, $row->no_sk);
+				$this->excel->getActiveSheet()->setCellValue('AC'.$i, $tgl_sk);
+				$this->excel->getActiveSheet()->setCellValue('AD'.$i, $row->gapok);
+				$this->excel->getActiveSheet()->setCellValue('AE'.$i, $row->masa_abdi);
+				$this->excel->getActiveSheet()->setCellValue('AF'.$i, $row->materi_diampu.' - '.$row->nama_matpal);
+				
+				$i++;
+			}
+		}
+
+		for($col = 'A'; $col !== 'AF'; $col++) {
+
+		    $this->excel->getActiveSheet()
+		        ->getColumnDimension($col)
+		        ->setAutoSize(true);
+		}
+
+		$styleArray = array(
+		  'borders' => array(
+		    'allborders' => array(
+		      'style' => PHPExcel_Style_Border::BORDER_THIN
+		    )
+		  )
+		);
+		$i = $i-1;
+		$cell_to = "AF".$i;
+		$this->excel->getActiveSheet()->getStyle('A3:'.$cell_to)->applyFromArray($styleArray);
+		$this->excel->getActiveSheet()->getStyle('A1:AF3')->getFont()->setBold(true);
+		$this->excel->getActiveSheet()->getStyle('A3:AF3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+		$this->excel->getActiveSheet()->getStyle('A3:AF3')->getFill()->getStartColor()->setRGB('2CC30B');
+
+		$filename='Master-Data-Guru.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0');//no cache
+
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		$objWriter->save('php://output');
 	}
 }

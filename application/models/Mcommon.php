@@ -34,4 +34,15 @@ class Mcommon extends CI_Model {
     	$this->db->order_by('id_guru','desc');
     	return $this->db->get('ms_guru');
     }
+
+    function mget_list_mata_pelajaran(){
+
+        $this->db->order_by('nama_matpal');
+        return $this->db->get('ms_mata_pelajaran');
+    }
+
+    function mget_config_lembaga(){
+
+        return $this->db->get('ms_config');
+    }
 }
