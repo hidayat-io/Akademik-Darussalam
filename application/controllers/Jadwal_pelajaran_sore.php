@@ -32,8 +32,21 @@ class jadwal_pelajaran_sore extends IO_Controller
             
 							$vdata['kode_kelas'][$b->kode_kelas."#".$b->nama."#".$b->tingkat."#".$b->tipe_kelas]
 							=$b->nama." | ".$b->tingkat." | ".$b->tipe_kelas;
-                        }
+						}
+						
+		//json data guru
+			$mguru = $this->mcommon->mget_list_master_guru()->result();
 		
+				foreach ($mguru as $g) {
+					
+					$data_guru[] = array(
+		
+						'id_guru' 	=> $g->id_guru,
+						'nama_guru' => $g->nama_lengkap
+					);
+				}
+		//end json data guru
+		$vdata['master_guru'] 	= $data_guru;
 		$vdata['title'] = 'JADWAL PELAJARAN SORE & KITAB';
 	    $data['content'] = $this->load->view('vjadwal_pelajaran_sore',$vdata,TRUE);
 	    $this->load->view('main',$data);

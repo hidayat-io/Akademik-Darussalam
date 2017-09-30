@@ -9,7 +9,13 @@ $(document).ready(function()
 		orientation: "left",
 		autoclose: true,
 		format: 'dd-mm-yyyy'
-    });
+	});
+	
+	// $(".select2").select2({
+	// 	dropdownParent:$('#Modal_add_jadwal_pelajaran')
+	// });
+	$(".select2").select2();
+
 	$('.numbers-only').keypress(function(event) {
 		var charCode = (event.which) ? event.which : event.keyCode;
 			if ((charCode >= 48 && charCode <= 57)
@@ -186,7 +192,6 @@ function refresh_table()
 							}
 						for(y=0;y<sm;y++)
 						{
-							var htmlString ="<?php echo $htmlString;?>";
 							var hari = 'txthari_'+data[i].id_mapel+y+i;
 							var guru = 'txtguru_'+data[i].id_mapel+y+i;
 							var jam = 'txtjam_'+data[i].id_mapel+y+i;
@@ -202,7 +207,7 @@ function refresh_table()
 												+'<option value="SABTU">SABTU</option>'
 												+'<option value="AHAD">AHAD</option>'
 												+'</select></td>'; //hari
-							content_data 	+= '<td><select class="form-control" name="'+guru+'" id="guru" >'
+							content_data 	+= '<td><select class="form-control select2" style="width:100%"  name="'+guru+'" id="guru" >'
 												+'<option value="">-Pilih Guru-</option>'
 												+str_opt_guru
 												+'</select></td>'; //Guru
@@ -371,7 +376,18 @@ function edit(kode_kelas,tingkat, tipe_kelas,nama,santri,id_thn_ajar,deskripsi,s
 				bootbox.alert('Tidak ada data, silahkan Cek Kurikulum!');
 			}
 			else
-			{			
+			{	
+				//build selectbox master guru
+				var str_opt_guru 	= '';
+				var data_guru 		= $('#hid_master_guru').val();
+					data_guru 		= $.parseJSON(data_guru);
+
+				for(x = 0; x < data_guru.length; x++){
+
+					str_opt_guru += '<option value="'+data_guru[x].id_guru+'">'+data_guru[x].id_guru+' - '+data_guru[x].nama_guru+'</option>';
+				}
+				//end build selectbox master guru
+
 				for(i=0;i<LengtData;i++)
 				{
 					if (semester == 1)
@@ -404,11 +420,9 @@ function edit(kode_kelas,tingkat, tipe_kelas,nama,santri,id_thn_ajar,deskripsi,s
 													+'<option value="SABTU">SABTU</option>'
 													+'<option value="AHAD">AHAD</option>'
 													+'</select></td>'; //hari
-								content_data 	+= '<td><select class="form-control" name="'+guru+'" id="'+guru+'" >'
+								content_data 	+= '<td><select class="form-control select2" style="width:100%"  name="'+guru+'" id="'+guru+'" >'
 													+'<option value="">-Pilih Guru-</option>'
-													+'<option value="1">G001</option>'
-													+'<option value="2">G002</option>'
-													+'<option value="3">G003</option>'
+													+str_opt_guru
 													+'</select></td>'; //Guru
 								content_data 	+= '<td><select class="form-control" name="'+jam+'" id="'+jam+'" >'
 													+'<option value="">-Pilih Jam-</option>'
@@ -448,6 +462,7 @@ function edit(kode_kelas,tingkat, tipe_kelas,nama,santri,id_thn_ajar,deskripsi,s
 	});
 	
 }
+
 // function edit(kode_kelas,tingkat, tipe_kelas,nama,santri,id_thn_ajar,deskripsi,semester){
 	// 	// var str_url  	= encodeURI(base_url+"jadwal_pelajaran/get_data_jadwal_pelajaran/"+kode_kelas+'/'+santri+'/'+id_thn_ajar+'/'+semester);
 	// 	$('#save_button').text('UPDATE');
@@ -619,14 +634,14 @@ function downloadExcel(){
 }
 
 // function CekDuplicate(id_jadwal){
-// 	$.ajax({
+	// 	$.ajax({
 
-// 		type:"POST",
-// 		url:base_url+"jadwal_pelajaran/get_data_jadwal_pelajaran/"+id_jadwal,
-// 		dataType:"html",
-// 		success:function(data){				
-//             var data =	 $.parseJSON(data)
-// 		}
-// 	});
+	// 		type:"POST",
+	// 		url:base_url+"jadwal_pelajaran/get_data_jadwal_pelajaran/"+id_jadwal,
+	// 		dataType:"html",
+	// 		success:function(data){				
+	//             var data =	 $.parseJSON(data)
+	// 		}
+	// 	});
 	
 // }

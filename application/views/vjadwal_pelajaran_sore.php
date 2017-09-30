@@ -88,6 +88,7 @@
                                     <div class="form-body">                                
                                         <!-- BEGIN FORM-->
                                         <form action="#" id="add_jadwal_pelajaran_sore">
+                                        <input type="text" id="hid_master_guru"  value='<?php echo json_encode($master_guru); ?>' />
                                             <!--inputbox-->
                                                 <div class="row">
                                                     <!--span-->
