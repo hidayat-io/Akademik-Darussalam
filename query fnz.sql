@@ -402,6 +402,20 @@ CREATE TABLE `ms_config` (
 
 insert  into `ms_config`(`id_config`,`nomor_statistik`,`NPSN`,`nama`,`jenis_lembaga`,`userid`,`recdate`) values (1,'510232051432','69937270 - 69937240','TMI - Pondok Pesantren Darussalam','Mu\'allimin','admin','2017-09-16 00:00:00');
 
+DROP TABLE IF EXISTS `ms_semester`;
+
+CREATE TABLE `ms_semester` (
+  `id_semester` int(11) NOT NULL AUTO_INCREMENT,
+  `semester` int(11) DEFAULT NULL,
+  `bulan` varchar(20) COLLATE latin1_general_ci DEFAULT NULL,
+  PRIMARY KEY (`id_semester`),
+  KEY `id` (`id_semester`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+/*Data for the table `ms_semester` */
+
+insert  into `ms_semester`(`id_semester`,`semester`,`bulan`) values (30,2,'SEPTEMBER'),(31,2,'OKTOBER'),(32,2,'NOVEMBER'),(33,2,'DESEMBER'),(34,1,'JANUARI'),(35,1,'FEBRUARI'),(36,1,'MARET');
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
