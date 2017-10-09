@@ -37,7 +37,8 @@ class Mcommon extends CI_Model {
 
     function mget_list_mata_pelajaran(){
 
-        $this->db->order_by('nama_matpal');
+		$this->db->order_by('nama_matpal');
+		$this->db->where('status','1');
         return $this->db->get('ms_mata_pelajaran');
     }
 

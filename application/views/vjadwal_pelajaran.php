@@ -163,9 +163,9 @@
                                                 </div>
                                             <!--end inputbox-->                                            
                                             <!--kotak mata pelajaran-->
-                             <input type="text" id="kode_kelas" name="kode_kelas"/>
-                             <input type="text" id="tingkat" name="tingkat"/>
-                             <input type="text" id="tipe_kelas" name="tipe_kelas"/>
+                             <input type="text" class="hidden"  id="kode_kelas" name="kode_kelas"/>
+                             <input type="text" class="hidden"  id="tingkat" name="tingkat"/>
+                             <input type="text" class="hidden"  id="tipe_kelas" name="tipe_kelas"/>
                             <div class="portlet box green-jungle">
                                 <div class="portlet-title">
                                     <div class="caption">

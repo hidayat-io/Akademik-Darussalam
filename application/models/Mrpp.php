@@ -143,22 +143,28 @@ class Mrpp extends CI_Model
 								// exit();
 		return $data;
 	}
-	function QueryGetKurikulumSM1Tambah($id_thn_ajar,$tingkat,$tipe_kelas){
+	function _GetRPPSM1Tambah($id_thn_ajar,$tingkat,$tipe_kelas,$santri,$kode_kelas,$mt_pelajaran){
         $data = array();
-		$data=$this->db->query("SELECT b.deskripsi, a.id_mapel, c.nama_matpal, a.tingkat, a.tipe_kelas,  a.sm_1, a.sm_2  
+		$data=$this->db->query("SELECT b.deskripsi, a.id_mapel, c.nama_matpal, a.tingkat, a.tipe_kelas,  a.sm_1, a.sm_2, d.hari, d.jam, e.semester, e.bulan
 								from trans_kurikulum a
 								inner join ms_tahun_ajaran b on a.id_thn_ajar = b.id
-                				inner join ms_mata_pelajaran c on a.id_mapel=c.id_matpal
+								inner join ms_mata_pelajaran c on a.id_mapel=c.id_matpal
+								inner join trans_jadwal_pelajaran d on a.id_mapel=d.id_mapel
+                                inner join ms_semester e
 								where a.id_thn_ajar ='$id_thn_ajar'
 								and a.tingkat = '$tingkat'
 								and a.tipe_kelas = '$tipe_kelas'
 								and b.kategori = 'UTAMA'
-								and a.sm_1 > 0")->result_array();
+								and d.santri = '$santri'
+								and d.kode_kelas = '$kode_kelas'
+								and d.id_mapel = '$mt_pelajaran'
+								and a.sm_1 > 0
+								order by e.bulan desc")->result_array();
 								// echo $this->db->last_query();
 								// exit();
 		return $data;
 	}
-	function QueryGetKurikulumSM2Tambah($id_thn_ajar,$tingkat,$tipe_kelas){
+	function _GetRPPSM2Tambah($id_thn_ajar,$tingkat,$tipe_kelas,$santri,$kode_kelas,$mt_pelajaran){
         $data = array();
 		$data=$this->db->query("SELECT b.deskripsi, a.id_mapel, c.nama_matpal,a.tingkat, a.tipe_kelas,  a.sm_1, a.sm_2  
 								from trans_kurikulum a

@@ -88,7 +88,6 @@
                                     <div class="form-body">                                
                                         <!-- BEGIN FORM-->
                                         <form action="#" id="add_rpp">
-                                            <input type="text" id="hid_master_guru" class="hidden" value='<?php echo json_encode($master_guru); ?>' />
                                             <!--inputbox-->
                                                 <div class="row">
                                                     <!--span-->
@@ -97,18 +96,17 @@
                                                             <label class="control-label"></label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">
-                                                                    Kurikulum
+                                                                    Mata Pelajaran
                                                                 </span>
                                                                 <?php
-                                                                    $att_item = ' type="text" class="form-control select " id="id_thn_ajar" name="id_thn_ajar" onclick="add_tohide()" onchange="kosong_table()" required';
-                                                                    echo form_dropdown('select_thnajar', $kode_deskripsi, null, $att_item);
+                                                                    $att_item = ' type="text" class="form-control select " id="mt_pelajaran" name="mt_pelajaran"  onchange="kosong_table()" required';
+                                                                    echo form_dropdown('select_mt_pelajaran', $mat_pal, null, $att_item);
                                                                 ?>
-                                                                <input type="hidden" class="form-control" name="hide_Kurikulum" id="hide_Kurikulum" >
-                                                            
+                                                                <!-- <input type="hidden" class="form-control" name="hide_Kurikulum" id="hide_Kurikulum" > -->
                                                             </div>
                                                         </div>    
                                                     </div>
-                                                        <!--span-->
+                                                    <!--span-->
                                                     <!--span-->
                                                     <div class="col-md-6">
                                                         <div class="form-group">
@@ -125,7 +123,7 @@
                                                             </div>
                                                         </div>    
                                                     </div>
-                                                    </div>
+                                                </div>
                                                 <div class="row">                                                   
                                                     <div class="col-md-6">
                                                         <div class="form-group">
@@ -142,7 +140,24 @@
                                                             </div>
                                                         </div>    
                                                     </div>
-                                                    <!--span-->                                                
+                                                    <!--span--> 
+                                                    <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Kurikulum
+                                                                </span>
+                                                                <?php
+                                                                    $att_item = ' type="text" class="form-control select " id="id_thn_ajar" name="id_thn_ajar" onclick="add_tohide()" onchange="kosong_table()" required';
+                                                                    echo form_dropdown('select_thnajar', $kode_deskripsi, null, $att_item);
+                                                                ?>
+                                                                <input type="hidden" class="form-control" name="hide_Kurikulum" id="hide_Kurikulum" >
+                                                            </div>
+                                                        </div>    
+                                                    </div>
+                                                    <!--span-->
                                                     <!--span-->
                                                     <div class="col-md-6">
                                                         <div class="form-group">
@@ -163,13 +178,13 @@
                                                 </div>
                                             <!--end inputbox-->                                            
                                             <!--kotak mata pelajaran-->
-                             <input type="text" id="kode_kelas" name="kode_kelas"/>
-                             <input type="text" id="tingkat" name="tingkat"/>
-                             <input type="text" id="tipe_kelas" name="tipe_kelas"/>
+                             <input type="text" class="hidden" id="kode_kelas" name="kode_kelas"/>
+                             <input type="text" class="hidden" id="tingkat" name="tingkat"/>
+                             <input type="text" class="hidden" id="tipe_kelas" name="tipe_kelas"/>
                             <div class="portlet box green-jungle">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-gift"></i> Data Mata Pelajaran 
+                                        <i class="fa fa-gift"></i> RPP LIST
                                     </div>
                                         <div class="tools">
                                              <button type="button" class="btn red-intense" id="button_refresh" onclick="refresh_table()">
@@ -188,18 +203,21 @@
                                         <input type="hidden" name="hid_table_item_KecakapanKhusus" id="hid_table_item_KecakapanKhusus" />
                                                 <div class="portlet-body table-both-scroll">
                                                     <div class="table-responsive">
-                                                        <table id="tb_mata_pelajaran" class="table table-striped table-bordered table-hover">
+                                                        <table id="tb_list_rpp" class="table table-striped table-bordered table-hover">
                                                             <thead>
                                                                 <tr>
-                                                                <td>Mata Pelajaran</td>
-                                                                <td>Hari</td>
-                                                                <td>Guru</td>
-                                                                <td>Jam</td>
+                                                                <td>Bulan</td>
+                                                                <td>Minggu</td>
+                                                                <td>Hari/Hissoh</td>
+                                                                <td>Materi Pokok</td>
+                                                                <td>Waktu</td>
+                                                                <td>TIU/TIK</td>
+                                                                <td>Jenis Tagihan PR/UH HP / PK</td>
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                 <tr>
-                                                                    <td colspan="6" align="center">
+                                                                    <td colspan="7" align="center">
                                                                     Belum Ada Data.
                                                                     </td>
                                                                 </tr>

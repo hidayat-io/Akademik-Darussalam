@@ -3,6 +3,7 @@ $(document).ready(function()
 {
 	// addSantri("TMI");
 	setTable();
+	addrpp();
 	$('.datepicker').datepicker(
 	{
 		rtl: App.isRTL(),
@@ -120,8 +121,8 @@ function setTable(){
 
 function kosong_table()
 {
-	$('#tb_mata_pelajaran tbody').html('');
-	$('#tb_mata_pelajaran > tbody').html('"<tr><td colspan=\"4\" align=\"center\">Belum Ada Data.</td></tr>"');
+	$('#tb_list_rpp tbody').html('');
+	$('#tb_list_rpp > tbody').html('"<tr><td colspan=\"4\" align=\"center\">Belum Ada Data.</td></tr>"');
 }
 
 function refresh_table()
@@ -144,14 +145,15 @@ function refresh_table()
     }
     else
     {   
-		$('#tb_mata_pelajaran tbody').html('');
-		var id_thn_ajar = $('#id_thn_ajar').val();
-		var semester 	= $('#semester').val();
-		var tingkat 	= $('#tingkat').val();
-		var tipe_kelas 	= $('#tipe_kelas').val();
-		var kdrow 	= makeid();
-		
-		var str_url  	= encodeURI(base_url+"rpp/GetKurikulumTambah/"+id_thn_ajar+"/"+semester+"/"+tingkat+"/"+tipe_kelas);
+		var id_thn_ajar 	= $('#id_thn_ajar').val();
+		var semester 		= $('#semester').val();
+		var tingkat 		= $('#tingkat').val();
+		var tipe_kelas 		= $('#tipe_kelas').val();
+		var santri 			= $('#santri').val();
+		var kode_kelas 		= $('#kode_kelas').val();
+		var mt_pelajaran 	= $('#mt_pelajaran').val();
+		var kdrow 			= makeid();
+		var str_url  		= encodeURI(base_url+"rpp/GetRPPTambah/"+id_thn_ajar+"/"+semester+"/"+tingkat+"/"+tipe_kelas+"/"+santri+"/"+kode_kelas+"/"+mt_pelajaran);
 		$.ajax({
 			
 			type:"POST",
@@ -162,84 +164,137 @@ function refresh_table()
 				var data = $.parseJSON(data);
 				var LengtData = data.length;
 				if (LengtData == 0){
-					$('#tb_mata_pelajaran tbody').html('');
-					$('#tb_mata_pelajaran > tbody').html('"<tr><td colspan=\"4\" align=\"center\">Belum Ada Data.</td></tr>"');
-					bootbox.alert('Tidak ada data, silahkan Cek Kurikulum!');
+					$('#tb_list_rpp tbody').html('');
+					$('#tb_list_rpp > tbody').html('"<tr><td colspan=\"4\" align=\"center\">Belum Ada Data.</td></tr>"');
+					bootbox.alert('Tidak ada data, silahkan Cek Kurikulum Atau Jadwal Pelajaran!');
 				}
 				else
 				{
-					
-					//build selectbox master guru
-					var str_opt_guru 	= '';
-					var data_guru 		= $('#hid_master_guru').val();
-						data_guru 		= $.parseJSON(data_guru);
 
-					for(x = 0; x < data_guru.length; x++){
-
-					    str_opt_guru += '<option value="'+data_guru[x].id_guru+'">'+data_guru[x].id_guru+' - '+data_guru[x].nama_guru+'</option>';
-					}
-					//end build selectbox master guru
-					
+					var kdrow = makeid();
+					$('#tb_list_rpp tbody').html('');
 					for(i=0;i<LengtData;i++)
 					{
-						if (semester == 1)
-							{
-								var sm = data[i].sm_1;
-							}
-							else if (semester ==2)
-							{
-								var sm = data[i].sm_2;
-							}
-						for(y=0;y<sm;y++)
-						{
-							var hari = 'txthari_'+data[i].id_mapel+y+i;
-							var guru = 'txtguru_'+data[i].id_mapel+y+i;
-							var jam = 'txtjam_'+data[i].id_mapel+y+i;
-							var content_data 	= '<tr class="tb-detail" id="row'+kdrow+'">';
-							content_data 	+= "<td>"+data[i].nama_matpal+"</td>"; //mata pelajaran
-							content_data 	+= '<td><select class="form-control" name="'+hari+'" id="hari" >'
-												+'<option value="">-Pilih Hari-</option>'
-												+'<option value="SENIN">SENIN</option>'
-												+'<option value="SELASA">SELASA</option>'
-												+'<option value="RABU">RABU</option>'
-												+'<option value="KAMIS">KAMIS</option>'
-												+'<option value="JUMAT">JUMAT</option>'
-												+'<option value="SABTU">SABTU</option>'
-												+'<option value="AHAD">AHAD</option>'
-												+'</select></td>'; //hari
-							content_data 	+= '<td><select class="form-control select2" style="width:100%"  name="'+guru+'" id="guru" >'
-												+'<option value="">-Pilih Guru-</option>'
-												+str_opt_guru
-												+'</select></td>'; //Guru
-							content_data 	+= '<td><select class="form-control" name="'+jam+'" id="jam" >'
-												+'<option value="">-Pilih Jam-</option>'
-												+'<option value="I">I</option>'
-												+'<option value="II">II</option>'
-												+'<option value="III">III</option>'
-												+'<option value="IV">IV</option>'
-												+'<option value="V">V</option>'
-												+'<option value="VI">VI</option>'
-												+'</select></td>'; //JAM
-							content_data 	+= "</tr>";
-										
-							if(y<1 && i<1){
-								
-								$('#tb_mata_pelajaran tbody').html(content_data);
-							}
-							else{
-	
-								$('#tb_mata_pelajaran tbody').append(content_data);
-							}
-						}
+						var content_data 	= '<tr class="tb-detail" id="row'+kdrow+'">';
+						content_data 	+= "<td>"+data[i].bulan+"</td>"; //mata pelajaran
+												content_data 	+= '<td>1</td>'; //Minggu
+												content_data 	+= '<td>'+data[i].hari+'/'+data[i].jam+'III</td>'; //Hari/Hissoh
+												content_data 	+= '<td>مدخل إلى دراسة الأديان</td>'; //Materi Pokok
+												content_data 	+= '<td>45</td>'; //Waktu
+												content_data 	+= '<td>ترجي قدرة التلاميد علي معرفة الاديان</td>'; //TIU/TIK
+												content_data 	+= '<td>عمل الحجرة</td>'; //Jenis Tagihan PR/UH HP / PK								
+												content_data 	+= "</tr>";
+															
+												if( i<1){
+													
+													$('#tb_list_rpp tbody').html(content_data);
+												}
+												else{
 						
+													$('#tb_list_rpp tbody').append(content_data);
+												}
 					}
 				}
-						
 			}
 		});
+		
+	// #region lama
+	// 	var id_thn_ajar = $('#id_thn_ajar').val();
+	// 	var semester 	= $('#semester').val();
+	// 	var tingkat 	= $('#tingkat').val();
+	// 	var tipe_kelas 	= $('#tipe_kelas').val();
+	// 	var kdrow 	= makeid();
+		
+	// 	var str_url  	= encodeURI(base_url+"rpp/GetKurikulumTambah/"+id_thn_ajar+"/"+semester+"/"+tingkat+"/"+tipe_kelas);
+	// 	$.ajax({
+			
+	// 		type:"POST",
+	// 		url:str_url,
+	// 		dataType:"html",
+	// 		success:function(data)
+	// 		{
+	// 			var data = $.parseJSON(data);
+	// 			var LengtData = data.length;
+	// 			if (LengtData == 0){
+					// $('#tb_list_rpp tbody').html('');
+					// $('#tb_list_rpp > tbody').html('"<tr><td colspan=\"4\" align=\"center\">Belum Ada Data.</td></tr>"');
+	// 				bootbox.alert('Tidak ada data, silahkan Cek Kurikulum!');
+	// 			}
+	// 			else
+	// 			{
+					
+	// 				//build selectbox master guru
+	// 				var str_opt_guru 	= '';
+	// 				var data_guru 		= $('#hid_master_guru').val();
+	// 					data_guru 		= $.parseJSON(data_guru);
 
+	// 				for(x = 0; x < data_guru.length; x++){
+
+	// 				    str_opt_guru += '<option value="'+data_guru[x].id_guru+'">'+data_guru[x].id_guru+' - '+data_guru[x].nama_guru+'</option>';
+	// 				}
+	// 				//end build selectbox master guru
+					
+	// 				for(i=0;i<LengtData;i++)
+	// 				{
+	// 					if (semester == 1)
+	// 						{
+	// 							var sm = data[i].sm_1;
+	// 						}
+	// 						else if (semester ==2)
+	// 						{
+	// 							var sm = data[i].sm_2;
+	// 						}
+	// 					for(y=0;y<sm;y++)
+	// 					{
+	// 						var hari = 'txthari_'+data[i].id_mapel+y+i;
+	// 						var guru = 'txtguru_'+data[i].id_mapel+y+i;
+	// 						var jam = 'txtjam_'+data[i].id_mapel+y+i;
+	// 						var content_data 	= '<tr class="tb-detail" id="row'+kdrow+'">';
+	// 						content_data 	+= "<td>"+data[i].nama_matpal+"</td>"; //mata pelajaran
+	// 						content_data 	+= '<td><select class="form-control" name="'+hari+'" id="hari" >'
+	// 											+'<option value="">-Pilih Hari-</option>'
+	// 											+'<option value="SENIN">SENIN</option>'
+	// 											+'<option value="SELASA">SELASA</option>'
+	// 											+'<option value="RABU">RABU</option>'
+	// 											+'<option value="KAMIS">KAMIS</option>'
+	// 											+'<option value="JUMAT">JUMAT</option>'
+	// 											+'<option value="SABTU">SABTU</option>'
+	// 											+'<option value="AHAD">AHAD</option>'
+	// 											+'</select></td>'; //hari
+	// 						content_data 	+= '<td><select class="form-control select2" style="width:100%"  name="'+guru+'" id="guru" >'
+	// 											+'<option value="">-Pilih Guru-</option>'
+	// 											+str_opt_guru
+	// 											+'</select></td>'; //Guru
+	// 						content_data 	+= '<td><select class="form-control" name="'+jam+'" id="jam" >'
+	// 											+'<option value="">-Pilih Jam-</option>'
+	// 											+'<option value="I">I</option>'
+	// 											+'<option value="II">II</option>'
+	// 											+'<option value="III">III</option>'
+	// 											+'<option value="IV">IV</option>'
+	// 											+'<option value="V">V</option>'
+	// 											+'<option value="VI">VI</option>'
+	// 											+'</select></td>'; //JAM
+	// 						content_data 	+= "</tr>";
+										
+	// 						if(y<1 && i<1){
+								
+	// 							$('#tb_list_rpp tbody').html(content_data);
+	// 						}
+	// 						else{
+	
+	// 							$('#tb_list_rpp tbody').append(content_data);
+	// 						}
+	// 					}
+						
+	// 				}
+	// 			}
+						
+	// 		}
+	// 	});
+	// #endregion lama
         
-    }
+	}
+	
 }
 
 function kosong(){
@@ -249,7 +304,7 @@ function kosong(){
 		$('#tingkat').val('');
 		$('#tipe_kelas').val('');
 		$('#santri').val('');
-		$('#tb_mata_pelajaran tbody').html('');
+		$('#tb_list_rpp tbody').html('');
 		
 }
 
@@ -353,7 +408,7 @@ function edit(kode_kelas,tingkat, tipe_kelas,nama,santri,id_thn_ajar,deskripsi,s
 		
 	$('#Modal_add_rpp').modal('show');
 	
-	$('#tb_mata_pelajaran tbody').html('');
+	$('#tb_list_rpp tbody').html('');
 	// var id_thn_ajar = $('#id_thn_ajar').val();
 	// var semester 	= $('#semester').val();
 	// var tingkat 	= $('#tingkat').val();
@@ -371,8 +426,8 @@ function edit(kode_kelas,tingkat, tipe_kelas,nama,santri,id_thn_ajar,deskripsi,s
 			var data = $.parseJSON(data);
 			var LengtData = data.length;
 			if (LengtData == 0){
-				$('#tb_mata_pelajaran tbody').html('');
-				$('#tb_mata_pelajaran > tbody').html('"<tr><td colspan=\"4\" align=\"center\">Belum Ada Data.</td></tr>"');
+				$('#tb_list_rpp tbody').html('');
+				$('#tb_list_rpp > tbody').html('"<tr><td colspan=\"4\" align=\"center\">Belum Ada Data.</td></tr>"');
 				bootbox.alert('Tidak ada data, silahkan Cek Kurikulum!');
 			}
 			else
@@ -440,11 +495,11 @@ function edit(kode_kelas,tingkat, tipe_kelas,nama,santri,id_thn_ajar,deskripsi,s
 								if(i<1){
 								// if(y<1 && i<1){
 									
-									$('#tb_mata_pelajaran tbody').html(content_data);
+									$('#tb_list_rpp tbody').html(content_data);
 								}
 								else{
 		
-									$('#tb_mata_pelajaran tbody').append(content_data);
+									$('#tb_list_rpp tbody').append(content_data);
 								}
 								$('#'+hari).val(data[i].hari);
 								$('#'+guru).val(data[i].id_guru);
@@ -517,8 +572,8 @@ function edit(kode_kelas,tingkat, tipe_kelas,nama,santri,id_thn_ajar,deskripsi,s
 	// 					var data = $.parseJSON(data);
 	// 					var LengtData = data.length;
 	// 					// if (LengtData == 0){
-	// 					// 	$('#tb_mata_pelajaran tbody').html('');
-	// 					// 	$('#tb_mata_pelajaran > tbody').html('"<tr><td colspan=\"4\" align=\"center\">Belum Ada Data.</td></tr>"');
+	// 					// 	$('#tb_list_rpp tbody').html('');
+	// 					// 	$('#tb_list_rpp > tbody').html('"<tr><td colspan=\"4\" align=\"center\">Belum Ada Data.</td></tr>"');
 	// 					// 	bootbox.alert('Tidak ada data, silahkan Cek Kurikulum!');
 	// 					// }
 	// 					// else
@@ -573,11 +628,11 @@ function edit(kode_kelas,tingkat, tipe_kelas,nama,santri,id_thn_ajar,deskripsi,s
 												
 	// 								if(y<1 && i<1){
 										
-	// 									$('#tb_mata_pelajaran tbody').html(content_data);
+	// 									$('#tb_list_rpp tbody').html(content_data);
 	// 								}
 	// 								else{
 
-	// 									$('#tb_mata_pelajaran tbody').append(content_data);
+	// 									$('#tb_list_rpp tbody').append(content_data);
 	// 								}
 
 	// 								$('#'+hari).val(dataS['hari']);

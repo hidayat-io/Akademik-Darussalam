@@ -33,23 +33,17 @@ class rpp extends IO_Controller
 							$vdata['kode_kelas'][$b->kode_kelas."#".$b->nama."#".$b->tingkat."#".$b->tipe_kelas]
 							=$b->nama." | ".$b->tingkat." | ".$b->tipe_kelas;
                         }
+        //get Mata Pelajaran
+			$select_mt_pelajaran= $this->mcommon->mget_list_mata_pelajaran()->result();
+            
+                        $vdata['mat_pal'][NULL] = '';
+                        foreach ($select_mt_pelajaran as $b) {
+            
+							$vdata['mat_pal'][$b->id_matpal]
+							=$b->id_matpal." | ".$b->nama_matpal;
+                        }
 		
 		$vdata['title'] 		= 'RPP';
-
-		//json data guru
-		$mguru = $this->mcommon->mget_list_master_guru()->result();
-
-		foreach ($mguru as $g) {
-			
-			$data_guru[] = array(
-
-				'id_guru' 	=> $g->id_guru,
-				'nama_guru' => $g->nama_lengkap
-			);
-		}
-		//end json data guru
-
-		$vdata['master_guru'] 	= $data_guru;
 	    $data['content'] 		= $this->load->view('vrpp',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
@@ -379,20 +373,23 @@ class rpp extends IO_Controller
 		echo json_encode($data);
     	
 	}
-	function GetKurikulumTambah($id_thn_ajar,$semester,$tingkat,$tipe_kelas)
+	function GetRPPTambah($id_thn_ajar,$semester,$tingkat,$tipe_kelas,$santri,$kode_kelas,$mt_pelajaran)
 	{
 		$id_thn_ajar 	= urldecode($id_thn_ajar);
 		$semester 		= urldecode($semester);
 		$tingkat 		= urldecode($tingkat);
 		$tipe_kelas 	= urldecode($tipe_kelas);
+		$santri 		= urldecode($santri);
+		$kode_kelas 	= urldecode($kode_kelas);
+		$mt_pelajaran 	= urldecode($mt_pelajaran);
 		if ($semester == 1)
 		{
-			$data = $this->model->QueryGetKurikulumSM1Tambah($id_thn_ajar,$tingkat,$tipe_kelas);
+			$data = $this->model->_GetRPPSM1Tambah($id_thn_ajar,$tingkat,$tipe_kelas,$santri,$kode_kelas,$mt_pelajaran);
 			
 		}
 		else if ($semester == 2)
 		{
-			$data = $this->model->QueryGetKurikulumSM2Tambah($id_thn_ajar,$tingkat,$tipe_kelas);
+			$data = $this->model->_GetRPPSM2Tambah($id_thn_ajar,$tingkat,$tipe_kelas,$santri,$kode_kelas,$mt_pelajaran);
 			
 		}
 		echo json_encode($data);
