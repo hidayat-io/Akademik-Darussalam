@@ -59,8 +59,14 @@ class Mrpp extends CI_Model
 	}
 
 	function simpan_data_rpp($data_rpp){
+		$id = $this->db->insert('trans_rpp',$data_rpp);
+	}
 
-		$this->db->replace('trans_rpp',$data_rpp);
+	function simpan_data_rpp_dt($data_rpp_dt)
+	{
+		$this->db->insert('trans_rpp_detail',$data_rpp_dt);
+		
+		// return $this->db->insert_id();
 	}
     
     // function update_data_rpp($id_jadwal,$data_rpp){
@@ -86,14 +92,16 @@ class Mrpp extends CI_Model
 		return $data;
 	}
 
-    function query_cek_duplicate_data($id_thn_ajar,$santri,$semester,$kode_kelas){
+    function query_cek_duplicate_data($id_thn_ajar,$santri,$semester,$kode_kelas,$mt_pelajaran){
         $data = array();
 		$data=$this->db->query("SELECT * FROM trans_rpp
-								WHERE santri = '$santri'
-								AND id_thn_ajar = '$id_thn_ajar'
+								WHERE id_thn_ajar = '$id_thn_ajar'
+								AND santri = '$santri'
 								AND semester = '$semester'
 								AND kode_kelas = '$kode_kelas'")->row_array();
-								return $data;
+								// echo $this->db->last_query();
+								// exit();
+								// return $data;
 	}
 
 	function QueryGetKurikulumSM1($id_thn_ajar,$tingkat,$tipe_kelas,$kode_kelas,$santri){
@@ -145,12 +153,13 @@ class Mrpp extends CI_Model
 	}
 	function _GetRPPSM1Tambah($id_thn_ajar,$tingkat,$tipe_kelas,$santri,$kode_kelas,$mt_pelajaran){
         $data = array();
-		$data=$this->db->query("SELECT b.deskripsi, a.id_mapel, c.nama_matpal, a.tingkat, a.tipe_kelas,  a.sm_1, a.sm_2, d.hari, d.jam, e.semester, e.bulan
+		$data=$this->db->query("SELECT b.deskripsi, a.id_mapel, c.nama_matpal, a.tingkat, a.tipe_kelas,  a.sm_1, a.sm_2, d.hari, d.jam, e.semester, e.bulan, f.minggu
 								from trans_kurikulum a
 								inner join ms_tahun_ajaran b on a.id_thn_ajar = b.id
 								inner join ms_mata_pelajaran c on a.id_mapel=c.id_matpal
 								inner join trans_jadwal_pelajaran d on a.id_mapel=d.id_mapel
-                                inner join ms_semester e
+                                inner join ms_semester e on d.semester = e.semester
+								join ms_minggu f
 								where a.id_thn_ajar ='$id_thn_ajar'
 								and a.tingkat = '$tingkat'
 								and a.tipe_kelas = '$tipe_kelas'
@@ -159,22 +168,29 @@ class Mrpp extends CI_Model
 								and d.kode_kelas = '$kode_kelas'
 								and d.id_mapel = '$mt_pelajaran'
 								and a.sm_1 > 0
-								order by e.bulan desc")->result_array();
+								order by e.id_semester, f.id_minggu asc")->result_array();
 								// echo $this->db->last_query();
 								// exit();
 		return $data;
 	}
 	function _GetRPPSM2Tambah($id_thn_ajar,$tingkat,$tipe_kelas,$santri,$kode_kelas,$mt_pelajaran){
         $data = array();
-		$data=$this->db->query("SELECT b.deskripsi, a.id_mapel, c.nama_matpal,a.tingkat, a.tipe_kelas,  a.sm_1, a.sm_2  
+		$data=$this->db->query("SELECT b.deskripsi, a.id_mapel, c.nama_matpal, a.tingkat, a.tipe_kelas,  a.sm_1, a.sm_2, d.hari, d.jam, e.semester, e.bulan, f.minggu
 								from trans_kurikulum a
 								inner join ms_tahun_ajaran b on a.id_thn_ajar = b.id
-                				inner join ms_mata_pelajaran c on a.id_mapel=c.id_matpal
+								inner join ms_mata_pelajaran c on a.id_mapel=c.id_matpal
+								inner join trans_jadwal_pelajaran d on a.id_mapel=d.id_mapel
+                                inner join ms_semester e on d.semester = e.semester
+								join ms_minggu f
 								where a.id_thn_ajar ='$id_thn_ajar'
 								and a.tingkat = '$tingkat'
 								and a.tipe_kelas = '$tipe_kelas'
 								and b.kategori = 'UTAMA'
-								and a.sm_2 > 0")->result_array();
+								and d.santri = '$santri'
+								and d.kode_kelas = '$kode_kelas'
+								and d.id_mapel = '$mt_pelajaran'
+								and a.sm_2 > 0
+								order by e.id_semester, f.id_minggu asc")->result_array();
 								// echo $this->db->last_query();
 								// exit();
 		return $data;

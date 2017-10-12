@@ -175,24 +175,37 @@ function refresh_table()
 					$('#tb_list_rpp tbody').html('');
 					for(i=0;i<LengtData;i++)
 					{
+						if (semester == 1)
+						{
+							var sm = data[i].sm_1;
+						}
+						else if (semester ==2)
+						{
+							var sm = data[i].sm_2;
+							
+						}
+						var materi_pokok = 'txt_mpokok'+data[i].minggu+data[i].hari+i;
+						var waktu = 'txt_waktu'+data[i].minggu+data[i].hari+i;
+						var tiu = 'txt_tiu'+data[i].minggu+data[i].hari+i;
+						var pr = 'txt_pr'+data[i].minggu+data[i].hari+i;
 						var content_data 	= '<tr class="tb-detail" id="row'+kdrow+'">';
-						content_data 	+= "<td>"+data[i].bulan+"</td>"; //mata pelajaran
-												content_data 	+= '<td>1</td>'; //Minggu
-												content_data 	+= '<td>'+data[i].hari+'/'+data[i].jam+'III</td>'; //Hari/Hissoh
-												content_data 	+= '<td>مدخل إلى دراسة الأديان</td>'; //Materi Pokok
-												content_data 	+= '<td>45</td>'; //Waktu
-												content_data 	+= '<td>ترجي قدرة التلاميد علي معرفة الاديان</td>'; //TIU/TIK
-												content_data 	+= '<td>عمل الحجرة</td>'; //Jenis Tagihan PR/UH HP / PK								
-												content_data 	+= "</tr>";
-															
-												if( i<1){
-													
-													$('#tb_list_rpp tbody').html(content_data);
-												}
-												else{
-						
-													$('#tb_list_rpp tbody').append(content_data);
-												}
+							content_data 		+= "<td>"+data[i].bulan+"</td>"; //mata pelajaran
+							content_data 	+= '<td>'+data[i].minggu+'</td>'; //Minggu
+							content_data 	+= '<td>'+data[i].hari+'/'+data[i].jam+'</td>'; //Hari/Hissoh
+							content_data 	+= '<td><input type="text" class="form-control" name="'+materi_pokok+'" id="'+materi_pokok+'" onkeydown="OtomatisKapital(this)" required></td>'; //Materi Pokok
+							content_data 	+= '<td><input type="text" class="form-control" name="'+waktu+'" id="'+waktu+'" onkeydown="OtomatisKapital(this)" required></td>'; //Waktu
+							content_data 	+= '<td><input type="text" class="form-control" name="'+tiu+'" id="'+tiu+'" onkeydown="OtomatisKapital(this)" required></td>'; //TIU/TIK
+							content_data 	+= '<td><input type="text" class="form-control" name="'+pr+'" id="'+pr+'" onkeydown="OtomatisKapital(this)" required></td>'; //Jenis Tagihan PR/UH HP / PK								
+							content_data 	+= "</tr>";
+										
+							if(i<1){
+								
+								$('#tb_list_rpp tbody').html(content_data);
+							}
+							else{
+
+								$('#tb_list_rpp tbody').append(content_data);
+							}											
 					}
 				}
 			}
@@ -310,12 +323,13 @@ function kosong(){
 
 function svrpp(){
 	// if($("#add_rpp").valid()==true){'
+        $mt_pelajaran = $('#mt_pelajaran').val();
         $santri = $('#santri').val();
         $id_thn_ajar = $('#id_thn_ajar').val();
         $semester = $('#semester').val();
         $kode_kelas = $('#kode_kelas').val();
 		$status = $('#save_button').text();
-		var str_url  	= encodeURI(base_url+"rpp/cek_duplicate_data/"+$id_thn_ajar+"/"+$santri+"/"+$semester+"/"+$kode_kelas);
+		var str_url  	= encodeURI(base_url+"rpp/cek_duplicate_data/"+$id_thn_ajar+"/"+$santri+"/"+$semester+"/"+$kode_kelas+"/"+$mt_pelajaran);
        $.ajax({
 		type:"POST",
 		url:str_url,

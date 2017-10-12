@@ -100,7 +100,7 @@
                                                                 </span>
                                                                 <?php
                                                                     $att_item = ' type="text" class="form-control select " id="mt_pelajaran" name="mt_pelajaran"  onchange="kosong_table()" required';
-                                                                    echo form_dropdown('select_mt_pelajaran', $mat_pal, null, $att_item);
+                                                                    echo form_dropdown('mt_pelajaran', $mat_pal, null, $att_item);
                                                                 ?>
                                                                 <!-- <input type="hidden" class="form-control" name="hide_Kurikulum" id="hide_Kurikulum" > -->
                                                             </div>

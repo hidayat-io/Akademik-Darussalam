@@ -34,10 +34,10 @@ class rpp extends IO_Controller
 							=$b->nama." | ".$b->tingkat." | ".$b->tipe_kelas;
                         }
         //get Mata Pelajaran
-			$select_mt_pelajaran= $this->mcommon->mget_list_mata_pelajaran()->result();
+			$mt_pelajaran= $this->mcommon->mget_list_mata_pelajaran()->result();
             
                         $vdata['mat_pal'][NULL] = '';
-                        foreach ($select_mt_pelajaran as $b) {
+                        foreach ($mt_pelajaran as $b) {
             
 							$vdata['mat_pal'][$b->id_matpal]
 							=$b->id_matpal." | ".$b->nama_matpal;
@@ -200,6 +200,7 @@ class rpp extends IO_Controller
 		$tipe_kelas  		= $this->input->post('tipe_kelas');
 		$kode_kelas  		= $this->input->post('kode_kelas');
 		$santri  			= $this->input->post('santri');
+		$mt_pelajaran 		= $this->input->post('mt_pelajaran');
 		$recdate            = date('y-m-d');
 	    $userid 			= $this->session->userdata('logged_in')['uid'];
 		
@@ -208,14 +209,27 @@ class rpp extends IO_Controller
 					
 			if ($semester == 1)
 			{
-				$kolom_sm = $this->model->QueryGetKurikulumSM1Tambah($id_thn_ajar,$tingkat,$tipe_kelas);
+				$kolom_sm = $this->model->_GetRPPSM1Tambah($id_thn_ajar,$tingkat,$tipe_kelas,$santri,$kode_kelas,$mt_pelajaran);
 				
 			}
 			else if ($semester == 2)
 			{
-				$kolom_sm = $this->model->QueryGetKurikulumSM2Tambah($id_thn_ajar,$tingkat,$tipe_kelas);
+				$kolom_sm = $this->model->_GetRPPSM2Tambah($id_thn_ajar,$tingkat,$tipe_kelas,$santri,$kode_kelas,$mt_pelajaran);
 				
 			}
+			//#region save ke RPP HD
+			$data_rpp = array(				
+				'id_thn_ajar' 		=> $id_thn_ajar,
+				'santri' 			=> $santri,
+				'semester' 		    => $semester,
+				'kode_kelas' 		=> $kode_kelas,
+				'id_mapel' 		    => $mt_pelajaran,
+				'recdate'           => $recdate,
+				'userid' 			=> $userid
+			);
+			$id = $this->model->simpan_data_rpp($data_rpp);
+			//#endregion save ke RPP HD
+
 			$row = $kolom_sm;
 			$ilength = count($kolom_sm);
 				for($i=0;$i<$ilength;$i++)
@@ -231,32 +245,38 @@ class rpp extends IO_Controller
 						$sm = $row[$i]['sm_2'];
 					}
 
-					for($y=0;$y<$sm;$y++)
-					{
-						$id_mapel 		= $row[$i]['id_mapel'];
-						$input_hari 	= 'txthari_'.$row[$i]['id_mapel'].$y.$i;
-						$input_guru 	= 'txtguru_'.$row[$i]['id_mapel'].$y.$i;
-						$input_jam 		= 'txtjam_'.$row[$i]['id_mapel'].$y.$i;
+					// for($y=0;$y<$sm;$y++)
+					// {
+						$bulan 			= $row[$i]['bulan'];
+						$minggu 			= $row[$i]['minggu'];
+						$hari 			= $row[$i]['hari'];
+						$hissos 			= $row[$i]['jam'];
+						$value_materi_pokok 	= 'txt_mpokok'.$row[$i]['minggu'].$row[$i]['hari'].$i;
+						$value_waktu 			= 'txt_waktu'.$row[$i]['minggu'].$row[$i]['hari'].$i;
+						$value_tiu 				= 'txt_tiu'.$row[$i]['minggu'].$row[$i]['hari'].$i;
+						$value_pr 				= 'txt_pr'.$row[$i]['minggu'].$row[$i]['hari'].$i;
 						// var_dump($input_hari);
 						// exit();
-						$hari 			= $this->input->post($input_hari);
-						$guru 			= $this->input->post($input_guru);
-						$jam 			= $this->input->post($input_jam);
-						$data_rpp = array(
-							'santri' 			=> $santri,
-							'id_thn_ajar' 		=> $id_thn_ajar,
-							'semester' 		    => $semester,
-							'kode_kelas' 		=> $kode_kelas,
-							'id_guru' 		    => $guru,
-							'jam' 		      	=> $jam,
-							'hari' 		      	=> $hari,
-							'id_mapel' 		    => $id_mapel,
-							'recdate'           => $recdate,
-							'userid' 			=> $userid
+						$materi_pokok 			= $this->input->post($value_materi_pokok);
+						$waktu 			= $this->input->post($value_waktu);
+						$tiu 			= $this->input->post($value_tiu);
+						$pr 			= $this->input->post($value_pr);
+						$data_rpp_dt = array(
+							'id_rpp' 			=> $id,
+							'bulan' 			=> $bulan,
+							'minggu' 			=> $minggu,
+							'hari' 				=> $hari,
+							'hissos' 			=> $hissos,
+							'materi_pokok' 		=> $materi_pokok,
+							'alokasi_waktu' 	=> $waktu,
+							'TIU' 				=> $tiu,
+							'jns_tagihan' 		=> $pr,
+
+							
 						);
-						$this->model->simpan_data_rpp($data_rpp);
+						$this->model->simpan_data_rpp_dt($data_rpp_dt);
 						
-					}
+					// }
 					
 				}
 		}
@@ -273,8 +293,8 @@ class rpp extends IO_Controller
 				$kolom_sm_update = $this->model->QueryGetKurikulumSM2($id_thn_ajar,$tingkat,$tipe_kelas,$kode_kelas,$santri);
 			}
 				$this->model->delete_rpp($kode_kelas,$santri,$id_thn_ajar,$semester);
-			$row = $kolom_sm_update;
-			$ilength = count($kolom_sm_update);
+				$row = $kolom_sm_update;
+				$ilength = count($kolom_sm_update);
 				for($i=0;$i<$ilength;$i++)
 				{
 				
@@ -333,13 +353,14 @@ class rpp extends IO_Controller
     	echo json_encode($data);
 	}
 
-	function cek_duplicate_data($id_thn_ajar,$santri,$semester,$kode_kelas)
+	function cek_duplicate_data($id_thn_ajar,$santri,$semester,$kode_kelas,$mt_pelajaran)
 	{
         $id_thn_ajar 	= urldecode($id_thn_ajar);
         $santri 		= urldecode($santri);
         $semester 		= urldecode($semester);
         $kode_kelas 	= urldecode($kode_kelas);
-		$data = $this->model->query_cek_duplicate_data($id_thn_ajar,$santri,$semester,$kode_kelas);
+        $mt_pelajaran 	= urldecode($mt_pelajaran);
+		$data = $this->model->query_cek_duplicate_data($id_thn_ajar,$santri,$semester,$kode_kelas,$mt_pelajaran);
     	echo json_encode($data);
 	}
 
