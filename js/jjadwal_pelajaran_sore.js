@@ -246,7 +246,12 @@ function kosong(){
 }
 
 function svjadwal_pelajaran_sore(){
-	// if($("#add_jadwal_pelajaran_sore").valid()==true){'
+	if($("#add_jadwal_pelajaran_sore").valid()==true){
+		var lengtable = $('.tb-detail').length;
+		if (lengtable == 0){
+		bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>Data pelajaran sore masih kosong </div>");
+		return false;
+		}
         $santri = $('#santri').val();
         $id_thn_ajar = $('#id_thn_ajar').val();
         $semester = $('#semester').val();
@@ -297,7 +302,7 @@ function svjadwal_pelajaran_sore(){
                 }
             }
         });
-	// }
+	}
 }
 
 function OtomatisKapital(a){

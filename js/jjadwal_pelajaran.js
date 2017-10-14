@@ -254,7 +254,12 @@ function kosong(){
 }
 
 function svjadwal_pelajaran(){
-	// if($("#add_jadwal_pelajaran").valid()==true){'
+	if($("#add_jadwal_pelajaran").valid()==true){
+		var lengtable = $('.tb-detail').length;
+		if (lengtable == 0){
+		bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>Data pelajaran masih kosong </div>");
+		return false;
+		}
         $santri = $('#santri').val();
         $id_thn_ajar = $('#id_thn_ajar').val();
         $semester = $('#semester').val();
@@ -305,7 +310,7 @@ function svjadwal_pelajaran(){
                 }
             }
         });
-	// }
+	}
 }
 
 function OtomatisKapital(a){

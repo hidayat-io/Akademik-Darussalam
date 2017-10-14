@@ -88,19 +88,20 @@ class rpp extends IO_Controller
 		$fdate = 'd-m-Y';
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->kode_kelas.'\',\''.$data[$i]->tingkat.'\',\''.$data[$i]->tipe_kelas.'\',\''.$data[$i]->nama.'\',\''.$data[$i]->santri.'\',\''.$data[$i]->id_thn_ajar.'\',\''.$data[$i]->deskripsi.'\',\''.$data[$i]->semester.'\')">
+			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_rpp.'\',\''.$data[$i]->kode_kelas.'\',\''.$data[$i]->tingkat.'\',\''.$data[$i]->tipe_kelas.'\',\''.$data[$i]->nama.'\',\''.$data[$i]->santri.'\',\''.$data[$i]->id_thn_ajar.'\',\''.$data[$i]->deskripsi.'\',\''.$data[$i]->semester.'\',\''.$data[$i]->id_mapel.'\')">
 					<i class="fa fa-edit"></i>
 					</a>
-					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->kode_kelas.'\',\''.$data[$i]->santri.'\',\''.$data[$i]->id_thn_ajar.'\',\''.$data[$i]->deskripsi.'\',\''.$data[$i]->semester.'\')">
+					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->id_rpp.'\')">
 						<i class="fa fa-remove"></i>
 					</a>';
 			
 			$records["data"][] = array(
 
+				$data[$i]->id_mapel,
 				$data[$i]->deskripsi,
 				$data[$i]->semester,
 		     	$data[$i]->kode_kelas,
-                 $data[$i]->nama,
+                $data[$i]->nama,
   				$data[$i]->santri,
                 $act
 		   );
@@ -194,6 +195,7 @@ class rpp extends IO_Controller
 
 	function simpan_rpp($status)
 	{
+		$id_rpp 			= $this->input->post('id_rpp_hide');
 		$id_thn_ajar 		= $this->input->post('hide_Kurikulum');
 		$semester  		    = $this->input->post('semester');
 		$tingkat  		    = $this->input->post('tingkat');
@@ -229,40 +231,72 @@ class rpp extends IO_Controller
 			);
 			$id = $this->model->simpan_data_rpp($data_rpp);
 			//#endregion save ke RPP HD
-
+			// var_dump($id);
+			// exit();
 			$row = $kolom_sm;
 			$ilength = count($kolom_sm);
 				for($i=0;$i<$ilength;$i++)
 				{
 				
+					$bulan 					= $row[$i]['bulan'];
+					$minggu 				= $row[$i]['minggu'];
+					$hari 					= $row[$i]['hari'];
+					$hissos 				= $row[$i]['jam'];
+					$value_materi_pokok 	= 'txt_mpokok'.$row[$i]['minggu'].$row[$i]['hari'].$i;
+					$value_waktu 			= 'txt_waktu'.$row[$i]['minggu'].$row[$i]['hari'].$i;
+					$value_tiu 				= 'txt_tiu'.$row[$i]['minggu'].$row[$i]['hari'].$i;
+					$value_pr 				= 'txt_pr'.$row[$i]['minggu'].$row[$i]['hari'].$i;
+					// var_dump($input_hari);
+					// exit();
+					$materi_pokok 			= $this->input->post($value_materi_pokok);
+					$waktu 					= $this->input->post($value_waktu);
+					$tiu 					= $this->input->post($value_tiu);
+					$pr 					= $this->input->post($value_pr);
+					$data_rpp_dt = array(
+						'id_rpp' 			=> $id,
+						'bulan' 			=> $bulan,
+						'minggu' 			=> $minggu,
+						'hari' 				=> $hari,
+						'hissos' 			=> $hissos,
+						'materi_pokok' 		=> $materi_pokok,
+						'alokasi_waktu' 	=> $waktu,
+						'TIU' 				=> $tiu,
+						'jns_tagihan' 		=> $pr,
 
-					if ($semester == 1)
+						
+					);
+					// var_dump($data_rpp_dt);
+					// exit();
+					$this->model->simpan_data_rpp_dt($data_rpp_dt);
+						
+					
+				}
+		}
+		else // proses update
+		{
+				$kolom_sm_update = $this->model->QueryGetRPPSM($id_rpp);
+				// var_dump($kolom_sm_update);
+				// exit();
+			// }
+				$this->model->delete_rpp_dt($id_rpp);
+				$row = $kolom_sm_update;
+				$ilength = count($kolom_sm_update);
+					for($i=0;$i<$ilength;$i++)
 					{
-						$sm = $row[$i]['sm_1'];
-					}
-					else if ($semester ==2)
-					{
-						$sm = $row[$i]['sm_2'];
-					}
-
-					// for($y=0;$y<$sm;$y++)
-					// {
-						$bulan 			= $row[$i]['bulan'];
-						$minggu 			= $row[$i]['minggu'];
-						$hari 			= $row[$i]['hari'];
-						$hissos 			= $row[$i]['jam'];
+						$bulan 					= $row[$i]['bulan'];
+						$minggu 				= $row[$i]['minggu'];
+						$hari 					= $row[$i]['hari'];
+						$hissos 				= $row[$i]['hissos'];
 						$value_materi_pokok 	= 'txt_mpokok'.$row[$i]['minggu'].$row[$i]['hari'].$i;
 						$value_waktu 			= 'txt_waktu'.$row[$i]['minggu'].$row[$i]['hari'].$i;
 						$value_tiu 				= 'txt_tiu'.$row[$i]['minggu'].$row[$i]['hari'].$i;
 						$value_pr 				= 'txt_pr'.$row[$i]['minggu'].$row[$i]['hari'].$i;
-						// var_dump($input_hari);
-						// exit();
 						$materi_pokok 			= $this->input->post($value_materi_pokok);
-						$waktu 			= $this->input->post($value_waktu);
-						$tiu 			= $this->input->post($value_tiu);
-						$pr 			= $this->input->post($value_pr);
+						$waktu 					= $this->input->post($value_waktu);
+						$tiu 					= $this->input->post($value_tiu);
+						$pr 					= $this->input->post($value_pr);
 						$data_rpp_dt = array(
-							'id_rpp' 			=> $id,
+							'id_rpp' 			=> $id_rpp,
 							'bulan' 			=> $bulan,
 							'minggu' 			=> $minggu,
 							'hari' 				=> $hari,
@@ -274,84 +308,27 @@ class rpp extends IO_Controller
 
 							
 						);
+						// var_dump($data_rpp_dt);
+						// exit();
 						$this->model->simpan_data_rpp_dt($data_rpp_dt);
 						
-					// }
-					
-				}
-		}
-		else // proses update
-		{
-			
-			if ($semester == 1)
-			{
-				$kolom_sm_update = $this->model->QueryGetKurikulumSM1($id_thn_ajar,$tingkat,$tipe_kelas,$kode_kelas,$santri);
-				
-			}
-			else if ($semester == 2)
-			{
-				$kolom_sm_update = $this->model->QueryGetKurikulumSM2($id_thn_ajar,$tingkat,$tipe_kelas,$kode_kelas,$santri);
-			}
-				$this->model->delete_rpp($kode_kelas,$santri,$id_thn_ajar,$semester);
-				$row = $kolom_sm_update;
-				$ilength = count($kolom_sm_update);
-				for($i=0;$i<$ilength;$i++)
-				{
-				
-
-					if ($semester == 1)
-					{
-						$sm = $row[$i]['sm_1'];
 					}
-					else if ($semester ==2)
-					{
-						$sm = $row[$i]['sm_2'];
-					}
-
-					// for($y=0;$y<$sm;$y++)
-					// {
-						$id_mapel 		= $row[$i]['id_mapel'];
-						$input_hari 	= 'txthari_'.$row[$i]['id_mapel'].$i;
-						$input_guru 	= 'txtguru_'.$row[$i]['id_mapel'].$i;
-						$input_jam 		= 'txtjam_'.$row[$i]['id_mapel'].$i;
-						// var_dump($input_hari);
-						// exit();
-						$hari 			= $this->input->post($input_hari);
-						$guru 			= $this->input->post($input_guru);
-						$jam 			= $this->input->post($input_jam);
-						$data_rpp = array(
-							'santri' 			=> $santri,
-							'id_thn_ajar' 		=> $id_thn_ajar,
-							'semester' 		    => $semester,
-							'kode_kelas' 		=> $kode_kelas,
-							'id_guru' 		    => $guru,
-							'jam' 		      	=> $jam,
-							'hari' 		      	=> $hari,
-							'id_mapel' 		    => $id_mapel,
-							'recdate'           => $recdate,
-							'userid' 			=> $userid
-						);
-						$this->model->simpan_data_rpp($data_rpp);
-						
-					// }
-					
-				}
 		}
 		echo "true";
 		
 		
 	}
 
-	function get_data_rpp($kode_kelas,$santri,$id_thn_ajar,$semester,$id_mapel)
-	{
-        $kode_kelas 	= urldecode($kode_kelas);
-		$santri 		= urldecode($santri);
-		$id_thn_ajar 	= urldecode($id_thn_ajar);
-		$semester 		= urldecode($semester);
-		$id_mapel 		= urldecode($id_mapel);
-		$data = $this->model->query_rpp($kode_kelas,$santri,$id_thn_ajar,$semester,$id_mapel);
-    	echo json_encode($data);
-	}
+	// function get_data_rpp($kode_kelas,$santri,$id_thn_ajar,$semester,$id_mapel)
+	// {
+        // $kode_kelas 	= urldecode($kode_kelas);
+		// $santri 		= urldecode($santri);
+		// $id_thn_ajar 	= urldecode($id_thn_ajar);
+		// $semester 		= urldecode($semester);
+		// $id_mapel 		= urldecode($id_mapel);
+		// $data = $this->model->query_rpp($kode_kelas,$santri,$id_thn_ajar,$semester,$id_mapel);
+    	// echo json_encode($data);
+	// }
 
 	function cek_duplicate_data($id_thn_ajar,$santri,$semester,$kode_kelas,$mt_pelajaran)
 	{
@@ -364,36 +341,33 @@ class rpp extends IO_Controller
     	echo json_encode($data);
 	}
 
-	function Delrpp($kode_kelas,$santri,$id_thn_ajar,$semester)
+	function Delrpp($id_rpp)
 	{
-		$kode_kelas 	= urldecode($kode_kelas);
-		$santri 		= urldecode($santri);
-		$id_thn_ajar 	= urldecode($id_thn_ajar);
-		$semester 		= urldecode($semester);
-		$this->model->delete_rpp($kode_kelas,$santri,$id_thn_ajar,$semester);
+		$id_rpp 	= urldecode($id_rpp);
+		$this->model->delete_rpp($id_rpp);
+		$this->model->delete_rpp_dt($id_rpp);
 	}
 
-	function GetKurikulum($id_thn_ajar,$semester,$tingkat,$tipe_kelas,$kode_kelas,$santri)
+	function GetRPP($id_rpp)
 	{
-		$id_thn_ajar 	= urldecode($id_thn_ajar);
-		$semester 		= urldecode($semester);
-		$tingkat 		= urldecode($tingkat);
-		$tipe_kelas 	= urldecode($tipe_kelas);
-		$kode_kelas 	= urldecode($kode_kelas);
-		$santri 	= urldecode($santri);
-		if ($semester == 1)
-		{
-			$data = $this->model->QueryGetKurikulumSM1($id_thn_ajar,$tingkat,$tipe_kelas,$kode_kelas,$santri);
+		$id_rpp 	= urldecode($id_rpp);
+		// $semester 	= urldecode($semester);
+		// if ($semester == 1)
+		// {
+			$data = $this->model->QueryGetRPPSM($id_rpp);
 			
-		}
-		else if ($semester == 2)
-		{
-			$data = $this->model->QueryGetKurikulumSM2($id_thn_ajar,$tingkat,$tipe_kelas,$kode_kelas,$santri);
+		// }
+		// else if ($semester == 2)
+		// {
+		// 	$data = $this->model->QueryGetRPPSM2($id_rpp);
 			
-		}
+		// }
+		// var_dump($data);
+		// exit();
 		echo json_encode($data);
     	
 	}
+	
 	function GetRPPTambah($id_thn_ajar,$semester,$tingkat,$tipe_kelas,$santri,$kode_kelas,$mt_pelajaran)
 	{
 		$id_thn_ajar 	= urldecode($id_thn_ajar);

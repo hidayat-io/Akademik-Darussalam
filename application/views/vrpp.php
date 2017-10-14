@@ -39,6 +39,7 @@
                 <table class="table table-striped table-bordered table-hover" id="tb_list">
                     <thead>
                         <tr>
+                            <th style="text-align:center">id_mapel</th>
                             <th style="text-align:center">Kurikulum</th>
                             <th style="text-align:center">Semester</th>
                             <th style="text-align:center">Kode kelas</th>
@@ -178,6 +179,7 @@
                                                 </div>
                                             <!--end inputbox-->                                            
                                             <!--kotak mata pelajaran-->
+                             <input type="text" class="hidden" id="id_rpp_hide" name="id_rpp_hide"/>
                              <input type="text" class="hidden" id="kode_kelas" name="kode_kelas"/>
                              <input type="text" class="hidden" id="tingkat" name="tingkat"/>
                              <input type="text" class="hidden" id="tipe_kelas" name="tipe_kelas"/>
