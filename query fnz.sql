@@ -416,6 +416,43 @@ CREATE TABLE `ms_semester` (
 
 insert  into `ms_semester`(`id_semester`,`semester`,`bulan`) values (30,2,'SEPTEMBER'),(31,2,'OKTOBER'),(32,2,'NOVEMBER'),(33,2,'DESEMBER'),(34,1,'JANUARI'),(35,1,'FEBRUARI'),(36,1,'MARET');
 
+/*Data for the table `ms_minggu` */
+
+CREATE TABLE `ms_minggu` (
+  `id_minggu` int(11) NOT NULL,
+  `minggu` varchar(5) NOT NULL,
+  `urut` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--
+-- Dumping data for table `ms_minggu`
+--
+
+
+INSERT INTO `ms_minggu` (`id_minggu`, `minggu`, `urut`) VALUES
+(1, 'I', 1),
+(2, 'II', 2),
+(3, 'III', 3),
+(4, 'IV', 4);
+
+/*Perubahan table trans_rpp*/
+
+ALTER TABLE `hidayati_pesantren`.`trans_rpp`   
+  CHANGE `id_kelas_dtl` `santri` VARCHAR(45) NULL,
+  CHANGE `id_mapel` `semester` VARCHAR(2) NULL,
+  ADD COLUMN `kode_kelas` VARCHAR(10) NULL AFTER `semester`,
+  ADD COLUMN `id_mapel` VARCHAR(10) NULL AFTER `kode_kelas`;
+
+/*Perubahan table trans_rpp_detail*/
+
+ALTER TABLE `hidayati_pesantren`.`trans_rpp_detail`   
+  CHANGE `tanggal` `hari` VARCHAR(10) NULL,
+  CHANGE `materi_pokok` `hissos` VARCHAR(45) CHARSET latin1 COLLATE latin1_swedish_ci NULL,
+  CHANGE `alokasi_waktu` `materi_pokok` VARCHAR(100) NULL,
+  ADD COLUMN `alokasi_waktu` VARCHAR(11) NULL AFTER `materi_pokok`;
+
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
