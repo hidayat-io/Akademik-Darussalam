@@ -41,6 +41,7 @@
                             <th style="text-align:center">Kode Kelas</th>
                             <th style="text-align:center">Tingkat</th>
                             <th style="text-align:center">Nama Kelas</th>
+                            <th style="text-align:center">Kapasitas</th>
                             <th style="text-align:center">Tipe Kelas</th>
                             <th style="text-align:center" width="10%">Action</th>
                         </tr>
@@ -122,6 +123,16 @@
                                                             Nama Kelas
                                                         </span>
                                                         <input type="text" class="form-control" name="nama" id="nama" onkeydown="OtomatisKapital(this)" maxlength="20" required></div>
+                                                    </div>
+                                                      <!--span-->
+                                                      <!--span-->
+                                                    <div class="form-group">
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                           Kapasitas
+                                                        </span>
+                                                        <input type="number" class="form-control" name="kapasitas" id="kapasitas" maxlength="2" required></div>
                                                     </div>
                                                       <!--span-->
                                                     <div class="form-group">

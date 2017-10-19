@@ -72,6 +72,7 @@ class kamar extends IO_Controller
 
 		     	$data[$i]->kode_kamar,
   				$data[$i]->nama,
+  				$data[$i]->kapasitas,
                 $act
 		   );
 		
@@ -105,13 +106,14 @@ class kamar extends IO_Controller
 		//name the worksheet
 		$this->excel->getActiveSheet()->setTitle('Master_Kamar');
 		$this->excel->getActiveSheet()->setCellValue('A1', "Master Kamar");
-		$this->excel->getActiveSheet()->mergeCells('A1:C1');
-		$this->excel->getActiveSheet()->getStyle('A1:C1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->mergeCells('A1:D1');
+		$this->excel->getActiveSheet()->getStyle('A1:D1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 		//header
 		$this->excel->getActiveSheet()->setCellValue('A3', "No.");
 		$this->excel->getActiveSheet()->setCellValue('B3', "Kode Kamar");
 		$this->excel->getActiveSheet()->setCellValue('C3', "Nama Kamar");
+		$this->excel->getActiveSheet()->setCellValue('D3', "Kapasitas");
 
 		$fdate 	= "d-m-Y";
 		$i  	= 4;
@@ -123,12 +125,13 @@ class kamar extends IO_Controller
 				$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
 				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->kode_kamar);
 				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->nama);
+				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->kapasitas);
 				
 				$i++;
 			}
 		}
 
-		for($col = 'A'; $col !== 'G'; $col++) {
+		for($col = 'A'; $col !== 'D'; $col++) {
 
 		    $this->excel->getActiveSheet()
 		        ->getColumnDimension($col)
@@ -143,11 +146,11 @@ class kamar extends IO_Controller
 		  )
 		);
 		$i = $i-1;
-		$cell_to = "C".$i;
+		$cell_to = "D".$i;
 		$this->excel->getActiveSheet()->getStyle('A3:'.$cell_to)->applyFromArray($styleArray);
-		$this->excel->getActiveSheet()->getStyle('A1:C3')->getFont()->setBold(true);
-		$this->excel->getActiveSheet()->getStyle('A3:C3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-		$this->excel->getActiveSheet()->getStyle('A3:C3')->getFill()->getStartColor()->setRGB('2CC30B');
+		$this->excel->getActiveSheet()->getStyle('A1:D3')->getFont()->setBold(true);
+		$this->excel->getActiveSheet()->getStyle('A3:D3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+		$this->excel->getActiveSheet()->getStyle('A3:D3')->getFill()->getStartColor()->setRGB('2CC30B');
 
 		$filename='Master-Kamar.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
@@ -166,12 +169,14 @@ class kamar extends IO_Controller
 	{
 		$kode_kamar 		= $this->input->post('kode_kamar');
 		$nama  		        = $this->input->post('nama');
+		$kapasitas  		= $this->input->post('kapasitas');
         $recdate            = date('y-m-d');
 	    $userid 			= $this->session->userdata('logged_in')['uid'];
 
 		$data_kamar = array(
 			'kode_kamar' 			=> $kode_kamar,
 			'nama' 		            => $nama,
+			'kapasitas' 		    => $kapasitas,
             'recdate'               => $recdate,
 			'userid' 				=> $userid
 		);

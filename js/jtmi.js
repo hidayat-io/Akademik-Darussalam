@@ -663,6 +663,7 @@ function setTable(){
 		"order": [[ 0, "desc" ]],
         "processing": true,
 		"serverSide": true,
+		"bFilter":false,
 		ajax: {
 			'url':base_url+"tmi/load_grid",
 			'type':'GET',

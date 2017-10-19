@@ -146,7 +146,8 @@ function setTable(){
         "serverSide": true,
         "bPaginate": false,
         "info": false,
-        "searching": false,
+		"searching": false,
+		"bFilter":false,
 		ajax: {
 			'url':base_url+"semester/load_grid",
 			'type':'GET',

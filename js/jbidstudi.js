@@ -146,6 +146,7 @@ function setTable(){
 		"order": [[ 0, "desc" ]],
         "processing": true,
 		"serverSide": true,
+		"bFilter":false,
 		ajax: {
 			'url':base_url+"bidstudi/load_grid",
 			'type':'GET',

@@ -87,6 +87,7 @@ function setTable(){
 		"order": [[ 0, "desc" ]],
         "processing": true,
 		"serverSide": true,
+		"bFilter":false,
 		ajax: {
 			'url':base_url+"gedung/load_grid",
 			'type':'GET',

@@ -175,6 +175,7 @@ function setTable(){
 		scrollCollapse: true,
 		processing: true,
 		serverSide: true,
+		bFilter:false,
 		ajax: {
 			'url':base_url+"/tabungan/load_grid",
 			'type':'GET',

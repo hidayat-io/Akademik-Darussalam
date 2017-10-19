@@ -87,6 +87,7 @@ function setTable(){
 		"order": [[ 0, "desc" ]],
         "processing": true,
 		"serverSide": true,
+		"bFilter":false,
 		ajax: {
 			'url':base_url+"kelas/load_grid",
 			'type':'GET',
@@ -121,6 +122,7 @@ function kosong(){
 		$('#kode_kelas').val('');
 		$('#tingkat').val('');
 		$('#nama').val('');
+		$('#kapasitas').val('');
 		$('#tipe_kelas').val('');
 }
 
@@ -220,6 +222,7 @@ function edit(kode_kelas){
 			$('#kode_kelas').val(data['kode_kelas']);//untuk membaca kategori saat update
 			$('#tingkat').val(data['tingkat']);
 			$('#nama').val(data['nama']);
+			$('#kapasitas').val(data['kapasitas']);
 			$('#tipe_kelas').val(data['tipe_kelas']);
 			
 			$('#Modal_add_kelas').modal('show');

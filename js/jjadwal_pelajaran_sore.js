@@ -103,6 +103,7 @@ function setTable(){
 		"order": [[ 0, "desc" ]],
         "processing": true,
 		"serverSide": true,
+		"bFilter":false,
 		ajax: {
 			'url':base_url+"jadwal_pelajaran_sore/load_grid",
 			'type':'GET',

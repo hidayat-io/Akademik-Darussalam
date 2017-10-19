@@ -87,6 +87,7 @@ function setTable(){
 		"order": [[ 0, "desc" ]],
         "processing": true,
 		"serverSide": true,
+		"bFilter":false,
 		ajax: {
 			'url':base_url+"kamar/load_grid",
 			'type':'GET',
@@ -120,6 +121,7 @@ function SearchAction(){
 function kosong(){
 		$('#kode_kamar').val('');
 		$('#nama').val('');
+		$('#kapasitas').val('');
 }
 
 function svkamar(){
@@ -187,8 +189,9 @@ function OtomatisKapital(a){
 }
 
 function addkamar(){
-    $('#save_button').text('SAVE');
-	// kosong();
+	$('#save_button').text('SAVE');
+	$('#kode_kamar').attr('readonly',false);
+	kosong();
 	$('#Modal_add_kamar').modal('show');
 }
 
@@ -218,6 +221,7 @@ function edit(kode_kamar){
 			var data = $.parseJSON(data);
 			$('#kode_kamar').val(data['kode_kamar']);//untuk membaca kategori saat update
 			$('#nama').val(data['nama']);
+			$('#kapasitas').val(data['kapasitas']);
 			
 			$('#Modal_add_kamar').modal('show');
 			
@@ -265,19 +269,6 @@ function downloadExcel(){
 	param 		= ioEncode(param);
 
 	window.location = base_url+'kamar/exportexcel/'+param;
-}
-
-function CekDuplicate(kode_kamar){
-	$.ajax({
-
-		type:"POST",
-		url:base_url+"kamar/get_data_kamar/"+kode_kamar,
-		dataType:"html",
-		success:function(data){				
-            var data =	 $.parseJSON(data)
-		}
-	});
-	
 }
 
 

@@ -73,6 +73,7 @@ class Kelas extends IO_Controller
 		     	$data[$i]->kode_kelas,
 				$data[$i]->tingkat,
   				$data[$i]->nama,
+  				$data[$i]->kapasitas,
 				$data[$i]->tipe_kelas,
                 $act
 		   );
@@ -107,15 +108,16 @@ class Kelas extends IO_Controller
 		//name the worksheet
 		$this->excel->getActiveSheet()->setTitle('Master_Kelas');
 		$this->excel->getActiveSheet()->setCellValue('A1', "Master Kelas");
-		$this->excel->getActiveSheet()->mergeCells('A1:E1');
-		$this->excel->getActiveSheet()->getStyle('A1:E1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->mergeCells('A1:F1');
+		$this->excel->getActiveSheet()->getStyle('A1:F1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 		//header
 		$this->excel->getActiveSheet()->setCellValue('A3', "No.");
 		$this->excel->getActiveSheet()->setCellValue('B3', "Kode Kelas");
 		$this->excel->getActiveSheet()->setCellValue('C3', "Tingkat");
 		$this->excel->getActiveSheet()->setCellValue('D3', "Nama kelas");
-		$this->excel->getActiveSheet()->setCellValue('E3', "Tipe Kelas");
+		$this->excel->getActiveSheet()->setCellValue('E3', "Kapasitas");
+		$this->excel->getActiveSheet()->setCellValue('F3', "Tipe Kelas");
 
 		$fdate 	= "d-m-Y";
 		$i  	= 4;
@@ -128,13 +130,14 @@ class Kelas extends IO_Controller
 				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->kode_kelas);
 				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->tingkat);
 				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->nama);
-				$this->excel->getActiveSheet()->setCellValue('E'.$i, $row->tipe_kelas);
+				$this->excel->getActiveSheet()->setCellValue('E'.$i, $row->kapasitas);
+				$this->excel->getActiveSheet()->setCellValue('F'.$i, $row->tipe_kelas);
 				
 				$i++;
 			}
 		}
 
-		for($col = 'A'; $col !== 'E'; $col++) {
+		for($col = 'A'; $col !== 'F'; $col++) {
 
 		    $this->excel->getActiveSheet()
 		        ->getColumnDimension($col)
@@ -149,11 +152,11 @@ class Kelas extends IO_Controller
 		  )
 		);
 		$i = $i-1;
-		$cell_to = "E".$i;
+		$cell_to = "F".$i;
 		$this->excel->getActiveSheet()->getStyle('A3:'.$cell_to)->applyFromArray($styleArray);
-		$this->excel->getActiveSheet()->getStyle('A1:E3')->getFont()->setBold(true);
-		$this->excel->getActiveSheet()->getStyle('A3:E3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-		$this->excel->getActiveSheet()->getStyle('A3:E3')->getFill()->getStartColor()->setRGB('2CC30B');
+		$this->excel->getActiveSheet()->getStyle('A1:F3')->getFont()->setBold(true);
+		$this->excel->getActiveSheet()->getStyle('A3:F3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+		$this->excel->getActiveSheet()->getStyle('A3:F3')->getFill()->getStartColor()->setRGB('2CC30B');
 
 		$filename='Master-Kelas.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
@@ -171,8 +174,9 @@ class Kelas extends IO_Controller
 	function simpan_kelas($status)
 	{
 		$kode_kelas 		= $this->input->post('kode_kelas');
-		$tingkat 		= $this->input->post('tingkat');
+		$tingkat 			= $this->input->post('tingkat');
 		$nama  		        = $this->input->post('nama');
+		$kapasitas  		= $this->input->post('kapasitas');
 		$tipe_kelas 		= $this->input->post('tipe_kelas');
         $recdate            = date('y-m-d');
 	    $userid 			= $this->session->userdata('logged_in')['uid'];
@@ -181,6 +185,7 @@ class Kelas extends IO_Controller
 			'kode_kelas' 			=> $kode_kelas,
 			'tingkat' 				=> $tingkat,
 			'nama' 		            => $nama,
+			'kapasitas' 		    => $kapasitas,
 			'tipe_kelas' 			=> $tipe_kelas,
             'recdate'               => $recdate,
 			'userid' 				=> $userid

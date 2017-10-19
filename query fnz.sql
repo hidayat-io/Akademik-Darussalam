@@ -452,6 +452,12 @@ ALTER TABLE `hidayati_pesantren`.`trans_rpp_detail`
   CHANGE `alokasi_waktu` `materi_pokok` VARCHAR(100) NULL,
   ADD COLUMN `alokasi_waktu` VARCHAR(11) NULL AFTER `materi_pokok`;
 
+ALTER TABLE `hidayati_pesantren`.`ms_kelas`   
+  ADD COLUMN `kapasitas` INT(2) NULL AFTER `tipe_kelas`;
+
+ALTER TABLE `hidayati_pesantren`.`ms_kamar`   
+  ADD COLUMN `kapasitas` INT(3) NULL AFTER `nama`;
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

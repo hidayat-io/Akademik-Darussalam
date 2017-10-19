@@ -1,4 +1,3 @@
-// //load
 $(document).ready(function()
 {
 	// addSantri("TMI");
@@ -74,61 +73,12 @@ $(document).ready(function()
 
 });
 
-// function tingkatshow(){
-//     $('#hiddentingkat').show();
-//     $('#spansearchtingkat').hide();
-//     $('#spansearchclosetingkat').show();
-    
-    
-// }
-
-// function tingkatclosespan(){
-//     $('#hiddentingkat').hide();
-//     $('#spansearchtingkat').show();
-//     $('#spansearchclosetingkat').hide();
-// }
-
-// function pilihItemtingkat(){
-
-// 	$item  	= $('#hide_tingkat').val();
-// 	$item 	= $item.split('#');
-
-//     $('#tingkat').val($item[0]);
-//     $('#hiddentingkat').hide();
-//     $('#spansearchtingkat').show();
-//     $('#spansearchclosetingkat').hide();
-// }
-
-// function id_mapelshow(){
-//     $('#hiddenid_mapel').show();
-//     $('#spansearchid_mapel').hide();
-//     $('#spansearchcloseid_mapel').show();
-    
-    
-// }
-
-// function id_mapelclosespan(){
-//     $('#hiddenid_mapel').hide();
-//     $('#spansearchid_mapel').show();
-//     $('#spansearchcloseid_mapel').hide();
-// }
-
-// function pilihItemid_mapel(){
-
-// 	$item  	= $('#hide_id_mapel').val();
-// 	$item 	= $item.split('#');
-
-//     $('#id_mapel').val($item[0]);
-//     $('#hiddenid_mapel').hide();
-//     $('#spansearchid_mapel').show();
-//     $('#spansearchcloseid_mapel').hide();
-// }
-
 function setTable(){
 	 $('#tb_list').DataTable( {
 		"order": [[ 0, "desc" ]],
         "processing": true,
 		"serverSide": true,
+		"bFilter":false,
 		ajax: {
 			'url':base_url+"kurikulum/load_grid",
 			'type':'GET',
