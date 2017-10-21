@@ -16,17 +16,32 @@ class Guru extends IO_Controller{
 		//data master jabatan
 		$mguru = $this->mcommon->mget_list_jabatan_guru()->result();
 
-		foreach ($mguru as $g) {
+		if($mguru!=null){
+
+			foreach ($mguru as $g) {
 			
-			$vdata['opt_jabatan'][$g->id_jabatan] = $g->nama_jabatan;
+				$vdata['opt_jabatan'][$g->id_jabatan] = $g->nama_jabatan;
+			}	
 		}
+		else{
+
+			$vdata['opt_jabatan'] = array();
+		}
+		
 
 		//data master mata pelajaran
 		$mpelajaran = $this->mcommon->mget_list_mata_pelajaran()->result();
 
-		foreach ($mpelajaran as $p) {
+		if($mpelajaran!=null){
+
+			foreach ($mpelajaran as $p) {
 			
-			$vdata['opt_mapel'][$p->id_matpal] = $p->id_matpal.' - '.$p->nama_matpal;
+				$vdata['opt_mapel'][$p->id_matpal] = $p->id_matpal.' - '.$p->nama_matpal;
+			}
+		}
+		else{
+
+			$vdata['opt_mapel'] = array();
 		}
 
 		//default config data lembaga
