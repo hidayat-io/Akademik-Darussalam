@@ -3,6 +3,240 @@ $(document).ready(function()
 {
 	// addSantri("TMI");
 	setTable();
+	validate_add_santri();
+	//validasi form data santri
+	$( "#add_santri" ).validate({
+		errorElement:"em",
+		// errorClass:"help-block help-block-error",
+			// rules:{
+	    //    no_registrasi:{
+	    //    minlength:2,
+	    //    required:!0},
+	    //    no_stambuk:{
+	    //    required:!0}
+			// },
+			messages: {
+				// no_registrasi: {
+				// 	required: "(required)",
+				// 	minlength: " (must be at least 3 characters)"
+				// },
+				email: "Email invalid"
+			},
+
+			invalidHandler: function(element, validator){
+				validator.focusInvalid();
+			},
+
+			errorPlacement: function ( error, element ) {
+					// Add the `help-block` class to the error element
+					error.addClass( "help-block" );
+
+					// Add `has-feedback` class to the parent div.form-group
+					// in order to add icons to inputs
+					element.parents( ".col-md-9" ).addClass( "has-feedback" );
+
+					if ( element.prop( "type" ) === "checkbox" ) {
+						error.insertAfter( element.parent( "form-control" ) );
+					} else {
+						error.insertAfter( element );
+					}
+
+					// Add the span element, if doesn't exists, and apply the icon classes to it.
+					if ( !element.next( "span" )[ 0 ] ) {
+						$( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
+					}
+				},
+				success: function ( label, element ) {
+					// Add the span element, if doesn't exists, and apply the icon classes to it.
+					if ( !$( element ).next( "span" )[ 0 ] ) {
+						$( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( element );
+					}
+				},
+				highlight: function ( element, errorClass, validClass ) {
+					$( element ).parents( ".col-md-9" ).addClass( "has-error" ).removeClass( "has-success" );
+					$( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+				},
+				unhighlight: function ( element, errorClass, validClass ) {
+					$( element ).parents( ".col-md-9" ).addClass( "has-success" ).removeClass( "has-error" );
+					$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
+				}
+
+	}); //end dari validasi form
+	//validasi form modal keluarga
+	$( "#add_keluarga_santri" ).validate({
+		errorElement:"em",
+		// errorClass:"help-block help-block-error",
+			// rules:{
+	    //    no_registrasi:{
+	    //    minlength:2,
+	    //    required:!0},
+	    //    no_stambuk:{
+	    //    required:!0}
+			// },
+			messages: {
+				// no_registrasi: {
+				// 	required: "(required)",
+				// 	minlength: " (must be at least 3 characters)"
+				// },
+				email: "Email invalid"
+			},
+
+			invalidHandler: function(element, validator){
+				validator.focusInvalid();
+			},
+
+			errorPlacement: function ( error, element ) {
+					// Add the `help-block` class to the error element
+					error.addClass( "help-block" );
+
+					// Add `has-feedback` class to the parent div.form-group
+					// in order to add icons to inputs
+					$(element).closest(".form-group").addClass( "has-feedback" );
+
+					if ( element.prop( "type" ) === "checkbox" ) {
+						error.insertAfter( element.parent( "form-control" ) );
+					} else {
+						error.insertAfter( element );
+					}
+
+					// Add the span element, if doesn't exists, and apply the icon classes to it.
+					if ( !element.next( "span" )[ 0 ] ) {
+						$( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
+					}
+				},
+				success: function ( label, element ) {
+					// Add the span element, if doesn't exists, and apply the icon classes to it.
+					if ( !$( element ).next( "span" )[ 0 ] ) {
+						$( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+					}
+				},
+				highlight: function ( element, errorClass, validClass ) {
+					$(element).closest(".form-group").addClass( "has-error" ).removeClass( "has-success" );
+					$( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+				},
+				unhighlight: function ( element, errorClass, validClass ) {
+					$(element).closest(".form-group").addClass( "has-success" ).removeClass( "has-error" );
+					$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
+				}
+
+	}); //end dari validasi form
+	//validasi form modal penyakit
+	$( "#add_penyakit" ).validate({
+		errorElement:"em",
+		// errorClass:"help-block help-block-error",
+			// rules:{
+	    //    no_registrasi:{
+	    //    minlength:2,
+	    //    required:!0},
+	    //    no_stambuk:{
+	    //    required:!0}
+			// },
+			messages: {
+				// no_registrasi: {
+				// 	required: "(required)",
+				// 	minlength: " (must be at least 3 characters)"
+				// },
+				email: "Email invalid"
+			},
+
+			invalidHandler: function(element, validator){
+				validator.focusInvalid();
+			},
+
+			errorPlacement: function ( error, element ) {
+					// Add the `help-block` class to the error element
+					error.addClass( "help-block" );
+
+					// Add `has-feedback` class to the parent div.form-group
+					// in order to add icons to inputs
+					$(element).closest(".form-group").addClass( "has-feedback" );
+
+					if ( element.prop( "type" ) === "checkbox" ) {
+						error.insertAfter( element.parent( "form-control" ) );
+					} else {
+						error.insertAfter( element );
+					}
+
+					// Add the span element, if doesn't exists, and apply the icon classes to it.
+					if ( !element.next( "span" )[ 0 ] ) {
+						$( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
+					}
+				},
+				success: function ( label, element ) {
+					// Add the span element, if doesn't exists, and apply the icon classes to it.
+					if ( !$( element ).next( "span" )[ 0 ] ) {
+						$( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+					}
+				},
+				highlight: function ( element, errorClass, validClass ) {
+					$(element).closest(".form-group").addClass( "has-error" ).removeClass( "has-success" );
+					$( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+				},
+				unhighlight: function ( element, errorClass, validClass ) {
+					$(element).closest(".form-group").addClass( "has-success" ).removeClass( "has-error" );
+					$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
+				}
+
+	}); //end dari validasi form
+
+	//validasi form modal add_kecakapan_khusus
+	$( "#add_kecakapan_khusus" ).validate({
+		errorElement:"em",
+		// errorClass:"help-block help-block-error",
+			// rules:{
+	    //    no_registrasi:{
+	    //    minlength:2,
+	    //    required:!0},
+	    //    no_stambuk:{
+	    //    required:!0}
+			// },
+			messages: {
+				// no_registrasi: {
+				// 	required: "(required)",
+				// 	minlength: " (must be at least 3 characters)"
+				// },
+				email: "Email invalid"
+			},
+
+			invalidHandler: function(element, validator){
+				validator.focusInvalid();
+			},
+
+			errorPlacement: function ( error, element ) {
+					// Add the `help-block` class to the error element
+					error.addClass( "help-block" );
+
+					// Add `has-feedback` class to the parent div.form-group
+					// in order to add icons to inputs
+					$(element).closest(".form-group").addClass( "has-feedback" );
+
+					if ( element.prop( "type" ) === "checkbox" ) {
+						error.insertAfter( element.parent( "form-control" ) );
+					} else {
+						error.insertAfter( element );
+					}
+
+					// Add the span element, if doesn't exists, and apply the icon classes to it.
+					if ( !element.next( "span" )[ 0 ] ) {
+						$( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
+					}
+				},
+				success: function ( label, element ) {
+					// Add the span element, if doesn't exists, and apply the icon classes to it.
+					if ( !$( element ).next( "span" )[ 0 ] ) {
+						$( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+					}
+				},
+				highlight: function ( element, errorClass, validClass ) {
+					$(element).closest(".form-group").addClass( "has-error" ).removeClass( "has-success" );
+					$( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+				},
+				unhighlight: function ( element, errorClass, validClass ) {
+					$(element).closest(".form-group").addClass( "has-success" ).removeClass( "has-error" );
+					$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
+				}
+
+	}); //end dari validasi form
 	$('.datepicker').datepicker(
 	{
 		rtl: App.isRTL(),
@@ -18,6 +252,7 @@ $(document).ready(function()
 	pilihItemKamar();
 	pilihItemKelas();
 	pilihItemBagian();
+	$('.nav-tabs').tabdrop();
 	
 	$('.numbers-only').keypress(function(event) {
 		var charCode = (event.which) ? event.which : event.keyCode;
@@ -28,11 +263,13 @@ $(document).ready(function()
 				return true;
 		return false;
 	});
-			$('#uang_jajan_perbulan').maskMoney({precision:0});
-			$('#biaya_perbulan_min').maskMoney({precision:0});
-			$('#biaya_perbulan_max').maskMoney({precision:0});
-			$('#penghasilan').maskMoney({precision:0});
-			$('#pedapatan_ibu_keluarga').maskMoney({precision:0});
+	// #region maskmoney format
+		$('#uang_jajan_perbulan').maskMoney({precision:0});
+		$('#biaya_perbulan_min').maskMoney({precision:0});
+		$('#biaya_perbulan_max').maskMoney({precision:0});
+		$('#penghasilan').maskMoney({precision:0});
+		$('#pedapatan_ibu_keluarga').maskMoney({precision:0});
+	//#endregion maskmoney format
 
 	$("#fileUpload").on('change', function(e) {
 
@@ -429,240 +666,6 @@ $(document).ready(function()
 		}
 
 	});
-
-	//validasi form data santri
-	$( "#add_santri" ).validate({
-		errorElement:"em",
-		// errorClass:"help-block help-block-error",
-			// rules:{
-	    //    no_registrasi:{
-	    //    minlength:2,
-	    //    required:!0},
-	    //    no_stambuk:{
-	    //    required:!0}
-			// },
-			messages: {
-				// no_registrasi: {
-				// 	required: "(required)",
-				// 	minlength: " (must be at least 3 characters)"
-				// },
-				email: "Email invalid"
-			},
-
-			invalidHandler: function(element, validator){
-				validator.focusInvalid();
-			},
-
-			errorPlacement: function ( error, element ) {
-					// Add the `help-block` class to the error element
-					error.addClass( "help-block" );
-
-					// Add `has-feedback` class to the parent div.form-group
-					// in order to add icons to inputs
-					element.parents( ".col-md-9" ).addClass( "has-feedback" );
-
-					if ( element.prop( "type" ) === "checkbox" ) {
-						error.insertAfter( element.parent( "form-control" ) );
-					} else {
-						error.insertAfter( element );
-					}
-
-					// Add the span element, if doesn't exists, and apply the icon classes to it.
-					if ( !element.next( "span" )[ 0 ] ) {
-						$( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
-					}
-				},
-				success: function ( label, element ) {
-					// Add the span element, if doesn't exists, and apply the icon classes to it.
-					if ( !$( element ).next( "span" )[ 0 ] ) {
-						$( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( element );
-					}
-				},
-				highlight: function ( element, errorClass, validClass ) {
-					$( element ).parents( ".col-md-9" ).addClass( "has-error" ).removeClass( "has-success" );
-					$( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
-				},
-				unhighlight: function ( element, errorClass, validClass ) {
-					$( element ).parents( ".col-md-9" ).addClass( "has-success" ).removeClass( "has-error" );
-					$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
-				}
-
-	}); //end dari validasi form
-	//validasi form modal keluarga
-	$( "#add_keluarga_santri" ).validate({
-		errorElement:"em",
-		// errorClass:"help-block help-block-error",
-			// rules:{
-	    //    no_registrasi:{
-	    //    minlength:2,
-	    //    required:!0},
-	    //    no_stambuk:{
-	    //    required:!0}
-			// },
-			messages: {
-				// no_registrasi: {
-				// 	required: "(required)",
-				// 	minlength: " (must be at least 3 characters)"
-				// },
-				email: "Email invalid"
-			},
-
-			invalidHandler: function(element, validator){
-				validator.focusInvalid();
-			},
-
-			errorPlacement: function ( error, element ) {
-					// Add the `help-block` class to the error element
-					error.addClass( "help-block" );
-
-					// Add `has-feedback` class to the parent div.form-group
-					// in order to add icons to inputs
-					$(element).closest(".form-group").addClass( "has-feedback" );
-
-					if ( element.prop( "type" ) === "checkbox" ) {
-						error.insertAfter( element.parent( "form-control" ) );
-					} else {
-						error.insertAfter( element );
-					}
-
-					// Add the span element, if doesn't exists, and apply the icon classes to it.
-					if ( !element.next( "span" )[ 0 ] ) {
-						$( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
-					}
-				},
-				success: function ( label, element ) {
-					// Add the span element, if doesn't exists, and apply the icon classes to it.
-					if ( !$( element ).next( "span" )[ 0 ] ) {
-						$( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
-					}
-				},
-				highlight: function ( element, errorClass, validClass ) {
-					$(element).closest(".form-group").addClass( "has-error" ).removeClass( "has-success" );
-					$( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
-				},
-				unhighlight: function ( element, errorClass, validClass ) {
-					$(element).closest(".form-group").addClass( "has-success" ).removeClass( "has-error" );
-					$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
-				}
-
-	}); //end dari validasi form
-	//validasi form modal penyakit
-	$( "#add_penyakit" ).validate({
-		errorElement:"em",
-		// errorClass:"help-block help-block-error",
-			// rules:{
-	    //    no_registrasi:{
-	    //    minlength:2,
-	    //    required:!0},
-	    //    no_stambuk:{
-	    //    required:!0}
-			// },
-			messages: {
-				// no_registrasi: {
-				// 	required: "(required)",
-				// 	minlength: " (must be at least 3 characters)"
-				// },
-				email: "Email invalid"
-			},
-
-			invalidHandler: function(element, validator){
-				validator.focusInvalid();
-			},
-
-			errorPlacement: function ( error, element ) {
-					// Add the `help-block` class to the error element
-					error.addClass( "help-block" );
-
-					// Add `has-feedback` class to the parent div.form-group
-					// in order to add icons to inputs
-					$(element).closest(".form-group").addClass( "has-feedback" );
-
-					if ( element.prop( "type" ) === "checkbox" ) {
-						error.insertAfter( element.parent( "form-control" ) );
-					} else {
-						error.insertAfter( element );
-					}
-
-					// Add the span element, if doesn't exists, and apply the icon classes to it.
-					if ( !element.next( "span" )[ 0 ] ) {
-						$( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
-					}
-				},
-				success: function ( label, element ) {
-					// Add the span element, if doesn't exists, and apply the icon classes to it.
-					if ( !$( element ).next( "span" )[ 0 ] ) {
-						$( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
-					}
-				},
-				highlight: function ( element, errorClass, validClass ) {
-					$(element).closest(".form-group").addClass( "has-error" ).removeClass( "has-success" );
-					$( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
-				},
-				unhighlight: function ( element, errorClass, validClass ) {
-					$(element).closest(".form-group").addClass( "has-success" ).removeClass( "has-error" );
-					$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
-				}
-
-	}); //end dari validasi form
-
-	//validasi form modal add_kecakapan_khusus
-	$( "#add_kecakapan_khusus" ).validate({
-		errorElement:"em",
-		// errorClass:"help-block help-block-error",
-			// rules:{
-	    //    no_registrasi:{
-	    //    minlength:2,
-	    //    required:!0},
-	    //    no_stambuk:{
-	    //    required:!0}
-			// },
-			messages: {
-				// no_registrasi: {
-				// 	required: "(required)",
-				// 	minlength: " (must be at least 3 characters)"
-				// },
-				email: "Email invalid"
-			},
-
-			invalidHandler: function(element, validator){
-				validator.focusInvalid();
-			},
-
-			errorPlacement: function ( error, element ) {
-					// Add the `help-block` class to the error element
-					error.addClass( "help-block" );
-
-					// Add `has-feedback` class to the parent div.form-group
-					// in order to add icons to inputs
-					$(element).closest(".form-group").addClass( "has-feedback" );
-
-					if ( element.prop( "type" ) === "checkbox" ) {
-						error.insertAfter( element.parent( "form-control" ) );
-					} else {
-						error.insertAfter( element );
-					}
-
-					// Add the span element, if doesn't exists, and apply the icon classes to it.
-					if ( !element.next( "span" )[ 0 ] ) {
-						$( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
-					}
-				},
-				success: function ( label, element ) {
-					// Add the span element, if doesn't exists, and apply the icon classes to it.
-					if ( !$( element ).next( "span" )[ 0 ] ) {
-						$( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
-					}
-				},
-				highlight: function ( element, errorClass, validClass ) {
-					$(element).closest(".form-group").addClass( "has-error" ).removeClass( "has-success" );
-					$( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
-				},
-				unhighlight: function ( element, errorClass, validClass ) {
-					$(element).closest(".form-group").addClass( "has-success" ).removeClass( "has-error" );
-					$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
-				}
-
-	}); //end dari validasi form
 
 });
 
@@ -1246,7 +1249,9 @@ function filter_aitam(){
 
 function svSantri()
 {
-	if($("#add_santri").valid()==true){
+	var valid = $('#add_santri').valid();
+
+	if(valid==true){
 	
 		//data keluarga
 		var item_data_tb_list_keluarga = "";
@@ -1399,6 +1404,65 @@ function OtomatisKapital(a){
     }, 1);
 }
 
+var validate_add_santri = function() 
+{
+	
+	var form = $('#add_santri');
+	var error2 = $('.alert-danger', form);
+	var success2 = $('.alert-success', form);
+
+	form.validate({
+		errorElement: 'span', //default input error message container
+		errorClass: 'help-block help-block-error', // default input error message class
+		focusInvalid: false, // do not focus the last invalid input
+		ignore: "",  // validate all fields including form hidden input
+		// rules: {
+		// 	txt_da_nama: {                    
+		// 		required: true
+		// 	},
+		// 	txt_da_pendidikan: {
+		// 		required: true
+		// 	},
+		// 	dtp_da_birth: {
+		// 		required: true
+		// 	},
+		// },
+
+		invalidHandler: function (event, validator) { //display error alert on form submit              
+			success2.hide();
+			error2.show();
+			App.scrollTo(error2, -200);
+		},
+
+		errorPlacement: function (error, element) { // render error placement for each input type
+			var icon = $(element).parent('.input-icon').children('i');
+			icon.removeClass('fa-check').addClass("fa-warning");  
+			icon.attr("data-original-title", error.text()).tooltip({'container': 'body'});
+		},
+
+		highlight: function (element) { // hightlight error inputs
+			$(element)
+				.closest('.input-group').removeClass("has-success").addClass('has-error'); // set error class to the control group   
+		},
+
+		unhighlight: function (element) { // revert the change done by hightlight
+			
+		},
+
+		success: function (label, element) {
+			var icon = $(element).parent('.input-icon').children('i');
+			$(element).closest('.input-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+			icon.removeClass("fa-warning").addClass("fa-check");
+		},
+
+		submitHandler: function (form) {
+			success2.show();
+			error2.hide();
+			form[0].submit(); // submit the form
+		}
+	});
+}
+	
 function addSantri(){
 	$('#hiddenidgedung').hide();
 	$('#spansearchclosegedung').hide();
