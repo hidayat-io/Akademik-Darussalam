@@ -771,13 +771,18 @@ function kosong(){
 	$('#image-holder').html('');
 	$('#tb_list_keluarga > tbody').html('"<tr><td colspan=\"33\" align=\"center\">Belum Ada Data.</td></tr>"');
 	$('#tb_list_penyakit > tbody').html('"<tr><td colspan=\"6\" align=\"center\">Belum Ada Data.</td></tr>"');
-	$('#tb_list_kckhusus > tbody').html('"<tr><td colspan=\"6\" align=\"center\">Belum Ada Data.</td></tr>"');
+	// $('#tb_list_kckhusus > tbody').html('"<tr><td colspan=\"6\" align=\"center\">Belum Ada Data.</td></tr>"');
 	$('#hid_jumlah_item_keluarga').val('0');
 	$('#hid_cek_ayah').val('0');
 	$('#hid_cek_ibu').val('0');
 	$('#hid_cek_wali').val('0');
 	$('#hid_jumlah_item_penyakit').val('0');
-	$('#hid_jumlah_item_KecakapanKhusus').val('0');
+	$('#bid_studi').val('')
+	$('#olahraga').val('')
+	$('#kesenian').val('')
+	$('#keterampilan').val('')
+	$('#lain_lain').val('')
+	// $('#hid_jumlah_item_KecakapanKhusus').val('0');
 	
 }
 
@@ -826,13 +831,15 @@ function kosong_modal_penyakit(){
 	$('#lamp_bukti').val('')
 }
 
-function kosong_modal_kckhusu(){
-	$('#bid_studi').val('')
-	$('#olahraga').val('')
-	$('#kesenian').val('')
-	$('#keterampilan').val('')
-	$('#lain_lain').val('')
-}
+//#region kecakapan khusus
+// function kosong_modal_kckhusu(){
+// 	$('#bid_studi').val('')
+// 	$('#olahraga').val('')
+// 	$('#kesenian').val('')
+// 	$('#keterampilan').val('')
+// 	$('#lain_lain').val('')
+// }
+//#endregion kecakapan khusu
 	
 function mati(){
 	if($('#kategori_santri').val() ==''){
@@ -903,6 +910,11 @@ function mati(){
 		$('#alergi').attr('disabled', true);
 		$('#thn_fisik').attr('disabled', true);
 		$('#kelainan_fisik').attr('disabled', true);
+		$('#bid_studi').attr('disabled', true);
+		$('#olahraga').attr('disabled', true);
+		$('#kesenian').attr('disabled', true);
+		$('#keterampilan').attr('disabled', true);
+		$('#lain_lain').attr('disabled', true);
 
 		//button
 		$('#button_keluarga').hide();
@@ -967,69 +979,76 @@ function mati_kel(){
 		$('#ktp_keluarga').attr('disabled', true);
 }
 
-function hidup(){
-	// $('#no_registrasi').attr('disabled', false);
-	// $('#no_stambuk').attr('disabled', false);
-	$('#kategori_santri').attr('disabled', false);
-	$('#thn_masuk').attr('disabled', false);
-	$('#rayon').attr('disabled', false);
-	$('#kamar').attr('disabled', false);
-	$('#bagian').attr('disabled', false);
-	$('#kel_sekarang').attr('disabled', false);
-	$('#nisn').attr('disabled', false);
-	$('#nisnlokal').attr('disabled', false);
-	$('#nama_lengkap').attr('disabled', false);
-	$('#nama_arab').attr('disabled', false);
-	$('#nama_panggilan').attr('disabled', false);
-	$('#hobi').attr('disabled', false);
-	$('#uang_jajan_perbulan').attr('disabled', false);
-	$('#no_kk').attr('disabled', false);
-	$('#nik').attr('disabled', false);
-	$('#tempat_lahir').attr('disabled', false);
-	$('#tgl_lahir').attr('disabled', false);
-	$('#konsulat').attr('disabled', false);
-	$('#nama_sekolah_aitam').attr('disabled', false);
-	$('#kelas_aitam').attr('disabled', false);
-	$('#alamat_sekolah_aitam').attr('disabled', false);
-	$('#suku').attr('disabled', false);
-	$('#kewarganegaraan').attr('disabled', false);
-	$('#jalan').attr('disabled', false);
-	$('#no_rumah').attr('disabled', false);
-	$('#dusun').attr('disabled', false);
-	$('#desa').attr('disabled', false);
-	$('#kecamatan').attr('disabled', false);
-	$('#kabupaten').attr('disabled', false);
-	$('#provinsi').attr('disabled', false);
-	$('#kd_pos').attr('disabled', false);
-	$('#no_tlp').attr('disabled', false);
-	$('#no_hp').attr('disabled', false);
-	$('#email').attr('disabled', false);
-	$('#fb').attr('disabled', false);
-	$('#dibesarkan_di').attr('disabled', false);
-	$('#pembiaya').attr('disabled', false);
-	$('#biaya_perbulan_min').attr('disabled', false);
-	$('#biaya_perbulan_max').attr('disabled', false);
-	$('#penghasilan').attr('disabled', false);
-	$('#gol_darah').attr('disabled', false);
-	$('#tinggi_badan').attr('disabled', false);
-	$('#berat_badan').attr('disabled', false);
-	$('#khitan').attr('disabled', false);
-	$('#kondisi_pendidikan').attr('disabled', false);
-	$('#ekonomi_keluarga').attr('disabled', false);
-	$('#situasi_rumah').attr('disabled', false);
-	$('#dekat_dengan').attr('disabled', false);
-	$('#hidup_beragama').attr('disabled', false);
-	$('#pengelihatan_mata').attr('disabled', false);
-	$('#kaca_mata').attr('disabled', false);
-	$('#pendengaran').attr('disabled', false);
-	$('#operasi').attr('disabled', false);
-	$('#sebab').attr('disabled', false);
-	$('#kecelakaan').attr('disabled', false);
-	$('#akibat').attr('disabled', false);
-	$('#alergi').attr('disabled', false);
-	$('#thn_fisik').attr('disabled', false);
-	$('#kelainan_fisik').attr('disabled', false);
-}
+// function hidup(){
+	// 	// $('#no_registrasi').attr('disabled', false);
+	// 	// $('#no_stambuk').attr('disabled', false);
+	// 	$('#kategori_santri').attr('disabled', false);
+	// 	$('#thn_masuk').attr('disabled', false);
+	// 	$('#rayon').attr('disabled', false);
+	// 	$('#kamar').attr('disabled', false);
+	// 	$('#bagian').attr('disabled', false);
+	// 	$('#kel_sekarang').attr('disabled', false);
+	// 	$('#nisn').attr('disabled', false);
+	// 	$('#nisnlokal').attr('disabled', false);
+	// 	$('#nama_lengkap').attr('disabled', false);
+	// 	$('#nama_arab').attr('disabled', false);
+	// 	$('#nama_panggilan').attr('disabled', false);
+	// 	$('#hobi').attr('disabled', false);
+	// 	$('#uang_jajan_perbulan').attr('disabled', false);
+	// 	$('#no_kk').attr('disabled', false);
+	// 	$('#nik').attr('disabled', false);
+	// 	$('#tempat_lahir').attr('disabled', false);
+	// 	$('#tgl_lahir').attr('disabled', false);
+	// 	$('#konsulat').attr('disabled', false);
+	// 	$('#nama_sekolah_aitam').attr('disabled', false);
+	// 	$('#kelas_aitam').attr('disabled', false);
+	// 	$('#alamat_sekolah_aitam').attr('disabled', false);
+	// 	$('#suku').attr('disabled', false);
+	// 	$('#kewarganegaraan').attr('disabled', false);
+	// 	$('#jalan').attr('disabled', false);
+	// 	$('#no_rumah').attr('disabled', false);
+	// 	$('#dusun').attr('disabled', false);
+	// 	$('#desa').attr('disabled', false);
+	// 	$('#kecamatan').attr('disabled', false);
+	// 	$('#kabupaten').attr('disabled', false);
+	// 	$('#provinsi').attr('disabled', false);
+	// 	$('#kd_pos').attr('disabled', false);
+	// 	$('#no_tlp').attr('disabled', false);
+	// 	$('#no_hp').attr('disabled', false);
+	// 	$('#email').attr('disabled', false);
+	// 	$('#fb').attr('disabled', false);
+	// 	$('#dibesarkan_di').attr('disabled', false);
+	// 	$('#pembiaya').attr('disabled', false);
+	// 	$('#biaya_perbulan_min').attr('disabled', false);
+	// 	$('#biaya_perbulan_max').attr('disabled', false);
+	// 	$('#penghasilan').attr('disabled', false);
+	// 	$('#gol_darah').attr('disabled', false);
+	// 	$('#tinggi_badan').attr('disabled', false);
+	// 	$('#berat_badan').attr('disabled', false);
+	// 	$('#khitan').attr('disabled', false);
+	// 	$('#kondisi_pendidikan').attr('disabled', false);
+	// 	$('#ekonomi_keluarga').attr('disabled', false);
+	// 	$('#situasi_rumah').attr('disabled', false);
+	// 	$('#dekat_dengan').attr('disabled', false);
+	// 	$('#hidup_beragama').attr('disabled', false);
+	// 	$('#pengelihatan_mata').attr('disabled', false);
+	// 	$('#kaca_mata').attr('disabled', false);
+	// 	$('#pendengaran').attr('disabled', false);
+	// 	$('#operasi').attr('disabled', false);
+	// 	$('#sebab').attr('disabled', false);
+	// 	$('#kecelakaan').attr('disabled', false);
+	// 	$('#akibat').attr('disabled', false);
+	// 	$('#alergi').attr('disabled', false);
+	// 	$('#thn_fisik').attr('disabled', false);
+	// 	$('#kelainan_fisik').attr('disabled', false);
+	// 	$('#bid_studi').attr('disabled', false);
+	// 	$('#olahraga').attr('disabled', false);
+	// 	$('#kesenian').attr('disabled', false);
+	// 	$('#keterampilan').attr('disabled', false);
+	// 	$('#lain_lain').attr('disabled', false);
+	
+
+// }
 
 function filter_tmi(){
 	$('#no_registrasi').attr('disabled', false);
@@ -1092,12 +1111,17 @@ function filter_tmi(){
 	$('#alergi').attr('disabled', false);
 	$('#thn_fisik').attr('disabled', false);
 	$('#kelainan_fisik').attr('disabled', false);
+	$('#bid_studi').attr('disabled', false);
+	$('#olahraga').attr('disabled', false);
+	$('#kesenian').attr('disabled', false);
+	$('#keterampilan').attr('disabled', false);
+	$('#lain_lain').attr('disabled', false);
 	var no_registrasi		= $('#no_registrasi').val();
 	if ( no_registrasi != ''){
-			//button
+		//button
 		$('#button_keluarga').show();
 		$('#button_penyakit').show();
-		$('#button_kecakapankhusus').show();
+		// $('#button_kecakapankhusus').show();
 		$('#button_photo').show();
 		$('#button_ijazah').show();
 		$("#ijazahholder").show();
@@ -1119,7 +1143,7 @@ function filter_tmi(){
 				//button
 		$('#button_keluarga').show();
 		$('#button_penyakit').show();
-		$('#button_kecakapankhusus').show();
+		// $('#button_kecakapankhusus').show();
 		$('#button_photo').show();
 		$('#button_ijazah').show();
 		$("#ijazahholder").hide();
@@ -1206,7 +1230,7 @@ function filter_aitam(){
 			//button
 		$('#button_keluarga').show();
 		$('#button_penyakit').show();
-		$('#button_kecakapankhusus').show();
+		// $('#button_kecakapankhusus').show();
 		$('#button_photo').show();
 		$('#button_ijazah').show();
 		$("#ijazahholder").show();
@@ -1253,7 +1277,7 @@ function svSantri()
 
 	if(valid==true){
 	
-		//data keluarga
+		//#region data keluarga
 		var item_data_tb_list_keluarga = "";
 
 		var oTable 		= document.getElementById('tb_list_keluarga');
@@ -1306,8 +1330,9 @@ function svSantri()
 		}
 		$('#hid_table_item_Keluarga').val(item_data_tb_list_keluarga);	
 		// var item_data_tb_list_keluarga_input = $('#hid_table_item_Keluarga').val();
-
-		//data Penyakit
+		//#endregion data keluarga
+		
+		//#region  data Penyakit
 		var item_data_tb_list_penyakit = "";
 
 		var oTable 		= document.getElementById('tb_list_penyakit');
@@ -1333,35 +1358,39 @@ function svSantri()
 		}
 		$('#hid_table_item_penyakit').val(item_data_tb_list_penyakit);
 		// var item_data_tb_list_penyakit_input = $('#hid_table_item_penyakit').val();
-		//data Kecakapan Khusus
-		var item_data_tb_list_kckhusus = "";
+		//#endregion penyakit
+		
+		//#region  data Kecakapan Khusus
+		// var item_data_tb_list_kckhusus = "";
 
-		var oTable 		= document.getElementById('tb_list_kckhusus');
-		var rowLength 	= oTable.rows.length;
-		var isitablekecakapankhusus = $('#hid_jumlah_item_KecakapanKhusus').val();
-			if(isitablekecakapankhusus ==0){
-				rowLength 	= rowLength-2;
-			}else{
-				rowLength 	= rowLength-1;
-			}
+		// var oTable 		= document.getElementById('tb_list_kckhusus');
+		// var rowLength 	= oTable.rows.length;
+		// var isitablekecakapankhusus = $('#hid_jumlah_item_KecakapanKhusus').val();
+		// 	if(isitablekecakapankhusus ==0){
+		// 		rowLength 	= rowLength-2;
+		// 	}else{
+		// 		rowLength 	= rowLength-1;
+		// 	}
 			
 
-		for (i = 1; i <= rowLength; i++){
+		// for (i = 1; i <= rowLength; i++){
 
-			var irow = oTable.rows.item(i);
+		// 	var irow = oTable.rows.item(i);
 
-			item_data_tb_list_kckhusus += irow.cells[1].innerHTML+"#"; //bid_studi
-			item_data_tb_list_kckhusus += irow.cells[2].innerHTML+"#"; //olahraga
-			item_data_tb_list_kckhusus += irow.cells[3].innerHTML+"#"; //kesenian
-			item_data_tb_list_kckhusus += irow.cells[4].innerHTML+"#"; //keterampilan
-			item_data_tb_list_kckhusus += irow.cells[5].innerHTML+"#"; //lain_lain
+		// 	item_data_tb_list_kckhusus += irow.cells[1].innerHTML+"#"; //bid_studi
+		// 	item_data_tb_list_kckhusus += irow.cells[2].innerHTML+"#"; //olahraga
+		// 	item_data_tb_list_kckhusus += irow.cells[3].innerHTML+"#"; //kesenian
+		// 	item_data_tb_list_kckhusus += irow.cells[4].innerHTML+"#"; //keterampilan
+		// 	item_data_tb_list_kckhusus += irow.cells[5].innerHTML+"#"; //lain_lain
 
 
-			item_data_tb_list_kckhusus += ';';
+		// 	item_data_tb_list_kckhusus += ';';
 			
-		}
-		$('#hid_table_item_KecakapanKhusus').val(item_data_tb_list_kckhusus);
+		// }
+		// $('#hid_table_item_KecakapanKhusus').val(item_data_tb_list_kckhusus);
 		// var item_data_tb_list_kckhusus_input = $('#hid_table_item_KecakapanKhusus').val();
+
+		//#endregion kecakapan khusus
 		var iform = $('#add_santri')[0];
 		var data = new FormData(iform);
 		cattt = $('#kategori_santri').val();
@@ -1462,7 +1491,19 @@ var validate_add_santri = function()
 		}
 	});
 }
+
+function clearValidate_add_santri()
+{
 	
+		$("#add_santri div").removeClass('has-error');
+		$("#add_santri i").removeClass('fa-warning');
+	
+		$("#add_santri div").removeClass('has-success');
+		$("#add_santri i").removeClass('fa-check');
+	
+		document.getElementById("add_santri").reset();
+}
+
 function addSantri(){
 	$('#hiddenidgedung').hide();
 	$('#spansearchclosegedung').hide();
@@ -1479,6 +1520,8 @@ function addSantri(){
 	kosong();
 	mati();
 	mati_kel();
+	clearValidate_add_santri();
+	$('.nav-tabs a[href="#tab_santri"]').tab('show');
 	$('#addto_button_header').hide();
 	$('#addto_button_footer').hide();
 	$('#save_button_header').show();
@@ -1584,6 +1627,7 @@ function cek_kt(){ //cek jika kategri onchange
 	{
 		filter_aitam();
 	}
+	clearValidate_add_santri();
 }
 
 function modalAddkeluarga(){
@@ -2314,121 +2358,126 @@ function hapusItemPenyakit(row_id){
 		}
 	);
 }
+//#region kecakapan khusus
+// function modalAddKecakapanKhusus(){
+// 	kosong_modal_kckhusu();
+// 	$('#Modal_add_KecakapanKhusus').modal('show');
+// }
 
-function modalAddKecakapanKhusus(){
-	kosong_modal_kckhusu();
-	$('#Modal_add_KecakapanKhusus').modal('show');
-}
+// function TambahKecakapanKhusus(){
+// 	if($("#add_kecakapan_khusus").valid()==true)
+// 	{
+// 		var bid_studi 				= $('#bid_studi').val()
+// 		var olahraga 				= $('#olahraga').val()
+// 		var kesenian 				= $('#kesenian').val()
+// 		var keterampilan 			= $('#keterampilan').val()
+// 		var lain_lain 				= $('#lain_lain').val()
+// 		var hid_jumlah_item 		= $('#hid_jumlah_item_KecakapanKhusus').val()
 
-function TambahKecakapanKhusus(){
-	if($("#add_kecakapan_khusus").valid()==true)
-	{
-		var bid_studi 				= $('#bid_studi').val()
-		var olahraga 				= $('#olahraga').val()
-		var kesenian 				= $('#kesenian').val()
-		var keterampilan 			= $('#keterampilan').val()
-		var lain_lain 				= $('#lain_lain').val()
-		var hid_jumlah_item 		= $('#hid_jumlah_item_KecakapanKhusus').val()
+// 		var kd_bidstudi 	= makeid();
+// 		if(cekItemkckhusus(bid_studi)==true){
 
-		var kd_bidstudi 	= makeid();
-		if(cekItemkckhusus(bid_studi)==true){
+// 			var row_count 		= $('#tb_list_kckhusus tr.tb-detail').length;
+// 			var content_data 	= '<tr class="tb-detail" id="row'+kd_bidstudi+'">';
+// 				content_data 	+= "<td>"+(row_count+1)+"</td>";
+// 				content_data 	+= "<td>"+bid_studi+"</td>";
+// 				content_data 	+= "<td>"+olahraga+"</td>";
+// 				content_data 	+= "<td>"+kesenian+"</td>";
+// 				content_data 	+= "<td>"+keterampilan+"</td>";
+// 				content_data 	+= "<td>"+lain_lain+"</td>";
+// 				content_data 	+= '<td><button type="button" class="btn btn-danger btn-xs" ';
+// 				content_data 	+= ' onclick="hapusItemkckhusus(\''+kd_bidstudi+'\')"><i class="fa fa-fw fa-trash"></i>Hapus</button></td>';
+// 				content_data 	+= "</tr>";
 
-			var row_count 		= $('#tb_list_kckhusus tr.tb-detail').length;
-			var content_data 	= '<tr class="tb-detail" id="row'+kd_bidstudi+'">';
-				content_data 	+= "<td>"+(row_count+1)+"</td>";
-				content_data 	+= "<td>"+bid_studi+"</td>";
-				content_data 	+= "<td>"+olahraga+"</td>";
-				content_data 	+= "<td>"+kesenian+"</td>";
-				content_data 	+= "<td>"+keterampilan+"</td>";
-				content_data 	+= "<td>"+lain_lain+"</td>";
-				content_data 	+= '<td><button type="button" class="btn btn-danger btn-xs" ';
-				content_data 	+= ' onclick="hapusItemkckhusus(\''+kd_bidstudi+'\')"><i class="fa fa-fw fa-trash"></i>Hapus</button></td>';
-				content_data 	+= "</tr>";
+// 			if(row_count<1){
 
-			if(row_count<1){
+// 				$('#tb_list_kckhusus tbody').html(content_data);
+// 			}
+// 			else{
 
-				$('#tb_list_kckhusus tbody').html(content_data);
-			}
-			else{
+// 				$('#tb_list_kckhusus tbody').append(content_data);
+// 			}
 
-				$('#tb_list_kckhusus tbody').append(content_data);
-			}
+// 			$("#hid_jumlah_item_KecakapanKhusus").val(row_count+1);
+// 			urutkanNomorkckhusus();
 
-			$("#hid_jumlah_item_KecakapanKhusus").val(row_count+1);
-			urutkanNomorkckhusus();
+// 			$('#Modal_add_KecakapanKhusus').modal('hide');
+// 		}
+// 		else{
 
-			$('#Modal_add_KecakapanKhusus').modal('hide');
-		}
-		else{
+// 			bootbox.alert("<span class='glyphicon glyphicon-exclamation-sign'></span>&nbsp;"+bid_studi+" sudah ada di list.");
+// 		}
+// 	}
+// }
 
-			bootbox.alert("<span class='glyphicon glyphicon-exclamation-sign'></span>&nbsp;"+bid_studi+" sudah ada di list.");
-		}
-	}
-}
+// function urutkanNomorkckhusus(){
 
-function urutkanNomorkckhusus(){
+// 	var oTable = document.getElementById('tb_list_kckhusus');
 
-	var oTable = document.getElementById('tb_list_kckhusus');
+// 	//hitung table row
+// 	var rowLength = oTable.rows.length;
+// 		rowLength = rowLength-1;
 
-	//hitung table row
-	var rowLength = oTable.rows.length;
-		rowLength = rowLength-1;
+// 	//urutkan nomor per row
+// 	for (i = 1; i <= rowLength; i++){
 
-	//urutkan nomor per row
-	for (i = 1; i <= rowLength; i++){
+// 		oTable.rows.item(i).cells[0].innerHTML = i;
+// 	}
+// }
 
-		oTable.rows.item(i).cells[0].innerHTML = i;
-	}
-}
+// function cekItemkckhusus(i_bid_studi){
+// 		var oTable  	= document.getElementById('tb_list_kckhusus');
+// 		var rowLength = oTable.rows.length;
+// 		var itemcount = $('#hid_jumlah_item_KecakapanKhusus').val();
+// 		rowLength = rowLength-1;
 
-function cekItemkckhusus(i_bid_studi){
-		var oTable  	= document.getElementById('tb_list_kckhusus');
-		var rowLength = oTable.rows.length;
-		var itemcount = $('#hid_jumlah_item_KecakapanKhusus').val();
-		rowLength = rowLength-1;
+// 		if(itemcount=="0"){ //jika item kosong
 
-		if(itemcount=="0"){ //jika item kosong
+// 			return true;
+// 		}
+// 		else{
 
-			return true;
-		}
-		else{
+// 			for (i = 1; i <= rowLength; i++)
+// 			{
+// 				var bid_studi = oTable.rows.item(i).cells[1].innerHTML;
+// 				// print(kode_kategori);
+// 				if(bid_studi==i_bid_studi){
 
-			for (i = 1; i <= rowLength; i++)
-			{
-				var bid_studi = oTable.rows.item(i).cells[1].innerHTML;
-				// print(kode_kategori);
-				if(bid_studi==i_bid_studi){
+// 						return false;
+// 				}
+// 			}
+// 			return true;
+// 		}
+// }
 
-						return false;
-				}
-			}
-			return true;
-		}
-}
+// function hapusItemkckhusus(row_id){
 
-function hapusItemkckhusus(row_id){
+// 		bootbox.confirm("Anda yakin akan menghapus item ini ?",
+// 		function(result){
+// 			if(result==true){
 
-		bootbox.confirm("Anda yakin akan menghapus item ini ?",
-		function(result){
-			if(result==true){
+// 				$('#row'+row_id).remove();
+// 				urutkanNomorkckhusus();
 
-				$('#row'+row_id).remove();
-				urutkanNomorkckhusus();
+// 				var row_count = $('#tb_list_kckhusus tr.tb-detail').length					;
 
-				var row_count = $('#tb_list_kckhusus tr.tb-detail').length					;
-
-				$('#hid_jumlah_item_KecakapanKhusus').val(row_count); //simpan jumlah item
+// 				$('#hid_jumlah_item_KecakapanKhusus').val(row_count); //simpan jumlah item
 
 
-				if(row_count<1){
+// 				if(row_count<1){
 
-					var content_data = "<tr><td colspan=\"30\" align=\"center\">Belum Ada Data.</td></tr>";
-					$('#tb_list_kckhusus tbody').append(content_data);
-				}
-			}
-		}
-	);
-}
+// 					var content_data = "<tr><td colspan=\"30\" align=\"center\">Belum Ada Data.</td></tr>";
+// 					$('#tb_list_kckhusus tbody').append(content_data);
+// 				}
+// 			}
+// 		}
+// 	);
+// }
+// function delDetailkecakapan(id){
+	
+// 		$('#row'+id).remove();
+// 	}
+//#endregion kecakapan khusus
 
 function ONprosses(){
 
@@ -3150,11 +3199,6 @@ function edit(no_registrasi){
 	});
 	
 
-}
-
-function delDetailkecakapan(id){
-
-	$('#row'+id).remove();
 }
 
 function AddTOSantri(){

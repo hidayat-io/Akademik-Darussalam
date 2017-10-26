@@ -1139,7 +1139,9 @@ class Pendaftaran extends IO_Controller
 
 				'name' => $filename
 			);
-
+// 			$response = "tes";
+// var_dump($response);
+// exit();
 			echo json_encode($response);
 		}
     }
