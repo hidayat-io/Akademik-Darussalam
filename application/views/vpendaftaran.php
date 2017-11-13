@@ -36,35 +36,36 @@
                     </button>
                 </div>
         </div>
-        <input type="hidden" name="hid_param" id="hid_param" />
+        <input type="text" name="hid_param" id="hid_param" class="hidden" />
+        <input type="text" name="hid_kategori_santri" id="hid_kategori_santri" class="hidden" value="<?php echo $kategori_santri;?>"/>
         <div class="portlet-body">
             <table class="table table-striped table-bordered table-hover" id="tb_list">
                 <thead>
                     <tr>
-                        <th style="text-align:center">No Registrasi</th>
-                        <th style="text-align:center">Tahun Masuk</th>
-                        <th style="text-align:center">Nama Lengkap</th>
-                        <th style="text-align:center">Nama Arab</th>
-                        <th style="text-align:center">Nama Panggilan</th>
-                        <th style="text-align:center">Uang Jajan Perbulan</th>
-                        <th style="text-align:center">No KK</th>
-                        <th style="text-align:center">NIK</th>
-                        <th style="text-align:center">Tempat Lahir</th>
-                        <th style="text-align:center">Tanggal Lahir</th>
-                        <th style="text-align:center">Action</th>
+                        <th>No Registrasi</th>
+                        <th>Tahun Masuk</th>
+                        <th>Nama Lengkap</th>
+                        <th>Nama Arab</th>
+                        <th>Nama Panggilan</th>
+                        <th>Uang Jajan Perbulan</th>
+                        <th>No KK</th>
+                        <th>NIK</th>
+                        <th>Tempat Lahir</th>
+                        <th>Tanggal Lahir</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                    <td colspan="11" align="center">
-                        Tidak ada data ditemukan.
-                    </td>
-                </tr>
+                        <td colspan="10" align="center">
+                            Tidak ada data ditemukan.
+                        </td>
+                    </tr>
                 </tbody>
-                <tfoot>
+                <!-- <tfoot>
                     <tr>
                     </tr>
-                </tfoot>
+                </tfoot> -->
             </table>
         </div>
         </div>
@@ -93,13 +94,13 @@
                                         <a href="#tab_santri" data-toggle="tab"><i class="fa fa-user"></i>&nbsp;Data Santri</a>
                                     </li>
                                     <li>
-                                        <a href="#tab_pembiayaan" data-toggle="tab"><i class="fa fa-university"></i>&nbsp;Data Pembiayaan</a>
+                                        <a href="#tab_pembiayaan" <?php if($kategori_santri != 'TMI'){echo 'class="hidden"';} ?> data-toggle="tab"><i class="fa fa-university"></i>&nbsp;Data Pembiayaan</a>
                                     </li>
                                     <li>
-                                        <a href="#tab_sekolah" data-toggle="tab"><i class="fa fa-child"></i>&nbsp;Data Sekolah (AITAM)</a>
+                                        <a href="#tab_sekolah"  <?php if($kategori_santri == 'TMI'){echo 'class="hidden"';} ?> data-toggle="tab"><i class="fa fa-child"></i>&nbsp;Data Sekolah (AITAM)</a>
                                     </li>
                                     <li>
-                                        <a href="#tab_fisik" data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Fisik</a>
+                                        <a href="#tab_fisik" <?php if($kategori_santri != 'TMI'){echo 'class="hidden"';} ?> data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Fisik</a>
                                     </li>
                                     <li>
                                         <a href="#tab_keluarga" data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Keluarga</a>
@@ -123,7 +124,7 @@
                                                         <i class="fa fa-gift"></i>DATA SANTRI
                                                     </div>
                                                     <div class="tools">
-                                                        <a href="javascript:;" class="collapse"><i class="fa fa-unsorted"></i> </a>
+                                                        <a href="javascript:;" class="collapse"></a>
                                                     </div>
                                                 </div>
                                                 <div class="portlet-body form">
@@ -160,14 +161,25 @@
                                                             <div class="m-grid-row">
                                                                 <div class="m-grid-col m-grid-col-middle m-grid-col-center col-md-1">
                                                                     <div class="form-group"><label for="form_control_1">Kategori</label>
-                                                                        <select class="form-control" name="kategori_santri" id="kategori_santri" required onchange="cek_kt()">
+                                                                        <select class="form-control" name="kategori_santri" id="kategori_santri"  required >
+                                                                                    <?php
+                                                                                    if($kategori_santri =="TMI")
+                                                                                    {
+                                                                                        $hidden_tmi     ='';
+                                                                                        $hidden_aitam   ='hidden';
+                                                                                    }
+                                                                                    else {
+                                                                                        $hidden_tmi     ='hidden';
+                                                                                        $hidden_aitam   ='';
+                                                                                    }
+                                                                                    ?>
                                                                                     <option value=""></option>
-                                                                                    <option value="TMI">TMI</option>
-                                                                                    <option value="AITAM_ISLAH">AITAM_ISLAH</option>
-                                                                                    <option value="AITAM_JAMIAH">AITAM_JAMIAH</option>
+                                                                                    <option value="TMI" class="<?php echo $hidden_tmi?>">TMI</option>
+                                                                                    <option value="AITAM_ISLAH" class="<?php echo $hidden_aitam?>">AITAM_ISLAH</option>
+                                                                                    <option value="AITAM_JAMIAH" class="<?php echo $hidden_aitam?>">AITAM_JAMIAH</option>
                                                                                 </select>
                                                                     </div>
-                                                                    <input type="hidden" name="kategori_update" id="kategori_update" />
+                                                                    <input type="text" name="kategori_update" id="kategori_update" class="hidden"/>
                                                                 </div>
                                                                 <div class="m-grid-col m-grid-col-middle m-grid-col-center col-md-1">
                                                                     <div class="form-group"><label for="no_registrasi">No. Registrasi</label>
@@ -186,9 +198,10 @@
                                                                 <div class="m-grid-col m-grid-col-middle m-grid-col-center col-md-1">
                                                                     <div class="form-group"><label for="form_control_1">Tahun Masuk</label>
                                                                         <div class="input-icon right">
-                                                                            <i class="fa"></i><input type class="form-control datepicker" readonly name="thn_masuk" id="thn_masuk" required>
+                                                                            <i class="fa"></i><input type class="form-control datepicker"  data-date-format="yyyy" name="thn_masuk" id="thn_masuk"  required>
                                                                         </div>
                                                                     </div>
+                                                                    
                                                                 </div>
                                                                 <div class="m-grid-col m-grid-col-middle m-grid-col-center col-md-2">
                                                                     <div class="form-group">
@@ -271,7 +284,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="m-grid-col m-grid-col-middle m-grid-col-center col-md-2">
+                                                                <div class="m-grid-col m-grid-col-middle m-grid-col-center col-md-2  <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
                                                                     <div class="form-group">
                                                                         <label for="form_control_1">Kelas
                                                                             <span class="glyphicon glyphicon-search"
@@ -328,7 +341,7 @@
                                                                               NISN LOKAL
                                                                           </span>
                                                                               <div class="input-icon right">
-                                                                                <i class="fa"></i><input type class="form-control numbers-only" name="nisnlokal" id="nisnlokal" onkeydown="OtomatisKapital(this)" required>
+                                                                                <i class="fa"></i><input type class="form-control numbers-only" name="nisnlokal" id="nisnlokal" readonly="" >
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -354,7 +367,7 @@
                                                                 </div>
                                                             </div>
                                                             <!--span-->
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
                                                                 <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
                                                                     <div class="col-md-9">
@@ -373,7 +386,7 @@
                                                         <!--end inputbox-->
                                                         <!--inputbbox-->
                                                         <div class="row">
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-6  <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
                                                                 <div class="form-group">
                                                                   <label class="control-label col-md-3"></label>
                                                                       <div class="col-md-9">
@@ -408,7 +421,7 @@
                                                         <!--end inputbox-->
                                                             <!--inputbbox-->
                                                         <div class="row">
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
                                                                 <div class="form-group">
                                                                   <label class="control-label col-md-3"></label>
                                                                       <div class="col-md-9">
@@ -443,7 +456,7 @@
                                                         <!--end inputbox-->
                                                         <!--inputbbox-->
                                                         <div class="row">
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
                                                                 <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
                                                                     <div class="col-md-9">
@@ -487,7 +500,7 @@
                                                                             Tgl. Lahir
                                                                         </span>
                                                                             <div class="input-icon right">
-                                                                                <i class="fa"></i><input type class="form-control datepicker" name="tgl_lahir" id="tgl_lahir" required>
+                                                                                <i class="fa"></i><input type class="form-control datepicker" data-date-format="dd-mm-yyyy"  name="tgl_lahir" id="tgl_lahir" required>
                                                                             </div>
                                                                             <span class="input-group-btn">
                                                                                 <button class="btn default" type="button">
@@ -499,7 +512,7 @@
                                                                 </div>
                                                             </div>
                                                             <!--span-->
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
                                                                 <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
                                                                     <div class="col-md-9">
@@ -729,7 +742,7 @@
                                                         <!--end inputbox-->
                                                         <!--inputbbox-->
                                                         <div class="row">
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
                                                                 <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
                                                                     <div class="col-md-9">
@@ -745,7 +758,7 @@
                                                                 </div>
                                                             </div>
                                                             <!--span-->
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
                                                                 <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
                                                                     <div class="col-md-9">
@@ -764,7 +777,7 @@
                                                         <!--end inputbox-->
                                                         <!--inputbbox-->
                                                         <div class="row">
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
                                                                 <div class="form-group">
                                                                   <label class="control-label col-md-3"></label>
                                                                       <div class="col-md-9">
@@ -789,13 +802,13 @@
                                         </div>
                                     <!--kotak data santri selesai-->
                                     <!--kotak data Pembiayaan mulai-->
-                                        <div class="tab-pane" id="tab_pembiayaan">
+                                        <div class="tab-pane  <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>" id="tab_pembiayaan">
                                             <div class="portlet box green-jungle">
                                                 <div class="portlet-title">
                                                     <div class="caption">
                                                         <i class="fa fa-gift"></i>DATA PEMBIAYAAN</div>
                                                     <div class="tools">
-                                                        <a href="javascript:;" class="collapse"><i class="fa fa-unsorted"></i> </a>
+                                                        <a href="javascript:;" class="collapse"></a>
                                                     </div>
                                                 </div>
                                                 <div class="portlet-body form">
@@ -885,13 +898,13 @@
                                         </div>
                                     <!--kotak data pembiayaan selesai-->
                                     <!--kotak data sekolah mulai-->
-                                        <div class="tab-pane" id="tab_sekolah">
+                                        <div class="tab-pane  <?php if($kategori_santri == 'TMI'){echo 'hidden';} ?>" id="tab_sekolah">
                                             <div class="portlet box green-jungle" id="kotak_sekolah">
                                                 <div class="portlet-title">
                                                     <div class="caption">
                                                         <i class="fa fa-gift"></i> DATA SEKOLAH (AITAM)</div>
                                                     <div class="tools">
-                                                        <a href="javascript:;" class="collapse"><i class="fa fa-unsorted"></i> </a>
+                                                        <a href="javascript:;" class="collapse"></a>
                                                     </div>
                                                 </div>
                                                 <div class="portlet-body form">
@@ -962,13 +975,13 @@
                                         </div>
                                     <!--kotak data sekolah end-->
                                     <!--kotak data fisik mulai-->
-                                        <div class="tab-pane" id="tab_fisik">
+                                        <div class="tab-pane  <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>" id="tab_fisik">
                                             <div class="portlet box green-jungle">
                                                 <div class="portlet-title">
                                                     <div class="caption">
                                                         <i class="fa fa-gift"></i> DATA FISIK</div>
                                                     <div class="tools">
-                                                        <a href="javascript:;" class="collapse"><i class="fa fa-unsorted"></i> </a>
+                                                        <a href="javascript:;" class="collapse"></a>
                                                     </div>
                                                 </div>
                                                 <div class="portlet-body form">
@@ -1246,7 +1259,7 @@
                                                                             Dari Tahun
                                                                             </span>
                                                                                 <div class="input-icon right">
-                                                                                    <i class="fa"></i><input type class="form-control datepicker" readonly name="thn_fisik" id="thn_fisik">
+                                                                                    <i class="fa"></i><input type class="form-control datepicker" data-date-format="yyyy" readonly name="thn_fisik" id="thn_fisik">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1384,7 +1397,7 @@
                                                     <div class="caption">
                                                         <i class="fa fa-gift"></i> DATA KELUARGA </div>
                                                     <div class="tools">
-                                                        <a href="javascript:;" class="collapse"><i class="fa fa-unsorted"></i></a>
+                                                        <a href="javascript:;" class="collapse"></a>
                                                     </div>
                                                 </div>
                                                 <div class="portlet-body form">
@@ -1412,7 +1425,7 @@
                                                                                         <th> Bin/Binti </th>
                                                                                         <th> Jenis Kelamin </th>
                                                                                         <th> Status Pernikahan </th>
-                                                                                        <th> Tgl. Wafat </th>
+                                                                                        <!-- <th> Tgl. Wafat </th>
                                                                                         <th> Umur </th>
                                                                                         <th> Hari </th>
                                                                                         <th> Sebab Wafat </th>
@@ -1422,10 +1435,10 @@
                                                                                         <th> Keahlian </th>
                                                                                         <th> Status Rumah </th>
                                                                                         <th> Kondisi Rumah </th>
-                                                                                        <th> Jumlah Yang diasuh </th>
+                                                                                        <th> Jumlah Yang diasuh </th> -->
                                                                                         <th> Pekerjaan </th>
                                                                                         <th> Pendidikan Terakhir </th>
-                                                                                        <th> Agama </th>
+                                                                                        <!-- <th> Agama </th>
                                                                                         <th> Suku </th>
                                                                                         <th> Kewarganegaraan </th>
                                                                                         <th> Ormas </th>
@@ -1433,10 +1446,10 @@
                                                                                         <th> Kedudukan diMasyarakat </th>
                                                                                         <th> Tahun Lulus </th>
                                                                                         <th> No. Stambuk </th>
-                                                                                        <th> Tempat Lahir </th>
+                                                                                        <th> Tempat Lahir </th> -->
                                                                                         <th> Tgl. Lahir </th>
                                                                                         <th> Hubungan Keluarga </th>
-                                                                                        <th> Keterangan </th>
+                                                                                        <!-- <th> Keterangan </th> -->
                                                                                         <th> Ktp </th>
                                                                                     </tr>
                                                                                 </thead>
@@ -1468,7 +1481,7 @@
                                                     <div class="caption">
                                                         <i class="fa fa-gift"></i> DATA PENYAKIT </div>
                                                     <div class="tools">
-                                                        <a href="javascript:;" class="collapse"><i class="fa fa-unsorted"></i></a>
+                                                        <a href="javascript:;" class="collapse"></a>
                                                     </div>
                                                 </div>
                                                 <div class="portlet-body form">
@@ -1479,8 +1492,8 @@
                                                                 <i class="fa fa-plus"> </i> Tambah List Penyakit
                                                             </button></h3>
                                                         <!--row begin-->
-                                                            <input type="hidden" id="hid_jumlah_item_penyakit" value="0" />
-                                                            <input type="hidden" name="hid_table_item_penyakit" id="hid_table_item_penyakit" />
+                                                            <input type="text" id="hid_jumlah_item_penyakit" value="0" class="hidden"/>
+                                                            <input type="text" name="hid_table_item_penyakit" id="hid_table_item_penyakit" class="hidden"/>
                                                                 <div class="portlet-body table-both-scroll">
                                                                 <div class="table-responsive">
                                                                 <table id="tb_list_penyakit" class="table table-striped table-bordered table-hover">
@@ -1522,7 +1535,7 @@
                                                     <div class="caption">
                                                         <i class="fa fa-gift"></i> DATA KECAKAPAN KHUSUS </div>
                                                     <div class="tools">
-                                                        <a href="javascript:;" class="collapse"><i class="fa fa-unsorted"></i></a>
+                                                        <a href="javascript:;" class="collapse"></a>
                                                     </div>
                                                 </div>
                                                 <div class="portlet-body form">
@@ -1540,7 +1553,7 @@
                                                                             Bidang Studi
                                                                             </span>
                                                                                 <div class="input-icon right">
-                                                                                    <i class="fa"></i><input type class="form-control" name="bid_studi" id="bid_studi" onkeydown="OtomatisKapital(this)" maxlength="50" required>
+                                                                                    <i class="fa"></i><input type class="form-control" name="bid_studi" id="bid_studi" onkeydown="OtomatisKapital(this)" maxlength="50" >
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1556,7 +1569,7 @@
                                                                             Olah Raga
                                                                             </span>
                                                                                 <div class="input-icon right">
-                                                                                    <i class="fa"></i><input type class="form-control" name="olahraga" id="olahraga" onkeydown="OtomatisKapital(this)" maxlength="50"  required>
+                                                                                    <i class="fa"></i><input type class="form-control" name="olahraga" id="olahraga" onkeydown="OtomatisKapital(this)" maxlength="50"  >
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1575,7 +1588,7 @@
                                                                             Kesenian
                                                                             </span>
                                                                                 <div class="input-icon right">
-                                                                                    <i class="fa"></i><input type class="form-control" name="kesenian" id="kesenian" onkeydown="OtomatisKapital(this)" maxlength="50"  required>
+                                                                                    <i class="fa"></i><input type class="form-control" name="kesenian" id="kesenian" onkeydown="OtomatisKapital(this)" maxlength="50"  >
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1590,7 +1603,7 @@
                                                                             Keterampilan
                                                                             </span>
                                                                                 <div class="input-icon right">
-                                                                                    <i class="fa"></i><input type class="form-control" name="keterampilan" id="keterampilan" onkeydown="OtomatisKapital(this)" maxlength="50"  required>
+                                                                                    <i class="fa"></i><input type class="form-control" name="keterampilan" id="keterampilan" onkeydown="OtomatisKapital(this)" maxlength="50"  >
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1605,7 +1618,7 @@
                                                                             Lain-Lain
                                                                             </span>
                                                                                 <div class="input-icon right">
-                                                                                    <i class="fa"></i><input type class="form-control" name="lain_lain" id="lain_lain" onkeydown="OtomatisKapital(this)" maxlength="50"  required>
+                                                                                    <i class="fa"></i><input type class="form-control" name="lain_lain" id="lain_lain" onkeydown="OtomatisKapital(this)" maxlength="50"  >
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1662,7 +1675,7 @@
                                                   <div class="caption">
                                                       <i class="fa fa-gift"></i> DATA LAMPIRAN </div>
                                                   <div class="tools">
-                                                      <a href="javascript:;" class="collapse"><i class="fa fa-unsorted"></i></a>
+                                                      <a href="javascript:;" class="collapse"></i></a>
                                                   </div>
                                               </div>
                                               <div class="portlet-body form">
@@ -1898,6 +1911,7 @@
             <div class="portlet-body">
                     <!-- BEGIN FORM-->
                 <form action="#" id="add_keluarga_santri">
+                <input class="hidden" name="hid_kdkeluarga" id="hid_kdkeluarga">
                     <div class="form-body">
                             <!--inputbbox-->
                         <div class="row">
@@ -1951,7 +1965,7 @@
                                             <span class="input-group-addon">
                                                 Bin/Binti
                                             </span>
-                                    <i class="fa"></i><input type class="form-control" name="binbinti_keluarga" id="binbinti_keluarga" onkeydown="OtomatisKapital(this)" required></div>
+                                    <i class="fa"></i><input type class="form-control" name="binbinti_keluarga" id="binbinti_keluarga" onkeydown="OtomatisKapital(this)" ></div>
                                 </div>
                             </div>
                         </div>
@@ -1999,7 +2013,7 @@
                                             <span class="input-group-addon">
                                                 Tgl. Wafat
                                             </span>
-                                    <i class="fa"></i><input type class="form-control datepicker" readonly="true" name="tgl_wafat_keluarga" id="tgl_wafat_keluarga" required><span class="input-group-btn">
+                                    <i class="fa"></i><input type class="form-control datepicker" data-date-format="dd-mm-yyyy" readonly="true" name="tgl_wafat_keluarga" id="tgl_wafat_keluarga" required><span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
                                         </button>
@@ -2108,8 +2122,7 @@
                                         <option value=""></option>
                                         <option value="KONTRAK">KONTRAK</option>
                                         <option value="MILIK SENDIRI">MILIK SENDIRI</option>
-                                    </select></div>
-                                    <span class="help-block">Status Pernikahan</span>
+                                    </select></div>                                   
                                 </div>
                             </div>
                                 <!--span-->
@@ -2126,7 +2139,6 @@
                                         <option value="SEDERHANA">SEDERHANA</option>
                                         <option value="SANGAT SEDERHANA">SANGAT SEDERHANA</option>
                                     </select></div>
-                                    <span class="help-block">Status Pernikahan</span>
                                 </div>
                             </div>
                         </div>
@@ -2259,7 +2271,7 @@
                                             <span class="input-group-addon">
                                             Tahun Lulus
                                             </span>
-                                                <i class="fa"></i><input type class="form-control datepicker" data-date-format="yyyy" readonly="true" name="tahun_lulus_keluarga" id="tahun_lulus_keluarga" required ><span class="input-group-btn">
+                                                <i class="fa"></i><input type class="form-control datepicker" data-date-format="yyyy" readonly="true" name="tahun_lulus_keluarga" id="tahun_lulus_keluarga" ><span class="input-group-btn">
                                                                 <button class="btn default" type="button">
                                                                     <i class="fa fa-calendar"></i>
                                                                 </button>
@@ -2274,7 +2286,7 @@
                                             <span class="input-group-addon">
                                             No. Stambuk
                                             </span>
-                                                <i class="fa"></i><input type class="form-control numbers-only" name="nostambuk_keluarga" id="nostambuk_keluarga" required></div>
+                                                <i class="fa"></i><input type class="form-control numbers-only" name="nostambuk_keluarga" id="nostambuk_keluarga" ></div>
                                 </div>
                             </div>
                         </div>
@@ -2294,15 +2306,16 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                            Tgl. Lahir
-                                            </span>
-                                                <i class="fa"></i><input type class="form-control datepicker" readonly="true" name="tgl_lahir_keluarga" id="tgl_lahir_keluarga" required><span class="input-group-btn">
-                                                                <button class="btn default" type="button">
-                                                                    <i class="fa fa-calendar"></i>
-                                                                </button>
-                                                            </span></div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                        Tgl. Lahir
+                                        </span>
+                                            <i class="fa"></i><input type class="form-control datepicker" readonly="true" data-date-format="dd-mm-yyyy" name="tgl_lahir_keluarga" id="tgl_lahir_keluarga" required><span class="input-group-btn">
+                                            <button class="btn default" type="button">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2326,7 +2339,7 @@
                                             <span class="input-group-addon">
                                             keterangan
                                             </span>
-                                                <i class="fa"></i><input type class="form-control" name="keterangan_keluarga" id="keterangan_keluarga" onkeydown="OtomatisKapital(this)" required></div>
+                                                <i class="fa"></i><input type class="form-control" name="keterangan_keluarga" id="keterangan_keluarga" onkeydown="OtomatisKapital(this)" ></div>
                                 </div>
                             </div>
                         </div>
@@ -2339,7 +2352,8 @@
                                         <span class="input-group-addon">
                                         KTP
                                         </span>
-                                        <input type="file" class="form-control" name="ktp_keluarga" id="ktp_keluarga" required></div>
+                                        <input type="file" class="form-control" name="ktp_keluarga" id="ktp_keluarga" ></div>
+                                        <input type="text" class="hidden" name="hid_ktp_keluarga" id="hid_ktp_keluarga" ></div>
                                     </div>
                                 </div>
                             </div>
@@ -2347,7 +2361,7 @@
                             <!--end inputbox-->
                         <div class="modal-footer">
                             <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn green" onclick="TambahKeluarga()">Tambah</button>
+                            <button type="button" class="btn green-jungle" id="btn_keluarga" onclick="TambahKeluarga()">Tambah</button>
                         </div>
                     </div>
                 </form>
@@ -2390,39 +2404,49 @@
                                             <form action="#" id="add_penyakit">
                                                 <!--inputbox-->
                                                     <!--span-->
+                                                        <input class="hidden" name="hid_kdpenyakit" id="hid_kdpenyakit">
                                                         <div class="form-group">
                                                             <label class="control-label"></label>
-                                                                <div class="input-group">
+                                                            <div class="input-group">
                                                                 <span class="input-group-addon">
                                                                     Nama Penyakit
                                                                 </span>
-                                                                <i class="fa"></i><input type class="form-control" name="nama_penyakit" id="nama_penyakit" onkeydown="OtomatisKapital(this)" required minlength="5"></div>
+                                                                <div class="input-icon right">
+                                                                <i class="fa"></i><input type class="form-control" name="nama_penyakit" id="nama_penyakit" onkeydown="OtomatisKapital(this)" required minlength="5">
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <!--span-->
                                                         <div class="form-group">
                                                             <label class="control-label"></label>
                                                             <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                Tahun
-                                                            </span>
-                                                            <i class="fa"></i><input type class="form-control datepicker" data-date-format="yyyy" name="thn_penyakit" id="thn_penyakit" required readonly="true"><span class="input-group-btn">
-                                                                <button class="btn default" type="button">
-                                                                    <i class="fa fa-calendar"></i>
-                                                                </button>
-                                                            </span></div>
+                                                                <span class="input-group-addon">
+                                                                    Tahun
+                                                                </span>
+                                                                <div class="input-icon right">
+                                                                <i class="fa"></i><input type class="form-control input-small datepicker" data-date-format="yyyy" name="thn_penyakit" id="thn_penyakit" required readonly="true"><span class="input-group-btn">
+                                                                    <button class="btn default" type="button">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </button>
+                                                                </span>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <!--span-->
                                                         <div class="form-group">
                                                             <label class="control-label"></label>
                                                             <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                Kategori Penyakit
-                                                            </span>
-                                                            <select class="form-control" name="kategori_penyakit" id="kategori_penyakit" required>
-                                                                <option value=""></option>
-                                                                <option value="KRONIS">KRONIS</option>
-                                                                <option value="TIDAK KRONIS">TIDAK KRONIS</option>
-                                                            </select></div>
+                                                                <span class="input-group-addon">
+                                                                    Kategori Penyakit
+                                                                </span>
+                                                                <div class="input-icon right">
+                                                                <i class="fa"></i><select class="form-control input-small" name="kategori_penyakit" id="kategori_penyakit" required>
+                                                                    <option value=""></option>
+                                                                    <option value="KRONIS">KRONIS</option>
+                                                                    <option value="TIDAK KRONIS">TIDAK KRONIS</option>
+                                                                </select>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <!--span-->
                                                         <div class="form-group">
@@ -2431,11 +2455,14 @@
                                                                 <span class="input-group-addon">
                                                                     Tipe Penyakit
                                                                 </span>
-                                                                <select class="form-control" name="tipe_penyakit" id="tipe_penyakit" required>
+                                                                <div class="input-icon right">
+                                                                <i class="fa"></i><select class="form-control" name="tipe_penyakit" id="tipe_penyakit" required>
                                                                     <option value=""></option>
                                                                     <option value="MENULAR">MENULAR</option>
                                                                     <option value="TIDAK MENULAR">TIDAK MENULAR</option>
-                                                                </select></div>
+                                                                </select>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <!--span-->
                                                         <div class="form-group">
@@ -2445,11 +2472,12 @@
                                                                 Lampiran Bukti Penyakit
                                                             </span>
                                                             <input type="file" class="form-control" name="lamp_bukti" id="lamp_bukti" ></div>
+                                                            <input type="text" class="hidden" name="hid_lamp_bukti" id="hid_lamp_bukti" ></div>
                                                         </div>
                                                 <!--end inputbox-->
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn green" onclick="TambahPenyakit()">Tambah</button>
+                                                    <button type="button" class="btn green-jungle" id="btn_penyakit" onclick="TambahPenyakit()">Tambah</button>
                                                 </div>
                                             </form>
                                             <!-- END FORM-->
@@ -2465,7 +2493,7 @@
         <!-- /.modal-dialog -->
     </div>
 <!-- end of modal penyakit-->
-<!-- modal add KECAKAPAN KHUSUS -->
+<!-- modal add KECAKAPAN KHUSUS AKAN DIHAPUS!!!! -->
     <div class="modal fade draggable-modal" id="Modal_add_KecakapanKhusus" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">

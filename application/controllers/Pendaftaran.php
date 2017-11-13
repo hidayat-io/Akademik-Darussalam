@@ -55,9 +55,56 @@ class Pendaftaran extends IO_Controller
 					=$b->kode_kelas." | ".$b->tingkat." | ".$b->nama." | ".$b->tipe_kelas;
 			}
 			
-
-		$vdata['title'] = 'DATA CALON SANTRI TMI & AITAM';
+		$vdata['kategori_santri']		= 'TMI';
+		$vdata['title'] = 'DATA CALON SANTRI TMI';
 	    $data['content'] = $this->load->view('vpendaftaran',$vdata,TRUE);
+	    $this->load->view('main',$data);
+	}
+
+	function aitam(){
+		//get ID Gedung
+			$hide_id_gedung = $this->model->get_gedung()->result();
+
+			$vdata['kode_gedung'][NULL] = '-';
+			foreach ($hide_id_gedung as $b) {
+
+				$vdata['kode_gedung'][$b->kode_gedung."#".$b->nama]
+					=$b->kode_gedung." | ".$b->nama;
+			}
+
+			//get ID Kamar
+			$hide_id_Kamar= $this->model->get_kamar()->result();
+
+			$vdata['kode_kamar'][NULL] = '-';
+			foreach ($hide_id_Kamar as $b) {
+
+				$vdata['kode_kamar'][$b->kode_kamar."#".$b->nama]
+					=$b->kode_kamar." | ".$b->nama;
+			}
+
+			//get ID Bagian
+			$hide_id_Bagian= $this->model->get_bagian()->result();
+
+			$vdata['kode_Bagian'][NULL] = '-';
+			foreach ($hide_id_Bagian as $b) {
+
+				$vdata['kode_Bagian'][$b->kode_bagian."#".$b->nama]
+					=$b->kode_bagian." | ".$b->nama;
+			}
+
+			//get ID Kelas
+			$hide_id_Kelas= $this->model->get_kelas()->result();
+
+			$vdata['kode_kelas'][NULL] = '-';
+			foreach ($hide_id_Kelas as $b) {
+
+				$vdata['kode_kelas'][$b->kode_kelas."#".$b->tingkat."#".$b->nama."#".$b->tipe_kelas]
+					=$b->kode_kelas." | ".$b->tingkat." | ".$b->nama." | ".$b->tipe_kelas;
+			}
+			
+		$vdata['kategori_santri']		= 'AITAM';
+		$vdata['title'] 				= 'DATA CALON AITAM';
+	    $data['content'] 				= $this->load->view('vpendaftaran',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
 
@@ -74,7 +121,7 @@ class Pendaftaran extends IO_Controller
 		return $string_param;
 	}
 
-	function load_grid()
+	function load_grid($kategori_santri)
 	{
 		$iparam 		= json_decode($_REQUEST['param']);
 		$string_param 	= $this->build_param($iparam);
@@ -86,7 +133,7 @@ class Pendaftaran extends IO_Controller
 		// exit();
 
 
-		$data 				= $this->model->get_list_data($string_param,$sort_by,$sort_type);
+		$data 				= $this->model->get_list_data($string_param,$sort_by,$sort_type,$kategori_santri);
 		$iTotalRecords  	= count($data);
 		$iDisplayLength 	= intval($_REQUEST['length']);
 		$iDisplayLength 	= $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
@@ -101,15 +148,16 @@ class Pendaftaran extends IO_Controller
 		$fdate = 'd-m-Y';
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			$act = '<a href="#" class="btn btn-icon-only green" title="LIHAT DATA" onclick="view(\''.$data[$i]->no_registrasi.'\')">
+			// $act = '<a class="btn blue btn-xs" title="UBAH DATA" onclick="edit(\''.$data[$i]->no_registrasi.'\')">
+			// 			<i class="fa fa-edit"></i>
+			// 		<a class="btn red btn-xs" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->no_registrasi.'\')">
+			// 			<i class="fa fa-trash"></i>';
+			$act = '<a class="btn green btn-xs" title="LIHAT DATA" onclick="view(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-file-o"></i>
-					</a>
-					<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->no_registrasi.'\')">
+					<a class="btn blue btn-xs" title="UBAH DATA" onclick="edit(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-edit"></i>
-					</a>
-					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->no_registrasi.'\')">
-						<i class="fa fa-trash"></i>
-					</a>';
+					<a class="btn red btn-xs" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->no_registrasi.'\')">
+						<i class="fa fa-trash"></i>';
 					
 			$records["data"][] = array(
 
@@ -291,8 +339,8 @@ class Pendaftaran extends IO_Controller
 		$kategori_update  		= $this->input->post('kategori_update');
 		$no_registrasi  		= $this->input->post('no_registrasi');
 		$no_stambuk  			= $this->input->post('no_stambuk');
-			$tglm					= $this->input->post('thn_masuk');
-		$thn_masuk 				= io_return_date('d-m-Y',$tglm);
+		$thn_masuk					= $this->input->post('thn_masuk');
+		// $thn_masuk 				= io_return_date('d-m-Y',$tglm);
 		$rayon  				= $this->input->post('rayon');
 		$kamar  				= $this->input->post('kamar');
 		$bagian  				= $this->input->post('bagian');
@@ -349,8 +397,8 @@ class Pendaftaran extends IO_Controller
 		$kecelakaan  			= $this->input->post('kecelakaan');
 		$akibat  				= $this->input->post('akibat');
 		$alergi  				= $this->input->post('alergi');
-			$tglf					= $this->input->post('thn_fisik');
-		$thn_fisik 				= io_return_date('d-m-Y',$tglf);
+		$thn_fisik					= $this->input->post('thn_fisik');
+		// $thn_fisik 				= io_return_date('d-m-Y',$tglf);
 		$kelainan_fisik  		= $this->input->post('kelainan_fisik');
 		$item_keluarga 			= $this->input->post('hid_table_item_Keluarga');
 		$item_penyakit 			= $this->input->post('hid_table_item_penyakit');
@@ -414,6 +462,7 @@ class Pendaftaran extends IO_Controller
 			
 			//update no_registrasi ke no baru
 			$data_santri['no_registrasi'] = $no_registrasi;
+			
 		// save data santri
          	$this->model->simpan_data_santri($data_santri);
 
@@ -507,10 +556,10 @@ class Pendaftaran extends IO_Controller
 							$tgl_wafat 				= io_return_date('d-m-Y',$tglw);
 							$detail_keluarga['tgl_wafat'] = $tgl_wafat;
 							// rbuah formattahun lulus keluarga
-							$tgll					= $idetail[25];
-							$tgl_l 					= date_parse_from_format("d/m/Y", $tgll);
-							$thn_lulus 				= $tgl_l['year'].'-'.'01'.'-'.'01';
-							$detail_keluarga['thn_lulus'] = $thn_lulus;
+							// $tgll					= $idetail[25];
+							// $tgl_l 					= date_parse_from_format("d/m/Y", $tgll);
+							// $thn_lulus 				= $tgl_l['year'].'-'.'01'.'-'.'01';
+							// $detail_keluarga['thn_lulus'] = $thn_lulus;
 							// rbuah format tgl lahri keluarga
 							$tglkel					= $idetail[28];
 							$tgl_lahir_keluarga 				= io_return_date('d-m-Y',$tglkel);
@@ -547,11 +596,14 @@ class Pendaftaran extends IO_Controller
 								'lamp_bukti'			=> $idetail[4]
 
 							);
+							
 							// rbuah thun penyakit
-							$tglp					= $idetail[1];
-							$tgl_p 					= date_parse_from_format("d/m/Y", $tglp);
-							$thn_penyakit 				= $tgl_p['year'].'-'.'01'.'-'.'01';
-							$detail_penyakit['thn_penyakit'] = $thn_penyakit;
+							// $tglp						= $idetail[1];
+							// // $tgl_p 						= date_parse_from_format("d/m/Y", $tglp);
+							// $thn_penyakit 				= $tglp.'-'.'01'.'-'.'01';
+							// var_dump($thn_penyakit);
+							// exit();
+							// $detail_penyakit['thn_penyakit'] = $thn_penyakit;
 							//pindahkan filenya
 							if(file_exists ('./assets/images/uploadtemp/'.$detail_penyakit['lamp_bukti'])){
 							rename('./assets/images/uploadtemp/'.$detail_penyakit['lamp_bukti'],'./assets/images/fileupload/lamp_penyakit/'.$detail_penyakit['lamp_bukti']);	
@@ -562,27 +614,24 @@ class Pendaftaran extends IO_Controller
 					}
 				}
 
-		//save khusus
-			
-			$item_kckhusus  = explode(';',$item_kckhusus);
-			foreach ($item_kckhusus as $i) {
-					$idetail = explode('#',$i);
-					if(count($idetail)>1){
+		//save kecakapan khusus
+			$bid_studi  			= $this->input->post('bid_studi');
+			$olahraga  				= $this->input->post('olahraga');
+			$kesenian  				= $this->input->post('kesenian');
+			$keterampilan  			= $this->input->post('keterampilan');
+			$lain_lain  			= $this->input->post('lain_lain');
 
-							$detail_kckhusus = array(
+			$detail_kckhusus = array(
 
-								'no_registrasi' 	=> $no_registrasi,
-								'bid_studi'			=> $idetail[0],
-								'olahraga'			=> $idetail[1],
-								'kesenian'			=> $idetail[2],
-								'keterampilan'		=> $idetail[3],
-								'lain_lain'			=> $idetail[4]
+				'no_registrasi' 	=> $no_registrasi,
+				'bid_studi'			=> $bid_studi,
+				'olahraga'			=> $olahraga,
+				'kesenian'			=> $kesenian,
+				'keterampilan'		=> $keterampilan,
+				'lain_lain'			=> $lain_lain
 
-							);
-							$this->model->simpan_item_kckhusus($detail_kckhusus);
-
-					}
-			}
+			);
+			$this->model->simpan_item_kckhusus($detail_kckhusus);
 		//upload file santri photo
 			$string_name 				= io_random_string(20);
 			$filename 					= $string_name.'.jpg';
@@ -731,11 +780,11 @@ class Pendaftaran extends IO_Controller
         else //update data
 		{		
 			// Prosess update
-			// save data santri
+		// save data santri
 			$data_santri['kategori'] = $kategori_update;
          	$this->model->update_data_santri($no_registrasi,$data_santri);
 
-			//save pembiayaan
+		//save pembiayaan
 				$data_trans_pembiayaan_siswa = array(
 
 					'no_registrasi' 		=> $no_registrasi,
@@ -748,7 +797,7 @@ class Pendaftaran extends IO_Controller
 				
 				$this->model->update_pembiayaan_siswa($no_registrasi,$data_trans_pembiayaan_siswa);
 
-			//save fisik
+		//save fisik
 				$data_ms_fisik_santri = array(
 
 					'no_registrasi' 		=> $no_registrasi,
@@ -776,7 +825,7 @@ class Pendaftaran extends IO_Controller
 				
 				$this->model->update_ms_fisik_santri($no_registrasi,$data_ms_fisik_santri);
 
-			//save keluarga
+		//save keluarga
 			
 				$this->model->delete_item_keluarga($no_registrasi);	//delete semua isi keluarga
 				$item_keluarga  = explode(';',$item_keluarga );
@@ -826,10 +875,10 @@ class Pendaftaran extends IO_Controller
 								$tgl_wafat 				= io_return_date('d-m-Y',$tglw);
 								$detail_keluarga['tgl_wafat'] = $tgl_wafat;
 								// rbuah formattahun lulus keluarga
-								$tgll					= $idetail[25];
-								$tgl_l 					= date_parse_from_format("d/m/Y", $tgll);
-								$thn_lulus 				= $tgl_l['year'].'-'.'01'.'-'.'01';
-								$detail_keluarga['thn_lulus'] = $thn_lulus;
+								// $tgll					= $idetail[25];
+								// $tgl_l 					= date_parse_from_format("d/m/Y", $tgll);
+								// $thn_lulus 				= $tgl_l['year'].'-'.'01'.'-'.'01';
+								// $detail_keluarga['thn_lulus'] = $thn_lulus;
 								// rbuah format tgl lahri keluarga
 								$tglkel					= $idetail[28];
 								$tgl_lahir_keluarga 				= io_return_date('d-m-Y',$tglkel);
@@ -838,70 +887,65 @@ class Pendaftaran extends IO_Controller
 								$detail_keluarga['pendapatan_ibu']	= str_replace(array('.',','), array('',''),$idetail[11]);
 								//pindahkan filenya
 								if(file_exists ('./assets/images/uploadtemp/'.$detail_keluarga->ktp)){
-								rename('./assets/images/uploadtemp/'.$detail_keluarga->ktp,'./assets/images/fileupload/ktp/'.$detail_keluarga->ktp);
+								rename('./assets/images/uploadtemp/'.$detail_keluarga['ktp'],'./assets/images/fileupload/ktp/'.$detail_keluarga['ktp']);
 								}
 							$this->model->simpan_item_keluarga($detail_keluarga); //masukan kembali isi keluarga
 
 						}
 				}
 
-			//save penyakit
+		//save penyakit
 			
 				$this->model->delete_item_penyakit($no_registrasi);
 				$item_penyakit  = explode(';',$item_penyakit );
 				foreach ($item_penyakit   as $i) 
 					{
 						$idetail = explode('#',$i);
-						if(count($idetail)>1){	
+							if(count($idetail)>1)
+							{
 
-								$detail_penyakit = array(
+									$detail_penyakit = array(
 
-									'no_registrasi' 		=> $no_registrasi,
-									'nama_penyakit'			=> $idetail[0],
-									'thn_penyakit'			=> $idetail[1],
-									'kategori_penyakit'		=> $idetail[2],
-									'tipe_penyakit'			=> $idetail[3],
-									'lamp_bukti'			=> $idetail[4]
+										'no_registrasi' 		=> $no_registrasi,
+										'nama_penyakit'			=> $idetail[0],
+										'thn_penyakit'			=> $idetail[1],
+										'kategori_penyakit'		=> $idetail[2],
+										'tipe_penyakit'			=> $idetail[3],
+										'lamp_bukti'			=> $idetail[4]
 
-								);
-								// rbuah thun penyakit
-								$tglp					= $idetail[1];
-								$tgl_p 					= date_parse_from_format("d/m/Y", $tglp);
-								$thn_penyakit 				= $tgl_p['year'].'-'.'01'.'-'.'01';
-								$detail_penyakit['thn_penyakit'] = $thn_penyakit;
-								//pindahkan filenya
-								if(file_exists ('./assets/images/uploadtemp/'.$detail_penyakit->lamp_bukti))
-								{
-									rename('./assets/images/uploadtemp/'.$detail_penyakit->lamp_bukti,'./assets/images/fileupload/lamp_penyakit/'.$detail_penyakit->lamp_bukti);	
-								}
-								$this->model->simpan_item_penyakit($detail_penyakit);
+									);
+									//pindahkan filenya
+									if(file_exists ('./assets/images/uploadtemp/'.$detail_penyakit['lamp_bukti'])){
+									rename('./assets/images/uploadtemp/'.$detail_penyakit['lamp_bukti'],'./assets/images/fileupload/lamp_penyakit/'.$detail_penyakit['lamp_bukti']);	
+									}
+									
+									$this->model->simpan_item_penyakit($detail_penyakit);
 
-						}
+							}
 					}
 
-			//save khusus
+		//save khusus
 				$this->model->delete_item_kckhusus($no_registrasi);
-				$item_kckhusus  = explode(';',$item_kckhusus);
-				foreach ($item_kckhusus as $i)
-					{
-						$idetail = explode('#',$i);
-						if(count($idetail)>1){
+				//save kecakapan khusus
+			$bid_studi  			= $this->input->post('bid_studi');
+			$olahraga  				= $this->input->post('olahraga');
+			$kesenian  				= $this->input->post('kesenian');
+			$keterampilan  			= $this->input->post('keterampilan');
+			$lain_lain  			= $this->input->post('lain_lain');
 
-								$detail_kckhusus = array(
+			$detail_kckhusus = array(
 
-									'no_registrasi' 	=> $no_registrasi,
-									'bid_studi'			=> $idetail[0],
-									'olahraga'			=> $idetail[1],
-									'kesenian'			=> $idetail[2],
-									'keterampilan'		=> $idetail[3],
-									'lain_lain'			=> $idetail[4]
+				'no_registrasi' 	=> $no_registrasi,
+				'bid_studi'			=> $bid_studi,
+				'olahraga'			=> $olahraga,
+				'kesenian'			=> $kesenian,
+				'keterampilan'		=> $keterampilan,
+				'lain_lain'			=> $lain_lain
 
-								);
-								$this->model->simpan_item_kckhusus($detail_kckhusus);
-						}
-					}
-			//upload file
-				//upload file santri photo
+			);
+			$this->model->simpan_item_kckhusus($detail_kckhusus);
+		//upload file
+			//upload file santri photo
 			
 					$string_name 				= io_random_string(20);
 					$filename 					= $string_name.'.jpg';
@@ -920,7 +964,7 @@ class Pendaftaran extends IO_Controller
 						echo $this->upload->display_errors();
 					};
 
-				//upload file ijazah
+			//upload file ijazah
 				if($_FILES['fileUpload_ijazah'] != '')
 				
 				{
@@ -944,7 +988,7 @@ class Pendaftaran extends IO_Controller
 					};
 				}
 				
-				//upload file akte_kelahiran
+			//upload file akte_kelahiran
 				if($_FILES['fileUpload_akelahiran'] != '')
 				
 				{
@@ -968,7 +1012,7 @@ class Pendaftaran extends IO_Controller
 					};
 				}
 
-				//upload file skhun
+			//upload file skhun
 				if($_FILES['fileUpload_kk'] != '')
 				
 				{
@@ -992,7 +1036,7 @@ class Pendaftaran extends IO_Controller
 					};
 				}
 
-				//upload file skhun
+			//upload file skhun
 				if($_FILES['fileUpload_skhun'] != '')
 				
 				{
@@ -1016,7 +1060,7 @@ class Pendaftaran extends IO_Controller
 					};
 				}
 
-				//upload file 
+			//upload file 
 				if($_FILES['fileUpload_transkip'] != '')
 				
 				{
@@ -1040,7 +1084,7 @@ class Pendaftaran extends IO_Controller
 					};
 				}
 
-				//upload file skb
+			//upload file skb
 				if($_FILES['fileUpload_skbb'] != '')
 				
 				{
@@ -1064,7 +1108,7 @@ class Pendaftaran extends IO_Controller
 					};
 				}
 
-				//upload file surat_kesehatan
+			//upload file surat_kesehatan
 				if($_FILES['fileUpload_skes'] != '')
 				
 				{
@@ -1130,7 +1174,7 @@ class Pendaftaran extends IO_Controller
 		$config['upload_path']   	= './assets/images/uploadtemp/';				
 		$config['file_name'] 		= $filename;				
 		$config['allowed_types']    = '*';
-
+		
 		$this->upload->initialize($config);
 
 		if($this->upload->do_upload('lamp_bukti')){
@@ -1139,9 +1183,8 @@ class Pendaftaran extends IO_Controller
 
 				'name' => $filename
 			);
-// 			$response = "tes";
-// var_dump($response);
-// exit();
+			// var_dump($response);
+			// exit();
 			echo json_encode($response);
 		}
     }
@@ -1214,17 +1257,17 @@ class Pendaftaran extends IO_Controller
 				else
 				{
 					$no_terakhir 	= $data_sequence->nomor_terakhir;
-					$sequence_db 	= substr($no_terakhir,-3);
+					$sequence_db 	= substr($no_terakhir,-4);
 					$awalan 		= 'T'.$tahun_hijri.$tahun_masehi;
 					// $didb = substr($no_terakhir,0,6);
 					
 					if(substr($no_terakhir,0,5)==$awalan)
 					{
-						$akhiran 		= str_pad($sequence_db+1, 3, "0", STR_PAD_LEFT);
+						$akhiran 		= str_pad($sequence_db+1, 4, "0", STR_PAD_LEFT);
 						$no_registrasi 	= $awalan.$akhiran;
 						
 					}
-					else if(substr($no_terakhir,0,5)!=$awalan)
+					else if(substr($no_terakhir,0,6)!=$awalan)
 					{
 
 						$no_registrasi = 'T'.$tahun_hijri.$tahun_masehi.'0001';
@@ -1267,6 +1310,7 @@ class Pendaftaran extends IO_Controller
 	{
 		$kategori_santri  		= $this->input->post('kategori_update');
 		$no_registrasi  		= $this->input->post('no_registrasi');
+		$nisnlokal  			= $this->input->post('nisnlokal');
 		$no_stambuk  			= $this->input->post('no_stambuk');
 		$rayon  				= $this->input->post('rayon');
 		$kamar  				= $this->input->post('kamar');
@@ -1279,21 +1323,28 @@ class Pendaftaran extends IO_Controller
 			$data_santri = array(
 				'no_registrasi' 		=> $no_registrasi,
 				'no_stambuk' 			=> $no_stambuk,
+				'nisnlokal' 			=> $nisnlokal,
 				'rayon' 				=> $rayon,
 				'kamar' 				=> $kamar,
 				'bagian' 				=> $bagian,
 				'kel_sekarang' 			=> $kel_sekarang,
 				// 'user' 					=> $user
 			);
-			$new_no_registrasi=$this->new_no_registrasi($kategori_santri);
-			
+
+			$new_no_registrasi=$this->new_no_registrasi($kategori_santri);			
 			//update no_registrasi ke no baru
 			$data_santri['no_registrasi'] = $new_no_registrasi;
 
 			$no_stambuk=$this->no_stambuk($kategori_santri);
 			$data_santri['no_stambuk'] = $no_stambuk;
-			
-		
+
+			//nisn local
+			$data_statistik 				=  $this->model->get_noSTATISTIK();
+				$no_statistik 				= $data_statistik->nomor_statistik;
+				$regis						= substr($new_no_registrasi,1,9);
+				$NISN_LOKAL					= $no_statistik.$regis;					
+				$data_santri['nisnlokal'] 	= $NISN_LOKAL;	
+
 		$this->model->addto_data_santri($no_registrasi,$data_santri);
 		echo "true";
 	}

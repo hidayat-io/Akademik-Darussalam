@@ -10,14 +10,21 @@ class Mpendaftaran extends CI_Model
 		parent::__construct();
 	}
 
-	function get_list_data($param,$sortby=0,$sorttype='desc')
+	function get_list_data($param,$sortby=0,$sorttype='desc',$kategori_santri)
 	{
 		
 
 		$cols = array('no_registrasi','thn_masuk','nama_lengkap','nama_arab','nama_panggilan','uang_jajan_perbulan','no_kk','nik','tempat_lahir','tgl_lahir');
 
-		$sql = "SELECT *
-					FROM ms_santri where no_registrasi not like 'T%' and no_registrasi not like 'A%'";
+		if ($kategori_santri == 'TMI')
+		{
+			$sql = "SELECT * FROM ms_santri where no_registrasi not like 'T%' and no_registrasi not like 'A%' and no_registrasi not like 'CA%'";
+		}
+		else
+		{
+			$sql = "SELECT * FROM ms_santri where no_registrasi not like 'T%' and no_registrasi not like 'A%' and no_registrasi not like 'CT%'";
+		}
+		
 				
 
 		if($param!=null){
@@ -28,6 +35,9 @@ class Mpendaftaran extends CI_Model
 		
 
 		$sql.= " ORDER BY ".$cols[$sortby]." ".$sorttype;
+
+		// echo $sql;
+		// exit();
 		
 		return $this->db->query($sql)->result();
 	}
@@ -105,6 +115,11 @@ class Mpendaftaran extends CI_Model
 
 		$this->db->where('nama_field','noreg_AITAM');
 		return $this->db->get('sequence')->row();
+	}
+
+	function get_noSTATISTIK()
+	{		
+		return $this->db->get('ms_config')->row();
 	}
 
 	function new_update_sequence_AITAM($last_no)
@@ -235,7 +250,7 @@ class Mpendaftaran extends CI_Model
 
 	function query_santri($no_registrasi){
 		$data = array();
-		$data=$this->db->query("SELECT a.kategori, a.no_registrasi, a.no_stambuk, DATE_FORMAT(a.thn_masuk,'%d-%m-%Y') as thn_masuk , a.rayon, a.kamar, a.bagian, 
+		$data=$this->db->query("SELECT a.kategori, a.no_registrasi, a.no_stambuk, a.thn_masuk , a.rayon, a.kamar, a.bagian, 
 		a.kel_sekarang, a.nisn, a.nisnlokal, a.nama_lengkap, a.nama_arab, a.nama_panggilan, a.hobi, 
 		a.uang_jajan_perbulan, a.no_kk, a.nik, a.tempat_lahir, DATE_FORMAT(a.tgl_lahir,'%d-%m-%Y') as tgl_lahir, a.konsulat, 
 		a.nama_sekolah, a.kelas_sekolah, a.alamat_sekolah, a.suku, a.kewarganegaraan, 
@@ -254,7 +269,9 @@ class Mpendaftaran extends CI_Model
 	}
 
 	function query_keluarga($no_registrasi){
-		$this->db->select('*');
+		$this->db->select('kategori,nama,nik,binbinti,jenis_kelamin,status,tgl_wafat,umur,hari,sebab_wafat,status_perkawinan,pendapatan_ibu,sebab_tdk_bekerja,keahlian,status_rumah,kondisi_rumah,jml_asuh,pekerjaan,pend_terakhir,agama,suku,kewarganegaraan,ormas,orpol,kedukmas,thn_lulus,no_stambuk_alumni,tempat_lahir,hub_kel,keterangan,ktp');
+		$this->db->select("DATE_FORMAT(tgl_lahir_keluarga,'%d-%m-%Y') as tgl_lahir_keluarga",false);
+		$this->db->select("DATE_FORMAT(tgl_wafat,'%d-%m-%Y') as tgl_wafat",false);
         $this->db->from('ms_keluarga');
         $this->db->where('no_registrasi',$no_registrasi);
         
@@ -274,10 +291,12 @@ class Mpendaftaran extends CI_Model
         $this->db->from('ms_kecakapan_santri');
         $this->db->where('no_registrasi',$no_registrasi);
         
-        return $this->db->get()->result();
+        return $this->db->get()->row_array();
 	}
 	
 	function addto_data_santri($no_registrasi,$data_santri){
+		// var_dump($data_santri);
+		// exit();
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->update('ms_santri',$data_santri);
 
