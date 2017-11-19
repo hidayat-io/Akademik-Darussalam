@@ -46,4 +46,27 @@ class Mcommon extends CI_Model {
 
         return $this->db->get('ms_config');
     }
+
+    function mget_list_santri($type='TMI'){
+
+        $this->db->where('kategori',$type);
+        $this->db->not_like('no_registrasi','C','after');
+        $this->db->order_by('nama_lengkap');
+
+        return $this->db->get('ms_santri');
+    }
+
+    function mget_list_kamar(){
+
+        $this->db->order_by('nama');
+
+        return $this->db->get('ms_kamar');
+    }
+
+    function mget_list_kelas(){
+
+        $this->db->order_by('nama');
+
+        return $this->db->get('ms_kelas');
+    }
 }

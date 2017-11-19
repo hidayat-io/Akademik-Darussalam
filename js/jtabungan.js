@@ -1,21 +1,36 @@
-// load
 $(document).ready(function(){
 
 	setTable();
-	//setdatasantri();
-	populateSelectClient();
+	populateSelectSantri();
+	populateSelectKamar();
+	populateSelectKelas();
 
-	updateDataTableSelectAllCtrl();
+	$("#opt_noreg").select2({
 
-	$("#opt_client").select2({
 		dropdownParent: $('#m_add')
 	});
 
-	$('.datepicker').datepicker({
-        rtl: App.isRTL(),
-        orientation: "left",
+	$("#opt_snoreg").select2({
+
+		dropdownParent: $('#modal_search_siswa')
+	});
+
+	$("#opt_skamar").select2({
+
+		dropdownParent: $('#modal_search_siswa')
+	});
+
+	$("#opt_skelas").select2({
+
+		dropdownParent: $('#modal_search_siswa')
+	});
+
+	var today = "<?=date('d-m-Y')?>";
+	$('.datepicker').datepicker({        
         autoclose: true,
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        endDate: "today",
+        maxDate: today
     });
 
 	$('.numbers-only').keypress(function(event) {
@@ -29,11 +44,22 @@ $(document).ready(function(){
 	    return false;
   	});
 
+	//change tipe on tab change
+  	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e){
 
+		var target 	= $(e.target).attr("href");
+		var tipe 	= target=='#tab_in'?'i':'o';
 
+		$('#hid_tipe_transaksi').val(tipe);
+
+		if(tipe=='o'){
+
+			$('#tb_list_santri').bootstrapTable('resetView');	
+		}
+	});
 });
 
-function populateSelectClient(){
+function populateSelectSantri(){
 
 	$.ajax({
         type: "POST",
@@ -41,34 +67,81 @@ function populateSelectClient(){
         dataType: 'json',
         success: function(json) {
         	
-            var $el 		= $("#opt_client");
+            var $el 	= $("#opt_noreg");
+            var $els 	= $("#opt_snoreg");
 
             $el.empty(); // remove old options
+            $els.empty(); // remove old options
 
             $el.append($("<option></option>")
                     .attr("value", '').text('- Please Select -'));
-
+            $els.append($("<option></option>")
+                    .attr("value", '').text('- Please Select -'));
 
             $.each(json, function(index, value) {
 
                 $el.append($("<option></option>")
-                        .attr("value", value['no_registrasi']).text(value['nama_lengkap']));
+                        .attr("value", value['no_registrasi']).text(value['no_registrasi']+' - '+value['nama_lengkap']));
+                $els.append($("<option></option>")
+                        .attr("value", value['no_registrasi']).text(value['no_registrasi']+' - '+value['nama_lengkap']));
             });
             
         }
     });
 }
 
+function populateSelectKelas(){
+
+	$.ajax({
+        type: "POST",
+        url: base_url+'common/get_list_kelas',
+        dataType: 'json',
+        success: function(json) {
+        	
+            var $el 	= $("#opt_skelas");
+
+            $el.empty(); // remove old options
+
+            $el.append($("<option></option>")
+                    .attr("value", '').text('- Please Select -'));            
+
+            $.each(json, function(index, value) {
+
+                $el.append($("<option></option>")
+                        .attr("value", value['kode_kelas']).text(value['kode_kelas']+' - '+value['nama']));
+            });
+            
+        }
+    });
+}
+
+function populateSelectKamar(){
+
+	$.ajax({
+        type: "POST",
+        url: base_url+'common/get_list_kamar',
+        dataType: 'json',
+        success: function(json) {
+        	
+            var $el 	= $("#opt_skamar");
+
+            $el.empty(); // remove old options
+
+            $el.append($("<option></option>")
+                    .attr("value", '').text('- Please Select -'));            
+
+            $.each(json, function(index, value) {
+
+                $el.append($("<option></option>")
+                        .attr("value", value['kode_kamar']).text(value['kode_kamar']+' - '+value['nama']));
+            });
+        }
+    });
+}
+
 function pnladd(){
 
-	$('#txtnoreg').val('');
-	$('#hid_data_saldo').val('');
-	$('#txtsaldotabungan').val('');
-	$('#txtnama').val('');
-	$("#txttgl").val('');
-	$('#txtnominal').val('');
-	$('#txtketerangan').val('');
-	$('#lbl_titel').text('TAMBAH DATA TABUNGAN');
+	clearForm();
 
 	$('#m_add').modal('show');
 }
@@ -76,7 +149,6 @@ function pnladd(){
 function modalSearch(){
 	$('#lbl_title').text('SEARCH DATA TABUNGAN');
 	$('#m_search').modal('show');
-
 }
 
 // JS Cari data
@@ -95,18 +167,11 @@ function searchdata(){
 	$('#m_search').modal('toggle');
 }
 
-
 // java script buat clear form nama pada form tabungan
-
 function clearForm(){
 
-    //document.getElementById("frmtabungan").reset();
-     $('#txtnama').val('');
-     $("#txttgl").val('');
-     $('#txtnominal').val('');
-     $('#txtketerangan').val('');
-     $('#hid_data_saldo').val('');
-	$('#txtsaldotabungan').val('');
+    document.getElementById("frmtabungan").reset();
+    $("#opt_noreg").val("").trigger("change");
 }
 
 function simpantabungan(){
@@ -114,73 +179,39 @@ function simpantabungan(){
 	var nama 				= $("input[name='txtnama']").val();
 	var hid_id_data 		= $("input[name='hid_id_data']").val();
 	var saldotabungan 		= $("input[name='txtsaldotabungan']").val();
-	var no_registrasi 		= $("input[name='opt_client']").val();
+	var no_registrasi 		= $("#opt_noreg").val();
 	var tanggal 			= $("input[name='txttgl']").val();
 	var tipe 				= $("input[name='optionsRadios']:checked").val();
 	var nominal 			= $("input[name='txtnominal']").val();
 	var keterangan 			= $("input[name='txtketerangan']").val();
 
 
-	 if(tanggal==""){
+	if(no_registrasi=="" || (nominal=="" || parseInt(nominal)<1)){
 
-		var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
-		var str_message = "Keterangan, &amp; Tanggal tidak boleh kosong.";
+		if(no_registrasi==""){
 
-		bootbox.alert({
-			size:'small',
-			title:title,
-			message:str_message,
-			buttons:{
-				ok:{
-					label: 'OK',
-					className: 'btn-warning'
-				}
-			}
-		});
-		return false;
-	}
-
-	else if(nominal==""){
-
-		var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
-		var str_message = "Keterangan, &amp; Nominal tidak boleh kosong.";
-
-		bootbox.alert({
-			size:'small',
-			title:title,
-			message:str_message,
-			buttons:{
-				ok:{
-					label: 'OK',
-					className: 'btn-warning'
-				}
-			}
-		});
-		return false;
-	}
-
-	else if(tipe=="o"){
-
-		var nm = parseInt(nominal);
-		var sldtbn = parseInt(saldotabungan);
-
-		if(nm > sldtbn){
-			var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
-		var str_message = "Keterangan, &amp; Pengeluaran lebih besar dari pada saldo saat ini.";
-
-		bootbox.alert({
-			size:'small',
-			title:title,
-			message:str_message,
-			buttons:{
-				ok:{
-					label: 'OK',
-					className: 'btn-warning'
-				}
-			}
-		});
-		return false;
+			var str_message = "Santri harus dipilih.";
 		}
+		else{
+
+			var str_message = "Nominal harus lebih dari 0 (nol)";
+		}
+
+		var title = "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
+		
+
+		bootbox.alert({
+			size:'small',
+			title:title,
+			message:str_message,
+			buttons:{
+				ok:{
+					label: 'OK',
+					className: 'btn-warning'
+				}
+			}
+		});
+		return false;
 	}
 
 	$("#frmtabungan").ajaxSubmit({
@@ -218,11 +249,15 @@ function setTable(){
 	        {
 	            targets: [0],
 	            visible: false
+	        },
+	        {
+	            targets: [8],
+	            orderable: false,
+	            width: 80
 	        }
         ],
 	});
 }
-
 
 function deleteData(id){
 
@@ -256,17 +291,14 @@ function editdata(id){
 
 			var data = $.parseJSON(data);
 
-
 			$('input[name="hid_id_data"]').val(data['id']);
-			$('input[name="hid_data_saldo"]').val(data['saldo']);
-			$("#opt_client").val(data['no_registrasi']).trigger("change");
+			$('input[name="hid_old_nominal"]').val(data['nominal']);
+			$("#opt_noreg").val(data['no_registrasi']).trigger("change");
 			$("input[name='optionsRadios']").filter('[value='+data['tipe']+']').prop('checked', true).trigger("click");
 			$('input[name="txttgl"]').val(data['itgl']);
 			$('input[name="txtnominal"]').val(data['nominal']);
 			$('input[name="txtsaldotabungan"]').val(data['saldo']);
 			$('textarea[name="txtketerangan"]').val(data['keterangan']);
-
-
 
 			$('#m_add').modal('show');
 		}
@@ -284,18 +316,21 @@ function downloadExcel(){
 
 function displaySaldo(){
 
-	var nosantri = $('#opt_client').val();
+	var nosantri = $('#opt_noreg').val();
 
 	$.ajax({
 
-		type:"POST",
+		type:"GET",
 		url:base_url+"tabungan/get_saldo/"+nosantri,
 		dataType:"html",
 		success:function(data){
 
-			var data = $.parseJSON(data);
+			var data 	= $.parseJSON(data);
+			var saldo 	= 0;
 
-			$('input[name="txtsaldotabungan"]').val(data['saldo']);
+			if(data!=null) saldo = data['saldo'];
+
+			$('input[name="txtsaldotabungan"]').val(saldo);
 		}
 	});
 }
@@ -325,4 +360,35 @@ function setdatasantri(){
 	        }
         ],
 	});
+}
+
+function queryParamPengeluaranSantri(){
+
+	var skelas 	= $('#opt_skelas').val();
+	var ssantri = $('#opt_snoreg').val();
+	var skamar 	= $('#opt_skamar').val();
+
+	return {
+        skelas: 	skelas,
+        skamar: 	skamar,
+        ssantri: 	ssantri
+    }
+}
+
+//modal search data santri
+function modalCariSiswa(){
+
+	$('#modal_search_siswa').modal('show');
+}
+
+function searchDataSantri(){
+
+	$('#tb_list_siswa').bootstrapTable('refresh');
+	$('#modal_search_siswa').modal('hide');	
+}
+//end modal search data santri
+
+function savePengeluaran(){
+
+	
 }

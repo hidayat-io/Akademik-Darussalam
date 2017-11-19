@@ -16,3 +16,8 @@ html, body{
 
   background-color: rgba(3, 0, 0, 0.73);
 }
+
+.cur-hand{
+
+	cursor: pointer;
+}

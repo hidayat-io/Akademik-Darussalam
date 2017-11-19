@@ -1,22 +1,20 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Tabungan extends IO_Controller
-{
+class Tabungan extends IO_Controller {
 
-	public function __construct()
-		{
-    $modul = 2;
+	public function __construct(){
+
+    	$modul = 2;
 		parent::__construct($modul);
-		 $this->load->model('tabungan_model');
-	  }
+		$this->load->model('tabungan_model');
+	}
 
-	function index()
-		{
-			$data['title'] = 'Data Tabungan';
-	    	$data['content'] = $this->load->view('vtabungan',$data,TRUE);
-	    	$this->load->view('main',$data);
-	  }
+	function index(){
+
+		$data['title'] 		= 'Data Tabungan';
+    	$data['content'] 	= $this->load->view('vtabungan',$data,TRUE);
+    	$this->load->view('main',$data);
+	}
 
 	function lookup_noreg(){
 
@@ -62,32 +60,39 @@ class Tabungan extends IO_Controller
 		$input = $this->input->post();
 
 		$id_data 		= $input['hid_id_data'];
-		$id_data_saldo 	= $input['hid_data_saldo'];
+		$old_saldo 		= $input['hid_old_nominal'];
 		$tgl 			= io_return_date('d-m-Y',$input['txttgl']);
 		$user 			= $this->session->userdata('logged_in')['uid'];
 
 		$data = array(
 
-			'no_registrasi'		=> $input['opt_client'],
+			'no_registrasi'		=> $input['opt_noreg'],
 			'tgl_tabungan'		=> $tgl,
-			'tipe'				=> $input['optionsRadios'],
+			'tipe'				=> $input['hid_tipe_transaksi'],
 			'nominal'			=> $input['txtnominal'],
 			'keterangan'		=> $input['txtketerangan'],
 			'userid'			=> $user
 		);
 
-
-
-
 		if($id_data==""){
 
 			$this->tabungan_model->insert_new($data);
-			$this->tabungan_model->update_saldo($input['txtnoreg'],$input['optionsRadios'],$input['txtnominal'],$user);
 		}
 		else{
 
+			//remove old nominal
+			$this->tabungan_model->update_saldo($input['opt_noreg'],'o',$old_saldo ,$user);
+
 			$this->tabungan_model->update_data($id_data,$data);
-			$this->tabungan_model->update_saldo_updt($input['txtnoreg'],$input['optionsRadios'],$input['txtnominal'],$user,$id_data_saldo);
+		}
+
+		//update table saldo
+		$this->tabungan_model->update_saldo($input['opt_noreg'],$input['hid_tipe_transaksi'],$input['txtnominal'],$user);
+
+		//if cek kalkulasi pengeluaran harian is checked
+		if(isset($input['chk_kalkulasi'])){
+
+			$this->calculate_limit_pengeluaran($input['opt_noreg']);
 		}
 	}
 
@@ -270,19 +275,48 @@ class Tabungan extends IO_Controller
 	}
 
 
-	function get_list_santri(){
+	function get_list_santri_pengeluaran(){
 
-    	$data_santri = $this->mcommon->query_list_santri();
+		$kelas 	= $this->input->get('skelas');
+		$kamar 	= $this->input->get('skamar');
+		$santri = $this->input->get('ssantri');
+		$param 	= " ";
 
-    	echo json_encode($data_santri);
+		//build param for requesting data
+		if($kelas!=''){
+
+			$param .= " AND s.kel_sekarang='$kelas'  ";
+		}
+
+		if($kamar!=''){
+
+			$param .= " AND s.kamar= '".$kamar."' ";
+		}
+
+		if($santri!=''){
+
+			$param .= " AND s.no_registrasi='".$santri."' ";
+		}
+
+		$data = $this->tabungan_model->mget_list_limit_pengeluaran($param)->result();
+
+		if($data==null) $data = array();
+
+    	echo json_encode($data);
     }
 
-    function get_saldo($nosantri){
+    function get_saldo($nosantri=null){
+    	
+    	if($nosantri!=null){
 
-    
-		$data = $this->tabungan_model->query_getdatasaldo($nosantri);
+    		$data = $this->tabungan_model->query_getdatasaldo($nosantri);
 
-		echo json_encode($data);
+			echo json_encode($data);
+    	}
+    	else{
+
+    		echo json_encode(array());
+    	}
 	}
 
 	function load_data_santri(){
@@ -332,5 +366,42 @@ class Tabungan extends IO_Controller
 		echo json_encode($records);
 	}
 
-	
+	private function calculate_limit_pengeluaran($no_reg_santri){
+
+		$limit 		= 5000;
+		$multiply   = 1000;
+
+		//get current saldo
+		$saldo = $this->tabungan_model->query_getdatasaldo($no_reg_santri);
+
+		if($saldo!=null){
+
+			//divide by 30 days ( a month )
+			$new_limit = (int)$saldo->saldo / 30;
+
+			//if new limit more than default limit
+			if($new_limit > $limit){
+
+				//round down to the closest thousands
+				$new_limit	= floor($new_limit / $multiply);
+				$limit 		= $new_limit * $multiply;
+			}
+		}
+
+		$data = array(
+
+			'no_reg'	=> $no_reg_santri,
+			'limit'		=> $limit,
+			'up_by'		=> $this->session->userdata('logged_in')['uid']
+		);
+
+		$this->tabungan_model->update_limit_pengeluaran($data);
+	}
+
+	function get_list_santri(){
+
+    	$data_santri = $this->mcommon->query_list_santri();
+    	
+    	echo json_encode($data_santri);
+    }
 }
