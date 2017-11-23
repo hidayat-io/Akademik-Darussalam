@@ -1,7 +1,5 @@
-// //load
 $(document).ready(function()
-{
-	// addSantri("TMI");
+{	
 	setTable();
 	
 	$("#thn_penyakit").datepicker({ 
@@ -29,27 +27,12 @@ $(document).ready(function()
 		autoclose: true
 		
 	});
-	// $("#PersonalDetails_DateOfBirth").datepicker({
-	// 	changeMonth: true,
-	// 	changeYear: true,
-	// 	showOn: "button",
-	// 	buttonImageOnly: true,
-	// 	minDate: "-60Y",
-	// 	maxDate: "-20Y",
-	// 	dateFormat: "dd/mm/yy",
-	// });
 
 	$("#tgl_wafat_keluarga").datepicker({ 
 		dateFormat: 'yyyy-mm-dd',
 		autoclose: true 
 	});
-	// $('.datepicker').datepicker(
-		// {
-		// 	rtl: App.isRTL(),
-		// 	orientation: "left",
-		// 	autoclose: true,
-		// 	format: 'dd-mm-yyyy'
-	// });
+
 	validate_add_santri();
 	validate_add_keluarga_santri();
 	validate_add_penyakit();
@@ -94,7 +77,6 @@ $(document).ready(function()
       	image_holder.empty();
 
       	if(size > 1048576 ){
-			// bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>Cannot upload file more than 1 MB</div>");
 			bootbox.alert("Cannot upload file more than 1 MB.");
 			$("#fileUpload").val('');
 			return false;
@@ -114,7 +96,6 @@ $(document).ready(function()
 			        "name"	: "img_photo"
 			      }).appendTo(image_holder);
 			    }
-			    // image_holder.show();
 			    reader.readAsDataURL($(this)[0].files[i]);
 			  }
 			}
@@ -143,7 +124,6 @@ $(document).ready(function()
 		var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
 
       	if(size > 1048576 ){
-			// bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>Cannot upload file more than 1 MB</div>");
 			bootbox.alert("Cannot upload file more than 1 MB.");
 			$("#ktp_keluarga").val('');
 			return false;
@@ -170,7 +150,6 @@ $(document).ready(function()
 		var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
 
       	if(size > 1048576 ){
-			// bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>Cannot upload file more than 1 MB</div>");
 			bootbox.alert("Cannot upload file more than 1 MB.");
 			$("#lamp_bukti").val('');
 			return false;
@@ -197,7 +176,6 @@ $(document).ready(function()
 		var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
 
       	if(size > 1048576 ){
-			// bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>Cannot upload file more than 1 MB</div>");
 			bootbox.alert("Cannot upload file more than 1 MB.");
 			$("#fileUpload_ijazah").val('');
 			return false;
@@ -240,7 +218,6 @@ $(document).ready(function()
 		var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
 
       	if(size > 1048576 ){
-			// bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>Cannot upload file more than 1 MB</div>");
 			bootbox.alert("Cannot upload file more than 1 MB.");
 			$("#fileUpload_akelahiran").val('');
 			return false;
@@ -281,7 +258,6 @@ $(document).ready(function()
 		var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
 
       	if(size > 1048576 ){
-			// bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>Cannot upload file more than 1 MB</div>");
 			bootbox.alert("Cannot upload file more than 1 MB.");
 			$("#fileUpload_kk").val('');
 			return false;
@@ -322,7 +298,6 @@ $(document).ready(function()
 		var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
 
       	if(size > 1048576 ){
-			// bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>Cannot upload file more than 1 MB</div>");
 			bootbox.alert("Cannot upload file more than 1 MB.");
 			$("#fileUpload_skhun").val('');
 			return false;
@@ -363,7 +338,6 @@ $(document).ready(function()
 		var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
 
       	if(size > 1048576 ){
-			// bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>Cannot upload file more than 1 MB</div>");
 			bootbox.alert("Cannot upload file more than 1 MB.");
 			$("#fileUpload_transkip").val('');
 			return false;
@@ -404,7 +378,6 @@ $(document).ready(function()
 		var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
 
       	if(size > 1048576 ){
-			// bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>Cannot upload file more than 1 MB</div>");
 			bootbox.alert("Cannot upload file more than 1 MB.");
 			$("#fileUpload_skbb").val('');
 			return false;
@@ -445,7 +418,6 @@ $(document).ready(function()
 		var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
 
       	if(size > 1048576 ){
-			// bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>Cannot upload file more than 1 MB</div>");
 			bootbox.alert("Cannot upload file more than 1 MB.");
 			$("#fileUpload_skes").val('');
 			return false;
@@ -682,7 +654,6 @@ function mati(){
 	}
 	
 	//disable form add_santri
-		// $('#kategori_santri').attr('disabled', true);
 		$('#no_registrasi').attr('disabled', true);
 		$('#no_stambuk').attr('disabled', true);
 		$('#thn_masuk').attr('disabled', true);
@@ -1095,8 +1066,7 @@ function svSantri(){
 
 			item_data_tb_list_keluarga += ';';
 		}
-		$('#hid_table_item_Keluarga').val(item_data_tb_list_keluarga);	
-		// var item_data_tb_list_keluarga_input = $('#hid_table_item_Keluarga').val();
+		$('#hid_table_item_Keluarga').val(item_data_tb_list_keluarga);
 		//#endregion data keluarga
 		
 		//#region  data Penyakit
@@ -1180,7 +1150,7 @@ var validate_add_santri = function() {
 		errorElement: 'span', //default input error message container
 		errorClass: 'help-block help-block-error', // default input error message class
 		focusInvalid: false, // do not focus the last invalid input
-		ignore: "",  // validate all fields including form hidden input
+		// ignore: "",  // validate all fields including form hidden input
 		// rules: {
 		// 	txt_da_nama: {                    
 		// 		required: true
@@ -1263,92 +1233,7 @@ function addSantri(){
 	$('#save_button_footer').show();
 	$('#save_button_header').text('SIMPAN');
 	$('#save_button_footer').text('SIMPAN');
-	// $('#button_keluarga').show();
-	// $('#button_penyakit').show();
-	// $('#button_kecakapankhusus').show();
-	// $('#button_photo').show();
-	// $('#button_ijazah').show();
-	// $("#ijazahholder").show();
-	// $("#ijazahholder").hide();
-	// $('#button_akelahiran').show();
-	// $("#aklahiranholder").show();
-	// $("#aklahiranholder").hide();
-	// $('#button_kk').show();
-	// $("#kkholder").show();
-	// $("#kkholder").hide();
-	// $('#button_skhun').show();
-	// $("#skhunholder").show();
-	// $("#skhunholder").hide();
-	// $('#button_transkip').show();
-	// $("#transkipholder").show();
-	// $("#transkipholder").hide();
-	// $('#button_skbb').show();
-	// $("#skbbholder").show();
-	// $("#skbbholder").hide();
-	// $('#button_skes').show();
-	// $("#skesholder").show();
-	// $("#skesholder").hide();
-
-	//males nginput
-	// $('#rayon').val('rayon1');
-	// $('#kamar').val('kamar2');
-	// $('#bagian').val('bagian');
-	// $('#kel_sekarang').val('kelas1');
-	// $('#nisn').val('112233');
-	// // $('#nisnlokal').val('445566');
-	// $('#nama_lengkap').val('namalengkap nya1');
-	// $('#nama_arab').val('namaarab nya1');
-	// $('#nama_panggilan').val('namapanggilan 1');
-	// $('#hobi').val('hoinya apa');
-	// $('#uang_jajan_perbulan').val('500000');
-	// $('#no_kk').val('123');
-	// $('#nik').val('321');
-	// $('#tempat_lahir').val('Tempat_lahir');
-	// // $('#tgl_lahir').val('19/07/2017');
-	// $('#konsulat').val('konsulat1');
-	// $('#nama_sekolah_aitam').val('nmsklAITAM');
-	// $('#kelas_aitam').val('klsAITAM1');
-	// $('#alamat_sekolah_aitam').val('AlamatSKL');
-	// $('#suku').val('suku1');
-	// $('#kewarganegaraan').val('Kewarga1');
-	// $('#jalan').val('jaln1');
-	// $('#no_rumah').val('norUMah1');
-	// $('#dusun').val('Dusun1');
-	// $('#desa').val('desa1');
-	// $('#kecamatan').val('kecamatan1');
-	// $('#kabupaten').val('kabupaten1');
-	// $('#provinsi').val('provinsi1');
-	// $('#kd_pos').val('51280');
-	// $('#no_tlp').val('02155677');
-	// $('#no_hp').val('08136737202');
-	// $('#email').val('email1@yahoo.com');
-	// $('#fb').val('fb1');
-	// $('#dibesarkan_di').val('dfdfdfdfdfd');
-	// $('#pembiaya').val('AYAH');
-	// $('#biaya_perbulan_min').val('1000000');
-	// $('#biaya_perbulan_max').val('1500000');
-	// $('#penghasilan').val('2000000');
-	// $('#gol_darah').val('A');
-	// $('#tinggi_badan').val('1');
-	// $('#berat_badan').val('1');
-	// $('#khitan').val('SUDAH');
-	// $('#kondisi_pendidikan').val('KETAT');
-	// $('#ekonomi_keluarga').val('MAMPU');
-	// $('#situasi_rumah').val('PERKOTAAN');
-	// $('#dekat_dengan').val('MASJID');
-	// $('#hidup_beragama').val('SEDANG');
-	// $('#pengelihatan_mata').val('BAIK');
-	// $('#kaca_mata').val('TIDAK');
-	// $('#pendengaran').val('BAIK');
-	// $('#operasi').val('TIDAK');
-	// $('#sebab').val('1');
-	// $('#kecelakaan').val('TIDAK');
-	// $('#akibat').val('1akibat');
-	// $('#alergi').val('alergi1');
-	// $('#thn_fisik').val('2007');
-	// $('#kelainan_fisik').val('kelainan_fisik1');
-
-
+	
 	// clearFormInput();
 	$('#Modal_add_Santri').modal('show');
 	cek_kt();
@@ -1386,17 +1271,6 @@ var validate_add_keluarga_santri = function() {
 		errorClass: 'help-block help-block-error', // default input error message class
 		focusInvalid: false, // do not focus the last invalid input
 		ignore: "",  // validate all fields including form hidden input
-		// rules: {
-		// 	txt_da_nama: {                    
-		// 		required: true
-		// 	},
-		// 	txt_da_pendidikan: {
-		// 		required: true
-		// 	},
-		// 	dtp_da_birth: {
-		// 		required: true
-		// 	},
-		// },
 
 		invalidHandler: function (event, validator) { //display error alert on form submit              
 			success2.hide();
@@ -1539,7 +1413,7 @@ function cek_jk(){ // cek saat memilih jenis kelamin di modal keluarga
 				$('#kondisi_rumah_keluarga').attr('disabled', false);
 				$('#jml_asuh').attr('disabled', true);
 				$('#pekerjaan_keluarga').attr('disabled', false);
-				$('#pendidikan_terakhir').attr('disabled', trufalsee);
+				$('#pendidikan_terakhir').attr('disabled', false);
 				$('#agama_keluarga').attr('disabled', false);
 				$('#suku_keluarga').attr('disabled', false);
 				$('#kewarganegaraan_keluarga').attr('disabled', false);
@@ -1829,11 +1703,23 @@ function TambahKeluarga(){
 
 								var resp = $.parseJSON(response);
 								var file = resp.name;
-								var linkfile = "<a href='./assets/images/uploadtemp/" + file + "' target='_blank'>" + file + "</a>";
+								var kategori = $('#hid_kategori_santri').val();
+								if (kategori == 'TMI') {
+									var linkfile = "<a href='./assets/images/uploadtemp/" + file + "' target='_blank'>" + file + "</a>";
+								}
+								else if (kategori == 'AITAM') {
+									var linkfile = "<a href='../assets/images/uploadtemp/" + file + "' target='_blank'>" + file + "</a>";
+								}
 							}
 							else {
 								var file = hid_ktp_keluarga;
-								var linkfile = "<a href='./assets/images/fileupload/ktp/" + file + "' target='_blank'>" + file + "</a>";
+								var kategori = $('#hid_kategori_santri').val();
+								if (kategori == 'TMI') {
+									var linkfile = "<a href='./assets/images/fileupload/ktp/" + file + "' target='_blank'>" + file + "</a>";
+								}
+								else if (kategori == 'AITAM') {
+									var linkfile = "<a href='../assets/images/fileupload/ktp/" + file + "' target='_blank'>" + file + "</a>";
+								}
 							}
 							
 							var str_data = kdkeluarga + '#' + kategori_keluarga + '#' + nama_keluarga + '#' + nik_keluarga + '#' + binbinti_keluarga + '#' + jenis_kelamin_keluarga + '#' + status_pernikahan_keluarga + '#' + tgl_wafat_keluarga + '#' + umur_keluarga + '#' + hari_keluarga + '#' + sebab_wafat_keluarga + '#' + status_perkawinan_ibu_keluarga + '#' + pedapatan_ibu_keluarga + '#' + sebab_tidak_bekerja_keluarga + '#' + keahlian_keluarga + '#' + status_rumah_keluarga + '#' + kondisi_rumah_keluarga + '#' + jml_asuh + '#' + pekerjaan_keluarga + '#' + pendidikan_terakhir + '#' + agama_keluarga + '#' + suku_keluarga + '#' + kewarganegaraan_keluarga + '#' + ormas_keluarga + '#' + orpol_keluarga + '#' + kedudukandimasyarakat_keluarga + '#' + tahun_lulus_keluarga + '#' + nostambuk_keluarga + '#' + tempat_lahir_keluarga + '#' + tgl_lahir_keluarga + '#' + hubungan_keluarga + '#' + keterangan_keluarga + '#' + file;
@@ -1947,35 +1833,7 @@ function TambahKeluarga(){
 
 										$('#Modal_add_keluarga_santri').modal('hide');
 							}
-					// 		else{
-
-					// 			bootbox.alert({
-					// 				size:'small',
-					// 				title:"<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Upload Failed.",
-					// 				message:"Upload Failed.",
-					// 				buttons:{
-					// 					ok:{
-					// 						label: 'OK',
-					// 						className: 'btn-error'
-					// 					}
-					// 				}
-					// 			});	
-					// 		}
-					// 		},
-					// 		error:function(){
-
-					// 			bootbox.alert({
-					// 				size:'small',
-					// 				title:"<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Upload Failed.",
-					// 				message:"Upload Failed.",
-					// 				buttons:{
-					// 					ok:{
-					// 						label: 'OK',
-					// 						className: 'btn-error'
-					// 					}
-					// 				}
-					// 			});
-							}
+						}
 					});
 			// }
 		}
@@ -2182,17 +2040,6 @@ var validate_add_penyakit = function(){
 		errorClass: 'help-block help-block-error', // default input error message class
 		focusInvalid: false, // do not focus the last invalid input
 		ignore: "",  // validate all fields including form hidden input
-		// rules: {
-		// 	txt_da_nama: {                    
-		// 		required: true
-		// 	},
-		// 	txt_da_pendidikan: {
-		// 		required: true
-		// 	},
-		// 	dtp_da_birth: {
-		// 		required: true
-		// 	},
-		// },
 
 		invalidHandler: function (event, validator) { //display error alert on form submit              
 			success2.hide();
@@ -2274,12 +2121,25 @@ function TambahPenyakit(){
 								
 								var resp 		= $.parseJSON(response);
 								var file 		=resp.name;
-								var linkfile = "<a href='./assets/images/uploadtemp/" + file + "' target='_blank'>" + file + "</a>";
+								var kategori = $('#hid_kategori_santri').val();
+								if (kategori == 'TMI') {
+									var linkfile = "<a href='./assets/images/uploadtemp/" + file + "' target='_blank'>" + file + "</a>";
+								}
+								else if (kategori == 'AITAM') {
+									var linkfile = "<a href='../assets/images/uploadtemp/" + file + "' target='_blank'>" + file + "</a>";
+								}
+								
 							}
 							else
 							{
 								var file = hid_lamp_bukti;
-								var linkfile = "<a href='./assets/images/fileupload/lamp_penyakit/" + file + "' target='_blank'>" + file + "</a>";
+								var kategori = $('#hid_kategori_santri').val();
+								if (kategori == 'TMI') {
+									var linkfile = "<a href='./assets/images/fileupload/lamp_penyakit/" + file + "' target='_blank'>" + file + "</a>";
+								}
+								else if (kategori == 'AITAM') {
+									var linkfile = "<a href='../assets/images/fileupload/lamp_penyakit/" + file + "' target='_blank'>" + file + "</a>";
+								}
 							}
 							
 							var str_data = kdpenyakit + '#' + nama_penyakit + '#' + thn_penyakit + '#' + kategori_penyakit + '#' + tipe_penyakit + '#' + file ;
@@ -2298,25 +2158,12 @@ function TambahPenyakit(){
 								row.cells[5].innerHTML = file;
 								row.cells[6].innerHTML = linkfile;
 								row.cells[7].innerHTML = strbutton; 
-
-								// var json_item = {
-
-								// 	"nama_penyakit": nama_penyakit,
-								// 	"thn_penyakit": thn_penyakit,
-								// 	"kategori_penyakit": kategori_penyakit
-								// };
 								$('#Modal_add_penyakit').modal('hide');
-
-								// json_anak = replace_json_item_data(json_anak, "id", id_detail_anak, json_item);
 
 							}
 							else
 							{
 								//add to table list
-
-								
-								
-
 								var row_count = $('#tb_list_penyakit tr.tb-detail').length;
 								var content_data = '<tr class="tb-detail" id="row' + kdpenyakit + '">';
 								content_data += "<td>" + (row_count + 1) + "</td>";
@@ -2341,21 +2188,6 @@ function TambahPenyakit(){
 								$("#hid_jumlah_item_penyakit").val(row_count + 1);
 								urutkanNomorPenyakit();
 								$('#Modal_add_penyakit').modal('hide');
-								// }
-								// else{
-
-								// 	bootbox.alert({
-								// 		size:'small',
-								// 		title:"<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Upload Failed.",
-								// 		message:"Upload Failed.",
-								// 		buttons:{
-								// 			ok:{
-								// 				label: 'OK',
-								// 				className: 'btn-error'
-								// 			}
-								// 		}
-								// 	});	
-								// }
 							}
 									
 									
@@ -2703,7 +2535,13 @@ function view(no_registrasi){
 						var kdkeluarga 			= makeid();
 						var str_data 			= kdkeluarga + '#' + value['kategori'] + '#' + value['nama'] + '#' + value['nik'] + '#' + value['binbinti'] + '#' + value['jenis_kelamin'] + '#' + value['status'] + '#' + value['tgl_wafat'] + '#' + value['umur'] + '#' + value['hari'] + '#' + value['sebab_wafat'] + '#' + value['status_perkawinan'] + '#' + value['pendapatan_ibu'] + '#' + value['sebab_tdk_bekerja'] + '#' + value['keahlian'] + '#' + value['status_rumah'] + '#' + value['kondisi_rumah'] + '#' + value['jml_asuh'] + '#' + value['pekerjaan'] + '#' + value['pend_terakhir'] + '#' + value['agama'] + '#' + value['suku'] + '#' + value['kewarganegaraan'] + '#' + value['ormas'] + '#' + value['orpol'] + '#' + value['kedukmas'] + '#' + value['thn_lulus'] + '#' + value['no_stambuk_alumni'] + '#' + value['tempat_lahir'] + '#' + value['tgl_lahir_keluarga'] + '#' + value['hub_kel'] + '#' + value['keterangan'] + '#' + value['ktp'];
 						var strbutton 			= "<a class='btn btn-primary btn-xs btn-flat' href='#' onclick='viewdetailkeluarga(\"" + str_data + "\")'><i class='fa fa-file-o'></i></a>&nbsp;";
-						var linkfile 			= "<a href='./assets/images/fileupload/ktp/" + value['ktp'] + "' target='_blank'>" + value['ktp'] + "</a>";
+						var kategori = $('#hid_kategori_santri').val();
+						if (kategori == 'TMI') {
+							var linkfile 			= "<a href='./assets/images/fileupload/ktp/" + value['ktp'] + "' target='_blank'>" + value['ktp'] + "</a>";
+						}
+						else if (kategori == 'AITAM') {
+							var linkfile 			= "<a href='../assets/images/fileupload/ktp/" + value['ktp'] + "' target='_blank'>" + value['ktp'] + "</a>";
+						}
 						var row_count 			= $('#tb_list_keluarga tr.tb-detail').length;
 						var content_data 		= '<tr class="tb-detail" id="row' + value['kategori'] + '">';
 						content_data 			+= "<td>" + (row_count + 1) + "</td>";
@@ -2740,7 +2578,7 @@ function view(no_registrasi){
 						content_data 			+= "<td class='hidden'>" + value['keterangan'] + "</td>";
 						content_data 			+= "<td class='hidden'>" + value['ktp'] + "</td>";
 						content_data 			+= "<td>" + linkfile + "</td>";
-						content_data += "<td>" + strbutton + "</td>";
+						content_data 			+= "<td>" + strbutton + "</td>";
 						content_data 			+= "</tr>";
 
 					if(row_count<1){
@@ -2772,7 +2610,13 @@ function view(no_registrasi){
 					var row_count 	= $('#tb_list_penyakit tr.tb-detail').length;
 					var str_data = kdpenyakit + '#' + value['nama_penyakit'] + '#' + value['thn_penyakit'] + '#' + value['kategori_penyakit'] + '#' + value['tipe_penyakit'] + '#' + value['lamp_bukti'];
 					var strbutton = "<a class='btn btn-primary btn-xs btn-flat' href='#' onclick='viewdetailpenyakit(\"" + str_data + "\")'><i class='fa fa-file-o'></i></a>&nbsp;";
-					var linkfile = "<a href='./assets/images/fileupload/lamp_penyakit/"+value['lamp_bukti']+"' target='_blank'>"+value['lamp_bukti']+"</a>";
+					var kategori = $('#hid_kategori_santri').val();
+					if (kategori == 'TMI') {
+						var linkfile = "<a href='./assets/images/fileupload/lamp_penyakit/"+value['lamp_bukti']+"' target='_blank'>"+value['lamp_bukti']+"</a>";
+					}
+					else if (kategori == 'AITAM') {
+						var linkfile = "<a href='../assets/images/fileupload/lamp_penyakit/"+value['lamp_bukti']+"' target='_blank'>"+value['lamp_bukti']+"</a>";
+					}
 					var row_count 		= $('#tb_list_penyakit tr.tb-detail').length;
 					var content_data 	= '<tr class="tb-detail" id="row'+value['nama_penyakit']+'">';
 						content_data 	+= "<td>"+(row_count+1)+"</td>";
@@ -2782,9 +2626,7 @@ function view(no_registrasi){
 						content_data 	+= "<td>"+value['tipe_penyakit']+"</td>";
 						content_data 	+= "<td class='hidden'>"+value['lamp_bukti']+"</td>";
 						content_data 	+= "<td>"+linkfile+"</td>";
-					content_data += "<td>" + strbutton+"</td>";
-						// content_data 	+= "<td>"+value['rel_en']+"</td>";		
-						// content_data 	+= "<td>"+strbutton+hid_code+"</td>";
+						content_data += "<td>" + strbutton+"</td>";
 						content_data 	+= "</tr>";
 
 					if(row_count<1){
@@ -2918,12 +2760,6 @@ function edit(no_registrasi){
 			$('#thn_fisik').val(data['thn_fisik']);
 			$('#kelainan_fisik').val(data['kelainan_fisik']);
 			$('#Modal_add_Santri').modal('show');
-			// $('#save_button_header').hide();
-			// $('#save_button_footer').hide();
-			// $('#button_keluarga').hide();
-			// $('#button_penyakit').hide();
-			// $('#button_kecakapankhusus').hide();
-			// $('#button_photo').hide();
 			//show photo
 			if(data['lamp_photo']!=null){
 				$("#TfileUpload").val('');
@@ -3041,7 +2877,13 @@ function edit(no_registrasi){
 					var str_data 		= kdkeluarga + '#' + value['kategori'] + '#' + value['nama'] + '#' + value['nik'] + '#' + value['binbinti'] + '#' + value['jenis_kelamin'] + '#' + value['status'] + '#' + value['tgl_wafat'] + '#' + value['umur'] + '#' + value['hari'] + '#' + value['sebab_wafat'] + '#' + value['status_perkawinan'] + '#' + value['pendapatan_ibu'] + '#' + value['sebab_tdk_bekerja'] + '#' + value['keahlian'] + '#' + value['status_rumah'] + '#' + value['kondisi_rumah'] + '#' + value['jml_asuh'] + '#' + value['pekerjaan'] + '#' + value['pend_terakhir'] + '#' + value['agama'] + '#' + value['suku'] + '#' + value['kewarganegaraan'] + '#' + value['ormas'] + '#' + value['orpol'] + '#' + value['kedukmas'] + '#' + value['thn_lulus'] + '#' + value['no_stambuk_alumni'] + '#' + value['tempat_lahir'] + '#' + value['tgl_lahir_keluarga'] + '#' + value['hub_kel'] + '#' + value['keterangan'] + '#' + value['ktp'];
 					var strbutton 		= "<a class='btn btn-primary btn-xs btn-flat' href='#' onclick='editdetailkeluarga(\"" + str_data + "\")'><i class='fa fa-pencil'></i></a>&nbsp;";
 						strbutton 		+= "<a class='btn btn-danger btn-xs btn-flat' href='#' data-toggle='confirmation' data-popout='true' onclick='hapusItem(\"" + kdkeluarga + "\")'><i class='fa fa-trash'></i></a>";
-					var linkfile 		= "<a href='./assets/images/fileupload/ktp/" + value['ktp'] + "' target='_blank'>" + value['ktp'] + "</a>";
+					var kategori = $('#hid_kategori_santri').val();
+					if (kategori == 'TMI') {
+						var linkfile 		= "<a href='./assets/images/fileupload/ktp/" + value['ktp'] + "' target='_blank'>" + value['ktp'] + "</a>";
+					}
+					else if (kategori == 'AITAM') {
+						var linkfile 		= "<a href='../assets/images/fileupload/ktp/" + value['ktp'] + "' target='_blank'>" + value['ktp'] + "</a>";
+					}
 					var row_count 		= $('#tb_list_keluarga tr.tb-detail').length;
 					var content_data 	= '<tr class="tb-detail" id="row' + kdkeluarga+'">';
 						content_data 	+= "<td>"+(row_count+1)+"</td>";
@@ -3122,7 +2964,13 @@ function edit(no_registrasi){
 					var str_data = kdpenyakit + '#' + value['nama_penyakit'] + '#' + value['thn_penyakit'] + '#' + value['kategori_penyakit'] + '#' + value['tipe_penyakit'] + '#' + value['lamp_bukti'];
 					var strbutton 		= "<a class='btn btn-primary btn-xs btn-flat' href='#' onclick='editdetailpenyakit(\"" + str_data + "\")'><i class='fa fa-pencil'></i></a>&nbsp;";
 						strbutton 		+= "<a class='btn btn-danger btn-xs btn-flat' href='#' data-toggle='confirmation' data-popout='true' onclick='hapusItemPenyakit(\"" + kdpenyakit + "\")'><i class='fa fa-trash'></i></a>";
-					var linkfile 		= "<a href='./assets/images/fileupload/lamp_penyakit/"+value['lamp_bukti']+"' target='_blank'>"+value['lamp_bukti']+"</a>";
+					var kategori = $('#hid_kategori_santri').val();
+					if (kategori == 'TMI') {
+						var linkfile 		= "<a href='./assets/images/fileupload/lamp_penyakit/"+value['lamp_bukti']+"' target='_blank'>"+value['lamp_bukti']+"</a>";
+					}
+					else if (kategori == 'AITAM') {
+						var linkfile 		= "<a href='../assets/images/fileupload/lamp_penyakit/"+value['lamp_bukti']+"' target='_blank'>"+value['lamp_bukti']+"</a>";
+					}
 					var row_count 		= $('#tb_list_penyakit tr.tb-detail').length;
 					var content_data 	= '<tr class="tb-detail" id="row'+kdpenyakit+'">';
 						content_data 	+= "<td>"+(row_count+1)+"</td>";
@@ -3257,14 +3105,12 @@ function downloadExcel(){
 
 function idgedungshow(){
 	$('#hiddenidgedung').show();
-	// $('#rayon').hide();
 	$('#spansearchgedung').hide();
     $('#spansearchclosegedung').show();
 }
 
 function idgedunghide(){
 	$('#hiddenidgedung').hide();
-	// $('#rayon').show();
 	$('#spansearchgedung').show();
     $('#spansearchclosegedung').hide();
 }
@@ -3276,21 +3122,18 @@ function pilihItemGedung(){
 
     $('#rayon').val($item[0]);
 	$('#hiddenidgedung').hide();
-	// $('#rayon').show();
     $('#spansearchgedung').show();
     $('#spansearchclosegedung').hide();
 }
 
 function idKamarshow(){
 	$('#hiddenidKamar').show();
-	// $('#kamar').hide();
 	$('#spansearchKamar').hide();
     $('#spansearchcloseKamar').show();
 }
 
 function idKamarhide(){
 	$('#hiddenidKamar').hide();
-	// $('#kamar').show();
 	$('#spansearchKamar').show();
     $('#spansearchcloseKamar').hide();
 }
@@ -3302,21 +3145,18 @@ function pilihItemKamar(){
 
     $('#kamar').val($item[0]);
 	$('#hiddenidKamar').hide();
-	// $('#kamar').show();
     $('#spansearchKamar').show();
     $('#spansearchcloseKamar').hide();
 }
 
 function idKelasshow(){
 	$('#hiddenidKelas').show();
-	// $('#kel_sekarang').hide();
 	$('#spansearchKelas').hide();
     $('#spansearchcloseKelas').show();
 }
 
 function idKelashide(){
 	$('#hiddenidKelas').hide();
-	// $('#kel_sekarang').show();
 	$('#spansearchKelas').show();
     $('#spansearchcloseKelas').hide();
 }
@@ -3328,21 +3168,18 @@ function pilihItemKelas(){
 
     $('#kel_sekarang').val($item[0]);
 	$('#hiddenidKelas').hide();
-	// $('#kel_sekarang').show();
     $('#spansearchKelas').show();
     $('#spansearchcloseKelas').hide();
 }
 
 function idBagianshow(){
 	$('#hiddenidBagian').show();
-	// $('#bagian').hide();
 	$('#spansearchBagian').hide();
     $('#spansearchcloseBagian').show();
 }
 
 function idBagianhide(){
 	$('#hiddenidBagian').hide();
-	// $('#bagian').show();
 	$('#spansearchBagian').show();
     $('#spansearchcloseBagian').hide();
 }
@@ -3354,7 +3191,6 @@ function pilihItemBagian(){
 
     $('#bagian').val($item[0]);
 	$('#hiddenidBagian').hide();
-	// $('#bagian').show();
     $('#spansearchBagian').show();
     $('#spansearchcloseBagian').hide();
 }

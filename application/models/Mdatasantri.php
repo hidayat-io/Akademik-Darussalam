@@ -1,6 +1,6 @@
 <?php
 
-class Mtmi extends CI_Model 
+class Mdatasantri extends CI_Model 
 {
 
 	public function __construct()
@@ -9,21 +9,35 @@ class Mtmi extends CI_Model
 		// Call the CI_Model constructor
 		parent::__construct();
 	}
-	
-	function get_list_data($param,$sortby=0,$sorttype='desc'){
-		$cols = array('no_registrasi','thn_masuk','nama_lengkap','nama_panggilan','nama_arab');
 
-		$sql = "SELECT *
-					FROM ms_santri where no_registrasi like 'T%' and no_registrasi not like 'C%'";
-// var_dump($sql);
-// 		exit();
-			if($param!=null){
-
-				$sql .= $param;
-				
-			}
+	function get_list_data($param,$sortby=0,$sorttype='desc',$kategori_santri)
+	{
 		
+
+		$cols = array('no_registrasi','thn_masuk','nama_lengkap','nama_arab','nama_panggilan','uang_jajan_perbulan','no_kk','nik','tempat_lahir','tgl_lahir');
+
+		if ($kategori_santri == 'TMI')
+		{
+			$sql = "SELECT * FROM ms_santri where no_registrasi like 'T%' and no_registrasi not like 'A%' and no_registrasi not like 'CA%'";
+		}
+		else
+		{
+			$sql = "SELECT * FROM ms_santri where no_registrasi not like 'T%' and no_registrasi like 'A%' and no_registrasi not like 'CT%'";
+		}
+		
+				
+
+		if($param!=null){
+
+			$sql .= $param;
+			
+		}
+		
+
 		$sql.= " ORDER BY ".$cols[$sortby]." ".$sorttype;
+
+		// echo $sql;
+		// exit();
 		
 		return $this->db->query($sql)->result();
 	}
@@ -39,6 +53,23 @@ class Mtmi extends CI_Model
 	{
 		$data = array(
 		'nama_field'  		=> 'noreg_CalonTMI',
+		'nomor_terakhir' 	=> $last_no
+		);
+
+		$this->db->replace('sequence',$data);
+	}
+
+	function new_get_sequence_noreg_TMI()
+	{
+
+		$this->db->where('nama_field','noreg_TMI');
+		return $this->db->get('sequence')->row();
+	}
+
+	function new_update_sequence_TMI($last_no)
+	{
+		$data = array(
+		'nama_field'  		=> 'noreg_TMI',
 		'nomor_terakhir' 	=> $last_no
 		);
 
@@ -73,6 +104,28 @@ class Mtmi extends CI_Model
 	{
 		$data = array(
 		'nama_field'  		=> 'noreg_CalonAITAM',
+		'nomor_terakhir' 	=> $last_no
+		);
+
+		$this->db->replace('sequence',$data);
+	}
+
+	function new_get_sequence_noreg_AITAM()
+	{
+
+		$this->db->where('nama_field','noreg_AITAM');
+		return $this->db->get('sequence')->row();
+	}
+
+	function get_noSTATISTIK()
+	{		
+		return $this->db->get('ms_config')->row();
+	}
+
+	function new_update_sequence_AITAM($last_no)
+	{
+		$data = array(
+		'nama_field'  		=> 'noreg_AITAM',
 		'nomor_terakhir' 	=> $last_no
 		);
 
@@ -197,7 +250,7 @@ class Mtmi extends CI_Model
 
 	function query_santri($no_registrasi){
 		$data = array();
-		$data=$this->db->query("SELECT a.kategori, a.no_registrasi, a.no_stambuk, DATE_FORMAT(a.thn_masuk,'%d-%m-%Y') as thn_masuk , a.rayon, a.kamar, a.bagian, 
+		$data=$this->db->query("SELECT a.kategori, a.no_registrasi, a.no_stambuk, a.thn_masuk , a.rayon, a.kamar, a.bagian, 
 		a.kel_sekarang, a.nisn, a.nisnlokal, a.nama_lengkap, a.nama_arab, a.nama_panggilan, a.hobi, 
 		a.uang_jajan_perbulan, a.no_kk, a.nik, a.tempat_lahir, DATE_FORMAT(a.tgl_lahir,'%d-%m-%Y') as tgl_lahir, a.konsulat, 
 		a.nama_sekolah, a.kelas_sekolah, a.alamat_sekolah, a.suku, a.kewarganegaraan, 
@@ -216,7 +269,9 @@ class Mtmi extends CI_Model
 	}
 
 	function query_keluarga($no_registrasi){
-		$this->db->select('*');
+		$this->db->select('kategori,nama,nik,binbinti,jenis_kelamin,status,tgl_wafat,umur,hari,sebab_wafat,status_perkawinan,pendapatan_ibu,sebab_tdk_bekerja,keahlian,status_rumah,kondisi_rumah,jml_asuh,pekerjaan,pend_terakhir,agama,suku,kewarganegaraan,ormas,orpol,kedukmas,thn_lulus,no_stambuk_alumni,tempat_lahir,hub_kel,keterangan,ktp');
+		$this->db->select("DATE_FORMAT(tgl_lahir_keluarga,'%d-%m-%Y') as tgl_lahir_keluarga",false);
+		$this->db->select("DATE_FORMAT(tgl_wafat,'%d-%m-%Y') as tgl_wafat",false);
         $this->db->from('ms_keluarga');
         $this->db->where('no_registrasi',$no_registrasi);
         
@@ -236,10 +291,12 @@ class Mtmi extends CI_Model
         $this->db->from('ms_kecakapan_santri');
         $this->db->where('no_registrasi',$no_registrasi);
         
-        return $this->db->get()->result();
+        return $this->db->get()->row_array();
 	}
 	
 	function addto_data_santri($no_registrasi,$data_santri){
+		// var_dump($data_santri);
+		// exit();
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->update('ms_santri',$data_santri);
 
@@ -283,5 +340,26 @@ class Mtmi extends CI_Model
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->delete('ms_kecakapan_santri');
 	}
+
+	function get_gedung(){
+		$data = $this->db->query ("SELECT * FROM ms_gedung ORDER BY kode_gedung");
+		return $data;
+	}
+
+	function get_kamar(){
+		$data = $this->db->query ("SELECT * FROM ms_kamar ORDER BY kode_kamar");
+		return $data;
+	}
+
+	function get_kelas(){
+		$data = $this->db->query ("SELECT * FROM ms_kelas ORDER BY kode_kelas");
+		return $data;
+	}
+
+	function get_bagian(){
+		$data = $this->db->query ("SELECT * FROM ms_bagian ORDER BY kode_bagian");
+		return $data;
+	}
+	
 	
 }

@@ -1290,7 +1290,7 @@ class Pendaftaran extends IO_Controller
 					
 					if(substr($no_terakhir,0,5)==$awalan)
 					{
-						$akhiran 		= str_pad($sequence_db+1, 3, "0", STR_PAD_LEFT);
+						$akhiran 		= str_pad($sequence_db+1, 4, "0", STR_PAD_LEFT);
 						$no_registrasi 	= $awalan.$akhiran;
 					}
 					else if(substr($no_terakhir,0,5)!=$awalan)
@@ -1330,6 +1330,8 @@ class Pendaftaran extends IO_Controller
 				'kel_sekarang' 			=> $kel_sekarang,
 				// 'user' 					=> $user
 			);
+			// var_dump($data_santri);
+			// exit();
 
 			$new_no_registrasi=$this->new_no_registrasi($kategori_santri);			
 			//update no_registrasi ke no baru
@@ -1353,10 +1355,6 @@ class Pendaftaran extends IO_Controller
 	{
 		$this->model->delete_all_data_santri($no_registrasi);
 	}
-		
-
-
-
 
 }
 

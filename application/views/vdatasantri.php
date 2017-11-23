@@ -3,7 +3,7 @@
 <script src="<?=base_url()?>assets/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js" type="text/javascript"></script>
 
 <script src="<?php echo base_url(); ?>assets/plugins/maskMoney/jquery.maskMoney.js"></script>
-<script src="<?php echo base_url(); ?>js/jpendaftaran.js"></script>
+<script src="<?php echo base_url(); ?>js/jdatasantri.js"></script>
 <script type="text/javascript">
     var base_url = "<?php echo base_url(); ?>";
 </script>
@@ -21,13 +21,9 @@
                   </div>
                 </div>
                 <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
-                    <button class="btn btn-default " type="button" onclick="addSantri()">
+                    <!-- <button class="btn btn-default " type="button" onclick="addSantri()">
                         <i class="fa fa-edit"></i>&nbsp;Tambah Data&nbsp;
-                    </button>
-                    <!-- <ul class="dropdown-menu" role="menu">
-                      <li><a href="#" onclick="addSantri('TMI')"> TMI </a></li>
-                      <li><a href="#" onclick="addSantri('AITAM')"> AITAM </a></li>
-                    </ul> -->
+                    </button> -->
                     <button type="button" class="btn btn-default" title="Search Data" onclick="Modalcari()">
                         <i class="fa fa-search"></i>&nbsp;Search
                     </button>
@@ -109,7 +105,7 @@
                                         <a href="#tab_penyakitn" data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Penyakit</a>
                                     </li>
                                     <li>
-                                        <a href="#tab_kecakapan"  <?php if($kategori_santri != 'TMI'){echo 'class="hidden"';} ?> data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Kecakapan Khusus</a>
+                                        <a href="#tab_kecakapan" <?php if($kategori_santri != 'TMI'){echo 'class="hidden"';} ?> data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Kecakapan Khusus</a>
                                     </li>
                                     <li>
                                         <a href="#tab_lampiran" data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Lampiran</a>
@@ -1877,9 +1873,9 @@
                     <a href="javascript:;" class="btn btn-sm green-jungle" onclick="svSantri()" id="save_button_footer">
                         <i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;SIMPAN
                     </a>
-                    <a href="javascript:;" class="btn btn-sm green-jungle" onclick="AddTOSantri()" id="addto_button_footer">
+                    <!-- <a href="javascript:;" class="btn btn-sm green-jungle" onclick="AddTOSantri()" id="addto_button_footer">
                         <i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Jadikan Santri
-                    </a>
+                    </a> -->
                     <img id="load_save" style="margin-left:5px;display: none"
                         src="<?php echo base_url(); ?>images/pre_loader.gif" />
                 </div>

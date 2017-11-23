@@ -197,10 +197,10 @@ function refresh_table()
 							content_data 	+= "<td>"+data[i].bulan+"</td>"; //mata pelajaran
 							content_data 	+= '<td>'+data[i].minggu+'</td>'; //Minggu
 							content_data 	+= '<td>'+data[i].hari+'/'+data[i].jam+'</td>'; //Hari/Hissoh
-							content_data 	+= '<td><input type="text" class="form-control" name="'+materi_pokok+'" id="'+materi_pokok+'" onkeydown="OtomatisKapital(this)" value="باب الكلام" required></td>'; //Materi Pokok
-							content_data 	+= '<td><input type="text" class="form-control" name="'+waktu+'" id="'+waktu+'" onkeydown="OtomatisKapital(this)" value="45" required></td>'; //Waktu
-							content_data 	+= '<td><input type="text" class="form-control" name="'+tiu+'" id="'+tiu+'" onkeydown="OtomatisKapital(this)" value="ترجي قدرة التلاميد علي  معرفة اقسام الكلام" required></td>'; //TIU/TIK
-							content_data 	+= '<td><input type="text" class="form-control" name="'+pr+'" id="'+pr+'" onkeydown="OtomatisKapital(this)" value="عمل الحجرة" required></td>'; //Jenis Tagihan PR/UH HP / PK								
+							content_data 	+= '<td><input type="text" class="form-control" name="'+materi_pokok+'" id="'+materi_pokok+'" onkeydown="OtomatisKapital(this)" required></td>'; //Materi Pokok
+							content_data 	+= '<td><input type="text" class="form-control" name="'+waktu+'" id="'+waktu+'" onkeydown="OtomatisKapital(this)" required></td>'; //Waktu
+							content_data 	+= '<td><input type="text" class="form-control" name="'+tiu+'" id="'+tiu+'" onkeydown="OtomatisKapital(this)" required></td>'; //TIU/TIK
+							content_data 	+= '<td><input type="text" class="form-control" name="'+pr+'" id="'+pr+'" onkeydown="OtomatisKapital(this)"  required></td>'; //Jenis Tagihan PR/UH HP / PK								
 							content_data 	+= "</tr>";
 										
 							if(i<1){

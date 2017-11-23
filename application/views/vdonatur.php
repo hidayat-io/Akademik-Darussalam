@@ -115,7 +115,7 @@
                                                         <span class="input-group-addon">
                                                             Alamat
                                                         </span>
-                                                        <input type="text" class="form-control" name="alamat" id="alamat" onkeydown="OtomatisKapital(this)" maxlength="20" required></div>
+                                                        <input type="text" class="form-control" name="alamat" id="alamat" onkeydown="OtomatisKapital(this)" maxlength="20" ></div>
                                                     </div>
                                                       <!--span-->
                                                       <!--span-->
