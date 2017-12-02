@@ -70,7 +70,7 @@ class Tabungan_model extends CI_Model {
 	    	$sql = "INSERT INTO santri_saldo(no_registrasi,saldo,recuser)
 	    				VALUES('".$noregis."',".$nom.",'".$user."')
 	    					ON DUPLICATE KEY UPDATE saldo=(saldo".$operator.$nom."),recuser='".$user."'";
-	    	
+
 	    	$this->db->query($sql);
 
 
@@ -78,7 +78,7 @@ class Tabungan_model extends CI_Model {
     	$this->db->delete('trans_tabungan');
     }
 
-    function update_saldo($noreg,$tipe,$nominal,$user){
+	function update_saldo($noreg,$tipe,$nominal,$user){
 
     	$operator=$tipe=='i'?'+':'-';
 
@@ -100,7 +100,7 @@ class Tabungan_model extends CI_Model {
     }
 
     function query_getdatasaldo($nosantri){
-     	
+
 		$sql ="SELECT * from santri_saldo WHERE no_registrasi='$nosantri'";
 
 		return $this->db->query($sql)->row();
@@ -110,10 +110,10 @@ class Tabungan_model extends CI_Model {
 
         $cols = array('no_registrasi','nama_lengkap','kelas_sekolah','saldo','nominal');
 
-        $sql = "SELECT a.no_registrasi,nama_lengkap, kelas_sekolah, nominal, saldo 
-					FROM ms_santri a 
+        $sql = "SELECT a.no_registrasi,nama_lengkap, kelas_sekolah, nominal, saldo
+					FROM ms_santri a
 				INNER JOIN ms_santri_pengeluaran b
-					ON a.no_registrasi=b.no_registrasi 
+					ON a.no_registrasi=b.no_registrasi
 				INNER JOIN santri_saldo c
 					ON a.no_registrasi = c.no_registrasi";
 

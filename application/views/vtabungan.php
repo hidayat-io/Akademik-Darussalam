@@ -58,19 +58,18 @@
 
   <!-- modal add -->
 
-
 <div id="m_add" class="modal fade bs-modal-lg" tabindex="-1" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="portlet box green-jungle">
             <div class="portlet-title">
-                <div class="caption">                    
+                <div class="caption">
                     <h4 class="modal-title" id="lbl_titel"></h4>
                 </div>
                 <div class="tools">
                   <div class="btn-group pull-right">
                     <i class="glyphicon glyphicon-remove cur-hand" data-dismiss="modal"></i>
                   </div>
-                </div>           
+                </div>
             </div>
             <div class="portlet-body">
                 <form action="#" id="frmtabungan" class="form-horizontal">
@@ -88,7 +87,7 @@
                                 </li>
                             </ul>
                             <div class="tab-content">
-                                <div class="tab-pane fade active in" id="tab_in">                                        
+                                <div class="tab-pane fade active in" id="tab_in">
                                     <div class="form-group">
                                         <label class="control-label col-md-2"></label>
                                         <div class="col-md-8">
@@ -122,7 +121,7 @@
                                                 <input type="text" class="form-control spinner inp" placeholder="Saldo Tabungan"
                                                 name="txtsaldotabungan" id="txtsaldotabungan" readonly="">
                                             </div>
-                                               
+
                                         </div>
                                     </div>
 
@@ -161,13 +160,15 @@
                                     <div class="form-action col-sm-offset-2">
                                         <button type="button" class="btn default" data-dismiss="modal">Batal</button>
                                         <button type="button" class="btn green-jungle" onclick="simpantabungan()">Simpan</button>
-                                    </div>                                    
+                                    </div>
                                 </div>
+
                                 <div class="tab-pane fade" id="tab_out">
+									<input type="hidden" name="hid_list_siswa" id="hid_list_siswa" />
                                     <div class="form-group">
                                         <label class="control-label col-md-2" style="text-align: left; padding-right: 0px">Jumlah Pengambilan</label>
                                         <div class="col-md-3" style="text-align: left">
-                                            <input class="form-control" placeholder="Jumlah Pengambilan" type="text">
+                                            <input class="form-control" placeholder="Jumlah Pengambilan" type="text" id="txt_jml_ambil" name="txt_jml_ambil">
                                         </div>
                                         <button type="button" class="btn blue pull-right" style="margin-right: 20px" onclick="modalCariSiswa()">
                                             <i class="fa fa-search"></i>&nbsp;Cari Data
@@ -176,11 +177,12 @@
                                             <i class="glyphicon glyphicon-log-out "></i>&nbsp;Simpan Pengeluaran
                                         </button>
                                     </div>
-                                    <table id="tb_list_siswa" 
-                                        data-toggle="table" 
-                                        data-url="<?php echo base_url(); ?>Tabungan/get_list_santri_pengeluaran" 
-                                        data-height="500" 
-                                        data-search="false" 
+
+                                    <table id="tb_list_siswa"
+                                        data-toggle="table"
+                                        data-url="<?php echo base_url(); ?>Tabungan/get_list_santri_pengeluaran"
+                                        data-height="500"
+                                        data-search="false"
                                         data-pagination="false"
                                         data-query-params="queryParamPengeluaranSantri">
                                         <thead>
@@ -207,11 +209,11 @@
                                             </tr>
                                         </thead>
                                     </table>
-                                        
+
                                 </div>
                             </div>
                         </div>
-                    </div>               
+                    </div>
                 </form>
             </div>
         </div>

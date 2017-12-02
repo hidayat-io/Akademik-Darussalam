@@ -53,46 +53,73 @@ class Tabungan extends IO_Controller {
 
         echo json_encode($ar_emp);
     }
-    
 
     function save_data(){
 
-		$input = $this->input->post();
+		$input 	= $this->input->post();
+		$user 	= $this->session->userdata('logged_in')['uid'];
 
-		$id_data 		= $input['hid_id_data'];
-		$old_saldo 		= $input['hid_old_nominal'];
-		$tgl 			= io_return_date('d-m-Y',$input['txttgl']);
-		$user 			= $this->session->userdata('logged_in')['uid'];
+		if($input['hid_tipe_transaksi']=='i'){ //save tabungan IN
 
-		$data = array(
+			$id_data 		= $input['hid_id_data'];
+			$old_saldo 		= $input['hid_old_nominal'];
+			$tgl 			= io_return_date('d-m-Y',$input['txttgl']);
 
-			'no_registrasi'		=> $input['opt_noreg'],
-			'tgl_tabungan'		=> $tgl,
-			'tipe'				=> $input['hid_tipe_transaksi'],
-			'nominal'			=> $input['txtnominal'],
-			'keterangan'		=> $input['txtketerangan'],
-			'userid'			=> $user
-		);
+			$data = array(
 
-		if($id_data==""){
+				'no_registrasi'		=> $input['opt_noreg'],
+				'tgl_tabungan'		=> $tgl,
+				'tipe'				=> $input['hid_tipe_transaksi'],
+				'nominal'			=> $input['txtnominal'],
+				'keterangan'		=> $input['txtketerangan'],
+				'userid'			=> $user
+			);
 
-			$this->tabungan_model->insert_new($data);
+			if($id_data==""){ //insert new data
+
+				$this->tabungan_model->insert_new($data);
+			}
+			else{ //update data
+
+				//remove old nominal
+				$this->tabungan_model->update_saldo($input['opt_noreg'],'o',$old_saldo ,$user);
+				$this->tabungan_model->update_data($id_data,$data);
+			}
+
+			//update table saldo
+			$this->tabungan_model->update_saldo($input['opt_noreg'],$input['hid_tipe_transaksi'],$input['txtnominal'],$user);
+
+			//if cek kalkulasi pengeluaran harian is checked
+			if(isset($input['chk_kalkulasi'])){
+
+				$this->calculate_limit_pengeluaran($input['opt_noreg']);
+			}
 		}
-		else{
+		else{ //save tabungan OUT
 
-			//remove old nominal
-			$this->tabungan_model->update_saldo($input['opt_noreg'],'o',$old_saldo ,$user);
+			$list_siswa = json_decode($input['hid_list_siswa']);
+			$tgl 		= date('Y/m/d');
 
-			$this->tabungan_model->update_data($id_data,$data);
-		}
+			for($i=0;$i<count($list_siswa);$i++){
 
-		//update table saldo
-		$this->tabungan_model->update_saldo($input['opt_noreg'],$input['hid_tipe_transaksi'],$input['txtnominal'],$user);
+				$noreg 		= $list_siswa[$i]->no_registrasi;
+				$nominal  	= $input['txt_jml_ambil'];
 
-		//if cek kalkulasi pengeluaran harian is checked
-		if(isset($input['chk_kalkulasi'])){
+				$data = array(
 
-			$this->calculate_limit_pengeluaran($input['opt_noreg']);
+					'no_registrasi'		=> $noreg,
+					'tgl_tabungan'		=> $tgl,
+					'tipe'				=> 'o',
+					'nominal'			=> $nominal,
+					'userid'			=> $user
+				);
+
+				//save new data
+				$this->tabungan_model->insert_new($data);
+
+				//update table saldo
+				$this->tabungan_model->update_saldo($noreg,'o',$nominal,$user);
+			}
 		}
 	}
 
@@ -123,8 +150,22 @@ class Tabungan extends IO_Controller {
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
 
-			$act = '<a class="btn btn-primary btn-xs btn-flat" href="#" onclick="editdata(\''.$data[$i]->id.'\')">Edit</a>&nbsp;';
-			$act .= '<a class="btn btn-danger btn-xs btn-flat" href="#" onclick="deleteData(\''.$data[$i]->id.'|'.$data[$i]->tipe.'|'.$data[$i]->nominal.'|'.$data[$i]->no_registrasi.'|'.$data[$i]->saldo.'\')">Delete</a>&nbsp;';
+			$act = '';
+
+			if($data[$i]->tipe=='i'){ // hanya transaksi in yang dapat diedit / transaksi out tidak
+
+				$act = '<button type="button" class="btn blue btn-xs" title="LIHAT & EDIT DATA" onclick="editdata(\''.$data[$i]->id.'\')">
+		                	<i class="fa fa-edit"></i>
+		                </button>';
+			}
+
+			$act.= '<button type="button" class="btn red btn-xs" title="HAPUS DATA" onclick="deleteData(\''.$data[$i]->id.'|'.$data[$i]->tipe.'|'.$data[$i]->nominal.'|'.$data[$i]->no_registrasi.'|'.$data[$i]->saldo.'\')">
+						<i class="fa fa-trash"></i>
+					</button>';
+
+
+			// $act = '<a class="btn btn-primary btn-xs btn-flat" href="#" onclick="editdata(\''.$data[$i]->id.'\')">Edit</a>&nbsp;';
+			// $act .= '<a class="btn btn-danger btn-xs btn-flat" href="#" onclick="deleteData(\''.$data[$i]->id.'|'.$data[$i]->tipe.'|'.$data[$i]->nominal.'|'.$data[$i]->no_registrasi.'|'.$data[$i]->saldo.'\')">Delete</a>&nbsp;';
 
 			$records["data"][] = array(
 
@@ -149,9 +190,7 @@ class Tabungan extends IO_Controller {
 
 	function hapus_data($str){
 
-
 		$param = explode('|', urldecode($str));
-
 
 		$id 		= $param[0];
 		$tipe 		= $param[1];
@@ -185,7 +224,7 @@ class Tabungan extends IO_Controller {
 	}
 
 	function excel_tabungan(){
-		// hasil decode // 
+		// hasil decode //
 		$str = base64_decode($this->uri->segment(3));
 
 		// merubah hasil decode dari string ke json //
@@ -235,7 +274,7 @@ class Tabungan extends IO_Controller {
 				$this->excel->getActiveSheet()->setCellValue('E'.$i, $tp);
 				$this->excel->getActiveSheet()->setCellValue('F'.$i, $row->nominal);
 				$this->excel->getActiveSheet()->setCellValue('G'.$i, $row->keterangan);
-				
+
 				$i++;
 			}
 		}
@@ -306,7 +345,7 @@ class Tabungan extends IO_Controller {
     }
 
     function get_saldo($nosantri=null){
-    	
+
     	if($nosantri!=null){
 
     		$data = $this->tabungan_model->query_getdatasaldo($nosantri);
@@ -401,7 +440,7 @@ class Tabungan extends IO_Controller {
 	function get_list_santri(){
 
     	$data_santri = $this->mcommon->query_list_santri();
-    	
+
     	echo json_encode($data_santri);
     }
 }

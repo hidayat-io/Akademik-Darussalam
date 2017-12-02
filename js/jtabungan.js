@@ -26,7 +26,7 @@ $(document).ready(function(){
 	});
 
 	var today = "<?=date('d-m-Y')?>";
-	$('.datepicker').datepicker({        
+	$('.datepicker').datepicker({
         autoclose: true,
         format: 'dd-mm-yyyy',
         endDate: "today",
@@ -54,7 +54,7 @@ $(document).ready(function(){
 
 		if(tipe=='o'){
 
-			$('#tb_list_santri').bootstrapTable('resetView');	
+			$('#tb_list_santri').bootstrapTable('resetView');
 		}
 	});
 });
@@ -66,7 +66,7 @@ function populateSelectSantri(){
         url: base_url+'tabungan/get_list_santri',
         dataType: 'json',
         success: function(json) {
-        	
+
             var $el 	= $("#opt_noreg");
             var $els 	= $("#opt_snoreg");
 
@@ -85,7 +85,7 @@ function populateSelectSantri(){
                 $els.append($("<option></option>")
                         .attr("value", value['no_registrasi']).text(value['no_registrasi']+' - '+value['nama_lengkap']));
             });
-            
+
         }
     });
 }
@@ -97,20 +97,20 @@ function populateSelectKelas(){
         url: base_url+'common/get_list_kelas',
         dataType: 'json',
         success: function(json) {
-        	
+
             var $el 	= $("#opt_skelas");
 
             $el.empty(); // remove old options
 
             $el.append($("<option></option>")
-                    .attr("value", '').text('- Please Select -'));            
+                    .attr("value", '').text('- Please Select -'));
 
             $.each(json, function(index, value) {
 
                 $el.append($("<option></option>")
                         .attr("value", value['kode_kelas']).text(value['kode_kelas']+' - '+value['nama']));
             });
-            
+
         }
     });
 }
@@ -122,13 +122,13 @@ function populateSelectKamar(){
         url: base_url+'common/get_list_kamar',
         dataType: 'json',
         success: function(json) {
-        	
+
             var $el 	= $("#opt_skamar");
 
             $el.empty(); // remove old options
 
             $el.append($("<option></option>")
-                    .attr("value", '').text('- Please Select -'));            
+                    .attr("value", '').text('- Please Select -'));
 
             $.each(json, function(index, value) {
 
@@ -198,19 +198,8 @@ function simpantabungan(){
 		}
 
 		var title = "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
-		
 
-		bootbox.alert({
-			size:'small',
-			title:title,
-			message:str_message,
-			buttons:{
-				ok:{
-					label: 'OK',
-					className: 'btn-warning'
-				}
-			}
-		});
+		showMessage(title,str_message);
 		return false;
 	}
 
@@ -384,11 +373,87 @@ function modalCariSiswa(){
 function searchDataSantri(){
 
 	$('#tb_list_siswa').bootstrapTable('refresh');
-	$('#modal_search_siswa').modal('hide');	
+	$('#modal_search_siswa').modal('hide');
 }
 //end modal search data santri
 
 function savePengeluaran(){
 
-	
+	var dataSiswa 	= $('#tb_list_siswa').bootstrapTable('getSelections');
+	var jmlAmbil 	= $('#txt_jml_ambil').val().trim()!=''?$('#txt_jml_ambil').val():0;
+		jmlAmbil 	= parseInt(jmlAmbil);
+
+	if(dataSiswa.length < 1){
+
+		var str_message = "Belum ada data yang dipilih.";
+		var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
+
+		showMessage(title,str_message);
+	}
+	else if(jmlAmbil <= 0){
+
+		var str_message = "Jumlah pengambilan harus lebih dari 0 (nol).";
+		var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Jumlah Pengambilan";
+
+		showMessage(title,str_message);
+	}
+	else{
+
+		//validate daily limit
+		for(i=0;i<dataSiswa.length;i++){
+
+			if(parseInt(dataSiswa[i].saldo) < jmlAmbil){
+
+				var siswa_name 	= dataSiswa[i].nama_lengkap;
+				var str_message = "Saldo untuk siswa : "+siswa_name+" tidak mencukupi.";
+				var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Saldo.";
+
+				showMessage(title,str_message);
+				return false;
+			}
+
+			if(jmlAmbil > parseInt(dataSiswa[i].limit)){
+
+				var siswa_name 	= dataSiswa[i].nama_lengkap;
+				var str_message = "Limit untuk siswa : "+siswa_name+" melebihi jumlah yang akan diambil.";
+				var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Limit.";
+
+				showMessage(title,str_message);
+				return false;
+			}
+		}
+
+		var str_list_siswa = JSON.stringify(dataSiswa);
+
+		$('#hid_list_siswa').val(str_list_siswa);
+
+		$("#frmtabungan").ajaxSubmit({
+			url:base_url+"tabungan/save_data",
+			type: 'post',
+			success: function(){
+
+				var table = $('#tb-list').DataTable();
+				table.ajax.reload( null, false );
+				table.draw();
+				$('#m_add').modal('toggle');
+
+				$('#tb_list_siswa').bootstrapTable('refresh');
+			}
+		});
+	}
+}
+
+function showMessage(title,str_message){
+
+	bootbox.alert({
+		size:'small',
+		title:title,
+		message:str_message,
+		buttons:{
+			ok:{
+				label: 'OK',
+				className: 'btn-warning'
+			}
+		}
+	});
 }
