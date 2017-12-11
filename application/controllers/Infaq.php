@@ -24,14 +24,16 @@ class Infaq extends IO_Controller
 		$input = $this->input->post();
 
 
-		$id_data 		= $input['hid_id_data'];
-		$id_data_saldo 	= $input['hid_data_saldo'];
+		$id_data 			= $input['hid_id_data'];
+		$id_data_saldo 		= $input['hid_data_saldo']; 
+		$hid_data_nm_awl 	= $input['hid_data_nm_awl'];
 
 		$hid_id_data_tipe 	= $input['hid_id_data_tipe'];
 
-		$tgl 			= io_return_date('d-m-Y',$input['txttgl']);
+		$tgl 				= io_return_date('d-m-Y',$input['txttgl']);
+		$tglkl 				= io_return_date('d-m-Y',$input['txttglkl']);
 
-		$user 			= $this->session->userdata('logged_in')['uid'];
+		$user 				= $this->session->userdata('logged_in')['uid'];
 
 
 		if($hid_id_data_tipe=="tab_in"){
@@ -41,25 +43,55 @@ class Infaq extends IO_Controller
 			$tipe ="o";	
 		}
 
-		$data = array(
-			'id_donatur'		=> $input['opt_donatur'],
-			'tgl_infaq'			=> $tgl,
-			'tipe'				=> $tipe,
-			'nominal'			=> $input['txtnominal'],
-			'keterangan'		=> $input['txtketerangan'],
-			'userid'			=> $user
-		);
 
+		if($hid_id_data_tipe =="tab_in"){
 
-		if($id_data==""){
+				$data = array(
+				'id_donatur'		=> $input['opt_donatur'],
+				'tgl_infaq'			=> $tgl,
+				'tipe'				=> $tipe,
+				'nominal'			=> $input['txtnominal'],
+				'keterangan'		=> $input['txtketerangan'],
+				'userid'			=> $user
+				);
 
-			$this->Minfaq->insert_new($data);
-			$this->Minfaq->update_saldo($input['opt_donatur'],$tipe,$input['txtnominal'],$user);
+				if($id_data==""){
+
+					$this->Minfaq->insert_new($data);
+					$this->Minfaq->update_saldo($input['opt_donatur'],$tipe,$input['txtnominal'],$user);
+				}
+				else{
+
+					$this->Minfaq->update_data($id_data,$data);
+					$this->Minfaq->update_saldo_updt_EDT($input['opt_donatur'],$tipe,$input['txtnominal'],$user,$id_data_saldo,$hid_data_nm_awl);
+				}
+
 		}
+
 		else{
 
-			$this->Minfaq->update_data($id_data,$data);
-			$this->Minfaq->update_saldo_updt($input['opt_donatur'],$input['txtnominal'],$user,$id_data_saldo);
+			$data = array(
+				'id_donatur'		=> $input['opt_donatur2'],
+				'tgl_infaq'			=> $tglkl,
+				'tipe'				=> $tipe,
+				'nominal'			=> $input['txtnominalkl'],
+				'keterangan'		=> $input['txtketerangankl'],
+				'userid'			=> $user
+				);
+
+			if($id_data==""){
+
+					$this->Minfaq->insert_new_kl($data);
+					$this->Minfaq->update_saldo_kl($input['opt_donatur2'],$tipe,$input['txtnominalkl'],$user);
+				}
+				else{
+
+				$this->Minfaq->update_data($id_data,$data);
+				$this->Minfaq->update_data_saldo_kl($input['opt_donatur2'],$tipe,$input['hid_data_nm_awl'],$input['txtnominalkl'],$input['txtsaldo'],$user);
+				}
+
+						
+
 		}
 	}
 
@@ -99,11 +131,12 @@ class Infaq extends IO_Controller
 		for($i = $iDisplayStart; $i < $end; $i++) {
 
 			$act = '<a class="btn btn-primary btn-xs btn-flat" href="#" onclick="editdata(\''.$data[$i]->id_infaq.'\')">Edit</a>&nbsp;';
-			$act .= '<a class="btn btn-danger btn-xs btn-flat" href="#" onclick="deleteData(\''.$data[$i]->id_infaq.'|'.$data[$i]->tipe.'|'.$data[$i]->nominal.'|'.'\')">Delete</a>&nbsp;';
+			$act .= '<a class="btn btn-danger btn-xs btn-flat" href="#" onclick="deleteData(\''.$data[$i]->id_infaq.'|'.$data[$i]->tipe.'|'.$data[$i]->nominal.'|'.$data[$i]->id_donatur.'|'.$data[$i]->saldo.'|'.'\')">Delete</a>&nbsp;';
 
 			$records["data"][] = array(
 
 				$data[$i]->id_infaq,
+				$data[$i]->id_donatur,
 				$data[$i]->nama_donatur,
 				$data[$i]->alamat,
 				io_date_format($data[$i]->tgl_infaq,$fdate),
@@ -143,6 +176,11 @@ class Infaq extends IO_Controller
 		echo json_encode($data);
 	}
 
+	function get_saldo_infaq($id){
+		$data = $this->Minfaq->quey_getdata_saldoinfaq($id);
+		echo json_encode($data);
+	}
+
 	//menghapus data
 	function hapus_data($str){
 
@@ -150,16 +188,18 @@ class Infaq extends IO_Controller
 		$param = explode('|', urldecode($str));
 
 
-		$id 		= $param[0];
-		$tipe 		= $param[1];
-		$nom 		= $param[2];
+		$id 			= $param[0];
+		$tipe 			= $param[1];
+		$nom 			= $param[2];
+		$id_donatur 	= $param[3];
+		$saldo 			= $param[4];
 		//$keytrans 	= $param[3];
 		//$saldo_temp	= $param[4];
 		$user 		= $this->session->userdata('logged_in')['uid'];
 
 		// melempar data ke model untuk execute berdasarkan //
 		// parameter yang diberikan //
-		$this->Minfaq->m_hapus_data($id,$tipe,$nom,$user);
+		$this->Minfaq->m_hapus_data($id,$id_donatur,$tipe,$nom,$saldo,$user);
 	}
 
 	// menampilkan data ke dalam excel

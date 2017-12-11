@@ -24,7 +24,6 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>ID Donatur</th>
                                     <th>Nama</th>
                                     <th>Alamat</th>
                                     <th>Tanggal</th>
@@ -59,18 +58,15 @@
 
                     <input type="hidden" name="hid_id_data" value="" />
                     <input type="hidden" name="hid_data_saldo" value="" id="hid_data_saldo" />
-                    <input type="hidden" name="hid_data_nm_awl" value="" id="hid_data_nm_awl" />
-                    <input type="hidden" name="hid_id_data_tipe" value="" id="hid_id_data_tipe" />
-
 
                     <div class="form-body">
                             <div class="portlet-body">
                                 <ul class="nav nav-pills">
-                                    <li class="active" id="tab_in" >
-                                        <a href="#tab_2_1" id="tab_masuk" data-toggle="tab">Uang Pemasukan Infaq</a>
+                                    <li class="active" id="tab_in">
+                                        <a href="#tab_2_1" data-toggle="tab">Uang Pemasukan Infaq</a>
                                     </li>
                                     <li id="tab_out">
-                                        <a href="#tab_2_2" id="tab_keluar" data-toggle="tab" name="tab_2_2">Uang Pengeluaran Infaq</a>
+                                        <a href="#tab_2_2" data-toggle="tab">Uang Pengeluaran Infaq</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
@@ -95,7 +91,7 @@
                                                 <label class="control-label col-md-2"></label>
                                                 <div class="col-md-9">
                                                     <div class="input-group">
-                                                        <span class="input-group-addon">Tanggal Pemasukan</span>
+                                                        <span class="input-group-addon">Tanggal</span>
                                                         <input class="form-control datepicker"  type="text" name="txttgl" value="<?php echo date('d-m-Y'); ?>" />
                                                     </div>
                                                 </div>
@@ -131,70 +127,7 @@
                                     </div>
 
                                     <div class="tab-pane fade" id="tab_2_2">
-                                        <p>
-
-                                            <div class="form-group">
-                                                <label class="control-label col-md-2"></label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">Nama</span>
-                                                           <select class="form-control select2" style="width: 100%;" id="opt_donatur2" name="opt_donatur2" onchange="displaysaldo()">
-                                                           </select>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!--inputbbox-->
-                                            <div class="form-group">
-                                                <label class="control-label col-md-2"></label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">Tanggal Pengeluaran</span>
-                                                        <input class="form-control datepicker"  type="text" name="txttglkl" value="<?php echo date('d-m-Y'); ?>" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--span-->
-
-                                            <!--inputbbox-->
-                                            <div class="form-group">
-                                                <label class="control-label col-md-2"></label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">Saldo Saat ini</span>
-                                                        <input type="text" class="form-control spinner numbers-only" name="txtsaldo" id="txtsaldo" readonly="readonly">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--span-->
-
-                                            <!--inputbbox-->
-                                            <div class="form-group">
-                                                <label class="control-label col-md-2"></label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">Nominal Pengeluaran</span>
-                                                        <input type="text" class="form-control spinner numbers-only" name="txtnominalkl" id="txtnominalkl">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--span-->
-
-                                            <!--inputbbox-->
-                                            <div class="form-group">
-                                                <label class="control-label col-md-2"></label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <sspan class="input-group-addon">Keterangan</span>
-                                                        <textarea class="form-control" rows="2" name="txtketerangankl" id="txtketerangankl"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--span-->
-
-
-
+                                        <p>        
                                         </p>
                                     </div>
                                 </div>
@@ -228,27 +161,10 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Nama</label>
                             <div class="col-md-4">
-
-                                <select class="form-control select2" style="width: 100%;" id="opt_dnt_srch" name="opt_dnt_srch">
-                                </select>
-
+                                <input type="text" class="form-control spinner" placeholder="Nama" name="txtnamasearch"
+                                id="txtnamasearch">
                             </div>
                         </div>
-
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Data Range</label>
-                            <div class="col-md-4">
-                                <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
-                                    <input type="text" class="form-control" name="from">
-                                    <span class="input-group-addon"> to </span>
-                                    <input type="text" class="form-control" name="to">
-
-                            </div>
-                        </div>
-
-
-
                     </div>
                 </form>
             </div>

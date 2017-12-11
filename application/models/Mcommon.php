@@ -69,4 +69,10 @@ class Mcommon extends CI_Model {
 
         return $this->db->get('ms_kelas');
     }
+
+    function mget_list_donatur(){
+        $this->db->order_by('nama_donatur');
+        return $this->db->get('ms_donatur')->result();
+    }
+    
 }
