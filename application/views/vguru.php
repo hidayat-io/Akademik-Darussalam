@@ -591,7 +591,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="input-group">
-                                    <span class="input-group-addon">Usia
+                                    <span class="input-group-addon">Tanggal Lahir
                                         <span class="required">*</span>
                                     </span>
                                     <div class="input-icon right" data-date-format="dd-mm-yyyy">

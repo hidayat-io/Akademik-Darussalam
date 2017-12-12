@@ -46,8 +46,10 @@ class Komponen extends IO_Controller
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
 
-			$act ='<a class="btn btn-primary btn-xs btn-flat" href="#" onclick="editdata(\''.$data[$i]->id_komponen.'\')">Edit</a>&nbsp;';
-			$act .= '<a class="btn btn-danger btn-xs btn-flat" href="#" onclick="deleteData(\''.$data[$i]->id_komponen.'\')">Delete</a>&nbsp;';
+			$act ='<a class="btn blue btn-xs" title="UBAH DATA" onclick="editdata(\''.$data[$i]->id_komponen.'\')">
+						<i class="fa fa-edit"></i>
+					<a class="btn red btn-xs" title="HAPUS DATA" onclick="deleteData(\''.$data[$i]->id_komponen.'\')">
+						<i class="fa fa-trash"></i>';
 
 			$records["data"][] = array(
 

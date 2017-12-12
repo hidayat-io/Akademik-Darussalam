@@ -3,6 +3,10 @@ $(document).ready(function(){
 
 	setTable();
 
+	$('#txtsaldo').maskMoney({ precision: 0 });
+	$('#txtnominalkl').maskMoney({ precision: 0 });
+	$('#txtnominal').maskMoney({ precision: 0 });
+
 	$('.datepicker').datepicker({
         rtl: App.isRTL(),
         orientation: "left",
@@ -128,7 +132,7 @@ function pnladd(){
 	$('#txtnominal').val('');
 	$('#txtketerangan').val('');
 	$('#lbl_titel').text('TAMBAH INFAQ');
-
+	kosong();
 	$('#m_add').modal('show');
 }
 
@@ -307,6 +311,7 @@ function setTable(){
 
 
 function editdata(id){
+	kosong();	
 
 	$('#lbl_titel').text('Update Data Tabungan');
 
@@ -369,7 +374,14 @@ function displaysaldo(){
 		success:function(data){
 
 			var data = $.parseJSON(data);
-			$('input[name="txtsaldo"]').val(data['saldo']);
+			if (data == null){
+				$('input[name="txtsaldo"]').val(0);
+			}
+			else{
+				// $('input[name="txtsaldo"]').val(data['saldo']);
+				$('#txtsaldo').val(data['saldo']).maskMoney({ precision: 0 });
+
+			}
 		}
 
 	});
@@ -414,7 +426,20 @@ function searchdata(){
 	$('#m_search').modal('toggle');
 }
 
+function kosong() {
+	$('#tab_masuk').trigger('click');
+	$('#hid_id_data').val('');
+	$('#hid_data_saldo').val('');
+	$('#txtsaldo').val('');
+	$('#txttgl').val('');
+	$('#txtnominal').val('');
+	$('#txtketerangan').val('');
 
+	// ini field data unt
+	$('#txttglkl').val('');
+	$('#txtnominalkl').val('');
+	$('#txtketerangankl').val('');
+}
 
 function downloadExcel(){
 

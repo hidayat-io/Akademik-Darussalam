@@ -50,7 +50,7 @@ class Infaq extends IO_Controller
 				'id_donatur'		=> $input['opt_donatur'],
 				'tgl_infaq'			=> $tgl,
 				'tipe'				=> $tipe,
-				'nominal'			=> $input['txtnominal'],
+				'nominal'			=> str_replace(array('.',','), array('',''),$input['txtnominal']),
 				'keterangan'		=> $input['txtketerangan'],
 				'userid'			=> $user
 				);
@@ -58,12 +58,12 @@ class Infaq extends IO_Controller
 				if($id_data==""){
 
 					$this->Minfaq->insert_new($data);
-					$this->Minfaq->update_saldo($input['opt_donatur'],$tipe,$input['txtnominal'],$user);
+					$this->Minfaq->update_saldo($input['opt_donatur'],$tipe,str_replace(array('.',','), array('',''),$input['txtnominal']),$user);
 				}
 				else{
 
 					$this->Minfaq->update_data($id_data,$data);
-					$this->Minfaq->update_saldo_updt_EDT($input['opt_donatur'],$tipe,$input['txtnominal'],$user,$id_data_saldo,$hid_data_nm_awl);
+					$this->Minfaq->update_saldo_updt_EDT($input['opt_donatur'],$tipe,str_replace(array('.',','), array('',''),$input['txtnominal']),$user,$id_data_saldo,$hid_data_nm_awl);
 				}
 
 		}
@@ -74,7 +74,7 @@ class Infaq extends IO_Controller
 				'id_donatur'		=> $input['opt_donatur2'],
 				'tgl_infaq'			=> $tglkl,
 				'tipe'				=> $tipe,
-				'nominal'			=> $input['txtnominalkl'],
+				'nominal'			=> str_replace(array('.',','), array('',''),$input['txtnominalkl']),
 				'keterangan'		=> $input['txtketerangankl'],
 				'userid'			=> $user
 				);
@@ -82,12 +82,12 @@ class Infaq extends IO_Controller
 			if($id_data==""){
 
 					$this->Minfaq->insert_new_kl($data);
-					$this->Minfaq->update_saldo_kl($input['opt_donatur2'],$tipe,$input['txtnominalkl'],$user);
+					$this->Minfaq->update_saldo_kl($input['opt_donatur2'],$tipe,str_replace(array('.',','), array('',''),$input['txtnominalkl']),$user);
 				}
 				else{
 
 				$this->Minfaq->update_data($id_data,$data);
-				$this->Minfaq->update_data_saldo_kl($input['opt_donatur2'],$tipe,$input['hid_data_nm_awl'],$input['txtnominalkl'],$input['txtsaldo'],$user);
+				$this->Minfaq->update_data_saldo_kl($input['opt_donatur2'],$tipe,$input['hid_data_nm_awl'],str_replace(array('.',','), array('',''),$input['txtnominalkl']),str_replace(array('.',','), array('',''),$input['txtsaldo']),$user);
 				}
 
 						
@@ -130,8 +130,10 @@ class Infaq extends IO_Controller
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
 
-			$act = '<a class="btn btn-primary btn-xs btn-flat" href="#" onclick="editdata(\''.$data[$i]->id_infaq.'\')">Edit</a>&nbsp;';
-			$act .= '<a class="btn btn-danger btn-xs btn-flat" href="#" onclick="deleteData(\''.$data[$i]->id_infaq.'|'.$data[$i]->tipe.'|'.$data[$i]->nominal.'|'.$data[$i]->id_donatur.'|'.$data[$i]->saldo.'|'.'\')">Delete</a>&nbsp;';
+			$act = '<a class="btn blue btn-xs" title="UBAH DATA" onclick="editdata(\''.$data[$i]->id_infaq.'\')">
+						<i class="fa fa-edit"></i>
+					<a class="btn red btn-xs" title="HAPUS DATA" onclick="deleteData(\''.$data[$i]->id_infaq.'|'.$data[$i]->tipe.'|'.$data[$i]->nominal.'|'.$data[$i]->id_donatur.'|'.$data[$i]->saldo.'|'.'\')">
+						<i class="fa fa-trash"></i>';
 
 			$records["data"][] = array(
 
@@ -141,7 +143,7 @@ class Infaq extends IO_Controller
 				$data[$i]->alamat,
 				io_date_format($data[$i]->tgl_infaq,$fdate),
 				$tipe[$data[$i]->tipe],
-				$data[$i]->nominal,
+				number_format($data[$i]->nominal,0,",","."),
 				$data[$i]->keterangan,
 				$act
 			);
@@ -249,7 +251,7 @@ class Infaq extends IO_Controller
 
 				$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
 				$this->excel->getActiveSheet()->setCellValue('B'.$i, io_date_format($row->tgl_infaq,$fdate));
-				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->nama);
+				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->nama_donatur);
 				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->alamat);
 				$this->excel->getActiveSheet()->setCellValue('E'.$i, $tp);
 				$this->excel->getActiveSheet()->setCellValue('F'.$i, $row->nominal);

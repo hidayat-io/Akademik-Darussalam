@@ -59,7 +59,7 @@
                                     <div class="col-md-9">
                                         <div class="input-group">
                                             <span class="input-group-addon">Nama Komponen</span>
-                                            <input type="text" class="form-control spinner"  name="txtnama" id="txtnama">
+                                            <input type="text" class="form-control spinner" onkeydown="OtomatisKapital(this)" name="txtnama" id="txtnama">
                                         </div>
                                     </div>
                             </div>

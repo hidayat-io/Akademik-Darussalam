@@ -1,3 +1,4 @@
+<script src="<?php echo base_url(); ?>assets/plugins/maskMoney/jquery.maskMoney.js"></script>
 <script src="<?php echo base_url(); ?>js/jinfaq.js"></script>
 <input type="hidden" name="hid_param" id="hid_param" value='' />
     <div class="row">
@@ -73,8 +74,8 @@
                                         <a href="#tab_2_2" id="tab_keluar" data-toggle="tab" name="tab_2_2">Uang Pengeluaran Infaq</a>
                                     </li>
                                 </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane fade active in" id="tab_2_1">
+                                <div class="tab-content ">
+                                    <div class="tab-pane fade active in " id="tab_2_1">
                                         <p>
 
                                             <div class="form-group">
@@ -204,9 +205,9 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn dark btn-outline">Cancel</button>
+                <button type="button" data-dismiss="modal" class="btn btn-sm default">Cancel</button>
 
-                <button type="button" class="btn green" onclick="simpaninfaq()">Simpan</button>
+                <button type="button" class="btn btn-sm green-jungle" onclick="simpaninfaq()">Simpan</button>
             </div>
 
         </div>
@@ -254,9 +255,9 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn dark btn-outline">Cancel</button>
+                <button type="button" data-dismiss="modal" class="btn btn-sm default">Cancel</button>
 
-                <button type="button" class="btn blue" onclick="searchdata()">Cari</button>
+                <button type="button" class="btn btn-sm green-jungle" onclick="searchdata()">Cari</button>
             </div>
         </div>
     </div>
