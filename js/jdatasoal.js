@@ -244,7 +244,7 @@ function edit(id_soal){
 			
 			var data = $.parseJSON(data);
 			$('#kode_datasoal').val(data['id_soal']);//untuk membaca kategori saat update
-			$('#id_matpal').val('MP01');
+			$('#id_matpal').val(data['id_matpal']);
 			$('#tingkat').val(data['tingkat']);
 			$('#jawaban_a').val(data['jwb_a']);
 			$('#soal').val(data['soal']);
