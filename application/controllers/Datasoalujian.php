@@ -90,6 +90,9 @@ class datasoalujian extends IO_Controller
 		for($i = $iDisplayStart; $i < $end; $i++) {
 			$act = '<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->id.'\')">
 						<i class="fa fa-remove"></i>
+					</a>
+					<a href="#" class="btn btn-icon-only blue" title="PRINT DATA" onclick="PrintSoal(\''.$data[$i]->id.'\')">
+						<i class="fa fa-print"></i>
 					</a>';
 			// $act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->id.'\')">
 			// 			<i class="fa fa-edit"></i>
@@ -212,6 +215,28 @@ class datasoalujian extends IO_Controller
 		//force user to download the Excel file without writing it to server's HD
 		$objWriter->save('php://output');
 
+	}
+
+	function PrintSoal($id)
+	{
+
+		$this->load->library("pdf");
+
+		// $data['data'] = $this->model->get_print_soal($id)->result();
+		$data['dataheader'] = $this->model->get_print_soal_header($id);
+		$data['databody'] 	= $this->model->get_print_soal($id);
+
+		// print_r($data);
+		// exit();
+
+		// echo $this->load->view('vPrintSoal',$data,true);
+		// exit();
+
+		$this->pdf->load_view('vPrintSoal',$data);
+		// $this->load->view('vPrintSoal');
+		$this->pdf->set_paper("A4", "potrait");
+		$this->pdf->render();
+		$this->pdf->stream("name-file.pdf",array("Attachment"=>0));
 	}
 
 	#region model

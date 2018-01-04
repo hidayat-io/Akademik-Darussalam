@@ -54,6 +54,35 @@ class Mdatasoalujian extends CI_Model
 		$this->db->where('id_hd',$id_hd);
 		$this->db->delete('trans_banksoalDT');
 	}
+
+	function get_print_soal_header($id)
+	{
+		$data = array();
+		$data=$this->db->query("SELECT trans_banksoalhd.id, trans_banksoalhd.kode_soal,  ms_tahun_ajaran.deskripsi , trans_banksoalhd.semester, trans_banksoalhd.tingkat, ms_mata_pelajaran.nama_matpal
+								FROM trans_banksoalhd
+								INNER JOIN ms_tahun_ajaran ON trans_banksoalhd.kurikulum = ms_tahun_ajaran.id
+								INNER JOIN ms_mata_pelajaran ON trans_banksoalhd.id_matpal = ms_mata_pelajaran.id_matpal
+								where trans_banksoalhd.id = '$id'")->row_array();
+								// echo $this->db->last_query();
+								// exit();
+		return $data;
+	}
+
+	function get_print_soal($id)
+	{
+		$data = array();
+		$data=$this->db->query("SELECT trans_banksoalhd.id, ms_tahun_ajaran.deskripsi , trans_banksoalhd.semester, trans_banksoalhd.tingkat, ms_mata_pelajaran.nama_matpal,
+								ms_banksoal.soal, ms_banksoal.jwb_a, ms_banksoal.jwb_b, ms_banksoal.jwb_c, ms_banksoal.jwb_d
+								FROM trans_banksoalhd
+								INNER JOIN ms_tahun_ajaran ON trans_banksoalhd.kurikulum = ms_tahun_ajaran.id
+								INNER JOIN ms_mata_pelajaran ON trans_banksoalhd.id_matpal = ms_mata_pelajaran.id_matpal
+								INNER JOIN trans_banksoaldt ON trans_banksoalhd.id = trans_banksoaldt.id_hd
+								INNER JOIN ms_banksoal ON trans_banksoaldt.id_soal = ms_banksoal.id_soal
+								where trans_banksoalhd.id = '$id'")->result_array();
+								// echo $this->db->last_query();
+								// exit();
+		return $data;
+	}
 	
 	#region model
 	function get_banksoal($param)

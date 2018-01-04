@@ -25,6 +25,7 @@ $(document).ready(function()
 
 });
 
+//#region loadform
 function setTable(){
 	 $('#tb_list').DataTable( {
 		"order": [[ 0, "desc" ]],
@@ -57,23 +58,35 @@ function setTable(){
 	 });
 }
 
-function Modalcari(){
-	clearformcari();
-	$('#Modal_cari').modal('show');
+function hapus(kode_datasoalujian){
+	var str_url  	= encodeURI(base_url+"datasoalujian/Deldatasoalujian/"+kode_datasoalujian);
+	bootbox.confirm("Anda yakin akan menghapus ini ?",
+		function(result){
+			if(result==true){
+				
+			$.ajax({
+			type:"POST",
+			url:str_url,
+			dataType:"html",
+			success:function(data){
+					bootbox.alert({
+						message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Hapus Berhasil Berhasil",
+						size: 'small',
+						callback: function () {
+
+							window.location = base_url+'datasoalujian';
+						}
+					});
+				}
+			});
+			}
+		}
+	);
+	
 }
 
-function SearchAction(){
-	var id_matpal 		= $('#s_idmatpal').val();
-	var param 			= {'id_matpal':id_matpal};
-		param 			= JSON.stringify(param);
-
-	$('#hid_param').val(param);
-
-	var table = $('#tb_list').DataTable();
-	table.ajax.reload( null, false );
-	table.draw();
-
-	$('#Modal_cari').modal('toggle');
+function PrintSoal(id) {
+	window.open(base_url + "datasoalujian/PrintSoal/" + id, '_blank');
 }
 
 var validate_add_datasoalujian = function () {
@@ -133,81 +146,42 @@ function clearvalidate_add_datasoalujian() {
 }
 
 function OtomatisKapital(a){
-    setTimeout(function(){
-        a.value = a.value.toUpperCase();
-    }, 1);
+	setTimeout(function(){
+		a.value = a.value.toUpperCase();
+	}, 1);
 }
 
 function adddatasoalujian(){
-    $('#save_button').text('SAVE');
+	$('#save_button').text('SAVE');
 	clearvalidate_add_datasoalujian();
 	$('#Modal_add_datasoalujian').modal('show');
 }
 
-function ONprosses(){
-
-	bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>SEDANG DALAM PENGERJAAN! </div>",
-		function(result){
-			if(result==true){
-
-			}
-		}
-	);
+function Modalcari(){
+	clearformcari();
+	$('#Modal_cari').modal('show');
 }
+//#endregion load form
 
-function hapus(kode_datasoalujian){
-	var str_url  	= encodeURI(base_url+"datasoalujian/Deldatasoalujian/"+kode_datasoalujian);
-	bootbox.confirm("Anda yakin akan menghapus ini ?",
-		function(result){
-			if(result==true){
-				
-			$.ajax({
-			type:"POST",
-			url:str_url,
-			dataType:"html",
-			success:function(data){
-					bootbox.alert({
-						message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Hapus Berhasil Berhasil",
-						size: 'small',
-						callback: function () {
+//#region modal search
+function SearchAction(){
+	var id_matpal 		= $('#s_idmatpal').val();
+	var param 			= {'id_matpal':id_matpal};
+		param 			= JSON.stringify(param);
 
-							window.location = base_url+'datasoalujian';
-						}
-					});
-				}
-			});
-			}
-		}
-	);
-	
+	$('#hid_param').val(param);
+
+	var table = $('#tb_list').DataTable();
+	table.ajax.reload( null, false );
+	table.draw();
+
+	$('#Modal_cari').modal('toggle');
 }
 
 function clearformcari(){
 	$('#s_kodedatasoalujian').val('');
 }
-
-function downloadExcel(){
-
-	var param 	= $('#hid_param').val();
-	param 		= ioEncode(param);
-
-	window.location = base_url+'datasoalujian/exportexcel/'+param;
-}
-
-function showMessage(title, str_message) {
-
-	bootbox.alert({
-		size: 'small',
-		title: title,
-		message: str_message,
-		buttons: {
-			ok: {
-				label: 'OK',
-				className: 'btn-danger'
-			}
-		}
-	});
-}
+//#endregion modal search
 
 //#region modal bank soal
 function queryParamBankSoal() {
@@ -273,3 +247,29 @@ function svdatasoalujian() {
 
 
 //#endregion bank soal
+
+function ONprosses(){
+
+	bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>SEDANG DALAM PENGERJAAN! </div>",
+		function(result){
+			if(result==true){
+
+			}
+		}
+	);
+}
+
+function showMessage(title, str_message) {
+
+	bootbox.alert({
+		size: 'small',
+		title: title,
+		message: str_message,
+		buttons: {
+			ok: {
+				label: 'OK',
+				className: 'btn-danger'
+			}
+		}
+	});
+}
