@@ -37,7 +37,8 @@ class jadwal_pelajaran extends IO_Controller
 		$vdata['title'] 		= 'JADWAL PELAJARAN UTAMA';
 
 		//json data guru
-		$mguru = $this->mcommon->mget_list_master_guru()->result();
+		$type ='guru';
+		$mguru = $this->mcommon->mget_list_master_guru($type)->result();
 
 		foreach ($mguru as $g) {
 			
@@ -248,6 +249,7 @@ class jadwal_pelajaran extends IO_Controller
 						$hari 			= $this->input->post($input_hari);
 						$guru 			= $this->input->post($input_guru);
 						$jam 			= $this->input->post($input_jam);
+						$kategori		='UTAMA';
 						$data_jadwal_pelajaran = array(
 							'santri' 			=> $santri,
 							'id_thn_ajar' 		=> $id_thn_ajar,
@@ -257,9 +259,12 @@ class jadwal_pelajaran extends IO_Controller
 							'jam' 		      	=> $jam,
 							'hari' 		      	=> $hari,
 							'id_mapel' 		    => $id_mapel,
+							'kategori' 		    => $kategori,
 							'recdate'           => $recdate,
 							'userid' 			=> $userid
 						);
+						// var_dump($data_jadwal_pelajaran);
+						// exit();
 						$this->model->simpan_data_jadwal_pelajaran($data_jadwal_pelajaran);
 						
 					}
@@ -305,6 +310,7 @@ class jadwal_pelajaran extends IO_Controller
 						$hari 			= $this->input->post($input_hari);
 						$guru 			= $this->input->post($input_guru);
 						$jam 			= $this->input->post($input_jam);
+						$kategori		='UTAMA';
 						$data_jadwal_pelajaran = array(
 							'santri' 			=> $santri,
 							'id_thn_ajar' 		=> $id_thn_ajar,
@@ -314,9 +320,12 @@ class jadwal_pelajaran extends IO_Controller
 							'jam' 		      	=> $jam,
 							'hari' 		      	=> $hari,
 							'id_mapel' 		    => $id_mapel,
+							'kategori' 		    => $kategori,
 							'recdate'           => $recdate,
 							'userid' 			=> $userid
 						);
+						// var_dump($data_jadwal_pelajaran);
+						// exit();
 						$this->model->simpan_data_jadwal_pelajaran($data_jadwal_pelajaran);
 						
 					// }

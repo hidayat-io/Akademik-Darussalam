@@ -29,9 +29,13 @@ class Mcommon extends CI_Model {
     	return $this->db->get('ms_guru_jabatan');
     }
 
-    function mget_list_master_guru(){
+    function mget_list_master_guru($type=null){
 
-    	$this->db->order_by('id_guru','desc');
+        $this->db->order_by('id_guru','desc');
+        if($type != null)
+        {
+            $this->db->where('is_pengajar','1');
+        }
     	return $this->db->get('ms_guru');
     }
 
@@ -74,5 +78,10 @@ class Mcommon extends CI_Model {
         $this->db->order_by('nama_donatur');
         return $this->db->get('ms_donatur')->result();
     }
+
+    function get_kurikulum_aktif() {
+		$this->db->select('param_value');
+		return $this->db->get('sys_param')->row();
+	}
     
 }

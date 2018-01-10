@@ -4,7 +4,7 @@
 <script src="<?php echo base_url(); ?>js/jmsconfig.js"></script>
 <!-- page -->
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet box green-jungle">
             <div class="portlet-title">
@@ -32,6 +32,52 @@
                                 <th style="text-align:center">NPSN</th>
                                 <th style="text-align:center">Nama Satuan Pendidikan</th>
                                 <th style="text-align:center">Jenis Lembaga</th>
+                                <th style="text-align:center" width="10%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <td colspan="5" align="center">
+                                Tidak ada data ditemukan.
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+        <!-- table kurikulum -->
+        <div class="col-md-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet box green-jungle">
+            <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-database"></i><?php echo $title2;?>
+                    </div>
+                    <div class="tools">
+                    <div class="btn-group pull-right">
+                        
+                    </div>
+                    </div>
+                    <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
+                        <!-- <button class="btn btn-default " type="button" onclick="addmsconfig()">
+                            <i class="fa fa-edit"></i>&nbsp;Tambah Data&nbsp;
+                        </button> -->
+                    </div>
+                </div>
+                <input type="hidden" name="hid_param2" id="hid_param2" />
+                <div class="portlet-body">
+                    <table class="table table-striped table-bordered table-hover" id="tb_list2">
+                        <thead>
+                            <tr>
+                                <!-- <th style="text-align:center">ID</th> -->
+                                <th style="text-align:center">Tahun Ajar Aktif</th>
+                                <th style="text-align:center">Semester Aktif</th>
                                 <th style="text-align:center" width="10%">Action</th>
                             </tr>
                         </thead>
@@ -139,8 +185,8 @@
         <!-- /.modal-dialog -->
     </div>
 <!-- end of modal msconfig-->
-<!-- modal Cari -->
-    <div class="modal fade draggable-modal" id="Modal_cari" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<!-- modal add Kurikulum -->
+    <div class="modal fade draggable-modal" id="Modal_add_kurikulum" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -156,36 +202,48 @@
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class=" icon-layers font-red"></i>
-                                        <span class="caption-subject font-red sbold uppercase">Form Cari</span>
+                                        <span class="caption-subject font-red sbold uppercase">SETTING DATA TAHUN AJAR & KURIKULUM AKTIF</span>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
                                     <div class="form-body">                                
                                         <!-- BEGIN FORM-->
-                                        <form action="#" id="form_cari">
+                                        <form action="#" id="add_kurikulum">
                                             <!--inputbox-->
                                                 <!--span-->
+                                                <input type="text" class="hidden" name="param_id" id="param_id" />
+                                                    <div class="form-group">
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                Tahun Ajaran
+                                                            </span>
+                                                            <?php
+                                                                $att_item = ' type="text" class="form-control
+                                                                    select input-lg" id="thn_ajar"  name="thn_ajar"';
+                                                                echo form_dropdown('select_thnajar', $kode_deskripsikelas, null, $att_item);
+                                                            ?>                                                           
+                                                        </div>
+                                                    </div>   
+                                                      <!--span-->
                                                     <div class="form-group">
                                                             <label class="control-label"></label>
                                                             <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                nama msconfig
-                                                            </span>
-                                                            <input type="text" class="form-control" name="s_nomor_statistik" id="s_nomor_statistik" onkeydown="OtomatisKapital(this)" required></div>
-                                                    </div>
-                                                <!--span-->
-                                                    <!-- <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            Nama Lengkap
-                                                        </span>
-                                                        <input type="text" class="form-control" name="s_namalengkap" id="s_namalengkap" onkeydown="OtomatisKapital(this)" required></div>
-                                                    </div>      -->
-                                            <!--end inputbox-->
+                                                                <span class="input-group-addon">
+                                                                    Semester
+                                                                </span>
+                                                                <select class="form-control input-lg" name="semester_aktif" id="semester_aktif">
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>   
+                                                      <!--span-->
+                                                      <!--span-->
+                                                   <!--end inputbox-->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn green" onclick="SearchAction()">Search</button>
+                                                <button type="button" class="btn green-jungle" id="save_button" onclick="svkurikulum()">Update</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -201,4 +259,5 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-<!-- end of modal cari-->
+<!-- end of modal kurikulum-->
+

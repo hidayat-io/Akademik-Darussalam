@@ -11,7 +11,8 @@ class Mrpp extends CI_Model
     }
     
     function get_thn_ajar(){
-		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='UTAMA' order by id desc Limit 2 ");
+		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran order by id desc Limit 3 ");
+		// $data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='UTAMA' order by id desc Limit 2 ");
 		return $data;
 	}
 
@@ -34,13 +35,14 @@ class Mrpp extends CI_Model
 
             if($param!=null){
                     
-                    $sql .= " WHERE b.kategori ='UTAMA'".$param;
+                    $sql .= " WHERE ".$param;
+                    // $sql .= " WHERE b.kategori ='UTAMA'".$param;
                     
                 }
-                else
-                {
-                    $sql .= " WHERE b.kategori ='UTAMA'";
-                }
+                // else
+                // {
+                //     $sql .= " WHERE b.kategori ='UTAMA'";
+                // }
 		
 
 		$sql.= " ORDER BY ".$cols[$sortby]." ".$sorttype;
@@ -172,12 +174,29 @@ class Mrpp extends CI_Model
 								where a.id_thn_ajar ='$id_thn_ajar'
 								and a.tingkat = '$tingkat'
 								and a.tipe_kelas = '$tipe_kelas'
-								and b.kategori = 'UTAMA'
 								and d.santri = '$santri'
 								and d.kode_kelas = '$kode_kelas'
 								and d.id_mapel = '$mt_pelajaran'
 								and a.sm_1 > 0
 								order by e.id_semester, f.id_minggu asc")->result_array();
+	// function _GetRPPSM1Tambah($id_thn_ajar,$tingkat,$tipe_kelas,$santri,$kode_kelas,$mt_pelajaran){
+    //     $data = array();
+	// 	$data=$this->db->query("SELECT b.deskripsi, a.id_mapel, c.nama_matpal, a.tingkat, a.tipe_kelas,  a.sm_1, a.sm_2, d.hari, d.jam, e.semester, e.bulan, f.minggu
+	// 							from trans_kurikulum a
+	// 							inner join ms_tahun_ajaran b on a.id_thn_ajar = b.id
+	// 							inner join ms_mata_pelajaran c on a.id_mapel=c.id_matpal
+	// 							inner join trans_jadwal_pelajaran d on a.id_mapel=d.id_mapel
+    //                             inner join ms_semester e on d.semester = e.semester
+	// 							join ms_minggu f
+	// 							where a.id_thn_ajar ='$id_thn_ajar'
+	// 							and a.tingkat = '$tingkat'
+	// 							and a.tipe_kelas = '$tipe_kelas'
+	// 							and b.kategori = 'UTAMA'
+	// 							and d.santri = '$santri'
+	// 							and d.kode_kelas = '$kode_kelas'
+	// 							and d.id_mapel = '$mt_pelajaran'
+	// 							and a.sm_1 > 0
+	// 							order by e.id_semester, f.id_minggu asc")->result_array();
 								// echo $this->db->last_query();
 								// exit();
 		return $data;
@@ -194,12 +213,27 @@ class Mrpp extends CI_Model
 								where a.id_thn_ajar ='$id_thn_ajar'
 								and a.tingkat = '$tingkat'
 								and a.tipe_kelas = '$tipe_kelas'
-								and b.kategori = 'UTAMA'
 								and d.santri = '$santri'
 								and d.kode_kelas = '$kode_kelas'
 								and d.id_mapel = '$mt_pelajaran'
 								and a.sm_2 > 0
 								order by e.id_semester, f.id_minggu asc")->result_array();
+		// $data=$this->db->query("SELECT b.deskripsi, a.id_mapel, c.nama_matpal, a.tingkat, a.tipe_kelas,  a.sm_1, a.sm_2, d.hari, d.jam, e.semester, e.bulan, f.minggu
+		// 						from trans_kurikulum a
+		// 						inner join ms_tahun_ajaran b on a.id_thn_ajar = b.id
+		// 						inner join ms_mata_pelajaran c on a.id_mapel=c.id_matpal
+		// 						inner join trans_jadwal_pelajaran d on a.id_mapel=d.id_mapel
+        //                         inner join ms_semester e on d.semester = e.semester
+		// 						join ms_minggu f
+		// 						where a.id_thn_ajar ='$id_thn_ajar'
+		// 						and a.tingkat = '$tingkat'
+		// 						and a.tipe_kelas = '$tipe_kelas'
+		// 						and b.kategori = 'UTAMA'
+		// 						and d.santri = '$santri'
+		// 						and d.kode_kelas = '$kode_kelas'
+		// 						and d.id_mapel = '$mt_pelajaran'
+		// 						and a.sm_2 > 0
+		// 						order by e.id_semester, f.id_minggu asc")->result_array();
 								// echo $this->db->last_query();
 								// exit();
 		return $data;

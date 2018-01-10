@@ -11,7 +11,8 @@ class Mjadwal_pelajaran_sore extends CI_Model
     }
     
     function get_thn_ajar(){
-		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='SORE' order by id desc Limit 2 ");
+		// $data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='SORE' order by id desc Limit 2 ");
+		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran  order by id desc Limit 3 ");
 		return $data;
 	}
 
@@ -34,12 +35,13 @@ class Mjadwal_pelajaran_sore extends CI_Model
 
                 if($param!=null){
                     
-                    $sql .= " WHERE b.kategori ='SORE'".$param;
+                    // $sql .= " WHERE ".$param;
+                    $sql .= " WHERE a.kategori ='SORE'".$param;
                     
                 }
                 else
                 {
-                    $sql .= " WHERE b.kategori ='SORE'";
+                    $sql .= " WHERE a.kategori ='SORE'";
                 }
 		
 
@@ -98,6 +100,18 @@ class Mjadwal_pelajaran_sore extends CI_Model
 
 	function QueryGetKurikulumSM1($id_thn_ajar,$tingkat,$tipe_kelas,$kode_kelas,$santri){
         $data = array();
+		// $data=$this->db->query("SELECT DISTINCT b.deskripsi, a.id_mapel, c.nama_matpal, a.tingkat, a.tipe_kelas, a.sm_1, a.sm_2, e.`hari`, e.`id_guru`, e.`jam`, e.`kode_kelas`
+		// 						FROM trans_kurikulum a 
+		// 						INNER JOIN ms_tahun_ajaran b ON a.id_thn_ajar = b.id 
+		// 						INNER JOIN ms_mata_pelajaran c ON a.id_mapel=c.id_matpal 
+		// 						INNER JOIN trans_jadwal_pelajaran e ON a.id_thn_ajar = e.id_thn_ajar AND a.`id_mapel` = e.`id_mapel`
+		// 						where a.id_thn_ajar ='$id_thn_ajar'
+		// 						and a.tingkat = '$tingkat'
+		// 						and a.tipe_kelas = '$tipe_kelas'
+		// 						AND e.kode_kelas = '$kode_kelas' 
+		// 						AND e.santri ='$santri'
+		// 						and a.sm_1 > 0
+		// 						ORDER BY b.id, e.id_mapel, e.kode_kelas, e.santri")->result_array();
 		$data=$this->db->query("SELECT DISTINCT b.deskripsi, a.id_mapel, c.nama_matpal, a.tingkat, a.tipe_kelas, a.sm_1, a.sm_2, e.`hari`, e.`id_guru`, e.`jam`, e.`kode_kelas`
 								FROM trans_kurikulum a 
 								INNER JOIN ms_tahun_ajaran b ON a.id_thn_ajar = b.id 
@@ -106,26 +120,29 @@ class Mjadwal_pelajaran_sore extends CI_Model
 								where a.id_thn_ajar ='$id_thn_ajar'
 								and a.tingkat = '$tingkat'
 								and a.tipe_kelas = '$tipe_kelas'
-								and b.kategori = 'SORE'
+								and a.kategori = 'SORE'
 								AND e.kode_kelas = '$kode_kelas' 
 								AND e.santri ='$santri'
 								and a.sm_1 > 0
 								ORDER BY b.id, e.id_mapel, e.kode_kelas, e.santri")->result_array();
-		// $data=$this->db->query("SELECT b.deskripsi, a.id_mapel, c.nama_matpal, a.tingkat, a.tipe_kelas,  a.sm_1, a.sm_2  
-		// 						from trans_kurikulum a
-		// 						inner join ms_tahun_ajaran b on a.id_thn_ajar = b.id
-        //         				inner join ms_mata_pelajaran c on a.id_mapel=c.id_matpal
-		// 						where a.id_thn_ajar ='$id_thn_ajar'
-		// 						and a.tingkat = '$tingkat'
-		// 						and a.tipe_kelas = '$tipe_kelas'
-		// 						and b.kategori = 'SORE'
-		// 						and a.sm_1 > 0")->result_array();
 								// echo $this->db->last_query();
 								// exit();
 		return $data;
 	}
 	function QueryGetKurikulumSM2($id_thn_ajar,$tingkat,$tipe_kelas,$kode_kelas,$santri){
         $data = array();
+		// $data=$this->db->query("SELECT DISTINCT b.deskripsi, a.id_mapel, c.nama_matpal, a.tingkat, a.tipe_kelas, a.sm_1, a.sm_2, e.`hari`, e.`id_guru`, e.`jam`, e.`kode_kelas`
+		// 						FROM trans_kurikulum a 
+		// 						INNER JOIN ms_tahun_ajaran b ON a.id_thn_ajar = b.id 
+		// 						INNER JOIN ms_mata_pelajaran c ON a.id_mapel=c.id_matpal 
+		// 						INNER JOIN trans_jadwal_pelajaran e ON a.id_thn_ajar = e.id_thn_ajar AND a.`id_mapel` = e.`id_mapel`
+		// 						where a.id_thn_ajar ='$id_thn_ajar'
+		// 						and a.tingkat = '$tingkat'
+		// 						and a.tipe_kelas = '$tipe_kelas'
+		// 						AND e.kode_kelas = '$kode_kelas' 
+		// 						AND e.santri ='$santri'
+		// 						and a.sm_2 > 0
+		// 						ORDER BY b.id, e.id_mapel, e.kode_kelas, e.santri")->result_array();
 		$data=$this->db->query("SELECT DISTINCT b.deskripsi, a.id_mapel, c.nama_matpal, a.tingkat, a.tipe_kelas, a.sm_1, a.sm_2, e.`hari`, e.`id_guru`, e.`jam`, e.`kode_kelas`
 								FROM trans_kurikulum a 
 								INNER JOIN ms_tahun_ajaran b ON a.id_thn_ajar = b.id 
@@ -134,7 +151,7 @@ class Mjadwal_pelajaran_sore extends CI_Model
 								where a.id_thn_ajar ='$id_thn_ajar'
 								and a.tingkat = '$tingkat'
 								and a.tipe_kelas = '$tipe_kelas'
-								and b.kategori = 'SORE'
+								and a.kategori = 'SORE'
 								AND e.kode_kelas = '$kode_kelas' 
 								AND e.santri ='$santri'
 								and a.sm_2 > 0
@@ -145,6 +162,14 @@ class Mjadwal_pelajaran_sore extends CI_Model
 	}
 	function QueryGetKurikulumSM1Tambah($id_thn_ajar,$tingkat,$tipe_kelas){
         $data = array();
+		// $data=$this->db->query("SELECT b.deskripsi, a.id_mapel, c.nama_matpal, a.tingkat, a.tipe_kelas,  a.sm_1, a.sm_2  
+		// 						from trans_kurikulum a
+		// 						inner join ms_tahun_ajaran b on a.id_thn_ajar = b.id
+        //         				inner join ms_mata_pelajaran c on a.id_mapel=c.id_matpal
+		// 						where a.id_thn_ajar ='$id_thn_ajar'
+		// 						and a.tingkat = '$tingkat'
+		// 						and a.tipe_kelas = '$tipe_kelas'
+		// 						and a.sm_1 > 0")->result_array();
 		$data=$this->db->query("SELECT b.deskripsi, a.id_mapel, c.nama_matpal, a.tingkat, a.tipe_kelas,  a.sm_1, a.sm_2  
 								from trans_kurikulum a
 								inner join ms_tahun_ajaran b on a.id_thn_ajar = b.id
@@ -152,7 +177,7 @@ class Mjadwal_pelajaran_sore extends CI_Model
 								where a.id_thn_ajar ='$id_thn_ajar'
 								and a.tingkat = '$tingkat'
 								and a.tipe_kelas = '$tipe_kelas'
-								and b.kategori = 'SORE'
+								and a.kategori = 'SORE'
 								and a.sm_1 > 0")->result_array();
 								// echo $this->db->last_query();
 								// exit();
@@ -160,6 +185,14 @@ class Mjadwal_pelajaran_sore extends CI_Model
 	}
 	function QueryGetKurikulumSM2Tambah($id_thn_ajar,$tingkat,$tipe_kelas){
         $data = array();
+		// $data=$this->db->query("SELECT b.deskripsi, a.id_mapel, c.nama_matpal,a.tingkat, a.tipe_kelas,  a.sm_1, a.sm_2  
+		// 						from trans_kurikulum a
+		// 						inner join ms_tahun_ajaran b on a.id_thn_ajar = b.id
+        //         				inner join ms_mata_pelajaran c on a.id_mapel=c.id_matpal
+		// 						where a.id_thn_ajar ='$id_thn_ajar'
+		// 						and a.tingkat = '$tingkat'
+		// 						and a.tipe_kelas = '$tipe_kelas'
+		// 						and a.sm_2 > 0")->result_array();
 		$data=$this->db->query("SELECT b.deskripsi, a.id_mapel, c.nama_matpal,a.tingkat, a.tipe_kelas,  a.sm_1, a.sm_2  
 								from trans_kurikulum a
 								inner join ms_tahun_ajaran b on a.id_thn_ajar = b.id
@@ -167,7 +200,7 @@ class Mjadwal_pelajaran_sore extends CI_Model
 								where a.id_thn_ajar ='$id_thn_ajar'
 								and a.tingkat = '$tingkat'
 								and a.tipe_kelas = '$tipe_kelas'
-								and b.kategori = 'SORE'
+								and a.kategori = 'SORE'
 								and a.sm_2 > 0")->result_array();
 								// echo $this->db->last_query();
 								// exit();

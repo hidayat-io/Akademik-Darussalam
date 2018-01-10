@@ -293,7 +293,7 @@ class Kurikulumsore extends IO_Controller
 				$recdate                = date('y-m-d');
 	    		$userid 			    = $this->session->userdata('logged_in')['uid'];
 				
-
+				$kategori				= 'SORE';
 				$data_kurikulumsore = array(
 				'id_thn_ajar' 			=> $new_id_thn_ajar,
 				'tingkat' 				=> $tingkat,
@@ -301,6 +301,7 @@ class Kurikulumsore extends IO_Controller
 				'id_mapel'              => $id_mapel,
 				'sm_1' 			        => $sm_1,
 				'sm_2' 			        => $sm_2,
+				'kategori' 			    => $kategori,
 				'recdate'               => $recdate,
 				'userid' 				=> $userid
 				);

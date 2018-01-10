@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 04, 2018 at 06:11 PM
+-- Generation Time: Jan 10, 2018 at 05:41 AM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -197,7 +197,7 @@ INSERT INTO `modul` (`modul_id`, `parent`, `nama_modul`, `url`, `icon`, `sequenc
 (14, 3, 'Daftar Santri Aitam', 'datasantri/aitam', 'glyphicon glyphicon-minus', 2),
 (15, 3, 'Daftar Santri TMI', 'datasantri', 'glyphicon glyphicon-minus', 1),
 (16, 4, 'Daftar Guru / Karyawan', 'guru', 'glyphicon glyphicon-minus', 0),
-(17, 4, 'Beban Kerja', '#', 'glyphicon glyphicon-minus', 0),
+(17, 4, 'Beban Kerja', 'bebankerja', 'glyphicon glyphicon-minus', 0),
 (18, 4, 'Pembagian Tugas', '#', 'glyphicon glyphicon-minus', 0),
 (19, 5, 'Kurikulum Utama', 'kurikulum', 'glyphicon glyphicon-minus', 1),
 (20, 5, 'Jadwal Pelajaran Utama', 'jadwal_pelajaran', 'glyphicon glyphicon-minus', 3),
@@ -269,7 +269,7 @@ CREATE TABLE `ms_bebanguru` (
   `id_thn_ajar` int(11) DEFAULT NULL,
   `semester` int(11) DEFAULT NULL,
   `userid` varchar(20) DEFAULT NULL,
-  `recdate` datetime DEFAULT NULL
+  `recdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -334,7 +334,7 @@ CREATE TABLE `ms_config` (
 --
 
 INSERT INTO `ms_config` (`id_config`, `nomor_statistik`, `NPSN`, `nama`, `jenis_lembaga`, `userid`, `recdate`) VALUES
-(1, '510232051432', '69937270 - 69937240', 'TMI - Pondok Pesantren Darussalam', 'Mu\'allimin', 'admin', '2017-09-16 00:00:00');
+(1, '510232051432', '69937270 - 69937240', 'TMI - Pondok Pesantren Darussalam', 'Mu\'allimin', 'admin', '2018-01-10 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -451,7 +451,7 @@ CREATE TABLE `ms_guru` (
   `nama_ibu` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
   `nama_pasangan` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
   `tgl_pasangan` date DEFAULT NULL,
-  `jml_anak` int(11) DEFAULT '0',
+  `jml_anak` int(11) DEFAULT NULL,
   `akademik` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
   `status` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
   `pendidikan_terakhir` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
@@ -465,11 +465,12 @@ CREATE TABLE `ms_guru` (
   `masa_abdi` int(11) DEFAULT NULL,
   `sertifikasi` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
   `file_sertifikasi` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
-  `materi_diampu` varchar(150) CHARACTER SET latin1 DEFAULT NULL,
+  `materi_diampu` varchar(15) CHARACTER SET latin1 DEFAULT NULL,
   `userid` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
   `recdate` datetime DEFAULT NULL,
   `status_aktif` tinyint(1) DEFAULT '1',
-  `is_delete` tinyint(1) DEFAULT '0'
+  `is_delete` tinyint(1) DEFAULT '0',
+  `is_pengajar` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -627,32 +628,6 @@ CREATE TABLE `ms_kelas` (
   `kapasitas` int(2) DEFAULT NULL,
   `userid` varchar(20) DEFAULT NULL,
   `recdate` date DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ms_kelas_d`
---
-
-CREATE TABLE `ms_kelas_d` (
-  `id_kelas_dtl` int(11) DEFAULT NULL,
-  `id_kelas` int(11) DEFAULT NULL,
-  `nama` varchar(50) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ms_kelas_h`
---
-
-CREATE TABLE `ms_kelas_h` (
-  `id_kelas` int(11) DEFAULT NULL,
-  `nama_kelas` varchar(50) DEFAULT NULL,
-  `type_kelas` varchar(10) DEFAULT NULL,
-  `userid` varchar(20) DEFAULT NULL,
-  `recdate` datetime DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -927,6 +902,26 @@ CREATE TABLE `sequence` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sys_param`
+--
+
+CREATE TABLE `sys_param` (
+  `param_id` int(11) NOT NULL,
+  `param_name` varchar(50) DEFAULT NULL,
+  `param_value` varchar(50) DEFAULT NULL,
+  `notes` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sys_param`
+--
+
+INSERT INTO `sys_param` (`param_id`, `param_name`, `param_value`, `notes`) VALUES
+(1, 'kurikulum_semester_aktif', '3#2', 'id_tahun_ajar#semester');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tabungan_temp`
 --
 
@@ -997,6 +992,7 @@ CREATE TABLE `trans_jadwal_pelajaran` (
   `jam` char(15) NOT NULL,
   `hari` varchar(20) NOT NULL,
   `id_mapel` varchar(10) NOT NULL,
+  `kategori` varchar(10) DEFAULT NULL,
   `userid` varchar(20) DEFAULT NULL,
   `recdate` datetime DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -1309,6 +1305,12 @@ ALTER TABLE `sequence`
   ADD PRIMARY KEY (`nama_field`);
 
 --
+-- Indexes for table `sys_param`
+--
+ALTER TABLE `sys_param`
+  ADD PRIMARY KEY (`param_id`);
+
+--
 -- Indexes for table `tabungan_temp`
 --
 ALTER TABLE `tabungan_temp`
@@ -1374,7 +1376,7 @@ ALTER TABLE `histori_master_biaya`
 -- AUTO_INCREMENT for table `login_history`
 --
 ALTER TABLE `login_history`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=289;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=294;
 --
 -- AUTO_INCREMENT for table `modul`
 --
@@ -1384,7 +1386,7 @@ ALTER TABLE `modul`
 -- AUTO_INCREMENT for table `ms_banksoal`
 --
 ALTER TABLE `ms_banksoal`
-  MODIFY `id_soal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id_soal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 --
 -- AUTO_INCREMENT for table `ms_biaya`
 --
@@ -1409,7 +1411,7 @@ ALTER TABLE `ms_donatur`
 -- AUTO_INCREMENT for table `ms_guru`
 --
 ALTER TABLE `ms_guru`
-  MODIFY `id_guru` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id_guru` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 --
 -- AUTO_INCREMENT for table `ms_guru_family`
 --
@@ -1461,6 +1463,11 @@ ALTER TABLE `ms_tahun_ajaran`
 ALTER TABLE `santri_limit_harian`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
+-- AUTO_INCREMENT for table `sys_param`
+--
+ALTER TABLE `sys_param`
+  MODIFY `param_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `trans_banksoalhd`
 --
 ALTER TABLE `trans_banksoalhd`
@@ -1469,7 +1476,7 @@ ALTER TABLE `trans_banksoalhd`
 -- AUTO_INCREMENT for table `trans_jadwal_pelajaran`
 --
 ALTER TABLE `trans_jadwal_pelajaran`
-  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=256;
+  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=305;
 --
 -- AUTO_INCREMENT for table `trans_rpp`
 --

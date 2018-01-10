@@ -262,7 +262,7 @@ class Kurikulum extends IO_Controller
 				$recdate                = date('y-m-d');
 	    		$userid 			    = $this->session->userdata('logged_in')['uid'];
 				
-
+				$kategori				= 'UTAMA';
 				$data_kurikulum = array(
 				'id_thn_ajar' 			=> $new_id_thn_ajar,
 				'tingkat' 				=> $tingkat,
@@ -270,6 +270,7 @@ class Kurikulum extends IO_Controller
 				'id_mapel'              => $id_mapel,
 				'sm_1' 			        => $sm_1,
 				'sm_2' 			        => $sm_2,
+				'kategori' 			    => $kategori,
 				'recdate'               => $recdate,
 				'userid' 				=> $userid
 				);

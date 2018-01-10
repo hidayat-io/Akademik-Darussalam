@@ -15,7 +15,8 @@ class Mkurikulumsore extends CI_Model
 		return $data;
 	}
     function get_thn_ajar(){
-		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='SORE' OR kategori='KITAB' order by id desc Limit 2 ");
+		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran order by id desc Limit 3 ");
+		// $data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='SORE' OR kategori='KITAB' order by id desc Limit 2 ");
 		return $data;
 	}
 
@@ -50,12 +51,13 @@ class Mkurikulumsore extends CI_Model
 
                 if($param!=null){
                     
-                    $sql .= " WHERE b.kategori ='SORE'".$param;
+                    $sql .= " WHERE a.kategori ='SORE'".$param;
+                    // $sql .= " WHERE ".$param;
                     
                 }
                 else
                 {
-                    $sql .= " WHERE b.kategori ='SORE'";
+                    $sql .= " WHERE a.kategori ='SORE'";
                 }
 		
 

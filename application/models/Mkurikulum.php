@@ -15,7 +15,8 @@ class Mkurikulum extends CI_Model
 		return $data;
 	}
     function get_thn_ajar(){
-		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='UTAMA' order by id desc Limit 2 ");
+		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran  order by id desc Limit 3 ");
+		// $data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='UTAMA' order by id desc Limit 2 ");
 		return $data;
 	}
 
@@ -50,12 +51,13 @@ class Mkurikulum extends CI_Model
 
             if($param!=null){
 
-                $sql .= " WHERE b.kategori ='UTAMA'".$param;
+                // $sql .= " WHERE ".$param;
+                $sql .= " WHERE a.kategori ='UTAMA'".$param;
                 
 			}
 			else
 			{
-				$sql .= " WHERE b.kategori ='UTAMA'";
+				$sql .= " WHERE a.kategori ='UTAMA'";
 			}
 		
 

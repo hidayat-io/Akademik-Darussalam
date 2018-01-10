@@ -246,6 +246,7 @@ class jadwal_pelajaran_sore extends IO_Controller
 						$hari 			= $this->input->post($input_hari);
 						$guru 			= $this->input->post($input_guru);
 						$jam 			= $this->input->post($input_jam);
+						$kategori		='SORE';
 						$data_jadwal_pelajaran_sore = array(
 							'santri' 			=> $santri,
 							'id_thn_ajar' 		=> $id_thn_ajar,
@@ -255,6 +256,7 @@ class jadwal_pelajaran_sore extends IO_Controller
 							'jam' 		      	=> $jam,
 							'hari' 		      	=> $hari,
 							'id_mapel' 		    => $id_mapel,
+							'kategori' 		    => $kategori,
 							'recdate'           => $recdate,
 							'userid' 			=> $userid
 						);
@@ -303,6 +305,7 @@ class jadwal_pelajaran_sore extends IO_Controller
 						$hari 			= $this->input->post($input_hari);
 						$guru 			= $this->input->post($input_guru);
 						$jam 			= $this->input->post($input_jam);
+						$kategori		='SORE';
 						$data_jadwal_pelajaran_sore = array(
 							'santri' 			=> $santri,
 							'id_thn_ajar' 		=> $id_thn_ajar,
@@ -312,6 +315,7 @@ class jadwal_pelajaran_sore extends IO_Controller
 							'jam' 		      	=> $jam,
 							'hari' 		      	=> $hari,
 							'id_mapel' 		    => $id_mapel,
+							'kategori' 		    => $kategori,
 							'recdate'           => $recdate,
 							'userid' 			=> $userid
 						);
