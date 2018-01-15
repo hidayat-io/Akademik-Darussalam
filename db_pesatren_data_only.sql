@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2018 at 05:41 AM
+-- Generation Time: Jan 15, 2018 at 06:02 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -278,7 +278,19 @@ INSERT INTO `login_history` (`id`, `user_id`, `time`, `ip_addr`) VALUES
 (290, 'admin', '2018-01-08 03:28:03', '::1'),
 (291, 'admin', '2018-01-08 16:21:04', '::1'),
 (292, 'admin', '2018-01-09 06:27:38', '::1'),
-(293, 'admin', '2018-01-10 00:54:58', '::1');
+(293, 'admin', '2018-01-10 00:54:58', '::1'),
+(294, 'admin', '2018-01-11 03:33:48', '::1'),
+(295, 'admin', '2018-01-11 07:14:06', '::1'),
+(296, 'admin', '2018-01-12 01:33:08', '::1'),
+(297, 'admin', '2018-01-12 06:28:30', '::1'),
+(298, 'admin', '2018-01-12 06:46:32', '::1'),
+(299, 'admin', '2018-01-12 10:03:57', '::1'),
+(300, 'admin', '2018-01-12 14:57:48', '::1'),
+(301, 'admin', '2018-01-13 05:56:09', '::1'),
+(302, 'admin', '2018-01-14 07:54:09', '::1'),
+(303, 'admin', '2018-01-14 11:40:11', '::1'),
+(304, 'admin', '2018-01-15 02:28:29', '::1'),
+(305, 'admin', '2018-01-15 15:10:14', '::1');
 
 --
 -- Dumping data for table `ms_bagian`
@@ -378,11 +390,39 @@ INSERT INTO `ms_bebanguru` (`id_guru`, `jml_beban`, `id_thn_ajar`, `semester`, `
 (72, 20, 3, 2, 'admin', '2018-01-08 16:57:04');
 
 --
+-- Dumping data for table `ms_biaya`
+--
+
+INSERT INTO `ms_biaya` (`id`, `kategori`, `nama_item`, `nominal`) VALUES
+(82, 'S', '11', 275000),
+(83, 'S', '12', 150000),
+(84, 'S', '13', 170000),
+(85, 'S', '14', 300000),
+(86, 'S', '15', 50000),
+(123, 'B', '8', 400000),
+(124, 'B', '9', 200000);
+
+--
 -- Dumping data for table `ms_biaya_komponen`
 --
 
 INSERT INTO `ms_biaya_komponen` (`id_komponen`, `nama_komponen`, `tipe`, `userid`, `recdate`) VALUES
-(4, 'TTRY', 'B', 'admin', NULL);
+(8, 'MAKAN', 'B', 'admin', '2018-01-12 06:05:13'),
+(9, 'INFAQ', 'B', 'admin', '2018-01-12 06:05:15'),
+(11, 'LISTRIK', 'S', 'admin', '2018-01-12 06:05:17'),
+(12, 'OPPD & KESEHATAN', 'S', 'admin', '2018-01-12 06:05:19'),
+(13, 'EVALUASI BELAJAR', 'S', 'admin', '2018-01-12 06:05:21'),
+(14, 'PEMBANGUNAN PONDOK', 'S', 'admin', '2018-01-12 06:05:23'),
+(15, 'FIGUR', 'S', 'admin', '2018-01-12 06:05:25');
+
+--
+-- Dumping data for table `ms_biaya_potongan`
+--
+
+INSERT INTO `ms_biaya_potongan` (`potongan`, `userid`, `rec_date`) VALUES
+(50, 'admin', '2018-01-15 15:56:25'),
+(25, 'admin', '2018-01-15 16:06:44'),
+(20, 'admin', '2018-01-15 16:07:16');
 
 --
 -- Dumping data for table `ms_bidang_study`
@@ -688,16 +728,6 @@ INSERT INTO `ms_semester` (`id_semester`, `semester`, `bulan`) VALUES
 (34, 1, 'JANUARI'),
 (35, 1, 'FEBRUARI'),
 (36, 1, 'MARET');
-
---
--- Dumping data for table `ms_tahun_ajaran`
---
-
-INSERT INTO `ms_tahun_ajaran` (`id`, `deskripsi`, `kategori`) VALUES
-(1, '2015-2016', 'UTAMA'),
-(2, '2016-2017', 'UTAMA'),
-(3, '2017-2018', 'UTAMA'),
-(4, '2018-2019', 'UTAMA');
 
 --
 -- Dumping data for table `santri_limit_harian`

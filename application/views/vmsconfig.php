@@ -4,7 +4,7 @@
 <script src="<?php echo base_url(); ?>js/jmsconfig.js"></script>
 <!-- page -->
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet box green-jungle">
             <div class="portlet-title">
@@ -52,7 +52,7 @@
             <!-- END EXAMPLE TABLE PORTLET-->
         </div>
         <!-- table kurikulum -->
-        <div class="col-md-6">
+        <div class="col-md-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet box green-jungle">
             <div class="portlet-title">

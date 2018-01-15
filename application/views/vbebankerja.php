@@ -138,7 +138,7 @@
                                                             </span>
                                                             <div class="input-icon right">
                                                                 <i class="fa"></i>
-                                                            <input type="number" class="form-control" name="jml_beban" id="jml_beban" required>
+                                                            <input type="text" class="form-control numbers-only" name="jml_beban" id="jml_beban" maxlength="3" required>
                                                             </div>
                                                         </div>
                                                     </div>

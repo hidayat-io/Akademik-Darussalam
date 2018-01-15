@@ -74,7 +74,7 @@ $(document).ready(function()
 			"info": false,
 			"searching": false,
 			"bFilter": false,
-			"orderable": false,
+			"ordering": false,
 			ajax: {
 				'url': base_url + "msconfig/load_grid",
 				'type': 'GET',
@@ -192,7 +192,7 @@ $(document).ready(function()
 			"info": false,
 			"searching": false,
 			"bFilter": false,
-			"orderable": false,
+			"ordering": false,
 			ajax: {
 				'url': base_url + "msconfig/load_grid_kurikulum",
 				'type': 'GET',
@@ -267,7 +267,4 @@ $(document).ready(function()
 
 
 //#endregion kurikulum
-
-
-
 

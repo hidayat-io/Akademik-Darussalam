@@ -86,7 +86,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn dark btn-outline">Cancel</button>
-                <button type="button" class="btn green" onclick="simpankomponen()">Simpan</button>
+                <button type="button" class="btn green-jungle" onclick="simpankomponen()">Simpan</button>
             </div>
         </div>
     </div>

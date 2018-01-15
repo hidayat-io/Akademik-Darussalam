@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2018 at 05:41 AM
+-- Generation Time: Jan 15, 2018 at 06:01 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -121,7 +121,8 @@ INSERT INTO `group_hak_akses` (`group_id`, `modul_id`, `add`, `edit`, `delete`) 
 (1, 39, 1, 1, 1),
 (1, 40, 1, 1, 1),
 (1, 41, 1, 1, 1),
-(1, 42, 1, 1, 1);
+(1, 42, 1, 1, 1),
+(1, 43, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -131,9 +132,9 @@ INSERT INTO `group_hak_akses` (`group_id`, `modul_id`, `add`, `edit`, `delete`) 
 
 CREATE TABLE `histori_master_biaya` (
   `id` int(11) NOT NULL,
-  `tgl_update` date DEFAULT NULL,
-  `user_id` varchar(10) DEFAULT NULL,
-  `nominal` double DEFAULT NULL
+  `userid` varchar(10) DEFAULT NULL,
+  `nominal` double DEFAULT NULL,
+  `tgl_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -192,8 +193,8 @@ INSERT INTO `modul` (`modul_id`, `parent`, `nama_modul`, `url`, `icon`, `sequenc
 (8, 0, 'Infaq', 'infaq', 'glyphicon glyphicon-import', 8),
 (9, 0, 'Tabungan Siswa', 'tabungan', 'icon-wallet', 9),
 (10, 0, 'Laporan', '#', 'glyphicon glyphicon-list-alt', 10),
-(11, 2, 'Uang Bulanan', '#', 'glyphicon glyphicon-minus', 1),
-(12, 2, 'Uang Semester', '#', 'glyphicon glyphicon-minus', 2),
+(11, 2, 'Uang Bulanan', '', 'glyphicon glyphicon-minus', 1),
+(12, 2, 'Uang Semester', '', 'glyphicon glyphicon-minus', 2),
 (14, 3, 'Daftar Santri Aitam', 'datasantri/aitam', 'glyphicon glyphicon-minus', 2),
 (15, 3, 'Daftar Santri TMI', 'datasantri', 'glyphicon glyphicon-minus', 1),
 (16, 4, 'Daftar Guru / Karyawan', 'guru', 'glyphicon glyphicon-minus', 0),
@@ -212,17 +213,18 @@ INSERT INTO `modul` (`modul_id`, `parent`, `nama_modul`, `url`, `icon`, `sequenc
 (29, 7, 'Data Bidang Studi', 'bidstudi', 'glyphicon glyphicon-minus', 1),
 (30, 7, 'Data Bagian', 'bagian', 'glyphicon glyphicon-minus', 5),
 (31, 5, 'Kurikulum Sore', 'kurikulumsore', 'glyphicon glyphicon-minus', 2),
-(32, 7, 'Komponen Biaya', 'komponen', 'glyphicon glyphicon-minus', 6),
-(33, 7, 'Data Donatur', 'donatur', 'glyphicon glyphicon-minus', 7),
-(34, 7, 'Config', 'msconfig', 'glyphicon glyphicon-minus', 9),
+(32, 7, 'Komponen Biaya', 'komponen', 'glyphicon glyphicon-minus', 7),
+(33, 7, 'Data Donatur', 'donatur', 'glyphicon glyphicon-minus', 10),
+(34, 7, 'Config', 'msconfig', 'glyphicon glyphicon-minus', 12),
 (35, 5, 'Jadwal Pelajaran Sore & kitab', 'jadwal_pelajaran_sore', 'glyphicon glyphicon-minus', 4),
-(36, 7, 'Semester', 'semester', 'glyphicon glyphicon-minus', 10),
-(37, 7, 'Data Jabatan Guru', 'jabatan_guru', 'glyphicon glyphicon-minus', 8),
+(36, 7, 'Semester', 'semester', 'glyphicon glyphicon-minus', 11),
+(37, 7, 'Data Jabatan Guru', 'jabatan_guru', 'glyphicon glyphicon-minus', 9),
 (38, 1, 'Pendaftaran TMI', 'pendaftaran', 'fa fa-pencil-square-o', 1),
 (39, 1, 'Pendaftaran AITAM', 'pendaftaran/aitam', 'fa fa-pencil-square-o', 2),
 (40, 0, 'Bank Soal', '#', 'glyphicon glyphicon-book ', 11),
 (41, 40, 'Data Soal', 'datasoal', 'glyphicon glyphicon-minus', 1),
-(42, 40, 'Soal Ujian', 'datasoalujian', 'glyphicon glyphicon-minus', 2);
+(42, 40, 'Soal Ujian', 'datasoalujian', 'glyphicon glyphicon-minus', 2),
+(43, 7, 'Data Biaya', 'biaya', 'glyphicon glyphicon-minus', 8);
 
 -- --------------------------------------------------------
 
@@ -265,7 +267,7 @@ CREATE TABLE `ms_banksoal` (
 
 CREATE TABLE `ms_bebanguru` (
   `id_guru` int(11) DEFAULT NULL,
-  `jml_beban` int(11) DEFAULT NULL,
+  `jml_beban` int(3) DEFAULT NULL,
   `id_thn_ajar` int(11) DEFAULT NULL,
   `semester` int(11) DEFAULT NULL,
   `userid` varchar(20) DEFAULT NULL,
@@ -296,8 +298,20 @@ CREATE TABLE `ms_biaya_komponen` (
   `nama_komponen` varchar(20) DEFAULT NULL,
   `tipe` varchar(5) DEFAULT NULL,
   `userid` varchar(20) DEFAULT NULL,
-  `recdate` timestamp NULL DEFAULT NULL
+  `recdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ms_biaya_potongan`
+--
+
+CREATE TABLE `ms_biaya_potongan` (
+  `potongan` int(3) DEFAULT NULL,
+  `userid` varchar(10) DEFAULT NULL,
+  `rec_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -832,6 +846,16 @@ CREATE TABLE `ms_tahun_ajaran` (
   `deskripsi` varchar(9) CHARACTER SET latin1 DEFAULT NULL COMMENT 'yyyy/yyyy',
   `kategori` varchar(9) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ms_tahun_ajaran`
+--
+
+INSERT INTO `ms_tahun_ajaran` (`id`, `deskripsi`, `kategori`) VALUES
+(1, '2015-2016', 'UTAMA'),
+(2, '2016-2017', 'UTAMA'),
+(3, '2017-2018', 'UTAMA'),
+(4, '2018-2019', 'UTAMA');
 
 -- --------------------------------------------------------
 
@@ -1371,17 +1395,17 @@ ALTER TABLE `group`
 -- AUTO_INCREMENT for table `histori_master_biaya`
 --
 ALTER TABLE `histori_master_biaya`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `login_history`
 --
 ALTER TABLE `login_history`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=294;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=306;
 --
 -- AUTO_INCREMENT for table `modul`
 --
 ALTER TABLE `modul`
-  MODIFY `modul_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `modul_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT for table `ms_banksoal`
 --
@@ -1391,12 +1415,12 @@ ALTER TABLE `ms_banksoal`
 -- AUTO_INCREMENT for table `ms_biaya`
 --
 ALTER TABLE `ms_biaya`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 --
 -- AUTO_INCREMENT for table `ms_biaya_komponen`
 --
 ALTER TABLE `ms_biaya_komponen`
-  MODIFY `id_komponen` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_komponen` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `ms_config`
 --
@@ -1411,7 +1435,7 @@ ALTER TABLE `ms_donatur`
 -- AUTO_INCREMENT for table `ms_guru`
 --
 ALTER TABLE `ms_guru`
-  MODIFY `id_guru` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id_guru` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT for table `ms_guru_family`
 --
@@ -1456,7 +1480,7 @@ ALTER TABLE `ms_tabungan`
 -- AUTO_INCREMENT for table `ms_tahun_ajaran`
 --
 ALTER TABLE `ms_tahun_ajaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `santri_limit_harian`
 --
@@ -1466,7 +1490,7 @@ ALTER TABLE `santri_limit_harian`
 -- AUTO_INCREMENT for table `sys_param`
 --
 ALTER TABLE `sys_param`
-  MODIFY `param_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `param_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `trans_banksoalhd`
 --
