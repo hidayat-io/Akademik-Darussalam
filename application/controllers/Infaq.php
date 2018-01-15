@@ -108,6 +108,8 @@ class Infaq extends IO_Controller
 		$iparam 		= json_decode($_REQUEST['param']);
 		$string_param 	= $this->build_param($iparam);
 
+
+		
 		//sorting
 		$sort_by 		= $_REQUEST['order'][0]['column'];
 		$sort_type 		= $_REQUEST['order'][0]['dir'];
@@ -159,12 +161,36 @@ class Infaq extends IO_Controller
 	//parameter yang dikirm
 	function build_param($param){
 
+
 		// merubah hasil json menjadi parameter Query //
 		$string_param = NULL;
 
 		if($param!=null){
 
-			if(isset($param->nama)) $string_param .= "nama LIKE '%".$param->nama."%' ";
+			//if(isset($param->nama)) $string_param .= "nama LIKE '%".$param->nama."%' ";
+
+			if($param->id_infaq != "") $string_param .= "id_infaq = '".$param->id_infaq."' ";
+
+			if($param->tgl_start != ""){
+
+				$istart_date 	= io_return_date('d-m-Y',$param->tgl_start);
+				$iend_date 		= io_return_date('d-m-Y',$param->tgl_end);
+
+				if($string_param != null){
+
+					$string_param .= ' AND ';
+				}
+
+				$string_param .= " tgl_infaq BETWEEN '".$istart_date."' AND '".$iend_date."' ";
+
+				if($param->tipe != ""){
+					if($string_param !=""){
+						$string_param .=' AND ';
+					}
+					$string_param .="tipe = '".$param->tipe."' ";
+
+				}
+			} 
 		}
 
 		return $string_param;

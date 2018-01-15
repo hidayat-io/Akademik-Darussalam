@@ -14,6 +14,13 @@ $(document).ready(function(){
         format: 'dd-mm-yyyy'
     });
 
+    $('.date-picker').datepicker({
+        rtl: App.isRTL(),
+        orientation: "left",
+        autoclose: true,
+        format: 'dd-mm-yyyy'
+    });
+
 	$('.numbers-only').keypress(function(event) {
 
 	    var charCode = (event.which) ? event.which : event.keyCode;
@@ -407,14 +414,19 @@ function deleteData(id){
 }
 
 // JS cari data
+
 function searchdata(){
 
 //	var tipe_in		= $("input[name='optsrch']:checked").val();
 //	var nama_in 	= $('#txtnamasearch').val();
+
 	var nm 			= $('#opt_dnt_srch').val();
+	var frm 		= $('#from').val();
+	var to 			= $('#to').val();
+	var tipe_d		= $("input[name='optionsRadios']:checked").val();
 	
 
-	var param 		= {'id_donatur':nm};
+	var param 		= {'id_infaq':nm,'tgl_start':frm,'tgl_end':to,'tipe':tipe_d};
 		param 		= JSON.stringify(param);
 		
 	$('#hid_param').val(param);
@@ -424,6 +436,7 @@ function searchdata(){
 	table.draw();
 
 	$('#m_search').modal('toggle');
+
 }
 
 function kosong() {

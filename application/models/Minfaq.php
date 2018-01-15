@@ -22,8 +22,8 @@ public function __construct(){
             $sql .= " WHERE ".$param;
         }
 
-
         $sql.= " ORDER BY ".$cols[$sortby]." ".$sorttype;
+
 
         return $this->db->query($sql)->result();
     }

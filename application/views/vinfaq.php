@@ -239,16 +239,32 @@
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Data Range</label>
-                            <div class="col-md-4">
-                                <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
-                                    <input type="text" class="form-control" name="from">
-                                    <span class="input-group-addon"> to </span>
-                                    <input type="text" class="form-control" name="to">
 
+                            <div class="col-md-8">
+                                <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
+                                    <input type="text" class="form-control" name="from" id="from">
+                                    <span class="input-group-addon" style="min-width: 20px"> to </span>
+                                    <input type="text" class="form-control" name="to" id="to">
+                                </div>
+                                <!-- /input-group -->
                             </div>
                         </div>
 
-
+                        <div class="form-group">
+                        <label class="col-md-4 control-label">Tipe</label>
+                        <div class="col-md-5">
+                            <div class="mt-radio-inline">
+                                <label class="mt-radio">
+                                    <input type="radio" name="optionsRadios" id="optsimpan" value="i" checked="checked" >IN
+                                    <span></span>
+                                </label>
+                                <label class="mt-radio">
+                                    <input type="radio" name="optionsRadios" id="optkeluar" value="o">OUT
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
                     </div>
                 </form>
