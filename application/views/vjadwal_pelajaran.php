@@ -135,7 +135,7 @@
                                                                     Kelas
                                                                 </span>
                                                                 <?php
-                                                                    $att_item = ' type="text" class="form-control select" id="select_kelas" onclick="add_tohidekelas()" onchange="kosong_table()" required';
+                                                                    $att_item = ' type="text" class="form-control select" id="select_kelas" onchange="kosong_table();add_tohidekelas()" required';
                                                                     echo form_dropdown('select_kelas', $kode_kelas, null, $att_item);
                                                                 ?>
                                                             

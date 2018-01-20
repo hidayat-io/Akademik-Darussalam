@@ -39,6 +39,8 @@ class jadwal_pelajaran extends IO_Controller
 		//json data guru
 		$type ='guru';
 		$mguru = $this->mcommon->mget_list_master_guru($type)->result();
+					
+		$data_guru = array();
 
 		foreach ($mguru as $g) {
 			
