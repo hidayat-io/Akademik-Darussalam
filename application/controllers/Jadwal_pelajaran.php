@@ -246,8 +246,7 @@ class jadwal_pelajaran extends IO_Controller
 						$input_hari 	= 'txthari_'.$row[$i]['id_mapel'].$y.$i;
 						$input_guru 	= 'txtguru_'.$row[$i]['id_mapel'].$y.$i;
 						$input_jam 		= 'txtjam_'.$row[$i]['id_mapel'].$y.$i;
-						// var_dump($input_hari);
-						// exit();
+
 						$hari 			= $this->input->post($input_hari);
 						$guru 			= $this->input->post($input_guru);
 						$jam 			= $this->input->post($input_jam);
@@ -265,8 +264,7 @@ class jadwal_pelajaran extends IO_Controller
 							'recdate'           => $recdate,
 							'userid' 			=> $userid
 						);
-						// var_dump($data_jadwal_pelajaran);
-						// exit();
+						
 						$this->model->simpan_data_jadwal_pelajaran($data_jadwal_pelajaran);
 						
 					}

@@ -100,7 +100,7 @@
                                                                     Kurikulum
                                                                 </span>
                                                                 <?php
-                                                                    $att_item = ' type="text" class="form-control select " id="id_thn_ajar" name="id_thn_ajar" onclick="add_tohide()" onchange="kosong_table()" required';
+                                                                    $att_item = ' type="text" class="form-control select " id="id_thn_ajar" name="id_thn_ajar" onchange="kosong_table();add_tohide();" required';
                                                                     echo form_dropdown('select_thnajar', $kode_deskripsi, null, $att_item);
                                                                 ?>
                                                                 <input type="hidden" class="form-control" name="hide_Kurikulum" id="hide_Kurikulum" >
