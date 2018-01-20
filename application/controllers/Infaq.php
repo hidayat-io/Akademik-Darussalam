@@ -169,7 +169,7 @@ class Infaq extends IO_Controller
 
 			//if(isset($param->nama)) $string_param .= "nama LIKE '%".$param->nama."%' ";
 
-			if($param->id_infaq != "") $string_param .= "id_infaq = '".$param->id_infaq."' ";
+			if($param->id_donatur != "") $string_param .= "a.id_donatur = '".$param->id_donatur."' ";
 
 			if($param->tgl_start != ""){
 
@@ -183,15 +183,19 @@ class Infaq extends IO_Controller
 
 				$string_param .= " tgl_infaq BETWEEN '".$istart_date."' AND '".$iend_date."' ";
 
-				if($param->tipe != ""){
+			} 
+
+			if($param->tipe != ""){
 					if($string_param !=""){
 						$string_param .=' AND ';
 					}
 					$string_param .="tipe = '".$param->tipe."' ";
 
 				}
-			} 
 		}
+
+		//var_dump($param);
+		//exit();
 
 		return $string_param;
 	}

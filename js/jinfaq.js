@@ -426,7 +426,7 @@ function searchdata(){
 	var tipe_d		= $("input[name='optionsRadios']:checked").val();
 	
 
-	var param 		= {'id_infaq':nm,'tgl_start':frm,'tgl_end':to,'tipe':tipe_d};
+	var param 		= {'id_donatur':nm,'tgl_start':frm,'tgl_end':to,'tipe':tipe_d};
 		param 		= JSON.stringify(param);
 		
 	$('#hid_param').val(param);

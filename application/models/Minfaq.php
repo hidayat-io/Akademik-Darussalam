@@ -17,9 +17,14 @@ public function __construct(){
                 ON a.id_donatur=b.id_donatur  LEFT JOIN infaq_temp c
                 ON b.id_donatur=c.id_donatur";
 
+
+
+      
+
         if($param!=null){
 
             $sql .= " WHERE ".$param;
+
         }
 
         $sql.= " ORDER BY ".$cols[$sortby]." ".$sorttype;
