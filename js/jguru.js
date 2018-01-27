@@ -1185,7 +1185,7 @@ function modalEdit(id_guru){
             $('#opt_gender').val(data.biodata.jns_kelamin);
             $('#txt_no_kk').val(data.biodata.no_kk);
             $('#txt_kewarganegaraan').val(data.biodata.kewarganegaraan);
-            $('textarea#txa_alamat').val(data.biodata.txa_alamat);
+            $('textarea#txa_alamat').val(data.biodata.alamat);
             $('#txt_email').val(data.biodata.email);
             $('#txt_notelp').val(data.biodata.no_telepon);
             $('#txt_nama_ayah').val(data.biodata.nama_ayah);
@@ -1195,8 +1195,8 @@ function modalEdit(id_guru){
             $('#txt_nama_pasangan').val(data.biodata.nama_pasangan);
             $('#dtp_tgllahir_pasangan').val(data.biodata.ibirth_mate);
             $('#txt_stambuk_alumni').val(data.biodata.id_alumni);            
-            $('#dtp_ajar_mulai').val(data.biodata.id_ajar_start);
-            $('#dtp_ajar_akhir').val(data.biodata.id_ajar_end);
+            $('#dtp_ajar_mulai').val(data.biodata.iajar_start);
+            $('#dtp_ajar_akhir').val(data.biodata.iajar_end);
             $('#opt_status').val(data.biodata.status);
             $('#txt_gapok').val(data.biodata.gapok);
             $('#txt_masa_pengabdian').val(data.biodata.masa_abdi);
@@ -1206,6 +1206,7 @@ function modalEdit(id_guru){
             $('#txt_sk_angkat').val(data.biodata.no_sk);
             $('#dtp_tgl_sk').val(data.biodata.isk);
             $('#txt_sertifikasi').val(data.biodata.sertifikasi);
+            $('#opt_mapel').val(data.biodata.materi_diampu);
 
             if(data.biodata.file_sk!=null){
 
@@ -1393,6 +1394,16 @@ function modalEdit(id_guru){
                 redrawSelectPendidikanTerakhir();
             });
             //end data pendidikan
+
+            //data struktural
+            var arr_structure   = [];
+            
+            $.each(data.struct,function(){
+
+                arr_structure.push(parseInt(this.id_jabatan));
+            });
+            $("#opt_jabatan").select2().val(arr_structure).trigger("change");
+            //end data struktural
 
             $('#modal_editing').modal('show');
             $('.nav-tabs a[href="#data_guru"]').tab('show');

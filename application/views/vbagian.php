@@ -16,7 +16,7 @@
                 </div>
                 <div class="tools">
                   <div class="btn-group pull-right">
-                      
+
                   </div>
                 </div>
                 <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
@@ -83,7 +83,7 @@
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                    <div class="form-body">                                
+                                    <div class="form-body">
                                         <!-- BEGIN FORM-->
                                         <form action="#" id="add_bagian">
                                             <!--inputbox-->
@@ -104,7 +104,7 @@
                                                             Nama Bagian
                                                         </span>
                                                         <input type="text" class="form-control" name="nama" id="nama" onkeydown="OtomatisKapital(this)" maxlength="20" required></div>
-                                                    </div>     
+                                                    </div>
                                             <!--end inputbox-->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
@@ -146,7 +146,7 @@
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                    <div class="form-body">                                
+                                    <div class="form-body">
                                         <!-- BEGIN FORM-->
                                         <form action="#" id="form_cari">
                                             <!--inputbox-->
