@@ -190,9 +190,21 @@ function OtomatisKapital(a){
     }, 1);
 }
 
+function clearValidate_kelas() {
+
+	$("#add_kelas div").removeClass('has-error');
+	$("#add_kelas i").removeClass('fa-warnin');
+	$("#add_kelas div").removeClass('has-success');
+	$("#add_kelas i").removeClass('fa-check');
+
+	document.getElementById("add_kelas").reset();
+}
+
 function addkelas(){
     $('#save_button').text('SAVE');
 	// kosong();
+	clearValidate_kelas();
+	$('#kode_kelas').attr('readonly', false);
 	$('#Modal_add_kelas').modal('show');
 }
 

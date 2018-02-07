@@ -296,21 +296,21 @@ function TambahBulan(){
 			// 	status = "TIDAK AKTIF"
 			// }
 			
-			// 	var str_url  	= encodeURI(base_url+"semester/get_data_bulan/"+semester+"/"+bulan);
-			// $.ajax({
-			// 	type:"POST",
-			// 	url:str_url,
-			// 	dataType:"html",
-			// 	success:function(data){	
-			// 		$data = $.parseJSON(data);
-			// 			if($data != null)
-			// 			{							
-            //                 bootbox.alert("Bulan di semester "+semester+" suda ada");
-            //                 return false;
+			var str_url = encodeURI(base_url +"semester/cek_data_bulan/"+bulan);
+			$.ajax({
+				type:"POST",
+				url:str_url,
+				dataType:"html",
+				success:function(data){	
+					$data = $.parseJSON(data);
+						if($data != null)
+						{							
+                            bootbox.alert("Bulan di semester lain sudah ada");
+                            return false;
 							
-			// 			}
-			// 			else
-			// 			{
+						}
+						else
+						{
 							var row_count 		= $('#tb_list_bulan tr.tb-detail').length;
 							var content_data 	= '<tr class="tb-detail" id="row'+bulan+'">';
 								content_data 	+= "<td>"+(row_count+1)+"</td>";
@@ -332,9 +332,9 @@ function TambahBulan(){
 							urutkanNomorbulan();
 
 							$('#Modal_add_bulan').modal('hide');
-						// }
-					// }
-				// });
+						}
+					}
+				});
 				
 		}
 		else{

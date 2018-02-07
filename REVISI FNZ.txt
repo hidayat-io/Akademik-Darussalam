@@ -14,3 +14,19 @@ DONATUR/INFAQ
 MASTER DONATUR,done
 
 DI PENDAFTARAN KHUSU AITAM TAMBAHKAN FIELD DONATURNYA/NO KAFIL & NAMA KAFIL
+
+
+
+revisi II:
+-da filter di menu semester, tidak boleh add bulan yang sudah ada di semester lainnya.
+-ada pengecekan bulan di semester, jika bulan yg di add lompat, ex: setelah januari, user pilih juli.
+-penambahan pemotongan, bisa flexible, dan bisa pilih by persen/nominal.---------------------------------------------------->DONE
+-penambahan, tombol untuk import santri AITAM yang lulus ke TMI.
+-penambahan tab donatur.di pendaftaran dan data santri. ?---------------------------------------------------->DONE
+-di komponen biaya di tambahkan aktif dan non active,
+-perubahan data kelas, pakek header & detail.
+-perubahan menu kurikulum = sourcenya ke kelas header
+-cek save & update data guru---------------------------------------------------->DONE
+-penambahan modul silabus
+-penambahan field guru di modul RPP
+- cek saat update di menu data santri, kelas dkk tidak ikut terupdate---------------------------------------------------->DONE

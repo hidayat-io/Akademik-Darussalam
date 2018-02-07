@@ -6,7 +6,7 @@
 
 <div class="row">
 <!-- table master biaya -->
-    <div class="col-md-6">
+    <div class="col-md-12">
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
         <div class="portlet box green-jungle">
         <div class="portlet-title">
@@ -14,8 +14,7 @@
                     <i class="fa fa-database"></i><?php echo $title;?>
                 </div>
                 <div class="tools">
-                  <div class="btn-group pull-right">
-                      
+                  <div class="btn-group pull-right">                      
                   </div>
                 </div>
                 <!-- <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
@@ -55,22 +54,67 @@
     </div>
 <!-- end Table master biaya -->
 <!-- table potongan -->
-    <div class="col-md-6">
+    <div class="col-md-12">
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
         <div class="portlet box green-jungle">
         <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-database"></i><?php echo $title2;?>
                 </div>
+                <div class="tools">
+                  <div class="btn-group pull-right">                      
+                  </div>
+                </div>
+                <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
+                <button class="btn btn-default " type="button" onclick="addpotongan()">
+                        <i class="fa fa-edit"></i>&nbsp;Tambah Data&nbsp;
+                    </button>
+                    <!-- <button type="button" class="btn btn-default" title="Search Data" onclick="Modalcari()">
+                        <i class="fa fa-search"></i>&nbsp;Search
+                    </button>
+                    <button type="button" class="btn btn-default" title="Export Data to Excel" onclick="downloadExcel()">
+                        <i class="fa fa-file-excel-o"></i>&nbsp;Excel
+                    </button> -->
+                </div>
+            </div>
+            <input type="text" class="hidden" name="hid_param_potongan" id="hid_param_potongan" />
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-hover" id="tb_potongan">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center">Nama Potongan</th>
+                            <th style="text-align:center">Persentasi (%)</th>
+                            <th style="text-align:center">Nominal</th>
+                            <th style="text-align:center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <td colspan="4" align="center">
+                            Tidak ada data ditemukan.
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
+        <!-- <div class="portlet box green-jungle">
+            <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-database"></i><?php echo $title2;?>
+                    </div>
+            </div>
             <div class="portlet-body">
             <form action="#" id="add_potongan">
-                                            <!--inputbox-->
                                                     <div class="form-group">
                                                             <label class="control-label"></label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                Potongan Harga Santri Lokal
+                                                                Potongan Harga Santri
                                                             </span>
                                                             <div class="input-icon right">
                                                                 <i class="fa fa-percent"></i>
@@ -90,11 +134,9 @@
                                                             </span>
                                                         </div>
                                                     </div> 
-                                            <!--end inputbox-->
                                         </form>
             </div>
-        </div>
-        <!-- END EXAMPLE TABLE PORTLET-->
+        </div> -->
     </div>
 <!-- end table potongan -->
 </div>
@@ -243,3 +285,93 @@
         </div>
     </div>
 <!-- end of EDIT BEBAN GURU-->
+<!-- modal Potongan -->
+    <div class="modal fade draggable-modal" id="Modal_add_potongan" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sx">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">FORM TAMBAH POTONGAN</h4>
+                </div>
+                <form action="#" id="add_potongan">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- isi body modal mulai -->                    
+                                <div class="portlet box green-jungle">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body form">
+                                        <!-- BEGIN FORM-->
+                                        <div class="form-body">
+                                            <!--inputbbox-->
+                                            <div class="row">
+                                            <input type="text" name="id_potongan" id="id_potongan" class="hidden">
+                                                <div class="form-group">
+                                                    <label class="control-label"></label>
+                                                    <div class="col-md-12">
+                                                        <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                        Nama Potongan
+                                                        </span>
+                                                            <div class="input-icon right">
+                                                                <i class="fa"></i><input type="text" class="form-control" name="nama_potongan" id="nama_potongan" onkeydown="upperCaseF(this)" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label class="control-label"></label>
+                                                        <div class="col-md-12">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                Persen
+                                                            </span>
+                                                            <div class="input-icon right">
+                                                                <i class="fa fa-percent"></i>
+                                                                <input type="text" class="form-control  numbers-only" name="persen" id="persen"  maxlength='3'>                                                                 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label class="control-label"></label>
+                                                    <div class="col-md-12">
+                                                        <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                        Nominal 
+                                                        </span>
+                                                            <div class="input-icon right">
+                                                                <i class="fa"></i><input type class="form-control" name="nominal_potongan" id="nominal_potongan">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                  
+                                <!--end modal-body-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer modal-footer-form">
+                        <a href="javascript:;" class="btn btn-sm default" data-dismiss="modal">
+                        <i class="glyphicon glyphicon-minus-sign"></i>&nbsp;CLOSE
+                        </a>
+                        <a href="javascript:;" class="btn btn-sm green-jungle" onclick="SaveDataPotongan()" id="save_button_potongan">
+                             <i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;SAVE
+                        </a>
+                        <img id="load_save" style="display:none" src="<?php echo base_url(); ?>assets/images/fb-loader.gif" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<!-- end of Potongan-->

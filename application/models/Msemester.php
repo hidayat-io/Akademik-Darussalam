@@ -62,6 +62,16 @@ class Msemester extends CI_Model
         // exit();
         return $this->db->get()->result();
         
+    }
+    
+    function query_cekbulan($bulan){
+		$this->db->select('id_semester, semester , bulan');
+        $this->db->from('ms_semester');
+        $this->db->where('bulan',$bulan);
+        // echo $this->db->last_query();
+        // exit();
+        return $this->db->get()->result();
+        
 	}
 
 }

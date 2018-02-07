@@ -17,19 +17,9 @@ class biaya extends IO_Controller
         $vdata['komponen_bulanan'] = $this->model->get_komponen($tipe='B');
         //get komponen semester
         $vdata['komponen_semester'] = $this->model->get_komponen($tipe='S');
-		//get Potogan
-		$potongan				=  $this->model->get_potongan();
-		if($potongan != null)
-		{
-			$potongan_val = $potongan->potongan;
-		}
-		else {
-			$potongan_val = '0';
-		}
-        $vdata['potongan'] 		= $potongan_val;
-        
+		       
        	$vdata['title'] = 'MASTER BIAYA';
-       	$vdata['title2'] = 'POTONGAN SANTRI LOKAL';
+       	$vdata['title2'] = 'POTONGAN SANTRI';
 	    $data['content'] = $this->load->view('vbiaya',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
@@ -119,7 +109,7 @@ class biaya extends IO_Controller
 			$kategori			= 'B';
 			$this->model->delete_ms_biaya($kategori);
 			foreach ($komponen_bulanan as $row) { 
-					$nama_item	         = $this->input->post('b_hid_nama_item_'.$row['id_komponen']);
+					$nama_item	         	= $this->input->post('b_hid_nama_item_'.$row['id_komponen']);
 					$nominal	            = $this->input->post('b_nominal_'.$row['id_komponen']);					
 					
 
@@ -197,24 +187,89 @@ class biaya extends IO_Controller
 #endregion ms_biaya
 
 #region potongan
-	function simpan_potongan() {
+
+	function load_grid_potongan() {
+		$data 				= $this->model->get_list_data_potongan();
+		$iTotalRecords  	= count($data);
+		$iDisplayLength 	= intval($_REQUEST['length']);
+		$iDisplayLength 	= $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
+		$iDisplayStart  	= intval($_REQUEST['start']);
+		$sEcho				= intval($_REQUEST['draw']);
+
+		$records            = array();
+		$records["data"]    = array();
+
+		$end = $iDisplayStart + $iDisplayLength;
+		$end = $end > $iTotalRecords ? $iTotalRecords : $end;
+
+		for($i = $iDisplayStart; $i < $end; $i++) {
+			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit_potongan(\''.$data[$i]->id_potongan.'\')">
+						<i class="fa fa-edit"></i>
+					</a>
+					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus_potongan(\''.$data[$i]->id_potongan.'\')">
+						<i class="fa fa-remove"></i>
+					</a>';
+			
+
+			$records["data"][] = array(
+				'<div align="center" style="width: 100%">'.$data[$i]->nama_potongan.'</div>',
+				'<div align="center" style="width: 100%">'.$data[$i]->persen.'%'.'</div>',
+				'<div align="center" style="width: 100%">'.number_format($data[$i]->nominal,0,",",".").'</div>',
+				'<div align="center" style="width: 100%">'.$act.'</div>'
+		);
 		
-		$potongan	        = $this->input->post('potongan');				
-		$userid 			= $this->session->userdata('logged_in')['uid'];			
-		if($potongan == null)
-		{
-			$potongan = 0;
 		}
+
+		$records["draw"]            	= $sEcho;
+		$records["recordsTotal"]    	= $iTotalRecords;
+		$records["recordsFiltered"] 	= $iTotalRecords;
+
+		echo json_encode($records);
+			
+	}
+
+	function get_data_potongan($id_potongan){
+		$id_potongan = urldecode($id_potongan);
+		$data = $this->model->query_potongan($id_potongan);
+    	echo json_encode($data);
+	}
+
+	function simpan_potongan($status) {
+		
+		$id_potongan	        = $this->input->post('id_potongan');				
+		$nama_potongan	        = $this->input->post('nama_potongan');				
+		$persen	        		= $this->input->post('persen');				
+		$nominal_potongan	    = $this->input->post('nominal_potongan');				
+		$userid 				= $this->session->userdata('logged_in')['uid'];			
+		
 		$data_potongan = array(
-		'potongan' 			=> $potongan,
+		'nama_potongan' 	=> $nama_potongan,
+		'persen' 			=> $persen,
+		'nominal' 			=> str_replace(array('.',','), array('',''),$nominal_potongan),
 		'userid' 			=> $userid
 		);
 			
 		
-		$this->model->_save_potongan($data_potongan);
+		if($status=='SAVE')	
+		{// cek apakah add new atau editdata
+			
+         	$this->model->_save_potongan($data_potongan);
+
+		}
+        else //update data
+		{		
+         	$this->model->_update_potongan($id_potongan,$data_potongan);
+		}	 
+		
 			
 			echo "true";
 
+	}
+
+	function hapus_potongan($id_potongan){
+		$id_potongan = urldecode($id_potongan);
+
+		$this->model->_DelPotongan($id_potongan);
 	}
 #endregion potongan
 
