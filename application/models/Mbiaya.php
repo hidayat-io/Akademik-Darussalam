@@ -44,7 +44,7 @@ class Mbiaya extends CI_Model
                                             ms_biaya.nominal
                                     FROM ms_biaya_komponen 
                                     LEFT JOIN ms_biaya on ms_biaya_komponen.id_komponen = ms_biaya.nama_item
-                                    WHERE tipe = '$tipe' ORDER BY id_komponen ASC")->result_array();
+                                    WHERE tipe = '$tipe' and isActive ='1' ORDER BY id_komponen ASC")->result_array();
 		return $data;
     }
 	

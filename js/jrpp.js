@@ -1,8 +1,12 @@
 // //load
 $(document).ready(function()
 {
-	// addSantri("TMI");
+
 	setTable();
+	$(".select2").select2({
+		dropdownParent: $('#Modal_add_rpp')
+		// dropdownParent: parentElement
+	});
 	// addrpp();
 	$('.datepicker').datepicker(
 	{
@@ -12,10 +16,7 @@ $(document).ready(function()
 		format: 'dd-mm-yyyy'
 	});
 	
-	// $(".select2").select2({
-	// 	dropdownParent:$('#Modal_add_rpp')
-	// });
-	$(".select2").select2();
+	validate_add_rpp();
 
 	$('.numbers-only').keypress(function(event) {
 		var charCode = (event.which) ? event.which : event.keyCode;
@@ -27,66 +28,64 @@ $(document).ready(function()
 		return false;
 	});
 
-	//validasi form modal add_kecakapan_khusus
-	$( "#add_rpp" ).validate({
-		errorElement:"em",
-		// errorClass:"help-block help-block-error",
-			// rules:{
-	    //    no_registrasi:{
-	    //    minlength:2,
-	    //    required:!0},
-	    //    no_stambuk:{
-	    //    required:!0}
-			// },
-			messages: {
-				// no_registrasi: {
-				// 	required: "(required)",
-				// 	minlength: " (must be at least 3 characters)"
-				// },
-				email: "Email invalid"
-			},
-
-			invalidHandler: function(element, validator){
-				validator.focusInvalid();
-			},
-
-			errorPlacement: function ( error, element ) {
-					// Add the `help-block` class to the error element
-					error.addClass( "help-block" );
-
-					// Add `has-feedback` class to the parent div.form-group
-					// in order to add icons to inputs
-					$(element).closest(".form-group").addClass( "has-feedback" );
-
-					if ( element.prop( "type" ) === "checkbox" ) {
-						error.insertAfter( element.parent( "form-control" ) );
-					} else {
-						error.insertAfter( element );
-					}
-
-					// Add the span element, if doesn't exists, and apply the icon classes to it.
-					if ( !element.next( "span" )[ 0 ] ) {
-						$( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
-					}
-				},
-				success: function ( label, element ) {
-					// Add the span element, if doesn't exists, and apply the icon classes to it.
-					if ( !$( element ).next( "span" )[ 0 ] ) {
-						$( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
-					}
-				},
-				highlight: function ( element, errorClass, validClass ) {
-					$(element).closest(".form-group").addClass( "has-error" ).removeClass( "has-success" );
-					$( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
-				},
-				unhighlight: function ( element, errorClass, validClass ) {
-					$(element).closest(".form-group").addClass( "has-success" ).removeClass( "has-error" );
-					$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
-				}
-
-	}); //end dari validasi form
 
 });
+
+var validate_add_rpp = function () {
+
+	var form = $('#add_rpp');
+	var error2 = $('.alert-danger', form);
+	var success2 = $('.alert-success', form);
+
+	form.validate({
+		errorElement: 'span', //default input error message container
+		errorClass: 'help-block help-block-error', // default input error message class
+		focusInvalid: false, // do not focus the last invalid input
+
+		invalidHandler: function (event, validator) { //display error alert on form submit              
+			success2.hide();
+			error2.show();
+			App.scrollTo(error2, -200);
+		},
+
+		errorPlacement: function (error, element) { // render error placement for each input type
+			var icon = $(element).parent('.input-icon').children('i');
+			icon.removeClass('fa-check').addClass("fa-warning");
+			icon.attr("data-original-title", error.text()).tooltip({ 'container': 'body' });
+		},
+
+		highlight: function (element) { // hightlight error inputs
+			$(element)
+				.closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group   
+		},
+
+		unhighlight: function (element) { // revert the change done by hightlight
+
+		},
+
+		success: function (label, element) {
+			var icon = $(element).parent('.input-icon').children('i');
+			$(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+			icon.removeClass("fa-warning").addClass("fa-check");
+		},
+
+		submitHandler: function (form) {
+			success2.show();
+			error2.hide();
+			form[0].submit(); // submit the form
+		}
+	});
+}
+
+function clearvalidate_add_rpp() {
+
+	$("#add_rpp div").removeClass('has-error');
+	$("#add_rpp i").removeClass('fa-warning');
+	$("#add_rpp div").removeClass('has-success');
+	$("#add_rpp i").removeClass('fa-check');
+
+	document.getElementById("add_rpp").reset();
+}
 
 function add_tohide()
 {
@@ -96,7 +95,7 @@ function add_tohide()
 
 function add_tohidekelas()
 {
-	$item  	= $('#select_kelas').val();
+	$item  	= $('#id_kelas').val();
 	$item 	= $item.split('#');
 
     $('#kode_kelas').val($item[0]);
@@ -140,13 +139,17 @@ function refresh_table()
     {
         bootbox.alert("Pilih Dulu Semester");
     }
-    else if($("#select_kelas").val() == '')
+	else if ($("#id_kelas").val() == '')
     {
         bootbox.alert("Pilih Dulu Kelas");
     }
     else if($("#santri").val() == '')
     {
         bootbox.alert("Pilih Dulu Santri");
+    }
+	else if ($("#id_guru").val() == '')
+    {
+        bootbox.alert("Pilih Dulu Guru");
     }
     else
     {   
@@ -155,10 +158,11 @@ function refresh_table()
 		var tingkat 		= $('#tingkat').val();
 		var tipe_kelas 		= $('#tipe_kelas').val();
 		var santri 			= $('#santri').val();
+		var id_guru 		= $('#id_guru').val();
 		var kode_kelas 		= $('#kode_kelas').val();
 		var mt_pelajaran 	= $('#mt_pelajaran').val();
 		var kdrow 			= makeid();
-		var str_url  		= encodeURI(base_url+"rpp/GetRPPTambah/"+id_thn_ajar+"/"+semester+"/"+tingkat+"/"+tipe_kelas+"/"+santri+"/"+kode_kelas+"/"+mt_pelajaran);
+		var str_url			 = encodeURI(base_url + "rpp/GetRPPTambah/" + id_thn_ajar + "/" + semester + "/" + tingkat + "/" + tipe_kelas + "/" + santri + "/" + id_guru + "/" + kode_kelas + "/" + mt_pelajaran);
 		$.ajax({
 			
 			type:"POST",
@@ -197,10 +201,10 @@ function refresh_table()
 							content_data 	+= "<td>"+data[i].bulan+"</td>"; //mata pelajaran
 							content_data 	+= '<td>'+data[i].minggu+'</td>'; //Minggu
 							content_data 	+= '<td>'+data[i].hari+'/'+data[i].jam+'</td>'; //Hari/Hissoh
-							content_data 	+= '<td><input type="text" class="form-control" name="'+materi_pokok+'" id="'+materi_pokok+'" onkeydown="OtomatisKapital(this)" required></td>'; //Materi Pokok
-							content_data 	+= '<td><input type="text" class="form-control" name="'+waktu+'" id="'+waktu+'" onkeydown="OtomatisKapital(this)" required></td>'; //Waktu
-							content_data 	+= '<td><input type="text" class="form-control" name="'+tiu+'" id="'+tiu+'" onkeydown="OtomatisKapital(this)" required></td>'; //TIU/TIK
-							content_data 	+= '<td><input type="text" class="form-control" name="'+pr+'" id="'+pr+'" onkeydown="OtomatisKapital(this)"  required></td>'; //Jenis Tagihan PR/UH HP / PK								
+							content_data 	+= '<td><div class="form-group"><input type="text" class="form-control" name="'+materi_pokok+'" id="'+materi_pokok+'" onkeydown="OtomatisKapital(this)" required></div></td>'; //Materi Pokok
+						content_data += '<td><div class="form-group"><input type="text" class="form-control" name="' + waktu + '" id="' + waktu +'" onkeydown="OtomatisKapital(this)" required></div></td>'; //Waktu
+						content_data += '<td><div class="form-group"><input type="text" class="form-control" name="' + tiu + '" id="' + tiu +'" onkeydown="OtomatisKapital(this)" required></div></td>'; //TIU/TIK
+						content_data += '<td><div class="form-group"><input type="text" class="form-control" name="' + pr + '" id="' + pr +'" onkeydown="OtomatisKapital(this)"  required></div></td>'; //Jenis Tagihan PR/UH HP / PK								
 							content_data 	+= "</tr>";
 										
 							if(i<1){
@@ -221,9 +225,19 @@ function refresh_table()
 }
 
 function kosong(){
+	//disable
+		$('#mt_pelajaran').prop("disabled", false);
+		$('#id_kelas').prop("disabled", false);
+		$('#id_guru').prop("disabled", false);
+		$('#semester').attr("disabled", false);
+		$('#id_thn_ajar').attr("disabled", false);
+		$('#santri').attr("disabled", false);
 		$('#id_thn_ajar').val('');
+		$('#id_guru').val(null).trigger('change');
+		$('#id_kelas').val(null).trigger('change');
+		$('#mt_pelajaran').val(null).trigger('change');
 		$('#semester').val('');
-		$('#select_kelas').val('');
+		$('#id_kelas').val('');
 		$('#tingkat').val('');
 		$('#tipe_kelas').val('');
 		$('#santri').val('');
@@ -242,11 +256,12 @@ function svrpp(){
 
         $mt_pelajaran 		= $('#mt_pelajaran').val();
         $santri 			= $('#santri').val();
+		$id_guru 			= $('#id_guru').val();
         $id_thn_ajar 		= $('#id_thn_ajar').val();
         $semester 			= $('#semester').val();
         $kode_kelas 		= $('#kode_kelas').val();
 		$status 			= $('#save_button').text();
-		var str_url  	= encodeURI(base_url+"rpp/cek_duplicate_data/"+$id_thn_ajar+"/"+$santri+"/"+$semester+"/"+$kode_kelas+"/"+$mt_pelajaran);
+		var str_url 		= encodeURI(base_url + "rpp/cek_duplicate_data/" + $id_thn_ajar + "/" + $santri + "/" + $id_guru + "/" + $semester+"/"+$kode_kelas+"/"+$mt_pelajaran);
        $.ajax({
 		type:"POST",
 		url:str_url,
@@ -301,6 +316,7 @@ function OtomatisKapital(a){
 }
 
 function addrpp(){
+	document.getElementById("add_rpp").reset();
     $('#save_button').text('SAVE');
 	kosong();
 	$('#button_refresh').attr('disabled',false);
@@ -318,34 +334,36 @@ function ONprosses(){
 	);
 }
 
-function edit(id_rpp,kode_kelas,tingkat, tipe_kelas,nama,santri,id_thn_ajar,deskripsi,semester,id_mapel){
+function edit(id_rpp, kode_kelas, tingkat, tipe_kelas, nama, santri, id_thn_ajar, deskripsi, semester, id_guru, id_mapel){
 	$('#save_button').text('UPDATE');
 	$('#button_refresh').attr('disabled',true);
 	
 	$('#id_rpp_hide').val(id_rpp);
 	$('#id_thn_ajar').val(id_thn_ajar);
-	$('#select_kelas').val(kode_kelas+'#'+nama+'#'+tingkat+'#'+tipe_kelas);
+	$('#id_kelas').val(kode_kelas+'#'+nama+'#'+tingkat+'#'+tipe_kelas);
+	$('#id_kelas').trigger('change');
 	$('#hide_Kurikulum').val(id_thn_ajar);
 	$('#santri').val(santri);
 	$('#semester').val(semester);
+	$('#id_guru').val(id_guru);
+	$('#id_guru').trigger('change');
 	$('#kode_kelas').val(kode_kelas);
 	$('#tingkat').val(tingkat);
 	$('#tipe_kelas').val(tipe_kelas);
 	$('#mt_pelajaran').val(id_mapel);
+	$('#mt_pelajaran').trigger('change');
 
-	//read only text box
-	// $('#id_thn_ajar').attr('disabled',true);
-	// $('#select_kelas').attr('disabled',true);
-	// $('#semester').attr('disabled',true);
-	// $('#santri').attr('disabled',true);
+	//disable
+	$('#mt_pelajaran').prop("disabled", true);
+	$('#id_kelas').prop("disabled", true);
+	$('#id_guru').prop("disabled", true);
+	$('#semester').attr("disabled", true);
+	$('#id_thn_ajar').attr("disabled", true);
+	$('#santri').attr("disabled", true);
 		
 	$('#Modal_add_rpp').modal('show');
 	
 	$('#tb_list_rpp tbody').html('');
-	// var id_thn_ajar = $('#id_thn_ajar').val();
-	// var semester 	= $('#semester').val();
-	// var tingkat 	= $('#tingkat').val();
-	// var tipe_kelas 	= $('#tipe_kelas').val();
 	var kdrow 	= makeid();
 	
 	var str_url  	= encodeURI(base_url+"rpp/GetRPP/"+id_rpp);
@@ -370,15 +388,7 @@ function edit(id_rpp,kode_kelas,tingkat, tipe_kelas,nama,santri,id_thn_ajar,desk
 				$('#tb_list_rpp tbody').html('');
 				for(i=0;i<LengtData;i++)
 				{
-					// if (semester == 1)
-					// {
-					// 	var sm = data[i].sm_1;
-					// }
-					// else if (semester ==2)
-					// {
-					// 	var sm = data[i].sm_2;
-						
-					// }
+					
 					var materi_pokok = 'txt_mpokok'+data[i].minggu+data[i].hari+i;
 					var waktu = 'txt_waktu'+data[i].minggu+data[i].hari+i;
 					var tiu = 'txt_tiu'+data[i].minggu+data[i].hari+i;

@@ -135,7 +135,7 @@
                                                             <?php $no++; } ?>
                                                     </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody style="overflow-x:scroll; height:100px;">
                                                         <?php  $no =1;
                                                                 foreach ($bodytablekurikulum as $rowbody) { ?>
                                                         <tr>

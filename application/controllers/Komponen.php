@@ -41,8 +41,9 @@ class Komponen extends IO_Controller
 		$end = $iDisplayStart + $iDisplayLength;
 		$end = $end > $iTotalRecords ? $iTotalRecords : $end;
 
-		$fdate 	= 'd-M-Y';
-		$tipe 	= array('S'=>'Semesteran','B'=>'Bulanan');
+		$fdate 		= 'd-M-Y';
+		$tipe 		= array('S'=>'Semesteran','B'=>'Bulanan');
+		$isActive 	= array('1'=>'Aktif','0'=>'NonAktif');
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
 
@@ -56,6 +57,7 @@ class Komponen extends IO_Controller
 				$data[$i]->id_komponen,
 				$data[$i]->nama_komponen,
 				$tipe[$data[$i]->tipe],
+				$isActive[$data[$i]->isActive],
 				$act
 			);
 		}
@@ -92,6 +94,7 @@ class Komponen extends IO_Controller
 
 			'nama_komponen'		=> $input['txtnama'],
 			'tipe'				=> $input['optionsRadios'],
+			'isActive'			=> $input['optionsRadiosStatus'],
 			'userid'			=> $user
 		);
 

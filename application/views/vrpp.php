@@ -1,5 +1,15 @@
 <!-- بسم الله الرحمن الرحیم -->
 <style type="text/css">.thumb-image{float:left;width:200px;position:relative;padding:5px;}</style>
+<style type="text/css">.form-group .select2-container {
+  position: relative;
+  z-index: 2;
+  float: left;
+  width: 100%;
+  margin-bottom: 0;
+  display: table;
+  table-layout: fixed;
+}
+</style>
 <script src="<?php echo base_url(); ?>assets/plugins/maskMoney/jquery.maskMoney.js"></script>
 <script src="<?php echo base_url(); ?>js/jrpp.js"></script>
 <script type="text/javascript">
@@ -42,6 +52,7 @@
                             <th style="text-align:center">id_mapel</th>
                             <th style="text-align:center">Kurikulum</th>
                             <th style="text-align:center">Semester</th>
+                            <th style="text-align:center">Guru</th>
                             <th style="text-align:center">Kode kelas</th>
                             <th style="text-align:center">Kelas</th>
                             <th style="text-align:center">Santri</th>
@@ -100,8 +111,8 @@
                                                                     Mata Pelajaran
                                                                 </span>
                                                                 <?php
-                                                                    $att_item = ' type="text" class="form-control select " id="mt_pelajaran" name="mt_pelajaran"  onchange="kosong_table()" required';
-                                                                    echo form_dropdown('mt_pelajaran', $mat_pal, null, $att_item);
+                                                                    $att_item = ' type="text" class="form-control select2"  style="width: 90%;" id="mt_pelajaran" onchange="kosong_table()" required';
+                                                                    echo form_dropdown('select_mtpelajaran', $mat_pal, null, $att_item);
                                                                 ?>
                                                                 <!-- <input type="hidden" class="form-control" name="hide_Kurikulum" id="hide_Kurikulum" > -->
                                                             </div>
@@ -116,8 +127,8 @@
                                                                 <span class="input-group-addon">
                                                                     Semester
                                                                 </span>
-                                                                <select class="form-control" name="semester" id="semester" onchange="kosong_table()" required>
-                                                                <option value="">-Pilih Semester-</option>
+                                                                <select class="form-control select" style="width: 90%;" name="semester" id="semester" onchange="kosong_table()" required>
+                                                                <option value=""></option>
                                                                 <option value="1">1</option>
                                                                 <option value="2">2</option>
                                                             </select>
@@ -134,7 +145,7 @@
                                                                     Kelas
                                                                 </span>
                                                                 <?php
-                                                                    $att_item = ' type="text" class="form-control select" id="select_kelas" onclick="add_tohidekelas()" onchange="kosong_table()" required';
+                                                                    $att_item = ' type="text" class="form-control select2"  style="width: 90%;" id="id_kelas" onchange="kosong_table();add_tohidekelas()" required';
                                                                     echo form_dropdown('select_kelas', $kode_kelas, null, $att_item);
                                                                 ?>
                                                             
@@ -151,8 +162,26 @@
                                                                     Kurikulum
                                                                 </span>
                                                                 <?php
-                                                                    $att_item = ' type="text" class="form-control select " id="id_thn_ajar" name="id_thn_ajar" onclick="add_tohide()" onchange="kosong_table()" required';
+                                                                    $att_item = ' type="text" class="form-control select" style="width: 90%;" id="id_thn_ajar" onchange="kosong_table();add_tohide()" required';
                                                                     echo form_dropdown('select_thnajar', $kode_deskripsi, null, $att_item);
+                                                                ?>
+                                                                <input type="hidden" class="form-control" name="hide_Kurikulum" id="hide_Kurikulum" >
+                                                            </div>
+                                                        </div>    
+                                                    </div>
+                                                    <!--span-->
+                                                </div>
+                                                <div class="row">  
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Guru
+                                                                </span>
+                                                                <?php
+                                                                    $att_item = ' type="text" class="form-control select2" style="width: 90%;" id="id_guru" onchange="kosong_table()" required';
+                                                                    echo form_dropdown('select_guru', $idguru, null, $att_item);
                                                                 ?>
                                                                 <input type="hidden" class="form-control" name="hide_Kurikulum" id="hide_Kurikulum" >
                                                             </div>
@@ -167,8 +196,8 @@
                                                                 <span class="input-group-addon">
                                                                     Santri
                                                                 </span>
-                                                                <select class="form-control" name="santri" id="santri" onchange="kosong_table()" required>
-                                                                <option value="">-Pilih Santri-</option>
+                                                                <select class="form-control" style="width: 90%;"  name="santri" id="santri" onchange="kosong_table()" required>
+                                                                <option value=""></option>
                                                                 <option value="PUTRI">PUTRI</option>
                                                                 <option value="PUTRA">PUTRA</option>
                                                             </select>

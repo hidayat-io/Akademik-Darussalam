@@ -67,25 +67,25 @@ function setTable(){
 
 function simpankomponen(){
 
-var nama 				= $("input[name='txtnama']").val();
+	var nama 				= $("input[name='txtnama']").val();
 
-if(nama==""){
+	if(nama==""){
 
-		var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
-		var str_message = "Keterangan, &amp; No Registrasi santri tidak boleh kosong.";
+			var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
+			var str_message = "Nama komponen tidak boleh kosong.";
 
-		bootbox.alert({
-			size:'small',
-			title:title,
-			message:str_message,
-			buttons:{
-				ok:{
-					label: 'OK',
-					className: 'btn-warning'
+			bootbox.alert({
+				size:'small',
+				title:title,
+				message:str_message,
+				buttons:{
+					ok:{
+						label: 'OK',
+						className: 'btn-warning'
+					}
 				}
-			}
-		});
-		return false;
+			});
+			return false;
 	}
 
 

@@ -10,9 +10,9 @@ public function __construct(){
 
     function get_list_data($param,$sortby=0,$sorttype='desc'){
 
-        $cols = array('id_komponen','nama_komponen','tipe');
+        $cols = array('id_komponen','nama_komponen','tipe','isActive');
 
-        $sql = "SELECT id_komponen,nama_komponen,tipe FROM ms_biaya_komponen";
+        $sql = "SELECT id_komponen,nama_komponen,tipe,isActive FROM ms_biaya_komponen";
 
         if($param!=null){
 
