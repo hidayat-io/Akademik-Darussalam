@@ -246,11 +246,13 @@ function edit(semester){
             var data = $.parseJSON(data);
 
                 $.each(data, function (index, value) {
-                    var bulan = value['bulan'];
+					var bln = {'1' : 'Januari', '2' : 'Februari', '3' : 'Maret', '4' : 'April', '5' : 'Mei', '6' : 'Juni', '7' : 'Juli', '8' : 'Agustus', '9' : 'September', '10' : 'Oktober', '11' : 'November', '12' : 'Desember'};
+                    var bulan = bln[value['bulan']];
                     var row_count 	= $('#tb_list_bulan tr.tb-detail').length;
                     var content_data 	= '<tr class="tb-detail"id="row'+bulan+'">';
                         content_data 	+= "<td>"+(row_count+1)+"</td>";
-                        content_data 	+= "<td>"+value['bulan']+"</td>";
+                        content_data 	+= "<td class='hidden'>"+value['bulan']+"</td>";
+                        content_data 	+= "<td>"+bulan+"</td>";
                         content_data 	+= '<td><button type="button" class="btn btn-danger btn-xs" ';
                         content_data 	+= ' onclick="hapusItembulan(\''+bulan+'\')"><i class="fa fa-fw fa-trash"></i>Hapus</button></td>';
                         content_data 	+= "</tr>";
@@ -289,13 +291,7 @@ function TambahBulan(){
 
 
 		if(cekItembulan(bulan)==true){
-			// if (status ==1){
-			// 	status = "AKTIF"
-			// }
-			// else{
-			// 	status = "TIDAK AKTIF"
-			// }
-			
+						
 			var str_url = encodeURI(base_url +"semester/cek_data_bulan/"+bulan);
 			$.ajax({
 				type:"POST",
@@ -311,10 +307,13 @@ function TambahBulan(){
 						}
 						else
 						{
+							var bln 			= { '1': 'Januari', '2': 'Februari', '3': 'Maret', '4': 'April', '5': 'Mei', '6': 'Juni', '7': 'Juli', '8': 'Agustus', '9': 'September', '10': 'Oktober', '11': 'November', '12': 'Desember' };
+							var bulanH 			= bln[bulan];
 							var row_count 		= $('#tb_list_bulan tr.tb-detail').length;
 							var content_data 	= '<tr class="tb-detail" id="row'+bulan+'">';
 								content_data 	+= "<td>"+(row_count+1)+"</td>";
-								content_data 	+= "<td>"+bulan+"</td>";
+								content_data 	+= "<td class='hidden'>" + bulan + "</td>";
+								content_data 	+= "<td>" + bulanH + "</td>";
 								content_data 	+= '<td><button type="button" class="btn btn-danger btn-xs" ';
 								content_data 	+= ' onclick="hapusItembulan(\''+bulan+'\')"><i class="fa fa-fw fa-trash"></i>Hapus</button></td>';
 								content_data 	+= "</tr>";
@@ -339,7 +338,7 @@ function TambahBulan(){
 		}
 		else{
 
-			bootbox.alert("<span class='glyphicon glyphicon-exclamation-sign'></span>&nbsp;Bulan di semester "+semester+" sudah ada");
+			bootbox.alert("<span class='glyphicon glyphicon-exclamation-sign'></span>&nbsp;Bulan di semester "+semester+" sudah ada atau bulan tidak urut");
 		}
 	}
 }
@@ -363,12 +362,13 @@ function cekItembulan(i_bulan){
     var oTable      = document.getElementById('tb_list_bulan');
     var rowLength   = oTable.rows.length;
     var itemcount   = $("#hid_jumlah_item_bulan").val();
-    rowLength = rowLength-1;
+	rowLength = rowLength-1;
+	var nextbulan = parseInt(oTable.rows.item(itemcount).cells[1].innerHTML) +1;
 
     if(itemcount=="0"){ //jika item kosong
 
         return true;
-    }
+	}
     else{
 
         for (i = 1; i <= rowLength; i++)
@@ -379,7 +379,10 @@ function cekItembulan(i_bulan){
 
                     return false;
             }
-        }
+		}
+		if (nextbulan != i_bulan) {
+			return false;
+		}
         return true;
     }
 }

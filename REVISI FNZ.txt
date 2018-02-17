@@ -18,8 +18,8 @@ DI PENDAFTARAN KHUSU AITAM TAMBAHKAN FIELD DONATURNYA/NO KAFIL & NAMA KAFIL
 
 
 revisi II:
--da filter di menu semester, tidak boleh add bulan yang sudah ada di semester lainnya.
--ada pengecekan bulan di semester, jika bulan yg di add lompat, ex: setelah januari, user pilih juli.
+-da filter di menu semester, tidak boleh add bulan yang sudah ada di semester lainnya.---------------------------------------------------->DONE
+-ada pengecekan bulan di semester, jika bulan yg di add lompat, ex: setelah januari, user pilih juli.---------------------------------------------------->DONE
 -penambahan pemotongan, bisa flexible, dan bisa pilih by persen/nominal.---------------------------------------------------->DONE
 -penambahan, tombol untuk import santri AITAM yang lulus ke TMI.
 -penambahan tab donatur.di pendaftaran dan data santri. ?---------------------------------------------------->DONE

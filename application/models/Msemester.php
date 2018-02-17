@@ -65,12 +65,13 @@ class Msemester extends CI_Model
     }
     
     function query_cekbulan($bulan){
-		$this->db->select('id_semester, semester , bulan');
+		$this->db->select('bulan');
         $this->db->from('ms_semester');
         $this->db->where('bulan',$bulan);
         // echo $this->db->last_query();
+        // var_dump($bulan);
         // exit();
-        return $this->db->get()->result();
+        return $this->db->get()->row();
         
 	}
 

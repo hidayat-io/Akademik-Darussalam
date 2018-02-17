@@ -151,7 +151,3 @@ class semester extends IO_Controller
 	}
 
 }
-
-	
-
-	
