@@ -1,2 +1,3 @@
 application/config/database.php
 .vscode\settings.json
+application/config/config.php
