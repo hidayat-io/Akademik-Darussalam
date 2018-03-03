@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
 	setTable();
+	modalEdit('s');
 
 	$('.datepicker').datepicker({
         orientation: "left",
@@ -47,4 +48,9 @@ function setTable(){
 			}
         ],
 	});
+}
+
+function modalEdit(id_jadwal){
+
+	$('#modal_editing').modal('show');
 }
