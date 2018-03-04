@@ -21,7 +21,7 @@ revisi II:
 -da filter di menu semester, tidak boleh add bulan yang sudah ada di semester lainnya.---------------------------------------------------->DONE
 -ada pengecekan bulan di semester, jika bulan yg di add lompat, ex: setelah januari, user pilih juli.---------------------------------------------------->DONE
 -penambahan pemotongan, bisa flexible, dan bisa pilih by persen/nominal.---------------------------------------------------->DONE
--penambahan, tombol untuk import santri AITAM yang lulus ke TMI.
+-penambahan, tombol untuk import santri AITAM yang lulus ke TMI..---------------------------------------------------->DONE
 -penambahan tab donatur.di pendaftaran dan data santri. ?---------------------------------------------------->DONE
 -di komponen biaya di tambahkan aktif dan non active, ---------------------------------------------------->DONE
 -perubahan data kelas, pakek header & detail.
