@@ -351,6 +351,10 @@ class Mpendaftaran extends CI_Model
 		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->update('ms_kecakapan_santri');
+
+		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->update('ms_santri_donatur');
 	}
 
 	function delete_all_data_santri($no_registrasi){

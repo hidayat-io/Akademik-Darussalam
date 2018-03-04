@@ -87,17 +87,17 @@
                     <form id="add_santri" class="form-horizontal" enctype="multipart/form-data">
                             <div class="tabbable-custom">
                                 <ul class="nav nav-tabs">
-                                    <li class="active">
+                                     <li class="active">
                                         <a href="#tab_santri" data-toggle="tab"><i class="fa fa-user"></i>&nbsp;Data Santri</a>
                                     </li>
                                     <li>
-                                        <a href="#tab_pembiayaan" <?php if($kategori_santri != 'TMI'){echo 'class="hidden"';} ?> data-toggle="tab"><i class="fa fa-university"></i>&nbsp;Data Pembiayaan</a>
+                                        <a href="#tab_pembiayaan" id="tabpembiayaan" data-toggle="tab"><i class="fa fa-university"></i>&nbsp;Data Pembiayaan</a>
                                     </li>
                                     <li>
-                                        <a href="#tab_sekolah"  <?php if($kategori_santri == 'TMI'){echo 'class="hidden"';} ?> data-toggle="tab"><i class="fa fa-child"></i>&nbsp;Data Sekolah (AITAM)</a>
+                                        <a href="#tab_sekolah"  id="tabsekolah"  data-toggle="tab"><i class="fa fa-child"></i>&nbsp;Data Sekolah (AITAM)</a>
                                     </li>
                                     <li>
-                                        <a href="#tab_fisik" <?php if($kategori_santri != 'TMI'){echo 'class="hidden"';} ?> data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Fisik</a>
+                                        <a href="#tab_fisik" id="tabfisik"  data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Fisik</a>
                                     </li>
                                     <li>
                                         <a href="#tab_keluarga" data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Keluarga</a>
@@ -106,7 +106,7 @@
                                         <a href="#tab_penyakitn" data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Penyakit</a>
                                     </li>
                                     <li>
-                                        <a href="#tab_kecakapan"  <?php if($kategori_santri != 'TMI'){echo 'class="hidden"';} ?> data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Kecakapan Khusus</a>
+                                        <a href="#tab_kecakapan"  id="tabkecakapan"  data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Kecakapan Khusus</a>
                                     </li>
                                     <li>
                                         <a href="#tab_lampiran" data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Lampiran</a>
@@ -172,17 +172,19 @@
                                                                                             $hidden_tmi     ='';
                                                                                             $hidden_aitam   ='hidden';
                                                                                             $tmi_select     ='selected';
+                                                                                            $aitam_select   ='';
                                                                                         }
                                                                                         else {
                                                                                             $hidden_tmi     ='hidden';
                                                                                             $hidden_aitam   ='';
                                                                                             $aitam_select   ='selected';
+                                                                                            $tmi_select     ='';
                                                                                         }
                                                                                         ?>
                                                                                         <option value=""></option>
-                                                                                        <option value="TMI" class="<?php echo $hidden_tmi?>" <?php echo $tmi_select?>>TMI</option>
-                                                                                        <option value="AITAM_ISLAH" class="<?php echo $hidden_aitam?>" <?php echo $aitam_select?>>AITAM_ISLAH</option>
-                                                                                        <option value="AITAM_JAMIAH" class="<?php echo $hidden_aitam?>">AITAM_JAMIAH</option>
+                                                                                        <option value="TMI" <?php echo $hidden_tmi?> <?php echo $tmi_select?>>TMI</option>
+                                                                                        <option value="AITAM_ISLAH" <?php echo $hidden_aitam?> <?php echo $aitam_select?>>AITAM_ISLAH</option>
+                                                                                        <option value="AITAM_JAMIAH" <?php echo $hidden_aitam?>>AITAM_JAMIAH</option>
                                                                                     </select>
                                                                                     <input type="text" name="kategori_update" id="kategori_update" class="hidden"/>
                                                                                 </div>
@@ -221,6 +223,11 @@
                                                                                     <i class="fa"></i><i class="fa"></i>
                                                                                     <input type class="form-control datepicker"  data-date-format="yyyy" name="thn_masuk" id="thn_masuk" readonly="true" required>
                                                                                 </div>
+                                                                                    <span class="input-group-btn">
+                                                                                    <button class="btn default" type="button">
+                                                                                        <i class="fa fa-calendar"></i>
+                                                                                    </button>
+                                                                                </span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -410,7 +417,7 @@
                                                                 <!-- </div> -->
                                                             </div>
                                                             <!--span-->
-                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
+                                                            <div id="cnama_arab" class="col-md-6">
                                                                 <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
                                                                     <div class="col-md-9"> -->
@@ -429,7 +436,7 @@
                                                         <!--end inputbox-->
                                                         <!--inputbbox-->
                                                         <div class="row">
-                                                            <div class="col-md-6  <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
+                                                            <div id="cnama_panggilan" class="col-md-6">
                                                                 <!-- <div class="form-group">
                                                                   <label class="control-label col-md-3"></label>
                                                                       <div class="col-md-9"> -->
@@ -464,7 +471,7 @@
                                                         <!--end inputbox-->
                                                             <!--inputbbox-->
                                                         <div class="row">
-                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
+                                                            <div id="cuang_jajan_perbulan" class="col-md-6">
                                                                 <!-- <div class="form-group">
                                                                   <label class="control-label col-md-3"></label>
                                                                       <div class="col-md-9"> -->
@@ -499,7 +506,7 @@
                                                         <!--end inputbox-->
                                                         <!--inputbbox-->
                                                         <div class="row">
-                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
+                                                            <div id="cnik" class="col-md-6">
                                                                 <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
                                                                     <div class="col-md-9"> -->
@@ -543,7 +550,7 @@
                                                                             Tgl. Lahir
                                                                         </span>
                                                                             <div class="input-icon right">
-                                                                                <i class="fa"></i><input type class="form-control datepicker" data-date-format="dd-mm-yyyy"  name="tgl_lahir" id="tgl_lahir" required>
+                                                                                <i class="fa"></i><input type class="form-control datepicker" data-date-format="dd-mm-yyyy"  name="tgl_lahir" id="tgl_lahir" readonly  required>
                                                                             </div>
                                                                             <span class="input-group-btn">
                                                                                 <button class="btn default" type="button">
@@ -555,7 +562,7 @@
                                                                 </div> -->
                                                             </div>
                                                             <!--span-->
-                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
+                                                            <div id="ckonsulat" class="col-md-6">
                                                                 <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
                                                                     <div class="col-md-9"> -->
@@ -1970,6 +1977,9 @@
                     </a>
                     <a href="javascript:;" class="btn btn-sm green-jungle  <?php if($page != 'DAFTAR'){echo 'hidden';}?> " onclick="AddTOSantri()" id="addto_button_footer">
                         <i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Jadikan Santri
+                    </a>
+                    <a href="javascript:;" class="btn btn-sm green-jungle  <?php if($page != 'DAFTAR'){echo 'hidden';}?> " onclick="AddToTMI()" id="addtoTMI_button_footer">
+                        <i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Jadikan TMI
                     </a>
                     <img id="load_save" style="margin-left:5px;display: none"
                         src="<?php echo base_url(); ?>images/pre_loader.gif" />

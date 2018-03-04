@@ -351,6 +351,41 @@ class Mdatasantri extends CI_Model
 		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->update('ms_kecakapan_santri');
+
+		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->update('ms_santri_donatur');
+	}
+
+	function addto_data_toTMI($no_registrasi,$data_santri){
+		// var_dump($data_santri);
+		// exit();
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->update('ms_santri',$data_santri);
+
+		// $this->db->set('no_registrasi',$data_santri['no_registrasi']);
+		// $this->db->where('no_registrasi',$no_registrasi);
+		// $this->db->update('trans_pembiayaan_siswa');
+
+		// $this->db->set('no_registrasi',$data_santri['no_registrasi']);
+		// $this->db->where('no_registrasi',$no_registrasi);
+		// $this->db->update('ms_fisik_santri');
+
+		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->update('ms_keluarga');
+
+		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->update('ms_penyakit');
+
+		// $this->db->set('no_registrasi',$data_santri['no_registrasi']);
+		// $this->db->where('no_registrasi',$no_registrasi);
+		// $this->db->update('ms_kecakapan_santri');
+
+		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->update('ms_santri_donatur');
 	}
 
 	function delete_all_data_santri($no_registrasi){

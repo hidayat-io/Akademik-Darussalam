@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2018 at 06:01 PM
+-- Generation Time: Feb 18, 2018 at 05:59 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -122,7 +122,8 @@ INSERT INTO `group_hak_akses` (`group_id`, `modul_id`, `add`, `edit`, `delete`) 
 (1, 40, 1, 1, 1),
 (1, 41, 1, 1, 1),
 (1, 42, 1, 1, 1),
-(1, 43, 1, 1, 1);
+(1, 43, 1, 1, 1),
+(1, 44, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -193,7 +194,7 @@ INSERT INTO `modul` (`modul_id`, `parent`, `nama_modul`, `url`, `icon`, `sequenc
 (8, 0, 'Infaq', 'infaq', 'glyphicon glyphicon-import', 8),
 (9, 0, 'Tabungan Siswa', 'tabungan', 'icon-wallet', 9),
 (10, 0, 'Laporan', '#', 'glyphicon glyphicon-list-alt', 10),
-(11, 2, 'Uang Bulanan', '', 'glyphicon glyphicon-minus', 1),
+(11, 2, 'Uang Bulanan', 'pembayaran', 'glyphicon glyphicon-minus', 1),
 (12, 2, 'Uang Semester', '', 'glyphicon glyphicon-minus', 2),
 (14, 3, 'Daftar Santri Aitam', 'datasantri/aitam', 'glyphicon glyphicon-minus', 2),
 (15, 3, 'Daftar Santri TMI', 'datasantri', 'glyphicon glyphicon-minus', 1),
@@ -204,7 +205,7 @@ INSERT INTO `modul` (`modul_id`, `parent`, `nama_modul`, `url`, `icon`, `sequenc
 (20, 5, 'Jadwal Pelajaran Utama', 'jadwal_pelajaran', 'glyphicon glyphicon-minus', 3),
 (21, 5, 'Jadwal Guru', '#', 'glyphicon glyphicon-minus', 5),
 (22, 5, 'RPP', 'rpp', 'glyphicon glyphicon-minus', 6),
-(23, 5, 'Absensi', '#', 'glyphicon glyphicon-minus', 7),
+(23, 5, 'Absensi', 'absensi', 'glyphicon glyphicon-minus', 7),
 (24, 5, 'Nilai', '#', 'glyphicon glyphicon-minus', 8),
 (25, 7, 'Data Pelajaran', 'mata_pelajaran', 'glyphicon glyphicon-minus', 2),
 (26, 7, 'Data Kelas', 'kelas', 'glyphicon glyphicon-minus', 6),
@@ -213,18 +214,19 @@ INSERT INTO `modul` (`modul_id`, `parent`, `nama_modul`, `url`, `icon`, `sequenc
 (29, 7, 'Data Bidang Studi', 'bidstudi', 'glyphicon glyphicon-minus', 1),
 (30, 7, 'Data Bagian', 'bagian', 'glyphicon glyphicon-minus', 5),
 (31, 5, 'Kurikulum Sore', 'kurikulumsore', 'glyphicon glyphicon-minus', 2),
-(32, 7, 'Komponen Biaya', 'komponen', 'glyphicon glyphicon-minus', 7),
+(32, 44, 'Komponen Biaya', 'komponen', 'glyphicon glyphicon-minus', 3),
 (33, 7, 'Data Donatur', 'donatur', 'glyphicon glyphicon-minus', 10),
-(34, 7, 'Config', 'msconfig', 'glyphicon glyphicon-minus', 12),
+(34, 44, 'Config', 'msconfig', 'glyphicon glyphicon-minus', 1),
 (35, 5, 'Jadwal Pelajaran Sore & kitab', 'jadwal_pelajaran_sore', 'glyphicon glyphicon-minus', 4),
-(36, 7, 'Semester', 'semester', 'glyphicon glyphicon-minus', 11),
+(36, 44, 'Semester', 'semester', 'glyphicon glyphicon-minus', 2),
 (37, 7, 'Data Jabatan Guru', 'jabatan_guru', 'glyphicon glyphicon-minus', 9),
 (38, 1, 'Pendaftaran TMI', 'pendaftaran', 'fa fa-pencil-square-o', 1),
 (39, 1, 'Pendaftaran AITAM', 'pendaftaran/aitam', 'fa fa-pencil-square-o', 2),
 (40, 0, 'Bank Soal', '#', 'glyphicon glyphicon-book ', 11),
 (41, 40, 'Data Soal', 'datasoal', 'glyphicon glyphicon-minus', 1),
 (42, 40, 'Soal Ujian', 'datasoalujian', 'glyphicon glyphicon-minus', 2),
-(43, 7, 'Data Biaya', 'biaya', 'glyphicon glyphicon-minus', 8);
+(43, 44, 'Data Biaya', 'biaya', 'glyphicon glyphicon-minus', 4),
+(44, 0, 'Pengaturan', '#', 'glyphicon glyphicon-wrench ', 12);
 
 -- --------------------------------------------------------
 
@@ -297,6 +299,7 @@ CREATE TABLE `ms_biaya_komponen` (
   `id_komponen` int(10) NOT NULL,
   `nama_komponen` varchar(20) DEFAULT NULL,
   `tipe` varchar(5) DEFAULT NULL,
+  `isActive` int(11) DEFAULT NULL,
   `userid` varchar(20) DEFAULT NULL,
   `recdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -308,7 +311,10 @@ CREATE TABLE `ms_biaya_komponen` (
 --
 
 CREATE TABLE `ms_biaya_potongan` (
-  `potongan` int(3) DEFAULT NULL,
+  `id_potongan` int(11) NOT NULL,
+  `nama_potongan` varchar(25) DEFAULT NULL,
+  `persen` int(3) DEFAULT NULL,
+  `nominal` double DEFAULT NULL,
   `userid` varchar(10) DEFAULT NULL,
   `rec_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -764,15 +770,15 @@ CREATE TABLE `ms_santri` (
   `no_rumah` varchar(50) CHARACTER SET latin1 DEFAULT NULL COMMENT 'Field Alamat, sama dengan data wali atau ortu',
   `dusun` varchar(15) CHARACTER SET latin1 DEFAULT NULL COMMENT 'Field Alamat, sama dengan data wali atau ortu',
   `desa` varchar(15) CHARACTER SET latin1 DEFAULT NULL COMMENT 'Field Alamat, sama dengan data wali atau ortu',
-  `kecamatan` varchar(15) CHARACTER SET latin1 DEFAULT NULL COMMENT 'Field Alamat, sama dengan data wali atau ortu',
-  `kabupaten` varchar(15) CHARACTER SET latin1 DEFAULT NULL COMMENT 'Field Alamat, sama dengan data wali atau ortu',
-  `provinsi` varchar(15) CHARACTER SET latin1 DEFAULT NULL COMMENT 'Field Alamat, sama dengan data wali atau ortu',
+  `kecamatan` varchar(25) CHARACTER SET latin1 DEFAULT NULL COMMENT 'Field Alamat, sama dengan data wali atau ortu',
+  `kabupaten` varchar(25) CHARACTER SET latin1 DEFAULT NULL COMMENT 'Field Alamat, sama dengan data wali atau ortu',
+  `provinsi` varchar(20) CHARACTER SET latin1 DEFAULT NULL COMMENT 'Field Alamat, sama dengan data wali atau ortu',
   `kd_pos` int(8) DEFAULT NULL COMMENT 'Field Alamat, sama dengan data wali atau ortu',
   `no_tlp` int(20) DEFAULT NULL COMMENT 'Field Alamat, sama dengan data wali atau ortu',
   `no_hp` int(20) DEFAULT NULL COMMENT 'Field Alamat, sama dengan data wali atau ortu',
   `email` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
   `fb` varchar(15) CHARACTER SET latin1 DEFAULT NULL,
-  `dibesarkan_di` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
+  `dibesarkan_di` varchar(25) CHARACTER SET latin1 DEFAULT NULL,
   `lamp_ijazah` varchar(25) CHARACTER SET latin1 DEFAULT NULL COMMENT 'File Upload',
   `lamp_photo` varchar(25) CHARACTER SET latin1 DEFAULT NULL COMMENT 'File Upload',
   `lamp_akta_kelahiran` varchar(25) CHARACTER SET latin1 DEFAULT NULL COMMENT 'File Upload',
@@ -780,7 +786,19 @@ CREATE TABLE `ms_santri` (
   `lamp_skhun` varchar(25) CHARACTER SET latin1 DEFAULT NULL COMMENT 'File Upload',
   `lamp_transkip_nilai` varchar(25) CHARACTER SET latin1 DEFAULT NULL COMMENT 'File Upload',
   `lamp_skkb` varchar(25) CHARACTER SET latin1 DEFAULT NULL COMMENT 'File Upload',
-  `lamp_surat_kesehatan` varchar(25) CHARACTER SET latin1 DEFAULT NULL COMMENT 'File Upload'
+  `lamp_surat_kesehatan` varchar(25) CHARACTER SET latin1 DEFAULT NULL COMMENT 'File Upload',
+  `aitam` varchar(15) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ms_santri_donatur`
+--
+
+CREATE TABLE `ms_santri_donatur` (
+  `no_registrasi` varchar(15) DEFAULT NULL,
+  `id_donatur` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -811,13 +829,11 @@ CREATE TABLE `ms_semester` (
 --
 
 INSERT INTO `ms_semester` (`id_semester`, `semester`, `bulan`) VALUES
-(30, 2, 'SEPTEMBER'),
-(31, 2, 'OKTOBER'),
-(32, 2, 'NOVEMBER'),
-(33, 2, 'DESEMBER'),
-(34, 1, 'JANUARI'),
-(35, 1, 'FEBRUARI'),
-(36, 1, 'MARET');
+(37, 1, '1'),
+(39, 1, '2'),
+(40, 2, '7'),
+(41, 2, '8'),
+(42, 2, '9');
 
 -- --------------------------------------------------------
 
@@ -1093,6 +1109,7 @@ CREATE TABLE `trans_rpp` (
   `id_rpp` int(11) NOT NULL,
   `id_thn_ajar` int(11) DEFAULT NULL,
   `santri` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `id_guru` int(5) DEFAULT NULL,
   `semester` varchar(2) CHARACTER SET latin1 DEFAULT NULL,
   `kode_kelas` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
   `id_mapel` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
@@ -1217,6 +1234,12 @@ ALTER TABLE `ms_biaya`
 --
 ALTER TABLE `ms_biaya_komponen`
   ADD PRIMARY KEY (`id_komponen`);
+
+--
+-- Indexes for table `ms_biaya_potongan`
+--
+ALTER TABLE `ms_biaya_potongan`
+  ADD PRIMARY KEY (`id_potongan`);
 
 --
 -- Indexes for table `ms_config`
@@ -1395,17 +1418,17 @@ ALTER TABLE `group`
 -- AUTO_INCREMENT for table `histori_master_biaya`
 --
 ALTER TABLE `histori_master_biaya`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `login_history`
 --
 ALTER TABLE `login_history`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=306;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=327;
 --
 -- AUTO_INCREMENT for table `modul`
 --
 ALTER TABLE `modul`
-  MODIFY `modul_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `modul_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 --
 -- AUTO_INCREMENT for table `ms_banksoal`
 --
@@ -1415,12 +1438,17 @@ ALTER TABLE `ms_banksoal`
 -- AUTO_INCREMENT for table `ms_biaya`
 --
 ALTER TABLE `ms_biaya`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 --
 -- AUTO_INCREMENT for table `ms_biaya_komponen`
 --
 ALTER TABLE `ms_biaya_komponen`
-  MODIFY `id_komponen` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_komponen` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT for table `ms_biaya_potongan`
+--
+ALTER TABLE `ms_biaya_potongan`
+  MODIFY `id_potongan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 --
 -- AUTO_INCREMENT for table `ms_config`
 --
@@ -1435,7 +1463,7 @@ ALTER TABLE `ms_donatur`
 -- AUTO_INCREMENT for table `ms_guru`
 --
 ALTER TABLE `ms_guru`
-  MODIFY `id_guru` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id_guru` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 --
 -- AUTO_INCREMENT for table `ms_guru_family`
 --
@@ -1470,7 +1498,7 @@ ALTER TABLE `ms_infaq`
 -- AUTO_INCREMENT for table `ms_semester`
 --
 ALTER TABLE `ms_semester`
-  MODIFY `id_semester` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id_semester` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 --
 -- AUTO_INCREMENT for table `ms_tabungan`
 --
@@ -1495,27 +1523,27 @@ ALTER TABLE `sys_param`
 -- AUTO_INCREMENT for table `trans_banksoalhd`
 --
 ALTER TABLE `trans_banksoalhd`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `trans_jadwal_pelajaran`
 --
 ALTER TABLE `trans_jadwal_pelajaran`
-  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=305;
+  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=317;
 --
 -- AUTO_INCREMENT for table `trans_rpp`
 --
 ALTER TABLE `trans_rpp`
-  MODIFY `id_rpp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_rpp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `trans_rpp_detail`
 --
 ALTER TABLE `trans_rpp_detail`
-  MODIFY `id_rpp_dtl` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
+  MODIFY `id_rpp_dtl` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 --
 -- AUTO_INCREMENT for table `trans_tabungan`
 --
 ALTER TABLE `trans_tabungan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
