@@ -25,7 +25,7 @@ revisi II:
 -penambahan tab donatur.di pendaftaran dan data santri. ?---------------------------------------------------->DONE
 -di komponen biaya di tambahkan aktif dan non active, ---------------------------------------------------->DONE
 -perubahan data kelas, pakek header & detail.---------------------------------------------------->DONE
--perubahan menu kurikulum = sourcenya ke kelas header
+-perubahan menu kurikulum = sourcenya ke kelas header---------------------------------------------------->DONE
 -cek save & update data guru---------------------------------------------------->DONE
 -penambahan modul silabus
 -penambahan field guru di modul RPP---------------------------------------------------->DONE

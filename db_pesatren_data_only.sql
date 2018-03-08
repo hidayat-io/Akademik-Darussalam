@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2018 at 06:00 PM
+-- Generation Time: Mar 08, 2018 at 07:07 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -311,7 +311,18 @@ INSERT INTO `login_history` (`id`, `user_id`, `time`, `ip_addr`) VALUES
 (323, 'admin', '2018-02-13 15:45:04', '::1'),
 (324, 'admin', '2018-02-13 22:07:22', '::1'),
 (325, 'admin', '2018-02-15 03:20:43', '::1'),
-(326, 'admin', '2018-02-17 12:22:51', '::1');
+(326, 'admin', '2018-02-17 12:22:51', '::1'),
+(327, 'admin', '2018-02-18 17:48:24', '::1'),
+(328, 'admin', '2018-02-25 16:03:11', '::1'),
+(329, 'admin', '2018-02-26 02:38:18', '::1'),
+(330, 'admin', '2018-02-26 07:56:11', '::1'),
+(331, 'admin', '2018-02-27 06:38:08', '::1'),
+(332, 'admin', '2018-02-27 07:26:39', '::1'),
+(333, 'admin', '2018-03-04 13:28:51', '::1'),
+(334, 'admin', '2018-03-06 02:36:24', '::1'),
+(335, 'admin', '2018-03-06 06:47:32', '::1'),
+(336, 'admin', '2018-03-08 02:17:03', '::1'),
+(337, 'admin', '2018-03-08 16:50:35', '::1');
 
 --
 -- Dumping data for table `ms_bagian`
@@ -400,7 +411,8 @@ INSERT INTO `ms_banksoal` (`id_soal`, `id_matpal`, `tingkat`, `soal`, `jwb_a`, `
 (74, 'MP01', 1, 'Mana jawaban yang benar?', 'ini jawaban yang benar', 'ini juga jawaban yang benar', 'a dan b benar', 'semua salah', 'b', 'admin', '2017-12-13 00:00:00'),
 (75, 'MP01', 1, 'Mana jawaban yang benar?', 'ini jawaban yang benar', 'ini juga jawaban yang benar', 'a dan b benar', 'semua salah', 'b', 'admin', '2017-12-13 00:00:00'),
 (76, 'MP01', 1, 'Mana jawaban yang benar?', 'ini jawaban yang benar', 'ini juga jawaban yang benar', 'a dan b benar', 'semua salah', 'b', 'admin', '2017-12-13 00:00:00'),
-(77, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'admin', '2018-01-08 00:00:00');
+(77, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'admin', '2018-01-08 00:00:00'),
+(78, 'TJDRORI', 3, 'werwer', 'wer', 'w', 'wer', 'wr', 'a', 'admin', '2018-03-08 00:00:00');
 
 --
 -- Dumping data for table `ms_bebanguru`
@@ -481,7 +493,10 @@ INSERT INTO `ms_fisik_santri` (`no_registrasi`, `gol_darah`, `tinggi_badan`, `be
 (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('A39170001', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('A3917002', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('T39180001', '', 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0000, '');
+('T39180001', '', 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0000, ''),
+('A39170004', 'A', 234, 423, 'SUDAH', 'KETAT', 'KURANG', 'PEDESAAN', 'SEKOLAH', 'SEDANG', 'SEDANG', 'TIDAK', 'SEDANG', 'TIDAK', '2342', 'TIDAK', '3234', '24234', 2018, '34234'),
+('T39180018', 'A', 234, 423, 'SUDAH', 'KETAT', 'KURANG', 'PEDESAAN', 'SEKOLAH', 'SEDANG', 'SEDANG', 'TIDAK', 'SEDANG', 'TIDAK', '2342', 'TIDAK', '3234', '24234', 2018, '34234'),
+('T39180019', 'A', 234, 423, 'SUDAH', 'KETAT', 'KURANG', 'PEDESAAN', 'SEKOLAH', 'SEDANG', 'SEDANG', 'TIDAK', 'SEDANG', 'TIDAK', '2342', 'TIDAK', '3234', '24234', 2018, '34234');
 
 --
 -- Dumping data for table `ms_gedung`
@@ -648,23 +663,44 @@ INSERT INTO `ms_kecakapan_santri` (`no_registrasi`, `bid_studi`, `olahraga`, `ke
 ('A39170001', NULL, NULL, NULL, NULL, NULL),
 ('A3917002', NULL, NULL, NULL, NULL, NULL),
 ('T39170019', '', '', '', '', ''),
-('CT38170008', 'DGD', 'DFG', 'DFGDF', 'DFGDFg', 'DFGDFG'),
 ('A39170003', NULL, NULL, NULL, NULL, NULL),
 ('T39180001', '', '', '', '', ''),
-('A39180001', NULL, NULL, NULL, NULL, NULL);
+('T39180009', NULL, NULL, NULL, NULL, NULL),
+('CT38170008', 'DGD', 'DFG', 'DFGDF', 'DFGDFg', 'DFGDFG'),
+('T39180015', NULL, NULL, NULL, NULL, NULL),
+('A39170004', '234', '234', '234', '234324', '234234'),
+('T39180019', '234', '234', '234', '234324', '234234'),
+('T39180018', '234', '234', '234', '234324', '234234');
 
 --
--- Dumping data for table `ms_kelas`
+-- Dumping data for table `ms_kelasdt`
 --
 
-INSERT INTO `ms_kelas` (`kode_kelas`, `tingkat`, `nama`, `tipe_kelas`, `kapasitas`, `userid`, `recdate`) VALUES
-('KR1B', 1, 'KELAS 1B', 'REGULER', 20, 'admin', '2017-10-19'),
-('KR1A', 1, 'KELAS 1A', 'INTENSIF', 52, 'admin', '2017-10-19'),
-('KR2A', 2, 'KELAS 2 A', 'REGULER', 50, 'admin', '2017-10-19'),
-('KR2B', 2, 'KELAS 2B', 'REGULER', 35, 'admin', '2017-10-19'),
-('KR3A', 3, 'KELAS 3A', 'REGULER', 40, 'admin', '2017-10-19'),
-('KR1C', 1, 'KELAS 1C', 'REGULER', 30, 'admin', '2017-10-19'),
-('K023', 1, 'KELAS 1A', 'INTENSIF', 25, 'admin', '2017-10-19');
+INSERT INTO `ms_kelasdt` (`kode_kelas`, `id_kelas`, `nama`, `kapasitas`, `userid`, `recdate`) VALUES
+('KR1B', 1, 'KELAS 1B', 20, 'admin', '2017-10-18 17:00:00'),
+('KR1A', 1, 'KELAS 1A', 45, 'admin', '2017-10-18 17:00:00'),
+('KR2A', 3, 'KELAS 2 A', 50, 'admin', '2017-10-18 17:00:00'),
+('KR2B', 4, 'KELAS 2B', 35, 'admin', '2017-10-18 17:00:00'),
+('KR3A', 5, 'KELAS 3A', 40, 'admin', '2017-10-18 17:00:00'),
+('KR1C', 1, 'KELAS 1C', 30, 'admin', '2017-10-18 17:00:00'),
+('K023', 2, 'KELAS 1A', 25, 'admin', '2017-10-18 17:00:00');
+
+--
+-- Dumping data for table `ms_kelashd`
+--
+
+INSERT INTO `ms_kelashd` (`id_kelas`, `tingkat`, `tipe_kelas`, `userid`, `recdate`) VALUES
+(1, 1, 'REGULER', NULL, '2018-03-08 02:39:13'),
+(2, 1, 'INSENTIF', 'admin', '2018-03-08 02:39:27'),
+(3, 2, 'REGULER', 'admin', '2018-03-08 02:40:04'),
+(4, 2, 'INSENTIF', 'admin', '2018-03-08 02:40:12'),
+(5, 3, 'REGULER', 'admin', '2018-03-08 02:40:26'),
+(6, 3, 'INSENTIF', 'admin', '2018-03-08 02:40:43'),
+(7, 4, 'REGULER', 'admin', '2018-03-08 02:40:50'),
+(8, 3, 'INSENTIF', 'admin', '2018-03-08 02:41:00'),
+(9, 4, 'INTENSIF', 'admin', '2018-03-08 06:12:17'),
+(10, 5, 'REGULER', 'admin', '2018-03-08 07:04:33'),
+(11, 5, 'INTENSIF', 'admin', '2018-03-08 07:38:58');
 
 --
 -- Dumping data for table `ms_keluarga`
@@ -721,7 +757,9 @@ INSERT INTO `ms_penyakit` (`no_registrasi`, `nama_penyakit`, `thn_penyakit`, `ka
 ('A39170001', 'BATUK', 2015, 'TIDAK KRONIS', 'TIDAK MENULAR', 'ondl.jpg'),
 ('A3917002', 'SDFSD', 2017, 'KRONIS', 'TIDAK MENULAR', 'HgW8.pdf'),
 ('T39180001', 'ETEYRY', 2018, 'KRONIS', 'MENULAR', ''),
-('T39180001', '4545646456', 2018, 'KRONIS', 'TIDAK MENULAR', '');
+('T39180001', '4545646456', 2018, 'KRONIS', 'TIDAK MENULAR', ''),
+('T39180015', 'JYUTYU', 2018, 'KRONIS', 'MENULAR', ''),
+('T39180018', 'WERWER', 2018, 'KRONIS', 'MENULAR', 'o2Br.jpg');
 
 --
 -- Dumping data for table `ms_santri`
@@ -729,38 +767,41 @@ INSERT INTO `ms_penyakit` (`no_registrasi`, `nama_penyakit`, `thn_penyakit`, `ka
 
 INSERT INTO `ms_santri` (`kategori`, `no_registrasi`, `no_stambuk`, `thn_masuk`, `rayon`, `kamar`, `bagian`, `kel_sekarang`, `nisn`, `nisnlokal`, `nama_lengkap`, `nama_arab`, `nama_panggilan`, `hobi`, `uang_jajan_perbulan`, `no_kk`, `nik`, `tempat_lahir`, `tgl_lahir`, `konsulat`, `nama_sekolah`, `kelas_sekolah`, `alamat_sekolah`, `suku`, `kewarganegaraan`, `jalan`, `no_rumah`, `dusun`, `desa`, `kecamatan`, `kabupaten`, `provinsi`, `kd_pos`, `no_tlp`, `no_hp`, `email`, `fb`, `dibesarkan_di`, `lamp_ijazah`, `lamp_photo`, `lamp_akta_kelahiran`, `lamp_kk`, `lamp_skhun`, `lamp_transkip_nilai`, `lamp_skkb`, `lamp_surat_kesehatan`, `aitam`) VALUES
 ('AITAM_ISLAH', 'A39170003', NULL, NULL, 'GD01', 'K01', 'B02', 'KR1B', '8748353078', '51023205143239170003', 'F DONI AQUILA', NULL, NULL, 'MAKAN', 0, 2147483647, NULL, 'BOGOR', '1995-02-01', NULL, 'SEKOLAH BERSAMA', 'IX A', 'JALAN KESEKOLAH', 'SUNDA', 'INDONESIA', 'JL ARCA BUANA', 'RT003 RW 004', 'KBOGO', 'DBOGO', 'DKECAM', 'DKABPU', 'DPROV', 9888, 2147483647, 2147483647, NULL, NULL, NULL, NULL, '3PioFhOHlOjYs9tz0OnW.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('AITAM_JAMIAH', 'A39180001', NULL, NULL, 'GD02', 'K03', 'B02', 'KR2A', '234234', '51023205143239180001', 'JONI S', NULL, NULL, '23432', 0, 423423423, NULL, '23423', '2017-11-16', NULL, '2342', '234324', '234234', '234234', '23423', '23', '234', '23', '23432', '234', '22342', '23423', 3423, 4234, 4234234, NULL, NULL, NULL, NULL, 'WK815803OJqTon7uPA3Z.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('AITAM_JAMIAH', 'CA39170005', NULL, NULL, '', '', '', '', '87', '5102320514323917002', '8', NULL, NULL, '77', 0, 87, NULL, '87', '2017-11-24', NULL, 'QWEWQ', 'QWEQWE', 'QWE', '7', '87', '87', '87', '8', '78', '78', '7', '87', 8, 7, 78, NULL, NULL, NULL, 'wAIbAV8uDMIi1PfrgHnw.pdf', 'hOcjJRWumBOjLT1mNe1C.jpg', 'ZEnND2ZCwfxKBKWqeKOA.pdf', 'UGYg9GcCHaO0ZIHIzTRS.pdf', NULL, NULL, NULL, NULL, NULL),
 ('AITAM_ISLAH', 'CA39170006', NULL, NULL, '', '', '', '', '324234', '51023205143239170002', '234234234', NULL, NULL, '23423', 0, 23423, NULL, '4234', '2017-11-16', NULL, '23423', '234234', '23423', '234234', '234234', '324234', '234', '324', '234', '234', '324234', '4234', 234, 23423, 23423, NULL, NULL, NULL, NULL, 'LeotDs03X1VAhPXjg9Bs.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('TMI', 'CT38170005', 0, 2017, NULL, NULL, NULL, NULL, '11223344', '0', 'RARA', 'فغع', 'RARA', 'NGOPI', 1000000, 113345587, 3355777, 'TANJUNG ENIM', '1989-07-10', 'KONSULAT 1', NULL, NULL, NULL, 'SUMATERA', 'INDONESIA', 'PERUMAHAN MEDANG', 'NO3 RT 003 RW 013', 'MEDANG', 'PAGEDANGAN', 'LEGOK', 'TANGERANG SELAT', 'BANTEN', 523314, 21558877, 2147483647, 'faritno@me.com', 'faritno@faceboo', 'TANJUNG EN', 'CoWhmFmcJ0nt3S5jbf5s.pdf', '5tzrpZTl8IQ06C1aEcx1.jpg', 'rAt6IRPZixfk4BkPnuaJ.pdf', '2bmJoaZ3jpFr8ls4HZZG.pdf', 'lLkvUG5fKbl8HfIS7kgG.PDF', 'QqBicZPU3YxgKSNz7Dey.pdf', 'vKUpKarTdnVbJkW1EuzD.pdf', 'NQrIxQDvHtJIDcQzbYyM.pdf', NULL),
 ('TMI', 'CT38170006', 0, 2017, NULL, NULL, NULL, NULL, '11223344', '0', 'RERE', 'ناهلات', 'RERE', 'NGOPI', 1000000, 113345587, 3355777, 'TANJUNG ENIM', '1989-07-10', 'KONSULAT 1', NULL, NULL, NULL, 'SUMATERA', 'INDONESIA', 'PERUMAHAN MEDANG', 'NO3 RT 003 RW 013', 'MEDANG', 'PAGEDANGAN', 'LEGOK', 'TANGERANG SELAT', 'BANTEN', 523314, 21558877, 2147483647, 'faritno@me.com', 'faritno@faceboo', 'TANJUNG EN', 'CoWhmFmcJ0nt3S5jbf5s.pdf', '5tzrpZTl8IQ06C1aEcx1.jpg', 'rAt6IRPZixfk4BkPnuaJ.pdf', '2bmJoaZ3jpFr8ls4HZZG.pdf', 'lLkvUG5fKbl8HfIS7kgG.PDF', 'QqBicZPU3YxgKSNz7Dey.pdf', 'vKUpKarTdnVbJkW1EuzD.pdf', 'NQrIxQDvHtJIDcQzbYyM.pdf', NULL),
 ('TMI', 'CT38170007', 0, 2017, NULL, NULL, NULL, NULL, '11223344', '0', 'SARAH', 'ناهلات', 'SARAH', 'NGOPI', 1000000, 113345587, 3355777, 'TANJUNG ENIM', '1989-07-10', 'KONSULAT 1', NULL, NULL, NULL, 'SUMATERA', 'INDONESIA', 'PERUMAHAN MEDANG', 'NO3 RT 003 RW 013', 'MEDANG', 'PAGEDANGAN', 'LEGOK', 'TANGERANG SELAT', 'BANTEN', 523314, 21558877, 2147483647, 'faritno@me.com', 'faritno@faceboo', 'TANJUNG EN', 'CoWhmFmcJ0nt3S5jbf5s.pdf', '5tzrpZTl8IQ06C1aEcx1.jpg', 'rAt6IRPZixfk4BkPnuaJ.pdf', '2bmJoaZ3jpFr8ls4HZZG.pdf', 'lLkvUG5fKbl8HfIS7kgG.PDF', 'QqBicZPU3YxgKSNz7Dey.pdf', 'vKUpKarTdnVbJkW1EuzD.pdf', 'NQrIxQDvHtJIDcQzbYyM.pdf', NULL),
-('TMI', 'CT38170008', 0, 2017, NULL, NULL, NULL, NULL, '11223344', '0', 'MUHTAR', 'خحها', 'MUHTAR', 'NGOPI', 1000000, 113345587, 3355777, 'TANJUNG ENIM', '1989-07-10', 'KONSULAT 1', NULL, NULL, NULL, 'SUMATERA', 'INDONESIA', 'PERUMAHAN MEDANG', 'NO3 RT 003 RW 013', 'MEDANG', 'PAGEDANGAN', 'LEGOK', 'TANGERANG SELATAN', 'BANTEN', 523314, 21558877, 2147483647, 'faritno@me.com', 'faritno@faceboo', 'TANJUNG ENIM', 'CoWhmFmcJ0nt3S5jbf5s.pdf', 'J8PywCgZ7VHjkmGqF8lD.jpg', 'rAt6IRPZixfk4BkPnuaJ.pdf', '2bmJoaZ3jpFr8ls4HZZG.pdf', 'lLkvUG5fKbl8HfIS7kgG.PDF', 'QqBicZPU3YxgKSNz7Dey.pdf', 'vKUpKarTdnVbJkW1EuzD.pdf', 'NQrIxQDvHtJIDcQzbYyM.pdf', 'aitam_jamiah'),
+('TMI', 'CT38170008', 0, 2018, NULL, NULL, NULL, NULL, '11223344', '0', 'MUHTAR', 'خحها', 'MUHTAR', 'NGOPI', 1000000, 113345587, 3355777, 'TANJUNG ENIM', '1989-07-10', 'KONSULAT 1', NULL, NULL, NULL, 'SUMATERA', 'INDONESIA', 'PERUMAHAN MEDANG', 'NO3 RT 003 RW 013', 'MEDANG', 'PAGEDANGAN', 'LEGOK', 'TANGERANG SELATAN', 'BANTEN', 523314, 21558877, 2147483647, 'faritno@me.com', 'faritno@faceboo', 'TANJUNG ENIM', 'CoWhmFmcJ0nt3S5jbf5s.pdf', 'J8PywCgZ7VHjkmGqF8lD.jpg', 'rAt6IRPZixfk4BkPnuaJ.pdf', '2bmJoaZ3jpFr8ls4HZZG.pdf', 'lLkvUG5fKbl8HfIS7kgG.PDF', 'QqBicZPU3YxgKSNz7Dey.pdf', 'vKUpKarTdnVbJkW1EuzD.pdf', 'NQrIxQDvHtJIDcQzbYyM.pdf', 'aitam_jamiah'),
 ('TMI', 'T38170001', 1, 2017, 'GD01', 'K01', 'B01', 'KR1A', '123456789', '1234567890', 'RUDI HERMAWAN', 'قعيه اثقةشصشى', 'RUDI', 'OLAHRAGE', 300000, 2147483647, 2147483647, 'GARUT', '2004-03-08', 'SINDANG', NULL, NULL, NULL, 'SUNDA', 'INDONESIA', 'JL. LANCAR JAYA', 'NO.18 007/008', 'KEJAYAAN', 'MAJU TERUS', 'KECAMATAN1', 'KABUPATEN1', 'JAWA BARAT', 11876, 24765984, 2147483647, 'rudi@gmail.com', 'rudi@facebook', 'garut', NULL, 'mnWyWkatVr4JTzcE0abP.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('TMI', 'T39170013', 14, 2017, 'GD01', 'K01', 'B01', 'K023', '112233', '2147483647', 'namalengkap nya1', 'namaarab nya1', 'namapanggi', 'hoinya apa', 500000, 123, 321, 'Tempat_lahir', '1990-02-13', 'konsulat1', NULL, NULL, NULL, 'suku1', 'Kewarga1', 'jaln1', 'norUMah1', 'Dusun1', 'desa1', 'kecamatan1', 'kabupaten1', 'provinsi1', 51280, 2155677, 2147483647, 'email1@yahoo.com', 'fb1', 'dfdfdfdfdf', 'MyScl8mlnNJCn7wLGxJu.pdf', 'eWSaMJ2sXheTNvKMrWUW.jpg', 'tMiZ5AUeYPb2H2P4WC3b.pdf', 'EzPpovTpLyAsy30oyjti.jpg', 'S2VAG4eIxziv8HYND4qA.jpg', 'ThG2pY575DBNDV6GfOmO.pdf', 'YLKopMNGWvs1jsF8HNg4.pdf', '55R4fRiOc63MD8M7UM4R.pdf', NULL),
 ('TMI', 'T39170014', 15, 2017, 'GD02', 'K02', 'B01', 'KR1A', '112233', '2147483647', 'BOBI', 'namaarab nya1', 'namapanggi', 'hoinya apa', 500000, 123, 321, 'Tempat_lahir', '0000-00-00', 'konsulat1', NULL, NULL, NULL, 'suku1', 'Kewarga1', 'jaln1', 'norUMah1', 'Dusun1', 'desa1', 'kecamatan1', 'kabupaten1', 'provinsi1', 51280, 2155677, 2147483647, 'email1@yahoo.com', 'fb1', 'dfdfdfdfdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('TMI', 'T39170019', 20, 2017, NULL, NULL, NULL, NULL, '11223344', '51023205143239170019', 'AHDIAN', 'حغغفىلا ت', 'AHDIAN', 'NGOPI', 1000000, 113345587, 3355777, 'TANJUNG ENIM', '1989-07-10', 'KONSULAT 1', NULL, NULL, NULL, 'SUMATERA', 'INDONESIA', 'PERUMAHAN MEDANG', 'NO3 RT 003 RW 013', 'MEDANG', 'PAGEDANGAN', 'LEGOK', 'TANGERANG SELAT', 'BANTEN', 523314, 21558877, 2147483647, 'faritno@me.com', 'faritno@faceboo', 'TANJUNG EN', 'CoWhmFmcJ0nt3S5jbf5s.pdf', '5tzrpZTl8IQ06C1aEcx1.jpg', 'rAt6IRPZixfk4BkPnuaJ.pdf', '2bmJoaZ3jpFr8ls4HZZG.pdf', 'lLkvUG5fKbl8HfIS7kgG.PDF', 'QqBicZPU3YxgKSNz7Dey.pdf', 'vKUpKarTdnVbJkW1EuzD.pdf', 'NQrIxQDvHtJIDcQzbYyM.pdf', NULL),
-('TMI', 'T39180001', 21, 2018, 'GD01', 'K04', 'B02', 'KR1C', '97878', '51023205143239180001', 'JOLA', '', 'ASd', 'ASDA', 234, 234, 2342, '23423', '2018-01-17', '34234', NULL, NULL, NULL, '23423', '2342', '234', '23234', '234', '234', '2342', '4234', '3423', 2342, 234, 234, '', '', '23', NULL, 'GeLr9gHRlMSalNYxAhZ8.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+('TMI', 'T39180001', 21, 2018, 'GD01', 'K04', 'B02', 'KR1C', '97878', '51023205143239180001', 'JOLA', '', 'ASd', 'ASDA', 234, 234, 2342, '23423', '2018-01-17', '34234', NULL, NULL, NULL, '23423', '2342', '234', '23234', '234', '234', '2342', '4234', '3423', 2342, 234, 234, '', '', '23', NULL, 'GeLr9gHRlMSalNYxAhZ8.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('TMI', 'T39180018', 37, 2015, 'GD02', 'K03', 'B02', 'KR1A', '234234', '51023205143239180018', 'JONI S', 'REREW', 'WEREW', '23432', 0, 423423423, 4535345, '23423', '2017-11-16', 'WERWER', NULL, NULL, NULL, '234234', '23423', '23', '234', '23', '23432', '234', '22342', '23423', 3423, 4234, 4234234, '', '', 'WERWER', NULL, 'WK815803OJqTon7uPA3Z.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Dumping data for table `ms_santri_donatur`
 --
 
 INSERT INTO `ms_santri_donatur` (`no_registrasi`, `id_donatur`) VALUES
-('CT38170008', 3),
 ('A39170003', 3),
-('T39180001', 5);
+('T39180001', 5),
+('T39180017', 4),
+('T39180017', 3),
+('T39180018', 3);
 
 --
 -- Dumping data for table `ms_semester`
 --
 
 INSERT INTO `ms_semester` (`id_semester`, `semester`, `bulan`) VALUES
-(37, 1, '1'),
-(39, 1, '2'),
 (40, 2, '7'),
 (41, 2, '8'),
-(42, 2, '9');
+(42, 2, '9'),
+(48, 1, '1'),
+(49, 1, '2'),
+(50, 1, '3');
 
 --
 -- Dumping data for table `santri_limit_harian`
@@ -788,9 +829,9 @@ INSERT INTO `santri_saldo` (`no_registrasi`, `saldo`, `recuser`, `recdate`) VALU
 --
 
 INSERT INTO `sequence` (`nama_field`, `nomor_terakhir`, `remark`) VALUES
-('Stambuk_TMI', '21', NULL),
-('noreg_TMI', 'T39180001', NULL),
-('noreg_CalonTMI', 'CT39180002', NULL),
+('Stambuk_TMI', '38', NULL),
+('noreg_TMI', 'T39180019', NULL),
+('noreg_CalonTMI', 'CT39180004', NULL),
 ('noreg_CalonAITAM', 'CA39180001', NULL),
 ('noreg_AITAM', 'A39180001', NULL),
 ('no_reg_guru', '4', NULL);
@@ -800,6 +841,9 @@ INSERT INTO `sequence` (`nama_field`, `nomor_terakhir`, `remark`) VALUES
 --
 
 INSERT INTO `trans_banksoaldt` (`id_hd`, `id_soal`) VALUES
+(8, 20),
+(8, 19),
+(8, 18),
 (7, 20),
 (7, 19),
 (7, 18);
@@ -809,13 +853,24 @@ INSERT INTO `trans_banksoaldt` (`id_hd`, `id_soal`) VALUES
 --
 
 INSERT INTO `trans_banksoalhd` (`id`, `kode_soal`, `kurikulum`, `semester`, `id_matpal`, `tingkat`, `user_id`, `recdate`) VALUES
-(7, '4/1/MP04/1', 4, 1, 'MP04', 1, 'admin', '2018-01-20 11:07:14');
+(7, '4/1/MP04/1', 4, 1, 'MP04', 1, 'admin', '2018-01-20 11:07:14'),
+(8, '4/2/MP04/1', 4, 2, 'MP04', 1, 'admin', '2018-03-08 07:05:04');
 
 --
 -- Dumping data for table `trans_jadwal_pelajaran`
 --
 
 INSERT INTO `trans_jadwal_pelajaran` (`id_jadwal`, `santri`, `id_thn_ajar`, `semester`, `kode_kelas`, `id_guru`, `jam`, `hari`, `id_mapel`, `kategori`, `userid`, `recdate`) VALUES
+(326, 'PUTRI', 4, '1', 'K023', 62, 'MAHGRIB', 'KAMIS', 'JRMYH', 'SORE', 'admin', '2018-03-08 00:00:00'),
+(325, 'PUTRI', 4, '1', 'K023', 65, 'MAHGRIB', 'JUMAT', 'SLMTFQ', 'SORE', 'admin', '2018-03-08 00:00:00'),
+(320, 'PUTRI', 4, '1', 'K023', 74, 'SUBUH', 'SENIN', 'MPSSORE', 'SORE', 'admin', '2018-03-08 00:00:00'),
+(321, 'PUTRI', 4, '1', 'K023', 69, 'SORE', 'SENIN', 'MPEKSORE2', 'SORE', 'admin', '2018-03-08 00:00:00'),
+(322, 'PUTRI', 4, '1', 'K023', 69, 'SORE', 'SELASA', 'MPEKSORE2', 'SORE', 'admin', '2018-03-08 00:00:00'),
+(323, 'PUTRI', 4, '1', 'K023', 69, 'MAHGRIB', 'RABU', 'TJDRORI', 'SORE', 'admin', '2018-03-08 00:00:00'),
+(324, 'PUTRI', 4, '1', 'K023', 70, 'SORE', 'RABU', 'SLMTFQ', 'SORE', 'admin', '2018-03-08 00:00:00'),
+(319, 'PUTRI', 3, '1', 'KR1B', 58, 'II', 'SELASA', 'MPSO', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+(318, 'PUTRI', 3, '1', 'KR1B', 58, 'I', 'SELASA', 'MPSO', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+(317, 'PUTRI', 3, '1', 'KR1B', 72, 'I', 'SENIN', 'MPEK', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
 (316, 'PUTRI', 3, '1', 'KR1A', 61, 'I', 'SELASA', 'MPSO', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
 (315, 'PUTRI', 3, '1', 'KR1A', 64, 'II', 'SENIN', 'MPSO', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
 (314, 'PUTRI', 3, '1', 'KR1A', 72, 'I', 'SENIN', 'MPEK', 'UTAMA', 'admin', '2018-01-20 00:00:00');
@@ -825,50 +880,177 @@ INSERT INTO `trans_jadwal_pelajaran` (`id_jadwal`, `santri`, `id_thn_ajar`, `sem
 --
 
 INSERT INTO `trans_kurikulum` (`id_thn_ajar`, `tingkat`, `tipe_kelas`, `id_mapel`, `sm_1`, `sm_2`, `kategori`, `userid`, `recdate`) VALUES
-('3', '1', 'REGULER', 'MTBHING', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
+('3', '1', 'INSENTIF', 'MPNI', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'INSENTIF', 'MP05', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'INSENTIF', 'MP04', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'INSENTIF', 'MPSJ', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'INSENTIF', 'MPGEO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'INSENTIF', 'MP01', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'INSENTIF', 'MP02', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'INSENTIF', 'MPSO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'INSENTIF', 'MPEK', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'REGULER', 'MTBHING', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
 ('3', '1', 'INTENSIF', 'MTBIN', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '3', 'REGULER', 'MTBIN', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '3', 'REGULER', 'MTBHING', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '3', 'REGULER', 'MPNI', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '3', 'REGULER', 'MP05', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '3', 'REGULER', 'MP04', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '3', 'REGULER', 'MPSJ', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '3', 'REGULER', 'MPGEO', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '1', 'REGULER', 'MP04', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '3', 'REGULER', 'MP01', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '3', 'REGULER', 'MP02', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '3', 'REGULER', 'MPSO', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '3', 'REGULER', 'MPEK', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '2', 'REGULER', 'MTBIN', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '2', 'REGULER', 'MTBHING', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '2', 'REGULER', 'MPNI', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '2', 'REGULER', 'MP05', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '2', 'REGULER', 'MP04', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '2', 'REGULER', 'MPSJ', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '2', 'REGULER', 'MPGEO', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '2', 'REGULER', 'MP01', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '2', 'REGULER', 'MP02', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '2', 'REGULER', 'MPSO', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '2', 'REGULER', 'MPEK', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '1', 'REGULER', 'MTBIN', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '1', 'REGULER', 'MPNI', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '1', 'REGULER', 'MP05', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
+('3', '3', 'REGULER', 'MTBIN', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'REGULER', 'MTBHING', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'REGULER', 'MPNI', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'REGULER', 'MP05', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'REGULER', 'MP04', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'REGULER', 'MPSJ', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'REGULER', 'MPGEO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'REGULER', 'MP04', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'REGULER', 'MP01', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'REGULER', 'MP02', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'REGULER', 'MPSO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'REGULER', 'MPEK', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'REGULER', 'MTBIN', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'REGULER', 'MTBHING', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'REGULER', 'MPNI', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'REGULER', 'MP05', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'REGULER', 'MP04', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'REGULER', 'MPSJ', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'REGULER', 'MPGEO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'REGULER', 'MP01', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'REGULER', 'MP02', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'REGULER', 'MPSO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'REGULER', 'MPEK', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'REGULER', 'MTBIN', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'REGULER', 'MPNI', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'REGULER', 'MP05', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
 ('3', '1', 'INTENSIF', 'MPSO', '2', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
 ('3', '1', 'INTENSIF', 'MP02', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
 ('3', '1', 'INTENSIF', 'MP01', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '1', 'REGULER', 'MPSJ', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '1', 'REGULER', 'MPGEO', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '1', 'REGULER', 'MP01', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '1', 'REGULER', 'MP02', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '1', 'REGULER', 'MPSO', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '1', 'REGULER', 'MPEK', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
+('3', '1', 'REGULER', 'MPSJ', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'REGULER', 'MPGEO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'REGULER', 'MP01', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'REGULER', 'MP02', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'REGULER', 'MPSO', '2', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'REGULER', 'MPEK', '1', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
 ('3', '1', 'INTENSIF', 'MTBHING', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
 ('3', '1', 'INTENSIF', 'MPNI', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
 ('3', '1', 'INTENSIF', 'MP05', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
 ('3', '1', 'INTENSIF', 'MP04', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
 ('3', '1', 'INTENSIF', 'MPSJ', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
 ('3', '1', 'INTENSIF', 'MPGEO', '0', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
-('3', '1', 'INTENSIF', 'MPEK', '1', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00');
+('3', '1', 'INTENSIF', 'MPEK', '1', '0', 'UTAMA', 'admin', '2018-01-20 00:00:00'),
+('3', '1', 'INSENTIF', 'MTBHING', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '1', 'INSENTIF', 'MTBIN', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'INSENTIF', 'MPEK', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'INSENTIF', 'MPSO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'INSENTIF', 'MP02', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'INSENTIF', 'MP01', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'INSENTIF', 'MPGEO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'INSENTIF', 'MPSJ', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'INSENTIF', 'MP04', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'INSENTIF', 'MP05', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'INSENTIF', 'MPNI', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'INSENTIF', 'MTBHING', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '2', 'INSENTIF', 'MTBIN', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'INSENTIF', 'MPEK', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'INSENTIF', 'MPSO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'INSENTIF', 'MP02', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'INSENTIF', 'MP01', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'INSENTIF', 'MPGEO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'INSENTIF', 'MPSJ', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'INSENTIF', 'MP04', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'INSENTIF', 'MP05', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'INSENTIF', 'MPNI', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'INSENTIF', 'MTBHING', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '3', 'INSENTIF', 'MTBIN', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'REGULER', 'MPEK', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'REGULER', 'MPSO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'REGULER', 'MP02', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'REGULER', 'MP01', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'REGULER', 'MPGEO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'REGULER', 'MPSJ', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'REGULER', 'MP04', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'REGULER', 'MP05', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'REGULER', 'MPNI', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'REGULER', 'MTBHING', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'REGULER', 'MTBIN', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'INTENSIF', 'MPEK', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'INTENSIF', 'MPSO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'INTENSIF', 'MP02', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'INTENSIF', 'MP01', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'INTENSIF', 'MPGEO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'INTENSIF', 'MPSJ', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'INTENSIF', 'MP04', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'INTENSIF', 'MP05', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'INTENSIF', 'MPNI', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'INTENSIF', 'MTBHING', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '4', 'INTENSIF', 'MTBIN', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'REGULER', 'MPEK', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'REGULER', 'MPSO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'REGULER', 'MP02', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'REGULER', 'MP01', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'REGULER', 'MPGEO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'REGULER', 'MPSJ', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'REGULER', 'MP04', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'REGULER', 'MP05', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'REGULER', 'MPNI', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'REGULER', 'MTBHING', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'REGULER', 'MTBIN', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'INTENSIF', 'MPEK', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'INTENSIF', 'MPSO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'INTENSIF', 'MP02', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'INTENSIF', 'MP01', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'INTENSIF', 'MPGEO', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'INTENSIF', 'MPSJ', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'INTENSIF', 'MP04', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'INTENSIF', 'MP05', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'INTENSIF', 'MPNI', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'INTENSIF', 'MTBHING', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('3', '5', 'INTENSIF', 'MTBIN', '0', '0', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
+('4', '5', 'INTENSIF', 'JRMYH', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '5', 'INTENSIF', 'SLMTFQ', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '5', 'INTENSIF', 'TJDRORI', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '5', 'INTENSIF', 'MPSSORE', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '5', 'INTENSIF', 'MPEKSORE2', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '5', 'REGULER', 'JRMYH', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '5', 'REGULER', 'TJDRORI', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '5', 'REGULER', 'SLMTFQ', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '5', 'REGULER', 'MPSSORE', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '5', 'REGULER', 'MPEKSORE2', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '4', 'INTENSIF', 'JRMYH', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '4', 'INTENSIF', 'SLMTFQ', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '4', 'INTENSIF', 'TJDRORI', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '4', 'INTENSIF', 'MPSSORE', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '4', 'INTENSIF', 'MPEKSORE2', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '4', 'REGULER', 'JRMYH', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '4', 'REGULER', 'TJDRORI', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '4', 'REGULER', 'SLMTFQ', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '4', 'REGULER', 'MPEKSORE2', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '4', 'REGULER', 'MPSSORE', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '3', 'REGULER', 'JRMYH', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '3', 'REGULER', 'SLMTFQ', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '3', 'REGULER', 'TJDRORI', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '3', 'REGULER', 'MPEKSORE2', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '3', 'REGULER', 'MPSSORE', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '3', 'INSENTIF', 'MPEKSORE2', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '3', 'INSENTIF', 'TJDRORI', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '3', 'INSENTIF', 'SLMTFQ', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '3', 'INSENTIF', 'JRMYH', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '2', 'INSENTIF', 'JRMYH', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '3', 'INSENTIF', 'MPSSORE', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '2', 'INSENTIF', 'SLMTFQ', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '2', 'INSENTIF', 'TJDRORI', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '2', 'INSENTIF', 'MPEKSORE2', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '2', 'INSENTIF', 'MPSSORE', '0', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '2', 'REGULER', 'JRMYH', '3', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '2', 'REGULER', 'SLMTFQ', '2', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '2', 'REGULER', 'TJDRORI', '1', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '2', 'REGULER', 'MPEKSORE2', '2', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '2', 'REGULER', 'MPSSORE', '1', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '1', 'INSENTIF', 'SLMTFQ', '2', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '1', 'INSENTIF', 'JRMYH', '1', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '1', 'INSENTIF', 'TJDRORI', '1', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '1', 'INSENTIF', 'MPSSORE', '1', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '1', 'INSENTIF', 'MPEKSORE2', '2', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '1', 'REGULER', 'JRMYH', '1', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '1', 'REGULER', 'SLMTFQ', '2', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '1', 'REGULER', 'TJDRORI', '1', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '1', 'REGULER', 'MPSSORE', '2', '0', 'SORE', 'admin', '2018-03-08 00:00:00'),
+('4', '1', 'REGULER', 'MPEKSORE2', '1', '0', 'SORE', 'admin', '2018-03-08 00:00:00');
 
 --
 -- Dumping data for table `trans_pembiayaan_siswa`
@@ -884,7 +1066,10 @@ INSERT INTO `trans_pembiayaan_siswa` (`no_registrasi`, `pembiaya`, `biaya_perbul
 (NULL, NULL, 0, 0, 0),
 ('A39170001', NULL, 0, 0, 0),
 ('A3917002', NULL, 0, 0, 0),
-('T39180001', '', 0, 0, 0);
+('T39180001', '', 0, 0, 0),
+('A39170004', 'IBU', 234234, 2423423, 423423),
+('T39180018', 'IBU', 234234, 2423423, 423423),
+('T39180019', 'IBU', 234234, 2423423, 423423);
 
 --
 -- Dumping data for table `trans_rpp`
@@ -899,18 +1084,6 @@ INSERT INTO `trans_rpp` (`id_rpp`, `id_thn_ajar`, `santri`, `id_guru`, `semester
 --
 
 INSERT INTO `trans_rpp_detail` (`id_rpp_dtl`, `id_rpp`, `bulan`, `minggu`, `hari`, `hissos`, `materi_pokok`, `alokasi_waktu`, `TIU`, `jns_tagihan`) VALUES
-(37, 10, 'JANUARI', 'I', 'SENIN', 'I', '1', '0', '0', '0'),
-(38, 10, 'JANUARI', 'II', 'SENIN', 'I', '0', '0', '0', '0'),
-(39, 10, 'JANUARI', 'III', 'SENIN', 'I', '0', '0', '0', '0'),
-(40, 10, 'JANUARI', 'IV', 'SENIN', 'I', '0', '0', '0', '0'),
-(41, 10, 'FEBRUARI', 'I', 'SENIN', 'I', '0', '0', '0', '0'),
-(42, 10, 'FEBRUARI', 'II', 'SENIN', 'I', '0', '0', '0', '0'),
-(43, 10, 'FEBRUARI', 'III', 'SENIN', 'I', '0', '0', '0', '0'),
-(44, 10, 'FEBRUARI', 'IV', 'SENIN', 'I', '0', '0', '0', '0'),
-(45, 10, 'MARET', 'I', 'SENIN', 'I', '0', '0', '0', '0'),
-(46, 10, 'MARET', 'II', 'SENIN', 'I', '0', '0', '0', '0'),
-(47, 10, 'MARET', 'III', 'SENIN', 'I', '0', '0', '0', '0'),
-(48, 10, 'MARET', 'IV', 'SENIN', 'I', '0', '0', '2', '0'),
 (85, 7, 'JANUARI', 'I', 'SELASA', 'I', '6', '7', '7', '7'),
 (86, 7, 'JANUARI', 'II', 'SELASA', 'I', '6', '5', '5', '5'),
 (87, 7, 'JANUARI', 'III', 'SELASA', 'I', '6', '7', '8', '8'),
@@ -922,7 +1095,19 @@ INSERT INTO `trans_rpp_detail` (`id_rpp_dtl`, `id_rpp`, `bulan`, `minggu`, `hari
 (93, 7, 'MARET', 'I', 'SELASA', 'I', '4', '5', '6', '7'),
 (94, 7, 'MARET', 'II', 'SELASA', 'I', '7', '8', '7', '6'),
 (95, 7, 'MARET', 'III', 'SELASA', 'I', '6', '6', '7', '8'),
-(96, 7, 'MARET', 'IV', 'SELASA', 'I', '23', '3', '3', '3');
+(96, 7, 'MARET', 'IV', 'SELASA', 'I', '23', '3', '3', '3'),
+(97, 10, 'JANUARI', 'I', 'SENIN', 'I', '1', '0', '0', '0'),
+(98, 10, 'JANUARI', 'II', 'SENIN', 'I', '0', '0', '0', '0'),
+(99, 10, 'JANUARI', 'III', 'SENIN', 'I', '0', '0', '0', '0'),
+(100, 10, 'JANUARI', 'IV', 'SENIN', 'I', '0', '0', '0', '0'),
+(101, 10, 'FEBRUARI', 'I', 'SENIN', 'I', '0', '0', '0', '0'),
+(102, 10, 'FEBRUARI', 'II', 'SENIN', 'I', '0', '0', '0', '0'),
+(103, 10, 'FEBRUARI', 'III', 'SENIN', 'I', '0', '0', '0', '0'),
+(104, 10, 'FEBRUARI', 'IV', 'SENIN', 'I', '0', '0', '0', '0'),
+(105, 10, 'MARET', 'I', 'SENIN', 'I', '0', '0', '0', '0'),
+(106, 10, 'MARET', 'II', 'SENIN', 'I', '0', '0', '0', '0'),
+(107, 10, 'MARET', 'III', 'SENIN', 'I', '0', '0', '0', '0'),
+(108, 10, 'MARET', 'IV', 'SENIN', 'I', '0', '0', '2', '0');
 
 --
 -- Dumping data for table `trans_tabungan`

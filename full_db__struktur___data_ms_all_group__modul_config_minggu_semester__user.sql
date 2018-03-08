@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2018 at 05:59 PM
+-- Generation Time: Mar 08, 2018 at 07:06 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -354,7 +354,7 @@ CREATE TABLE `ms_config` (
 --
 
 INSERT INTO `ms_config` (`id_config`, `nomor_statistik`, `NPSN`, `nama`, `jenis_lembaga`, `userid`, `recdate`) VALUES
-(1, '510232051432', '69937270 - 69937240', 'TMI - Pondok Pesantren Darussalam', 'Mu\'allimin', 'admin', '2018-01-10 00:00:00');
+(1, '510232051432', '69937270 - 69937240', 'TMI - Pondok Pesantren Darussalam', 'Mu\'allimin', 'admin', '2018-03-08 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -637,18 +637,31 @@ CREATE TABLE `ms_kecakapan_santri` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ms_kelas`
+-- Table structure for table `ms_kelasdt`
 --
 
-CREATE TABLE `ms_kelas` (
-  `kode_kelas` varchar(10) DEFAULT NULL,
-  `tingkat` int(11) DEFAULT NULL,
-  `nama` varchar(20) DEFAULT NULL,
-  `tipe_kelas` varchar(10) DEFAULT NULL,
+CREATE TABLE `ms_kelasdt` (
+  `kode_kelas` varchar(10) CHARACTER SET latin1 NOT NULL,
+  `id_kelas` int(3) DEFAULT NULL,
+  `nama` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
   `kapasitas` int(2) DEFAULT NULL,
+  `userid` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
+  `recdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ms_kelashd`
+--
+
+CREATE TABLE `ms_kelashd` (
+  `id_kelas` int(3) NOT NULL,
+  `tingkat` int(2) DEFAULT NULL,
+  `tipe_kelas` varchar(10) DEFAULT NULL,
   `userid` varchar(20) DEFAULT NULL,
-  `recdate` date DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `recdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -829,11 +842,12 @@ CREATE TABLE `ms_semester` (
 --
 
 INSERT INTO `ms_semester` (`id_semester`, `semester`, `bulan`) VALUES
-(37, 1, '1'),
-(39, 1, '2'),
 (40, 2, '7'),
 (41, 2, '8'),
-(42, 2, '9');
+(42, 2, '9'),
+(48, 1, '1'),
+(49, 1, '2'),
+(50, 1, '3');
 
 -- --------------------------------------------------------
 
@@ -1302,6 +1316,18 @@ ALTER TABLE `ms_infaq`
   ADD PRIMARY KEY (`id_infaq`);
 
 --
+-- Indexes for table `ms_kelasdt`
+--
+ALTER TABLE `ms_kelasdt`
+  ADD PRIMARY KEY (`kode_kelas`);
+
+--
+-- Indexes for table `ms_kelashd`
+--
+ALTER TABLE `ms_kelashd`
+  ADD KEY `id_kelas` (`id_kelas`);
+
+--
 -- Indexes for table `ms_santri`
 --
 ALTER TABLE `ms_santri`
@@ -1423,7 +1449,7 @@ ALTER TABLE `histori_master_biaya`
 -- AUTO_INCREMENT for table `login_history`
 --
 ALTER TABLE `login_history`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=327;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=338;
 --
 -- AUTO_INCREMENT for table `modul`
 --
@@ -1433,7 +1459,7 @@ ALTER TABLE `modul`
 -- AUTO_INCREMENT for table `ms_banksoal`
 --
 ALTER TABLE `ms_banksoal`
-  MODIFY `id_soal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id_soal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 --
 -- AUTO_INCREMENT for table `ms_biaya`
 --
@@ -1495,10 +1521,15 @@ ALTER TABLE `ms_guru_sk`
 ALTER TABLE `ms_infaq`
   MODIFY `id_infaq` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 --
+-- AUTO_INCREMENT for table `ms_kelashd`
+--
+ALTER TABLE `ms_kelashd`
+  MODIFY `id_kelas` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
 -- AUTO_INCREMENT for table `ms_semester`
 --
 ALTER TABLE `ms_semester`
-  MODIFY `id_semester` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id_semester` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 --
 -- AUTO_INCREMENT for table `ms_tabungan`
 --
@@ -1523,12 +1554,12 @@ ALTER TABLE `sys_param`
 -- AUTO_INCREMENT for table `trans_banksoalhd`
 --
 ALTER TABLE `trans_banksoalhd`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `trans_jadwal_pelajaran`
 --
 ALTER TABLE `trans_jadwal_pelajaran`
-  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=317;
+  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=327;
 --
 -- AUTO_INCREMENT for table `trans_rpp`
 --
@@ -1538,7 +1569,7 @@ ALTER TABLE `trans_rpp`
 -- AUTO_INCREMENT for table `trans_rpp_detail`
 --
 ALTER TABLE `trans_rpp_detail`
-  MODIFY `id_rpp_dtl` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id_rpp_dtl` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 --
 -- AUTO_INCREMENT for table `trans_tabungan`
 --

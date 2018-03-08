@@ -16,22 +16,20 @@ class Mrpp extends CI_Model
 		return $data;
 	}
 
-    function get_kelas(){
-		$data = $this->db->query ("SELECT * FROM ms_kelas");
-		return $data;
-	}
-
+   
     function get_list_data($param,$sortby=1,$sorttype='desc'){
         // var_dump($param);
         // exit();
 		
         $cols = array('santri','id_mapel','semester','nama_lengkap','deskripsi','nama','santri');
 
-        $sql = "SELECT DISTINCT a.id_rpp, a.kode_kelas,a.id_guru,c.tingkat, c.tipe_kelas,c.nama, a.santri, a.semester, a.id_thn_ajar, a.id_mapel, b.deskripsi, c.nama, d.nama_lengkap
+        $sql = "SELECT DISTINCT a.id_rpp, a.kode_kelas,a.id_guru,e.tingkat, e.tipe_kelas,c.nama, a.santri, a.semester, a.id_thn_ajar, a.id_mapel, b.deskripsi, c.nama, d.nama_lengkap
                 FROM trans_rpp a
                 INNER JOIN ms_tahun_ajaran b ON b.id = a.id_thn_ajar
-                INNER JOIN ms_kelas c ON c.kode_kelas=a.kode_kelas
-                INNER JOIN ms_guru d ON d.id_guru=a.id_guru";
+                INNER JOIN ms_kelasDT c ON c.kode_kelas=a.kode_kelas
+				INNER JOIN ms_guru d ON d.id_guru=a.id_guru
+				INNER JOIN ms_kelasHD e ON c.id_kelas=e.id_kelas";
+				
                     
 
             if($param!=null){
