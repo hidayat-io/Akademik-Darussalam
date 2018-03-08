@@ -24,7 +24,7 @@ revisi II:
 -penambahan, tombol untuk import santri AITAM yang lulus ke TMI..---------------------------------------------------->DONE
 -penambahan tab donatur.di pendaftaran dan data santri. ?---------------------------------------------------->DONE
 -di komponen biaya di tambahkan aktif dan non active, ---------------------------------------------------->DONE
--perubahan data kelas, pakek header & detail.
+-perubahan data kelas, pakek header & detail.---------------------------------------------------->DONE
 -perubahan menu kurikulum = sourcenya ke kelas header
 -cek save & update data guru---------------------------------------------------->DONE
 -penambahan modul silabus

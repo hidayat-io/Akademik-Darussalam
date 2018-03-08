@@ -15,11 +15,6 @@ class Mdatasoalujian extends CI_Model
 		return $data;
 	}
 
-    function get_kelas(){
-		$data = $this->db->query ("SELECT * FROM ms_kelas");
-		return $data;
-	}
-
     function get_list_data($param,$sortby=0,$sorttype='desc'){
         // var_dump($param);
         // exit();

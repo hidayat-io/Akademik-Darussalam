@@ -88,7 +88,7 @@
                                             <!--inputbox-->
                                                 <!--span-->
                                                     <input type="text" class="hidden" name="kode_datasoal" id="kode_datasoal">
-                                                <!--span-->
+                                                    <!--span-->
                                                     <div class="form-group">
                                                         <label class="control-label"></label>
                                                         <div class="input-group">
@@ -104,7 +104,7 @@
                                                                 </div>
                                                         </div>
                                                     </div>
-                                                      <!--span-->
+                                                    <!--span-->
                                                     <div class="form-group">
                                                         <label class="control-label"></label>
                                                         <div class="input-group">
@@ -113,15 +113,10 @@
                                                             </span>
                                                             <div class="input-icon right">
                                                                 <i class="fa"></i>
-                                                                <select class="form-control" name="tingkat" id="tingkat" required >
-                                                                    <option value=""></option>
-                                                                    <option value="1">1</option>
-                                                                    <option value="2">2</option>
-                                                                    <option value="3">3</option>
-                                                                    <option value="4">4</option>
-                                                                    <option value="5">5</option>
-                                                                    <option value="6">6</option>
-                                                                </select>
+                                                                <?php
+                                                                    $att_item = 'type="text" class="form-control select"  style="width: 90%;" id="tingkat" onchange="SearchBankSoal()" required';
+                                                                    echo form_dropdown('tingkat', $tingkat, null, $att_item);
+                                                                ?>
                                                             </div>
                                                         </div>
                                                     </div>    
