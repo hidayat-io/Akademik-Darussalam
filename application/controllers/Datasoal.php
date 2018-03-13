@@ -23,7 +23,15 @@ class datasoal extends IO_Controller
             
 							$vdata['mat_pal'][$b->id_matpal]
 							=$b->id_matpal." | ".$b->nama_matpal;
-                        }
+						}
+			//get Kelas
+			$tingkat= $this->mcommon->mget_list_tingkat()->result();
+		
+					$vdata['tingkat'][NULL] = '';
+					foreach ($tingkat as $b) {
+						$vdata['tingkat'][$b->tingkat]
+						=$b->tingkat;
+					}
 		
 		$vdata['title'] = 'DATA SOAL';
 	    $data['content'] = $this->load->view('vdatasoal',$vdata,TRUE);

@@ -25,14 +25,13 @@ class datasoalujian extends IO_Controller
                             =$b->deskripsi;
                         }
         //get Kelas
-			$select_kelas= $this->model->get_kelas()->result();
-            
-                        $vdata['kode_kelas'][NULL] = '';
-                        foreach ($select_kelas as $b) {
-            
-							$vdata['kode_kelas'][$b->kode_kelas."#".$b->nama."#".$b->tingkat."#".$b->tipe_kelas]
-							=$b->nama." | ".$b->tingkat." | ".$b->tipe_kelas;
-                        }
+			$tingkat= $this->mcommon->mget_list_tingkat()->result();
+		
+					$vdata['tingkat'][NULL] = '';
+					foreach ($tingkat as $b) {
+						$vdata['tingkat'][$b->tingkat]
+						=$b->tingkat;
+					}
        //get Mata Pelajaran
 			$mt_pelajaran= $this->mcommon->mget_list_mata_pelajaran()->result();
             

@@ -109,6 +109,7 @@
                                                                         <thead>
                                                                             <tr>
                                                                                 <th style="text-align:center">No</th>
+                                                                                <th style="text-align:center" class="hidden">bln</th>
                                                                                 <th style="text-align:center">BULAN</th>
                                                                                 <th style="text-align:center" width="10%">Action</th>
                                                                             </tr>
@@ -182,18 +183,18 @@
                                                 </span>
                                                 <select class="form-control" name="bulan" id="bulan" required>
                                                     <option value=""></option>
-                                                    <option value="JANUARI">JANUARI</option>
-                                                    <option value="FEBRUARI">FEBRUARI</option>
-                                                    <option value="MARET">MARET</option>
-                                                    <option value="APRIL">APRIL</option>
-                                                    <option value="MEI">MEI</option>
-                                                    <option value="JUNI">JUNI</option>
-                                                    <option value="JULI">JULI</option>
-                                                    <option value="AGUSTUS">AGUSTUS</option>
-                                                    <option value="SEPTEMBER">SEPTEMBER</option>
-                                                    <option value="OKTOBER">OKTOBER</option>
-                                                    <option value="NOVEMBER">NOVEMBER</option>
-                                                    <option value="DESEMBER">DESEMBER</option>
+                                                    <option value="1">JANUARI</option>
+                                                    <option value="2">FEBRUARI</option>
+                                                    <option value="3">MARET</option>
+                                                    <option value="4">APRIL</option>
+                                                    <option value="5">MEI</option>
+                                                    <option value="6">JUNI</option>
+                                                    <option value="7">JULI</option>
+                                                    <option value="8">AGUSTUS</option>
+                                                    <option value="9">SEPTEMBER</option>
+                                                    <option value="10">OKTOBER</option>
+                                                    <option value="11">NOVEMBER</option>
+                                                    <option value="12">DESEMBER</option>
                                                 </select>
                                                 </div>
                                             </div>

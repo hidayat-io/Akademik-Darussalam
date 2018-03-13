@@ -1,5 +1,5 @@
 <!-- بسم الله الرحمن الرحیم -->
-<style type="text/css">.thumb-image{float:left;width:200px;position:relative;padding:5px;}</style>
+<style type="text/css">.thumb-image{float:left;width:250px;position:relative;padding:5px;}</style>
 <script src="<?=base_url()?>assets/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js" type="text/javascript"></script>
 
 <script src="<?php echo base_url(); ?>assets/plugins/maskMoney/jquery.maskMoney.js"></script>
@@ -21,9 +21,9 @@
                   </div>
                 </div>
                 <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
-                    <!-- <button class="btn btn-default " type="button" onclick="addSantri()">
+                    <button class="btn btn-default <?php if($page != 'DAFTAR'){echo 'hidden';}?> " type="button" onclick="addSantri()">
                         <i class="fa fa-edit"></i>&nbsp;Tambah Data&nbsp;
-                    </button> -->
+                    </button>
                     <button type="button" class="btn btn-default" title="Search Data" onclick="Modalcari()">
                         <i class="fa fa-search"></i>&nbsp;Search
                     </button>
@@ -34,6 +34,7 @@
         </div>
         <input type="text" name="hid_param" id="hid_param" class="hidden" />
         <input type="text" name="hid_kategori_santri" id="hid_kategori_santri" class="hidden" value="<?php echo $kategori_santri;?>"/>
+        <input type="text" name="hid_page" id="hid_page" class="hidden" value="<?php echo $page;?>"/>
         <div class="portlet-body">
             <table class="table table-striped table-bordered table-hover" id="tb_list">
                 <thead>
@@ -42,9 +43,9 @@
                         <th>Tahun Masuk</th>
                         <th>Nama Lengkap</th>
                         <th>Nama Arab</th>
-                        <th>Nama Panggilan</th>
-                        <th>Uang Jajan Perbulan</th>
-                        <th>No KK</th>
+                        <!-- <th >Nama Panggilan</th> -->
+                        <!-- <th>Uang Jajan Perbulan</th> -->
+                        <!-- <th>No KK</th> -->
                         <th>NIK</th>
                         <th>Tempat Lahir</th>
                         <th>Tanggal Lahir</th>
@@ -53,7 +54,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="10" align="center">
+                        <td colspan="8" align="center">
                             Tidak ada data ditemukan.
                         </td>
                     </tr>
@@ -90,13 +91,13 @@
                                         <a href="#tab_santri" data-toggle="tab"><i class="fa fa-user"></i>&nbsp;Data Santri</a>
                                     </li>
                                     <li>
-                                        <a href="#tab_pembiayaan" <?php if($kategori_santri != 'TMI'){echo 'class="hidden"';} ?> data-toggle="tab"><i class="fa fa-university"></i>&nbsp;Data Pembiayaan</a>
+                                        <a href="#tab_pembiayaan" id="tabpembiayaan" data-toggle="tab"><i class="fa fa-university"></i>&nbsp;Data Pembiayaan</a>
                                     </li>
                                     <li>
-                                        <a href="#tab_sekolah"  <?php if($kategori_santri == 'TMI'){echo 'class="hidden"';} ?> data-toggle="tab"><i class="fa fa-child"></i>&nbsp;Data Sekolah (AITAM)</a>
+                                        <a href="#tab_sekolah"  id="tabsekolah"  data-toggle="tab"><i class="fa fa-child"></i>&nbsp;Data Sekolah (AITAM)</a>
                                     </li>
                                     <li>
-                                        <a href="#tab_fisik" <?php if($kategori_santri != 'TMI'){echo 'class="hidden"';} ?> data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Fisik</a>
+                                        <a href="#tab_fisik" id="tabfisik"  data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Fisik</a>
                                     </li>
                                     <li>
                                         <a href="#tab_keluarga" data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Keluarga</a>
@@ -105,10 +106,13 @@
                                         <a href="#tab_penyakitn" data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Penyakit</a>
                                     </li>
                                     <li>
-                                        <a href="#tab_kecakapan" <?php if($kategori_santri != 'TMI'){echo 'class="hidden"';} ?> data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Kecakapan Khusus</a>
+                                        <a href="#tab_kecakapan"  id="tabkecakapan"  data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Kecakapan Khusus</a>
                                     </li>
                                     <li>
                                         <a href="#tab_lampiran" data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Lampiran</a>
+                                    </li>
+                                    <li>
+                                        <a href="#tab_donatur" data-toggle="tab"><i class="fa fa-group"></i>&nbsp;Data Donatur</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
@@ -126,13 +130,13 @@
                                                 <div class="portlet-body form">
                                                     <!-- BEGIN FORM-->
                                                     <div class="form-body">
-                                                        <h3 class="form-section">Data Pribadi</h3>
+                                                        <!-- <h3 class="form-section">Data Pribadi</h3> -->
                                                         <!--row begin-->
-                                                        <!--inputbbox-->
-                                                        <div class="m-grid m-grid-responsive-xs">
-                                                            <div class="m-grid-row">
-                                                                <div class="m-grid-col m-grid-col-middle m-grid-col-center col-md-1">
-                                                                    <div class="form-group ">
+                                                        <!-- Profile & header -->
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <ul class="list-unstyled profile-nav">
+                                                                   <!-- <div class="form-group "> -->
                                                                         <!--<label class="control-label col-md-3"></label>
                                                                         <div class="col-md-9">-->
                                                                             <div class="fileinput fileinput-new" data-provides="fileinput" >
@@ -148,211 +152,259 @@
                                                                                   <input type="hidden"  id="TfileUpload" name="TfileUpload">
                                                                             </div>
                                                                         <!--</div>-->
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div> -->
+                                                                </ul>
                                                             </div>
-                                                        </div>
-                                                        <h3 class="form-section"></h3>
-                                                        <div class="m-grid m-grid-responsive-xs">
-                                                            <div class="m-grid-row">
-                                                                <div class="m-grid-col m-grid-col-middle m-grid-col-center col-md-1">
-                                                                    <div class="form-group"><label for="form_control_1">Kategori</label>
-                                                                        <select class="form-control" name="kategori_santri" id="kategori_santri"  required >
+                                                            <div class="col-md-7">
+                                                                <div class="row">
+                                                                    <div class="m-grid-row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="input-group">
+                                                                            <span class="input-group-addon">
+                                                                                Kategori
+                                                                            </span>
+                                                                                <div class="input-icon right">
+                                                                                    <i class="fa"></i><i class="fa"></i>
+                                                                                    <select class="form-control" name="kategori_santri" id="kategori_santri"  required >
+                                                                                        <?php
+                                                                                        if($kategori_santri =="TMI")
+                                                                                        {
+                                                                                            $hidden_tmi     ='';
+                                                                                            $hidden_aitam   ='hidden';
+                                                                                            $tmi_select     ='selected';
+                                                                                            $aitam_select   ='';
+                                                                                        }
+                                                                                        else {
+                                                                                            $hidden_tmi     ='hidden';
+                                                                                            $hidden_aitam   ='';
+                                                                                            $aitam_select   ='selected';
+                                                                                            $tmi_select     ='';
+                                                                                        }
+                                                                                        ?>
+                                                                                        <option value=""></option>
+                                                                                        <option value="TMI" <?php echo $hidden_tmi?> <?php echo $tmi_select?>>TMI</option>
+                                                                                        <option value="AITAM_ISLAH" <?php echo $hidden_aitam?> <?php echo $aitam_select?>>AITAM_ISLAH</option>
+                                                                                        <option value="AITAM_JAMIAH" <?php echo $hidden_aitam?>>AITAM_JAMIAH</option>
+                                                                                    </select>
+                                                                                    <input type="text" name="kategori_update" id="kategori_update" class="hidden"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="input-group">
+                                                                            <span class="input-group-addon">
+                                                                                No Registrasi
+                                                                            </span>
+                                                                                <div class="input-icon right">
+                                                                                    <i class="fa"></i><i class="fa"></i>
+                                                                                    <input type class="form-control" readonly name="no_registrasi" id="no_registrasi" onkeydown="OtomatisKapital(this)" >
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="m-grid-row">
+                                                                        <div class="col-md-6">
+                                                                           <div class="input-group">
+                                                                            <span class="input-group-addon">
+                                                                                No Stambuk
+                                                                            </span>
+                                                                                <div class="input-icon right">
+                                                                                    <i class="fa"></i><i class="fa"></i>
+                                                                                    <input type class="form-control numbers-only"  name="no_stambuk" id="no_stambuk" readonly >
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="input-group">
+                                                                            <span class="input-group-addon">
+                                                                                Tahun Masuk
+                                                                            </span>
+                                                                                <div class="input-icon right">
+                                                                                    <i class="fa"></i><i class="fa"></i>
+                                                                                    <input type class="form-control datepicker"  data-date-format="yyyy" name="thn_masuk" id="thn_masuk" readonly="true" required>
+                                                                                </div>
+                                                                                <span class="input-group-btn">
+                                                                                    <button class="btn default" type="button">
+                                                                                        <i class="fa fa-calendar"></i>
+                                                                                    </button>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="m-grid-row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-addon">
+                                                                                    Gedung
+                                                                                </span>
+                                                                                <div class="input" id= "hiddenidgedung">
                                                                                     <?php
-                                                                                    if($kategori_santri =="TMI")
-                                                                                    {
-                                                                                        $hidden_tmi     ='';
-                                                                                        $hidden_aitam   ='hidden';
-                                                                                        $tmi_select     ='selected';
-                                                                                    }
-                                                                                    else {
-                                                                                        $hidden_tmi     ='hidden';
-                                                                                        $hidden_aitam   ='';
-                                                                                        $aitam_select   ='selected';
-                                                                                    }
+                                                                                        $att_item = 'id="hide_id_gedung"  class="form-control select" style="width:100%"  onchange="pilihItemGedung()"';
+                                                                                        echo form_dropdown('hide_id_gedung', $kode_gedung, null, $att_item);
                                                                                     ?>
-                                                                                    <option value=""></option>
-                                                                                    <option value="TMI" class="<?php echo $hidden_tmi?>" <?php echo $tmi_select?>>TMI</option>
-                                                                                    <option value="AITAM_ISLAH" class="<?php echo $hidden_aitam?>" <?php echo $aitam_select?>>AITAM_ISLAH</option>
-                                                                                    <option value="AITAM_JAMIAH" class="<?php echo $hidden_aitam?>">AITAM_JAMIAH</option>
-                                                                                </select>
-                                                                    </div>
-                                                                    <input type="text" name="kategori_update" id="kategori_update" class="hidden"/>
-                                                                </div>
-                                                                <div class="m-grid-col m-grid-col-middle m-grid-col-center col-md-1">
-                                                                    <div class="form-group"><label for="no_registrasi">No. Registrasi</label>
-                                                                        <div class="input-icon right">
-                                                                            <i class="fa"></i><input type class="form-control" readonly name="no_registrasi" id="no_registrasi" onkeydown="OtomatisKapital(this)" >
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="m-grid-col m-grid-col-middle m-grid-col-center col-md-1">
-                                                                    <div class="form-group"> <label for="form_control_1">No. Stambuk</label>
-                                                                        <div class="input-icon right">
-                                                                            <i class="fa"></i><input type class="form-control numbers-only"  name="no_stambuk" id="no_stambuk" readonly >
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="m-grid-col m-grid-col-middle m-grid-col-center col-md-1">
-                                                                    <div class="form-group"><label for="form_control_1">Tahun Masuk</label>
-                                                                        <div class="input-icon right">
-                                                                            <i class="fa"></i><input type class="form-control datepicker"  data-date-format="yyyy" name="thn_masuk" id="thn_masuk"  required>
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                </div>
-                                                                <div class="m-grid-col m-grid-col-middle m-grid-col-center col-md-2">
-                                                                    <div class="form-group">
-                                                                        <label for="form_control_1">Gedung
-                                                                            <span class="glyphicon glyphicon-search"
-                                                                                style="cursor: pointer;"
-                                                                                title="Cari Kode Gedung"
-                                                                                id="spansearchgedung"
-                                                                            onclick="idgedungshow()">
-                                                                            </span>
-                                                                            <span class="glyphicon glyphicon-remove-sign"
-                                                                                style="cursor: pointer;"
-                                                                                title="Cari Kode Gedung"
-                                                                                id="spansearchclosegedung"
-                                                                            onclick="idgedunghide()">
-                                                                            </span>
-                                                                        </label>
-                                                                        <div class="input" id= "hiddenidgedung">
-                                                                            <?php
-                                                                                $att_item = 'id="hide_id_gedung"  class="form-control select2" style="width:100%"  onchange="pilihItemGedung()"';
-                                                                                echo form_dropdown('hide_id_gedung', $kode_gedung, null, $att_item);
-                                                                            ?>
-                                                                        </div>
-                                                                        <div class="input-icon right">
-                                                                            <i class="fa"></i><input type class="form-control" readonly name="rayon" id="rayon" onkeydown="OtomatisKapital(this)" required>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="m-grid-col m-grid-col-middle m-grid-col-center col-md-2">
-                                                                    <div class="form-group">
-                                                                        <label for="form_control_1">Kamar
-                                                                            <span class="glyphicon glyphicon-search"
-                                                                                style="cursor: pointer;"
-                                                                                title="Cari Kode Kamar"
-                                                                                id="spansearchKamar"
-                                                                                onclick="idKamarshow()">
-                                                                            </span>
-                                                                            <span class="glyphicon glyphicon-remove-sign"
-                                                                                style="cursor: pointer;"
-                                                                                title="Cari Kode Kamar"
-                                                                                id="spansearchcloseKamar"
-                                                                                onclick="idKamarhide()">
-                                                                            </span>
-                                                                        </label>
-                                                                        <div class="input" id= "hiddenidKamar">
-                                                                            <?php
-                                                                                $att_item = 'id="hide_id_Kamar"  class="form-control select2" style="width:100%"  onchange="pilihItemKamar()"';
-                                                                                echo form_dropdown('hide_id_Kamar', $kode_kamar, null, $att_item);
-                                                                            ?>
-                                                                        </div>
-                                                                        <div class="input-icon right">
-                                                                        <i class="fa"></i><input type class="form-control" readonly name="kamar" id="kamar" onkeydown="OtomatisKapital(this)" required>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="m-grid-col m-grid-col-middle m-grid-col-center col-md-2">
-                                                                    <div class="form-group">
-                                                                        <label for="form_control_1">Bagian
-                                                                            <span class="glyphicon glyphicon-search"
+                                                                                </div>
+                                                                                <div class="input-icon right">
+                                                                                    <i class="fa"></i>
+                                                                                    <input type class="form-control" readonly name="rayon" id="rayon" onkeydown="OtomatisKapital(this)" required>
+                                                                                </div>
+                                                                                <span class="input-group-btn"
+                                                                                        style="cursor: pointer;"
+                                                                                        title="Cari Kode Gedung"
+                                                                                        id="spansearchgedung"
+                                                                                        onclick="idgedungshow()">
+                                                                                    <button class="btn default" type="button">
+                                                                                        <i class="fa fa-search"></i>
+                                                                                    </button>
+                                                                                </span>
+                                                                                <span class="input-group-btn"
                                                                                     style="cursor: pointer;"
-                                                                                    title="Cari Kode Bagian"
-                                                                                    id="spansearchBagian"
-                                                                                    onclick="idBagianshow()">
-                                                                            </span>
-                                                                            <span class="glyphicon glyphicon-remove-sign"
+                                                                                        title="Cari Kode Gedung"
+                                                                                        id="spansearchclosegedung"
+                                                                                    onclick="idgedunghide()">
+                                                                                    <button class="btn default" type="button">
+                                                                                        <i class="fa fa-times-circle"></i>
+                                                                                    </button>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-addon">
+                                                                                    Kamar
+                                                                                </span>
+                                                                                <div class="input" id= "hiddenidKamar">
+                                                                                    <?php
+                                                                                        $att_item = 'id="hide_id_Kamar"  class="form-control select" style="width:100%"  onchange="pilihItemKamar()"';
+                                                                                        echo form_dropdown('hide_id_Kamar', $kode_kamar, null, $att_item);
+                                                                                    ?>
+                                                                                </div>
+                                                                                <div class="input-icon right">
+                                                                                <i class="fa"></i><input type class="form-control" readonly name="kamar" id="kamar" onkeydown="OtomatisKapital(this)" required>
+                                                                                </div>
+                                                                                <span class="input-group-btn"
+                                                                                        style="cursor: pointer;"
+                                                                                        title="Cari Kode Kamar"
+                                                                                        id="spansearchKamar"
+                                                                                        onclick="idKamarshow()">
+                                                                                    <button class="btn default" type="button">
+                                                                                        <i class="fa fa-search"></i>
+                                                                                    </button>
+                                                                                </span>
+                                                                                <span class="input-group-btn"
                                                                                     style="cursor: pointer;"
-                                                                                    title="Cari Kode Bagian"
-                                                                                    id="spansearchcloseBagian"
-                                                                                onclick="idBagianhide()">
-                                                                            </span>
-                                                                        </label>
-                                                                        <div class="input" id= "hiddenidBagian">
-                                                                            <?php
-                                                                                $att_item = 'id="hide_id_Bagian"  class="form-control select2" style="width:100%"  onchange="pilihItemBagian()"';
-                                                                                echo form_dropdown('hide_id_Bagian', $kode_Bagian, null, $att_item);
-                                                                            ?>
+                                                                                        title="Cari Kode Kamar"
+                                                                                        id="spansearchcloseKamar"
+                                                                                        onclick="idKamarhide()">
+                                                                                    <button class="btn default" type="button">
+                                                                                        <i class="fa fa-times-circle"></i>
+                                                                                    </button>
+                                                                                </span>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="input-icon right">
-                                                                        <i class="fa"></i><input type class="form-control" readonly name="bagian" id="bagian" onkeydown="OtomatisKapital(this)" required>
+                                                                        <div class="col-md-6">
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-addon">
+                                                                                    Bagian
+                                                                                </span>
+                                                                                <div class="input" id= "hiddenidBagian">
+                                                                                    <?php
+                                                                                        $att_item = 'id="hide_id_Bagian"  class="form-control select" style="width:100%"  onchange="pilihItemBagian()"';
+                                                                                        echo form_dropdown('hide_id_Bagian', $kode_Bagian, null, $att_item);
+                                                                                    ?>
+                                                                                </div>
+                                                                                <div class="input-icon right">
+                                                                                <i class="fa"></i><input type class="form-control" readonly name="bagian" id="bagian" onkeydown="OtomatisKapital(this)" required>
+                                                                                </div>
+                                                                                <span class="input-group-btn"
+                                                                                        style="cursor: pointer;"
+                                                                                        title="Cari Kode Bagian"
+                                                                                        id="spansearchBagian"
+                                                                                        onclick="idBagianshow()">
+                                                                                    <button class="btn default" type="button">
+                                                                                        <i class="fa fa-search"></i>
+                                                                                    </button>
+                                                                                </span>
+                                                                                <span class="input-group-btn"
+                                                                                        style="cursor: pointer;"
+                                                                                        title="Cari Kode Bagian"
+                                                                                        id="spansearchcloseBagian"
+                                                                                        onclick="idBagianhide()">
+                                                                                    <button class="btn default" type="button">
+                                                                                        <i class="fa fa-times-circle"></i>
+                                                                                    </button>
+                                                                                </span>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="m-grid-col m-grid-col-middle m-grid-col-center col-md-2  <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
-                                                                    <div class="form-group">
-                                                                        <label for="form_control_1">Kelas
-                                                                            <span class="glyphicon glyphicon-search"
-                                                                                    style="cursor: pointer;"
-                                                                                    title="Cari Kode Kelas"
-                                                                                    id="spansearchKelas"
-                                                                                onclick="idKelasshow()">
-                                                                            </span>
-                                                                            <span class="glyphicon glyphicon-remove-sign"
-                                                                                style="cursor: pointer;"
-                                                                                title="Cari Kode Kelas"
-                                                                                id="spansearchcloseKelas"
-                                                                                onclick="idKelashide()">
-                                                                            </span>
-                                                                        </label>
-                                                                        <div class="input" id= "hiddenidKelas">
-                                                                            <?php
-                                                                                $att_item = 'id="hide_id_Kelas"  class="form-control select2" style="width:100%"  onchange="pilihItemKelas()"';
-                                                                                echo form_dropdown('hide_id_Kelas', $kode_kelas, null, $att_item);
-                                                                            ?>
-                                                                        </div>
-                                                                        <div class="input-icon right">
-                                                                        <i class="fa"></i><input type class="form-control" readonly name="kel_sekarang" id="kel_sekarang" onkeydown="OtomatisKapital(this)" required>
-                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-addon">
+                                                                                    Kelas
+                                                                                </span>
+                                                                                <div class="input" id= "hiddenidKelas">
+                                                                                    <?php
+                                                                                        $att_item = 'id="hide_id_Kelas"  class="form-control select" style="width:100%"  onchange="pilihItemKelas()"';
+                                                                                        echo form_dropdown('hide_id_Kelas', $kode_kelas, null, $att_item);
+                                                                                    ?>
+                                                                                </div>
+                                                                                <div class="input-icon right">
+                                                                                <i class="fa"></i><input type class="form-control" readonly name="kel_sekarang" id="kel_sekarang" onkeydown="OtomatisKapital(this)" required>
+                                                                                </div>
+                                                                                <span class="input-group-btn"
+                                                                                        style="cursor: pointer;"
+                                                                                        title="Cari Kode Kelas"
+                                                                                        id="spansearchKelas"
+                                                                                        onclick="idKelasshow()">
+                                                                                    <button class="btn default" type="button">
+                                                                                        <i class="fa fa-search"></i>
+                                                                                    </button>
+                                                                                </span>
+                                                                                <span class="input-group-btn"
+                                                                                        style="cursor: pointer;"
+                                                                                        title="Cari Kode Kelas"
+                                                                                        id="spansearchcloseKelas"
+                                                                                        onclick="idKelashide()">
+                                                                                    <button class="btn default" type="button">
+                                                                                        <i class="fa fa-times-circle"></i>
+                                                                                    </button>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>                                                                       
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!--end inputbox-->
+                                                        <!-- end profile & heder -->
                                                         <!--inputbbox-->
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
-                                                                        <div class="input-group">
-                                                                        <span class="input-group-addon">
-                                                                            NISN
-                                                                        </span>
-                                                                            <div class="input-icon right">
-                                                                                <i class="fa"></i><i class="fa"></i><input type class="form-control numbers-only" name="nisn" id="nisn" onkeydown="OtomatisKapital(this)" required>
-                                                                            </div>
-                                                                        </div>
+                                                                <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    NISN
+                                                                </span>
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i><i class="fa"></i><input type class="form-control numbers-only" name="nisn" id="nisn" onkeydown="OtomatisKapital(this)" required>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <!--span-->
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
-                                                                        <div class="input-group">
-                                                                          <span class="input-group-addon">
-                                                                              NISN LOKAL
-                                                                          </span>
-                                                                              <div class="input-icon right">
-                                                                                <i class="fa"></i><input type class="form-control numbers-only" name="nisnlokal" id="nisnlokal" readonly="" >
-                                                                            </div>
-                                                                        </div>
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">
+                                                                        NISN LOKAL
+                                                                    </span>
+                                                                        <div class="input-icon right">
+                                                                        <i class="fa"></i><input type class="form-control numbers-only" name="nisnlokal" id="nisnlokal" readonly="" >
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <!--end inputbox-->
                                                         <!--inputbbox-->
-                                                        <div class="row">
+                                                        <div class="row">                                                         
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                <!-- <div class="form-group"> -->
+                                                                <!-- <label class="control-label col-md-3"></label> -->
+                                                                    <!-- <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                             Nama Lengkap
@@ -361,14 +413,14 @@
                                                                                 <i class="fa"></i><i class="fa"></i><input type class="form-control" name="nama_lengkap" id="nama_lengkap" onkeydown="OtomatisKapital(this)" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div> -->
+                                                                <!-- </div> -->
                                                             </div>
                                                             <!--span-->
-                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
-                                                                <div class="form-group">
+                                                            <div id="cnama_arab" class="col-md-6">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                             Nama Arab
@@ -377,17 +429,17 @@
                                                                                 <i class="fa"></i><input type class="form-control" name="nama_arab" id="nama_arab" onkeydown="OtomatisKapital(this)" >
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                         <!--end inputbox-->
                                                         <!--inputbbox-->
                                                         <div class="row">
-                                                            <div class="col-md-6  <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
-                                                                <div class="form-group">
+                                                            <div id="cnama_panggilan" class="col-md-6">
+                                                                <!-- <div class="form-group">
                                                                   <label class="control-label col-md-3"></label>
-                                                                      <div class="col-md-9">
+                                                                      <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                             Nama Panggilan
@@ -396,14 +448,14 @@
                                                                                 <i class="fa"></i><input type class="form-control" name="nama_panggilan" id="nama_panggilan" onkeydown="OtomatisKapital(this)" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                             <!--span-->
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                   <label class="control-label col-md-3"></label>
-                                                                      <div class="col-md-9">
+                                                                      <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                           <span class="input-group-addon">
                                                                               Hobi
@@ -412,17 +464,17 @@
                                                                                 <i class="fa"></i><input type class="form-control" name="hobi" id="hobi" onkeydown="OtomatisKapital(this)">
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                         <!--end inputbox-->
                                                             <!--inputbbox-->
                                                         <div class="row">
-                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
-                                                                <div class="form-group">
+                                                            <div id="cuang_jajan_perbulan" class="col-md-6">
+                                                                <!-- <div class="form-group">
                                                                   <label class="control-label col-md-3"></label>
-                                                                      <div class="col-md-9">
+                                                                      <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                             Uang Jajan Perbulan
@@ -431,14 +483,14 @@
                                                                                 <i class="fa"></i><input type class="form-control" name="uang_jajan_perbulan" id="uang_jajan_perbulan" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                             <!--span-->
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                             Nomor KK
@@ -448,16 +500,16 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </div>
+                                                                <!-- </div>
+                                                            </div> -->
                                                         </div>
                                                         <!--end inputbox-->
                                                         <!--inputbbox-->
                                                         <div class="row">
-                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
-                                                                <div class="form-group">
+                                                            <div id="cnik" class="col-md-6">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                             NIKK
@@ -466,14 +518,14 @@
                                                                                 <i class="fa"></i><input type class="form-control numbers-only" name="nik" id="nik" onkeydown="OtomatisKapital(this)" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                             <!--span-->
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                             Tempat Lahir
@@ -482,23 +534,23 @@
                                                                                 <i class="fa"></i><input type class="form-control" name="tempat_lahir" id="tempat_lahir" onkeydown="OtomatisKapital(this)" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                         <!--end inputbox-->
                                                             <!--inputbbox-->
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                             Tgl. Lahir
                                                                         </span>
                                                                             <div class="input-icon right">
-                                                                                <i class="fa"></i><input type class="form-control datepicker" data-date-format="dd-mm-yyyy"  name="tgl_lahir" id="tgl_lahir" required>
+                                                                                <i class="fa"></i><input type class="form-control datepicker" data-date-format="dd-mm-yyyy"  name="tgl_lahir" id="tgl_lahir" readonly  required>
                                                                             </div>
                                                                             <span class="input-group-btn">
                                                                                 <button class="btn default" type="button">
@@ -506,14 +558,14 @@
                                                                                 </button>
                                                                             </span>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                             <!--span-->
-                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
-                                                                <div class="form-group">
+                                                            <div id="ckonsulat" class="col-md-6">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                         Konsulat
@@ -522,17 +574,17 @@
                                                                                 <i class="fa"></i><input type class="form-control" name="konsulat" id="konsulat" onkeydown="OtomatisKapital(this)" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                         <!--end inputbox-->
                                                             <!--inputbbox-->
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                         Suku
@@ -541,14 +593,14 @@
                                                                                 <i class="fa"></i><input type class="form-control" name="suku" id="suku" onkeydown="OtomatisKapital(this)" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                             <!--span-->
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                         Kewarganegaraan
@@ -557,8 +609,8 @@
                                                                                 <i class="fa"></i><input type class="form-control" name="kewarganegaraan" id="kewarganegaraan" onkeydown="OtomatisKapital(this)" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                         <!--end inputbox-->
@@ -566,25 +618,25 @@
                                                         <!--inputbbox-->
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                         Jalan/Kompleks
                                                                         </span>
                                                                             <div class="input-icon right">
-                                                                                <i class="fa"></i><input type class="form-control" name="jalan" id="jalan" onkeydown="OtomatisKapital(this)" required>
+                                                                                <i class="fa"></i><textarea type class="form-control" name="jalan" id="jalan" onkeydown="OtomatisKapital(this)" required></textarea>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                             <!--span-->
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                         No Rumah, RT, RW
@@ -593,17 +645,17 @@
                                                                                 <i class="fa"></i><input type class="form-control" name="no_rumah" id="no_rumah" onkeydown="OtomatisKapital(this)" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                         <!--end inputbox-->
                                                         <!--inputbbox-->
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                         Dusun/Kampung
@@ -612,14 +664,14 @@
                                                                                 <i class="fa"></i><input type class="form-control" name="dusun" id="dusun" onkeydown="OtomatisKapital(this)" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                             <!--span-->
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                         Desa/Kelurahan
@@ -628,17 +680,17 @@
                                                                                 <i class="fa"></i><input type class="form-control" name="desa" id="desa" onkeydown="OtomatisKapital(this)" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                         <!--end inputbox-->
                                                         <!--inputbbox-->
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                         Kecamatan
@@ -647,14 +699,14 @@
                                                                                 <i class="fa"></i><input type class="form-control" name="kecamatan" id="kecamatan" onkeydown="OtomatisKapital(this)" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                             <!--span-->
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                         Kabupaten/Kota
@@ -663,17 +715,17 @@
                                                                                 <i class="fa"></i><input type class="form-control" name="kabupaten" id="kabupaten" onkeydown="OtomatisKapital(this)" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                         <!--end inputbox-->
                                                         <!--inputbbox-->
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                         Provinsi
@@ -682,14 +734,14 @@
                                                                                 <i class="fa"></i><input type class="form-control" name="provinsi" id="provinsi" onkeydown="OtomatisKapital(this)" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                             <!--span-->
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                         Kode Pos
@@ -698,17 +750,17 @@
                                                                                 <i class="fa"></i><input type class="form-control numbers-only" name="kd_pos" id="kd_pos" onkeydown="OtomatisKapital(this)" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                         <!--end inputbox-->
                                                         <!--inputbbox-->
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                         No Telepon
@@ -717,14 +769,14 @@
                                                                                 <i class="fa"></i><input type class="form-control numbers-only" name="no_tlp" id="no_tlp" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                             <!--span-->
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                         No HP
@@ -733,17 +785,17 @@
                                                                                 <i class="fa"></i><input type class="form-control numbers-only" name="no_hp" id="no_hp" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                         <!--end inputbox-->
                                                         <!--inputbbox-->
                                                         <div class="row">
                                                             <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                         E-Mail
@@ -752,14 +804,14 @@
                                                                                 <input type="email" class="form-control" name="email" id="email">
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                             <!--span-->
                                                             <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                 <label class="control-label col-md-3"></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
                                                                         Facebook
@@ -768,17 +820,17 @@
                                                                                 <i class="fa"></i><input type class="form-control" name="fb" id="fb">
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                         <!--end inputbox-->
                                                         <!--inputbbox-->
                                                         <div class="row">
                                                             <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
-                                                                <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                   <label class="control-label col-md-3"></label>
-                                                                      <div class="col-md-9">
+                                                                      <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                           <span class="input-group-addon">
                                                                           Dibesarkan Di
@@ -787,8 +839,8 @@
                                                                                 <i class="fa"></i><input type class="form-control" name="dibesarkan_di" id="dibesarkan_di" onkeydown="OtomatisKapital(this)" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <!-- </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                         <!--end inputbox-->
@@ -800,7 +852,7 @@
                                         </div>
                                     <!--kotak data santri selesai-->
                                     <!--kotak data Pembiayaan mulai-->
-                                        <div class="tab-pane  <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>" id="tab_pembiayaan">
+                                        <div class="tab-pane" id="tab_pembiayaan">
                                             <div class="portlet box green-jungle">
                                                 <div class="portlet-title">
                                                     <div class="caption">
@@ -896,7 +948,7 @@
                                         </div>
                                     <!--kotak data pembiayaan selesai-->
                                     <!--kotak data sekolah mulai-->
-                                        <div class="tab-pane  <?php if($kategori_santri == 'TMI'){echo 'hidden';} ?>" id="tab_sekolah">
+                                        <div class="tab-pane" id="tab_sekolah">
                                             <div class="portlet box green-jungle" id="kotak_sekolah">
                                                 <div class="portlet-title">
                                                     <div class="caption">
@@ -973,7 +1025,7 @@
                                         </div>
                                     <!--kotak data sekolah end-->
                                     <!--kotak data fisik mulai-->
-                                        <div class="tab-pane  <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>" id="tab_fisik">
+                                        <div class="tab-pane" id="tab_fisik">
                                             <div class="portlet box green-jungle">
                                                 <div class="portlet-title">
                                                     <div class="caption">
@@ -1857,25 +1909,78 @@
                                           </div>
                                         </div>
                                     <!--kotak data data lampiran End-->
+                                    <!--kotak data Donaturi-->
+                                        <div class="tab-pane" id="tab_donatur">
+                                            <div class="portlet box green-jungle">
+                                                <div class="portlet-title">
+                                                    <div class="caption">
+                                                        <i class="fa fa-gift"></i> DATA DONATUR </div>
+                                                    <div class="tools">
+                                                        <a href="javascript:;" class="collapse"></a>
+                                                    </div>
+                                                </div>
+                                                <div class="portlet-body form">
+                                                    <!-- BEGIN FORM-->
+                                                    <div class="form-body">
+                                                        <h3 class="form-section">
+                                                            <button type="button" class="btn red" id="button_donatur" onclick="modalAdddonatur()" >
+                                                                <i class="fa fa-plus"> </i> Tambah Donatur
+                                                            </button></h3>
+                                                            
+                                                        <!--row begin-->
+                                                            <input type="text" id="hid_jumlah_item_donatur" value="0" class="hidden"/>
+                                                            <input type="text" name="hid_table_item_donatur" id="hid_table_item_donatur" class="hidden"/>
+                                                            <input type="text" name="hid_Xaitam" id="hid_Xaitam" class="hidden"/>
+                                                                <div class="portlet-body table-both-scroll">
+                                                                <div class="table-responsive">
+                                                                <table id="tb_list_donatur" class="table table-striped table-bordered table-hover">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th> No</th>
+                                                                            <th> ID Donatur</th>
+                                                                            <th> Nama Donatur</th>
+                                                                            <th> Kategori</th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td colspan="4" align="center">
+                                                                            Belum Ada Data.
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                        <!--<tfoot>
+                                                                            <tr>
+                                                                            </tr>
+                                                                        </tfoot>-->
+                                                                </table>
+                                                            </div>
+                                                            </div>
+                                                        <!--/row-->
+                                                    </div>
+                                                <!-- END FORM-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <!--kotak data Donaturi End-->
                                 </div>
                             </div>
                         <!--modal-body end-->
                     </form>
                 </div>
                 <div class="modal-footer modal-footer-form">
-                    <!-- <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn green-jungle" id="save_button_footer" onclick="svSantri()">Simpan changes</button>
-                    <button type="button" class="btn green-jungle" id="addto_button_footer" onclick="AddTOSantri()">Jadikan Santri</button> -->
-
                     <a href="javascript:;" class="btn btn-sm default" data-dismiss="modal">
                     <i class="glyphicon glyphicon-minus-sign"></i>&nbsp;CLOSE
                     </a>
                     <a href="javascript:;" class="btn btn-sm green-jungle" onclick="svSantri()" id="save_button_footer">
                         <i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;SIMPAN
                     </a>
-                    <!-- <a href="javascript:;" class="btn btn-sm green-jungle" onclick="AddTOSantri()" id="addto_button_footer">
+                    <a href="javascript:;" class="btn btn-sm green-jungle  <?php if($page != 'DAFTAR'){echo 'hidden';}?> " onclick="AddTOSantri()" id="addto_button_footer">
                         <i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Jadikan Santri
-                    </a> -->
+                    </a>
+                    <a href="javascript:;" class="btn btn-sm green-jungle  <?php if($page != 'DAFTAR'){echo '';}?> " onclick="AddToTMI()" id="addtoTMI_button_footer">
+                        <i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Jadikan TMI
+                    </a>
                     <img id="load_save" style="margin-left:5px;display: none"
                         src="<?php echo base_url(); ?>images/pre_loader.gif" />
                 </div>
@@ -2231,7 +2336,7 @@
                                             <span class="input-group-addon">
                                                 Ormas
                                             </span>
-                                                <i class="fa"></i><input type class="form-control" name="ormas_keluarga" id="ormas_keluarga" onkeydown="OtomatisKapital(this)" required></div>
+                                                <i class="fa"></i><input type class="form-control" name="ormas_keluarga" id="ormas_keluarga" onkeydown="OtomatisKapital(this)" ></div>
                                     </div>
                                 </div>
                                 <!--span-->
@@ -2242,7 +2347,7 @@
                                             <span class="input-group-addon">
                                                 Orpol
                                             </span>
-                                                <i class="fa"></i><input type class="form-control" name="orpol_keluarga" id="orpol_keluarga" onkeydown="OtomatisKapital(this)" required></div>
+                                                <i class="fa"></i><input type class="form-control" name="orpol_keluarga" id="orpol_keluarga" onkeydown="OtomatisKapital(this)" ></div>
                                 </div>
                             </div>
                         </div>
@@ -2255,7 +2360,7 @@
                                         <span class="input-group-addon">
                                         Kedudukan dimasyarakat
                                         </span>
-                                            <i class="fa"></i><input type class="form-control" name="kedudukandimasyarakat_keluarga" id="kedudukandimasyarakat_keluarga" onkeydown="OtomatisKapital(this)" required></div>
+                                            <i class="fa"></i><input type class="form-control" name="kedudukandimasyarakat_keluarga" id="kedudukandimasyarakat_keluarga" onkeydown="OtomatisKapital(this)" ></div>
                                 </div>
                             </div>
                         </div>
@@ -2410,7 +2515,7 @@
                                                                     Nama Penyakit
                                                                 </span>
                                                                 <div class="input-icon right">
-                                                                <i class="fa"></i><input type class="form-control" name="nama_penyakit" id="nama_penyakit" onkeydown="OtomatisKapital(this)" required minlength="5">
+                                                                <i class="fa"></i><input type class="form-control" name="nama_penyakit" id="nama_penyakit" onkeydown="OtomatisKapital(this)" required >
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -2491,8 +2596,8 @@
         <!-- /.modal-dialog -->
     </div>
 <!-- end of modal penyakit-->
-<!-- modal add KECAKAPAN KHUSUS AKAN DIHAPUS!!!! -->
-    <div class="modal fade draggable-modal" id="Modal_add_KecakapanKhusus" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<!-- modal add donatur -->
+    <div class="modal fade draggable-modal" id="Modal_add_donatur" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2503,75 +2608,86 @@
                      <!-- isi body modal mulai -->
                     <div class="row">
                         <div class="col-md-12">
-                        <!-- BEGIN VALIDATION STATES-->
-                        <div class="portlet light portlet-fit portlet-form bordered">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <i class=" icon-layers font-red"></i>
-                                        <span class="caption-subject font-red sbold uppercase">INPUT DATA KECAPAKAN KHUSUS</span>
+                                <!-- BEGIN VALIDATION STATES-->
+                                <div class="portlet light portlet-fit portlet-form bordered">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class=" icon-layers font-red"></i>
+                                            <span class="caption-subject font-red sbold uppercase">INPUT DATA DONATUR</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="portlet-body">
-                                    <div class="form-body">
-                                        <!-- BEGIN FORM-->
-                                        <form action="#" id="add_kecakapan_khusus">
-                                            <!--inputbox-->
-                                                <!--span-->
-                                                    <div class="form-group">
+                                    <div class="portlet-body">
+                                        <div class="form-body">
+                                            <!-- BEGIN FORM-->
+                                            <form action="#" id="add_donatur">
+                                                <!--inputbox-->
+                                                    <!--span-->
+                                                        <input class="hidden" name="hid_kddonatur" id="hid_kddonatur">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Donatur
+                                                                </span>
+                                                                <div class="input" id= "hiddenidDonatur">
+                                                                    <?php
+                                                                        $att_item = 'id="hide_id_Donatur"  class="form-control select" style="width:100%"  onchange="pilihItemDonatur()"';
+                                                                        echo form_dropdown('hide_id_Donatur', $id_donatur, null, $att_item);
+                                                                    ?>
+                                                                </div>
+                                                                <div class="input-icon right">
+                                                                <i class="fa"></i><input type class="form-control" readonly name="donatur" id="donatur" onkeydown="OtomatisKapital(this)" required>
+                                                                </div>
+                                                                <span class="input-group-btn"
+                                                                        style="cursor: pointer;"
+                                                                        title="Cari Kode donatur"
+                                                                        id="spansearchDonatur"
+                                                                        onclick="idDonaturshow()">
+                                                                    <button class="btn default" type="button">
+                                                                        <i class="fa fa-search"></i>
+                                                                    </button>
+                                                                </span>
+                                                                <span class="input-group-btn"
+                                                                    style="cursor: pointer;"
+                                                                        title="Cari Kode Donatur"
+                                                                        id="spansearchcloseDonatur"
+                                                                        onclick="idDonaturhide()">
+                                                                    <button class="btn default" type="button">
+                                                                        <i class="fa fa-times-circle"></i>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                        <div class="form-group">
                                                             <label class="control-label"></label>
                                                             <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                Bidang Studi
-                                                            </span>
-                                                            <i class="fa"></i><input type class="form-control" name="bid_studi" id="bid_studi" onkeydown="OtomatisKapital(this)" required></div>
-                                                    </div>
-                                                <!--span-->
-                                                    <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            Olah Raga
-                                                        </span>
-                                                        <i class="fa"></i><input type class="form-control" name="olahraga" id="olahraga" onkeydown="OtomatisKapital(this)" required></div>
-                                                    </div>
-                                                <!--span-->
-                                                    <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            Kesenian
-                                                        </span>
-                                                        <i class="fa"></i><input type class="form-control" name="kesenian" id="kesenian" onkeydown="OtomatisKapital(this)" required></div>
-                                                    </div>
-                                                <!--span-->
-                                                    <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            Keterampilan
-                                                        </span>
-                                                        <i class="fa"></i><input type class="form-control" name="keterampilan" id="keterampilan" onkeydown="OtomatisKapital(this)" required></div>
-                                                    </div>
-                                                <!--span-->
-                                                    <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            Lain-Lain
-                                                        </span>
-                                                        <i class="fa"></i><input type class="form-control" name="lain_lain" id="lain_lain" onkeydown="OtomatisKapital(this)" ></div>
-                                                    </div>
-                                            <!--end inputbox-->
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn green" onclick="TambahKecakapanKhusus()">Tambah</button>
-                                            </div>
-                                        </form>
-                                        <!-- END FORM-->
+                                                                <span class="input-group-addon">
+                                                                    Nama donatur
+                                                                </span>
+                                                                <div class="input-icon right">
+                                                                <i class="fa"></i><input type class="form-control" name="nama_donatur" id="nama_donatur" readonly="true">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--span-->
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Kategori Donatur
+                                                                </span>
+                                                                <div class="input-icon right">
+                                                                <i class="fa"></i><input type class="form-control" name="kategori_donatur" id="kategori_donatur" readonly="true" >
+                                                                </div>
+                                                            </div>
+                                                        </div>                                                        
+                                                <!--end inputbox-->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn green-jungle" id="btn_donatur" onclick="Tambahdonatur()">Tambah</button>
+                                                </div>
+                                            </form>
+                                            <!-- END FORM-->
+                                        </div>
                                     </div>
-                                </div>
-                        </div>
-                        <!-- END VALIDATION STATES-->
+                                </div><!-- END VALIDATION STATES-->
                         </div>
                     </div>
                 </div><!--end modal-body-->
@@ -2580,7 +2696,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-<!-- end of modal Kecakapan Khusus-->
+<!-- end of modal donatur-->
 <!-- modal Cari -->
     <div class="modal fade draggable-modal" id="Modal_cari" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">

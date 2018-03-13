@@ -54,8 +54,19 @@ class Pendaftaran extends IO_Controller
 				$vdata['kode_kelas'][$b->kode_kelas."#".$b->tingkat."#".$b->nama."#".$b->tipe_kelas]
 					=$b->kode_kelas." | ".$b->tingkat." | ".$b->nama." | ".$b->tipe_kelas;
 			}
+
+			//get ID Donatur
+			$hide_id_Donatur= $this->model->get_donatur()->result();
+
+			$vdata['id_donatur'][NULL] = '-';
+			foreach ($hide_id_Donatur as $b) {
+
+				$vdata['id_donatur'][$b->id_donatur."#".$b->nama_donatur."#".$b->kategori]
+					=$b->id_donatur." | ".$b->nama_donatur." | ".$b->kategori;
+			}
 			
 		$vdata['kategori_santri']		= 'TMI';
+		$vdata['page']					= 'DAFTAR';
 		$vdata['title'] = 'DATA CALON SANTRI TMI';
 	    $data['content'] = $this->load->view('vpendaftaran',$vdata,TRUE);
 	    $this->load->view('main',$data);
@@ -101,8 +112,19 @@ class Pendaftaran extends IO_Controller
 				$vdata['kode_kelas'][$b->kode_kelas."#".$b->tingkat."#".$b->nama."#".$b->tipe_kelas]
 					=$b->kode_kelas." | ".$b->tingkat." | ".$b->nama." | ".$b->tipe_kelas;
 			}
+
+			//get ID Donatur
+			$hide_id_Donatur= $this->model->get_donatur()->result();
+
+			$vdata['id_donatur'][NULL] = '-';
+			foreach ($hide_id_Donatur as $b) {
+
+				$vdata['id_donatur'][$b->id_donatur."#".$b->nama_donatur."#".$b->kategori]
+					=$b->id_donatur." | ".$b->nama_donatur." | ".$b->kategori;
+			}
 			
 		$vdata['kategori_santri']		= 'AITAM';
+		$vdata['page']					= 'DAFTAR';
 		$vdata['title'] 				= 'DATA CALON AITAM';
 	    $data['content'] 				= $this->load->view('vpendaftaran',$vdata,TRUE);
 	    $this->load->view('main',$data);
@@ -121,7 +143,7 @@ class Pendaftaran extends IO_Controller
 		return $string_param;
 	}
 
-	function load_grid($kategori_santri)
+	function load_grid($kategori_santri,$page)
 	{
 		$iparam 		= json_decode($_REQUEST['param']);
 		$string_param 	= $this->build_param($iparam);
@@ -133,7 +155,7 @@ class Pendaftaran extends IO_Controller
 		// exit();
 
 
-		$data 				= $this->model->get_list_data($string_param,$sort_by,$sort_type,$kategori_santri);
+		$data 				= $this->model->get_list_data($string_param,$sort_by,$sort_type,$kategori_santri,$page);
 		$iTotalRecords  	= count($data);
 		$iDisplayLength 	= intval($_REQUEST['length']);
 		$iDisplayLength 	= $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
@@ -148,26 +170,35 @@ class Pendaftaran extends IO_Controller
 		$fdate = 'd-m-Y';
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			// $act = '<a class="btn blue btn-xs" title="UBAH DATA" onclick="edit(\''.$data[$i]->no_registrasi.'\')">
-			// 			<i class="fa fa-edit"></i>
-			// 		<a class="btn red btn-xs" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->no_registrasi.'\')">
-			// 			<i class="fa fa-trash"></i>';
+			if ($page == 'DAFTAR')
+		{
 			$act = '<a class="btn green btn-xs" title="LIHAT DATA" onclick="view(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-file-o"></i>
 					<a class="btn blue btn-xs" title="UBAH DATA" onclick="edit(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-edit"></i>
 					<a class="btn red btn-xs" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-trash"></i>';
+		}
+		else {
+			$act = '<a class="btn green btn-xs" title="LIHAT DATA" onclick="view(\''.$data[$i]->no_registrasi.'\')">
+						<i class="fa fa-file-o"></i>
+					<a class="btn blue btn-xs" title="UBAH DATA" onclick="edit(\''.$data[$i]->no_registrasi.'\')">
+						<i class="fa fa-edit"></i>
+					<a class="btn red btn-xs" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->no_registrasi.'\')">
+						<i class="fa fa-trash"></i>
+					<a class="btn yellow btn-xs" title="Jadikan TMI" onclick="ToTMI(\''.$data[$i]->no_registrasi.'\')">
+						<i class="fa fa-exchange"></i>';
+		}	
 					
 			$records["data"][] = array(
 
 		     	$data[$i]->no_registrasi,
-  				date('Y',strtotime($data[$i]->thn_masuk)),
+  				$data[$i]->thn_masuk,
   				$data[$i]->nama_lengkap,
 		     	$data[$i]->nama_arab,
-		     	$data[$i]->nama_panggilan,
-		     	number_format($data[$i]->uang_jajan_perbulan,0,",","."),
-				 $data[$i]->no_kk,
+		     	// $data[$i]->nama_panggilan,
+		     	// number_format($data[$i]->uang_jajan_perbulan,0,",","."),
+				//  $data[$i]->no_kk,
 				 $data[$i]->nik,
 				 $data[$i]->tempat_lahir,
 				 io_date_format($data[$i]->tgl_lahir,$fdate),
@@ -271,6 +302,7 @@ class Pendaftaran extends IO_Controller
 
 	function no_registrasi($kategori_santri)
 	{
+		$page  		= $this->input->post('hid_page');
 		$tahun_masehi 	= date('y');
 		$today 			= date("Y/m/d");
 		$tahun_hijri 	= io_get_hijri($today);
@@ -403,6 +435,7 @@ class Pendaftaran extends IO_Controller
 		$item_keluarga 			= $this->input->post('hid_table_item_Keluarga');
 		$item_penyakit 			= $this->input->post('hid_table_item_penyakit');
 		$item_kckhusus 			= $this->input->post('hid_table_item_KecakapanKhusus');
+		$item_donatur 			= $this->input->post('hid_table_item_donatur');
 		$TfileUpload 		= $this->input->post('TfileUpload');
 		$TfileUpload_ijazah 		= $this->input->post('TfileUpload_ijazah');
 		$TfileUpload_akelahiran 		= $this->input->post('TfileUpload_akelahiran');
@@ -413,6 +446,7 @@ class Pendaftaran extends IO_Controller
 		$TfileUpload_skes 		= $this->input->post('TfileUpload_skes');
 		$user 					= $this->session->userdata('logged_in')['uid'];
 
+	
 		$data_santri = array(
 			'kategori' 				=> $kategori_santri,
 			'no_registrasi' 		=> $no_registrasi,
@@ -454,6 +488,7 @@ class Pendaftaran extends IO_Controller
 			'dibesarkan_di' 		=> $dibesarkan_di
 			// 'user' 					=> $user
 		);
+
 
 		if($no_registrasi=='')	
 		{// cek apakah add new atau editdata
@@ -775,13 +810,36 @@ class Pendaftaran extends IO_Controller
 
 				echo $this->upload->display_errors();
 			};
+		
+		//save donatur
+			
+			$item_donatur  = explode(';',$item_donatur );
+			foreach ($item_donatur   as $i) 
+				{
+					$idetail = explode('#',$i);
+					if(count($idetail)>1)
+					{
 
+						$detail_donatur = array(
+
+							'no_registrasi' 		=> $no_registrasi,
+							'id_donatur'			=> $idetail[0]
+
+						);
+						
+						$this->model->simpan_item_donatur($detail_donatur);
+
+					}
+				}
+				
         }
         else //update data
 		{		
 			// Prosess update
 		// save data santri
 			$data_santri['kategori'] = $kategori_update;
+		// 			var_dump($data_santri);
+		// exit();
          	$this->model->update_data_santri($no_registrasi,$data_santri);
 
 		//save pembiayaan
@@ -1133,7 +1191,26 @@ class Pendaftaran extends IO_Controller
 					
 				}
 					
-				
+		//save donatur
+			
+				$this->model->delete_item_donatur($no_registrasi);
+				$item_donatur  = explode(';',$item_donatur );
+				foreach ($item_donatur   as $i) 
+					{
+						$idetail = explode('#',$i);
+							if(count($idetail)>1)
+							{
+
+									$detail_donatur = array(
+
+										'no_registrasi' 		=> $no_registrasi,
+										'id_donatur'			=> $idetail[0]
+
+									);									
+									$this->model->simpan_item_donatur($detail_donatur);
+
+							}
+					}		
         }	
 
 			echo "true";
@@ -1210,6 +1287,12 @@ class Pendaftaran extends IO_Controller
 	function get_data_kecakapankhusus($no_registrasi)
 	{
 		$data = $this->model->query_kecakapankhusus($no_registrasi);
+    	echo json_encode($data);
+	}
+	
+	function get_data_donatur($no_registrasi)
+	{
+		$data = $this->model->query_donatur($no_registrasi);
     	echo json_encode($data);
 	}
 
@@ -1351,13 +1434,148 @@ class Pendaftaran extends IO_Controller
 		echo "true";
 	}
 
+	function addtoTMI()
+	{
+		$kategori_santri  		= $this->input->post('kategori_update');
+		$no_registrasi  		= $this->input->post('no_registrasi');
+		$thn_masuk				= $this->input->post('thn_masuk');
+		$nisnlokal  			= $this->input->post('nisnlokal');
+		$no_stambuk  			= $this->input->post('no_stambuk');
+		$rayon  				= $this->input->post('rayon');
+		$kamar  				= $this->input->post('kamar');
+		$bagian  				= $this->input->post('bagian');
+		$kel_sekarang  			= $this->input->post('kel_sekarang');
+		$pembiaya  				= $this->input->post('pembiaya');
+		$biaya_perbulan_min  	= $this->input->post('biaya_perbulan_min');
+		$biaya_perbulan_max  	= $this->input->post('biaya_perbulan_max');
+		$penghasilan  			= $this->input->post('penghasilan');
+		$gol_darah  			= $this->input->post('gol_darah');
+		$tinggi_badan  			= $this->input->post('tinggi_badan');
+		$berat_badan  			= $this->input->post('berat_badan');
+		$khitan  				= $this->input->post('khitan');
+		$kondisi_pendidikan  	= $this->input->post('kondisi_pendidikan');
+		$ekonomi_keluarga  		= $this->input->post('ekonomi_keluarga');
+		$situasi_rumah  		= $this->input->post('situasi_rumah');
+		$dekat_dengan  			= $this->input->post('dekat_dengan');
+		$hidup_beragama  		= $this->input->post('hidup_beragama');
+		$pengelihatan_mata  	= $this->input->post('pengelihatan_mata');
+		$kaca_mata  			= $this->input->post('kaca_mata');
+		$pendengaran  			= $this->input->post('pendengaran');
+		$operasi  				= $this->input->post('operasi');
+		$sebab  				= $this->input->post('sebab');
+		$kecelakaan  			= $this->input->post('kecelakaan');
+		$akibat  				= $this->input->post('akibat');
+		$alergi  				= $this->input->post('alergi');
+		$thn_fisik					= $this->input->post('thn_fisik');
+		// $thn_fisik 				= io_return_date('d-m-Y',$tglf);
+		$kelainan_fisik  		= $this->input->post('kelainan_fisik');
+		// $no_registrasi_baru 	= SUBSTR($no_registrasi,1);
+		// var_dump($no_registrasi);
+		
+
+			$data_santri = array(
+				'kategori'				=> $kategori_santri,
+				'no_registrasi' 		=> $no_registrasi,
+				'thn_masuk' 			=> $thn_masuk,
+				'no_stambuk' 			=> $no_stambuk,
+				'nisnlokal' 			=> $nisnlokal,
+				'rayon' 				=> $rayon,
+				'kamar' 				=> $kamar,
+				'bagian' 				=> $bagian,
+				'kel_sekarang' 			=> $kel_sekarang,
+				// 'user' 					=> $user
+			);
+			// var_dump($data_santri);
+			// exit();
+
+			$new_no_registrasi=$this->new_no_registrasi($kategori_santri);	
+			// var_dump($new_no_registrasi);
+			// exit();		
+			//update no_registrasi ke no baru
+			$data_santri['no_registrasi'] = $new_no_registrasi;
+
+			$no_stambuk=$this->no_stambuk($kategori_santri);
+			$data_santri['no_stambuk'] = $no_stambuk;
+
+			//nisn local
+			$data_statistik 				=  $this->model->get_noSTATISTIK();
+				$no_statistik 				= $data_statistik->nomor_statistik;
+				$regis						= substr($new_no_registrasi,1,9);
+				$NISN_LOKAL					= $no_statistik.$regis;					
+				$data_santri['nisnlokal'] 	= $NISN_LOKAL;	
+
+		$this->model->addto_data_toTMI($no_registrasi,$data_santri);
+		
+		//save pembiayaan
+			$data_trans_pembiayaan_siswa = array(
+
+				'no_registrasi' 		=> $new_no_registrasi,
+				'pembiaya' 				=> $pembiaya,
+				'biaya_perbulan_min' 	=> str_replace(array('.',','), array('',''),$biaya_perbulan_min),
+				'biaya_perbulan_max' 	=> str_replace(array('.',','), array('',''),$biaya_perbulan_max),
+				'penghasilan' 			=> str_replace(array('.',','), array('',''),$penghasilan)
+				// 'user' 					=> $user
+			);
+			// var_dump($data_trans_pembiayaan_siswa);
+			// exit();
+			$this->model->simpan_pembiayaan_siswa($data_trans_pembiayaan_siswa);
+
+		//save fisik
+			$data_ms_fisik_santri = array(
+
+				'no_registrasi' 		=> $new_no_registrasi,
+				'gol_darah' 			=> $gol_darah,
+				'tinggi_badan' 			=> $tinggi_badan,
+				'berat_badan' 			=> $berat_badan,
+				'khitan' 				=> $khitan,
+				'kondisi_pendidikan' 	=> $kondisi_pendidikan,
+				'ekonomi_keluarga' 		=> $ekonomi_keluarga,
+				'situasi_rumah' 		=> $situasi_rumah,
+				'dekat_dengan' 			=> $dekat_dengan,
+				'hidup_beragama' 		=> $hidup_beragama,
+				'pengelihatan_mata' 	=> $pengelihatan_mata,
+				'kaca_mata' 			=> $kaca_mata,
+				'pendengaran' 			=> $pendengaran,
+				'operasi' 				=> $operasi,
+				'sebab' 				=> $sebab,
+				'kecelakaan' 			=> $kecelakaan,
+				'akibat' 				=> $akibat,
+				'alergi' 				=> $alergi,
+				'thn_fisik' 			=> $thn_fisik,
+				'kelainan_fisik' 		=> $kelainan_fisik
+				// 'user' 					=> $user
+			);
+			// var_dump($data_ms_fisik_santri);
+			// exit();
+			$this->model->simpan_ms_fisik_santri($data_ms_fisik_santri);
+
+		//save kecakapan khusus
+			$bid_studi  			= $this->input->post('bid_studi');
+			$olahraga  				= $this->input->post('olahraga');
+			$kesenian  				= $this->input->post('kesenian');
+			$keterampilan  			= $this->input->post('keterampilan');
+			$lain_lain  			= $this->input->post('lain_lain');
+
+			$detail_kckhusus = array(
+
+				'no_registrasi' 	=> $new_no_registrasi,
+				'bid_studi'			=> $bid_studi,
+				'olahraga'			=> $olahraga,
+				'kesenian'			=> $kesenian,
+				'keterampilan'		=> $keterampilan,
+				'lain_lain'			=> $lain_lain
+
+			);
+
+			// var_dump($detail_kckhusus);
+			// exit();
+			$this->model->simpan_item_kckhusus($detail_kckhusus);
+		echo "true";
+	}
+
 	function DelSantri($no_registrasi)
 	{
 		$this->model->delete_all_data_santri($no_registrasi);
 	}
 
 }
-
-	
-
-	

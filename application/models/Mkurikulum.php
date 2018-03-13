@@ -10,10 +10,6 @@ class Mkurikulum extends CI_Model
 		parent::__construct();
 	}
 
-    function get_kelas(){
-		$data = $this->db->query ("SELECT * FROM ms_kelas ORDER BY kode_kelas");
-		return $data;
-	}
     function get_thn_ajar(){
 		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran  order by id desc Limit 3 ");
 		// $data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='UTAMA' order by id desc Limit 2 ");
@@ -27,7 +23,7 @@ class Mkurikulum extends CI_Model
 
 	function get_headertable_kurikulum(){
 		$data = array();
-		$data = $this->db->query ("SELECT DISTINCT tingkat, tipe_kelas FROM ms_kelas ORDER BY tingkat")->result_array();
+		$data = $this->db->query ("SELECT tingkat, tipe_kelas FROM ms_kelasHD ORDER BY tingkat")->result_array();
 		return $data;
 	}
 
@@ -89,6 +85,7 @@ class Mkurikulum extends CI_Model
 	
 	function delete_kurikulum($id_thn_ajar){
 		$this->db->where('id_thn_ajar',$id_thn_ajar);
+		$this->db->where('kategori','UTAMA');
 		$this->db->delete('trans_kurikulum');
 	}
 
@@ -100,26 +97,27 @@ class Mkurikulum extends CI_Model
     function update_data_kurikulum($id_thn_ajar,$data_kurikulum){
         
         $this->db->where('id_thn_ajar',$id_thn_ajar);
+        $this->db->where('kategori','UTAMA');
 		$this->db->update('trans_kurikulum',$data_kurikulum);
 	}
 
     function query_kurikulum($id_thn_ajar){
         $data = array();
-		$data=$this->db->query("SELECT * from trans_kurikulum where id_thn_ajar ='$id_thn_ajar'")->result_array();
+		$data=$this->db->query("SELECT * from trans_kurikulum where id_thn_ajar ='$id_thn_ajar' and kategori = 'UTAMA'")->result_array();
 		return $data;
 	}
 
 	function query_kurikulum_byid($id_thn_ajar){
         $data = array();
-		$data=$this->db->query("SELECT * from trans_kurikulum where id_thn_ajar ='$id_thn_ajar'")->row_array();
+		$data=$this->db->query("SELECT * from trans_kurikulum where id_thn_ajar ='$id_thn_ajar' and kategori = 'UTAMA'")->row_array();
 		return $data;
 	}
 
 	function query_Row_Column(){
-		$this->db->select('ms_bidang_study.id_bidang , ms_bidang_study.nama_bidang ,ms_mata_pelajaran.id_matpal ,ms_mata_pelajaran.nama_matpal , ms_mata_pelajaran.status , ms_kelas.kode_kelas');
+		$this->db->select('ms_bidang_study.id_bidang , ms_bidang_study.nama_bidang ,ms_mata_pelajaran.id_matpal ,ms_mata_pelajaran.nama_matpal , ms_mata_pelajaran.status , ms_kelasHD.kode_kelas');
 		$this->db->from('ms_bidang_study');
 		$this->db->join('ms_mata_pelajaran', 'ms_mata_pelajaran.id_bidang = ms_bidang_study.id_bidang');
-		$this->db->join('ms_kelas');
+		$this->db->join('ms_kelasHD');
         
         return $this->db->get()->result();
 	}

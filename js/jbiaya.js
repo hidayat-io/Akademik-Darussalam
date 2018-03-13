@@ -2,17 +2,31 @@
 $(document).ready(function()
 {
 	setTable();
+	setTablePotongan();
 	
-	$('#BPEdit').show();
-	$('#BPCancel').hide();
-	$('#BPSave').hide();
-	$('#potongan').attr('readonly', true);
+	$('.numbers-only').keypress(function (event) {
+		var charCode = (event.which) ? event.which : event.keyCode;
+		if ((charCode >= 48 && charCode <= 57)
+			|| charCode == 46
+			|| charCode == 44
+			|| charCode == 8)
+			return true;
+		return false;
+	});
 	$('input[id^="b_nominal_"]').maskMoney({ precision: 0 });
 	$('input[id^="s_nominal_"]').maskMoney({ precision: 0 });
+	$('#nominal_potongan').maskMoney({ precision: 0 });
+
+	validate_add_potongan();
 
 
 });
 
+	function upperCaseF(a) {
+		setTimeout(function () {
+			a.value = a.value.toUpperCase();
+		}, 1);
+	}
 //#region ms_biaya
 	function setTable() {
 		$('#tb_list').DataTable({
@@ -115,57 +129,186 @@ $(document).ready(function()
 //#endregion ms_biaya
 
 //#region potongan
-function EditDataPotongan() {
-	$('#BPEdit').hide();
-	$('#BPCancel').show();
-	$('#BPSave').show();
-	$('#potongan').attr('readonly',false);
-
-}
-
-function CanceleDataPotongan(potongan) {
-	$potongan_awal	= $('#potongan').val();
-	$('#BPEdit').show();
-	$('#BPCancel').hide();
-	$('#BPSave').hide();
-
-	if (potongan != ''){
-		$('#potongan').val(potongan);
+	function setTablePotongan() {
+		$('#tb_potongan').DataTable({
+			"processing": true,
+			"serverSide": true,
+			"bFilter": false,
+			"bSort": false,
+			"paging": false,
+			"info": false,
+			ajax: {
+				'url': base_url + "biaya/load_grid_potongan",
+				'type': 'GET',
+				'data': function (d) {
+					d.param = $('#hid_param_potongan').val();
+				}
+			},
+			// columnDefs: [
+			// 	{ width: 10, targets: 0 },
+			// 	{ width: 30, targets: 1 },
+			// 	{
+			// 		targets: [2],         //action
+			// 		orderable: false,
+			// 		width: 10
+			// 	}
+			// ],
+		});
 	}
-	else{
-		$('#potongan').val('0');
+
+	var validate_add_potongan = function () {
+
+		var form = $('#add_potongan');
+		var error2 = $('.alert-danger', form);
+		var success2 = $('.alert-success', form);
+
+		form.validate({
+			errorElement: 'span', //default input error message container
+			errorClass: 'help-block help-block-error', // default input error message class
+			focusInvalid: false, // do not focus the last invalid input
+
+			invalidHandler: function (event, validator) { //display error alert on form submit              
+				success2.hide();
+				error2.show();
+				App.scrollTo(error2, -200);
+			},
+
+			errorPlacement: function (error, element) { // render error placement for each input type
+				var icon = $(element).parent('.input-icon').children('i');
+				icon.removeClass('fa-check').addClass("fa-warning");
+				icon.attr("data-original-title", error.text()).tooltip({ 'container': 'body' });
+			},
+
+			highlight: function (element) { // hightlight error inputs
+				$(element)
+					.closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group   
+			},
+
+			unhighlight: function (element) { // revert the change done by hightlight
+
+			},
+
+			success: function (label, element) {
+				var icon = $(element).parent('.input-icon').children('i');
+				$(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+				icon.removeClass("fa-warning").addClass("fa-check");
+			},
+
+			submitHandler: function (form) {
+				success2.show();
+				error2.hide();
+				form[0].submit(); // submit the form
+			}
+		});
 	}
-	$('#potongan').attr('readonly',true);
 
-}
+	function clearvalidate_add_potongan() {
 
-function SaveDataPotongan(potongan) {
-	var iform = $('#add_potongan')[0];
-	var data = new FormData(iform);
-	$.ajax({
+		$("#add_potongan div").removeClass('has-error');
+		$("#add_potongan i").removeClass('fa-warning');
+		$("#add_potongan div").removeClass('has-success');
+		$("#add_potongan i").removeClass('fa-check');
 
-		type: "POST",
-		url: base_url + "biaya/simpan_potongan/",
-		enctype: 'multipart/form-data',
-		contentType: false,
-		processData: false,
-		data: data,
-		success: function (data) {
+		document.getElementById("add_potongan").reset();
+	}
 
-			bootbox.alert({
-				message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp UPDATE POTONGAN BERHASIL!!",
-				size: 'small',
-				callback: function () {
+	function addpotongan() {
+		clearvalidate_add_potongan();
+		$('#Modal_add_potongan').modal('show');
+		$('#save_button_potongan').show();
+		$('#load_save').hide();
 
-					window.location = base_url + 'biaya';
+	}
+
+	function edit_potongan(id_potongan) {
+		var str_url = encodeURI(base_url + "biaya/get_data_potongan/" + id_potongan);
+			$('#save_button_potongan').text('UPDATE');
+			$.ajax({
+
+				type: "POST",
+				url: str_url,
+				dataType: "html",
+				success: function (data) {
+
+					var data = $.parseJSON(data);
+					$('#id_potongan').val(data['id_potongan']);
+					$('#nama_potongan').val(data['nama_potongan']);
+					$('#persen').val(data['persen']);
+					$('#nominal_potongan').val(data['nominal']);
+
+					$('#Modal_add_potongan').modal('show');
+
+
 				}
 			});
-		}
-	});
-	$('#BPEdit').show();
-	$('#BPCancel').hide();
-	$('#BPSave').hide();
-	$('#potongan').attr('readonly',true);
+	}
+	
+	function SaveDataPotongan() {
+		if ($("#add_potongan").valid() == true) {
+			$status = $('#save_button_potongan').text();
+			$('#save_button_potongan').hide();
+			$('#load_save').show();
+			var iform = $('#add_potongan')[0];
+			var data = new FormData(iform);
+			if ($status == 'UPDATE') {
+				msg = "Update Data Berhasil"
+			}
+			else {
+				msg = "Simpan Data Berhasil"
+			}
+				$.ajax({
 
-}
+					type: "POST",
+					url: base_url + "biaya/simpan_potongan/" + $status,
+					enctype: 'multipart/form-data',
+					contentType: false,
+					processData: false,
+					data: data,
+					success: function (data) {
+
+						bootbox.alert({
+							message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp."+msg+" !!",
+							size: 'small',
+							callback: function () {
+
+								window.location = base_url + 'biaya';
+							}
+						});
+					},
+					error: function () {
+
+						$('#save_button_potongan').show();
+						$('#load_save').hide();
+					}
+					
+				});
+		}
+
+	}
+
+	function hapus_potongan (id_potongan) {
+		var str_url = encodeURI(base_url + "biaya/hapus_potongan/" + id_potongan);
+		bootbox.confirm("Anda yakin akan menghapus ini ?",
+			function (result) {
+				if (result == true) {
+
+					$.ajax({
+						type: "POST",
+						url: str_url,
+						dataType: "html",
+						success: function (data) {
+							bootbox.alert({
+								message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Hapus Berhasil Berhasil",
+								size: 'small',
+								callback: function () {
+
+									window.location = base_url + 'biaya';
+								}
+							});
+						}
+					});
+				}
+			}
+		);
+	}
 //#endregion potongan

@@ -25,7 +25,7 @@ class jadwal_pelajaran extends IO_Controller
                             =$b->deskripsi;
                         }
         //get Kelas
-			$select_kelas= $this->model->get_kelas()->result();
+			$select_kelas= $this->mcommon->mget_list_kelas()->result();
             
                         $vdata['kode_kelas'][NULL] = '';
                         foreach ($select_kelas as $b) {

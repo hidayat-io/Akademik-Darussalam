@@ -10,20 +10,33 @@ class Mpendaftaran extends CI_Model
 		parent::__construct();
 	}
 
-	function get_list_data($param,$sortby=0,$sorttype='desc',$kategori_santri)
+	function get_list_data($param,$sortby=0,$sorttype='desc',$kategori_santri,$page)
 	{
 		
 
 		$cols = array('no_registrasi','thn_masuk','nama_lengkap','nama_arab','nama_panggilan','uang_jajan_perbulan','no_kk','nik','tempat_lahir','tgl_lahir');
-
-		if ($kategori_santri == 'TMI')
+		if ($page == 'DAFTAR')
 		{
-			$sql = "SELECT * FROM ms_santri where no_registrasi not like 'T%' and no_registrasi not like 'A%' and no_registrasi not like 'CA%'";
+			if ($kategori_santri == 'TMI')
+			{
+				$sql = "SELECT * FROM ms_santri where no_registrasi not like 'T%' and no_registrasi not like 'A%' and no_registrasi not like 'CA%'";
+			}
+			else
+			{
+				$sql = "SELECT * FROM ms_santri where no_registrasi not like 'T%' and no_registrasi not like 'A%' and no_registrasi not like 'CT%'";
+			}
 		}
-		else
-		{
-			$sql = "SELECT * FROM ms_santri where no_registrasi not like 'T%' and no_registrasi not like 'A%' and no_registrasi not like 'CT%'";
+		else {
+				if ($kategori_santri == 'TMI')
+			{
+				$sql = "SELECT * FROM ms_santri where no_registrasi like 'T%' and no_registrasi not like 'A%' and no_registrasi not like 'CA%'";
+			}
+			else
+			{
+				$sql = "SELECT * FROM ms_santri where no_registrasi not like 'T%' and no_registrasi like 'A%' and no_registrasi not like 'CT%'";
+			}
 		}
+		
 		
 				
 
@@ -246,7 +259,17 @@ class Mpendaftaran extends CI_Model
         $this->db->set('lamp_surat_kesehatan',$str);
         $this->db->where('no_registrasi',$no_registrasi);
         $this->db->update('ms_santri');   
-    }
+	}
+	
+	function delete_item_donatur($no_registrasi){
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->delete('ms_santri_donatur');
+	}
+
+	function simpan_item_donatur($detail_donatur){
+
+		$this->db->replace('ms_santri_donatur',$detail_donatur);
+	}
 
 	function query_santri($no_registrasi){
 		$data = array();
@@ -260,7 +283,7 @@ class Mpendaftaran extends CI_Model
 		b.biaya_perbulan_max, b.penghasilan, c.gol_darah, c.tinggi_badan, 
 		c.berat_badan, c.khitan, c.kondisi_pendidikan, c.ekonomi_keluarga, c.situasi_rumah, 
 		c.dekat_dengan, c.hidup_beragama, c.pengelihatan_mata, c.kaca_mata, c.pendengaran, c.operasi, 
-		c.sebab, c.kecelakaan, c.akibat, c.alergi, c.thn_fisik, c.kelainan_fisik
+		c.sebab, c.kecelakaan, c.akibat, c.alergi, c.thn_fisik, c.kelainan_fisik, a.aitam
 		FROM ms_santri a LEFT JOIN
 		trans_pembiayaan_siswa b ON a.no_registrasi= b.no_registrasi LEFT JOIN
 		ms_fisik_santri c ON a.no_registrasi= c.no_registrasi
@@ -293,6 +316,15 @@ class Mpendaftaran extends CI_Model
         
         return $this->db->get()->row_array();
 	}
+
+	function query_donatur($no_registrasi){
+		$this->db->select('ms_santri_donatur.no_registrasi, ms_santri_donatur.id_donatur, ms_donatur.nama_donatur, ms_donatur.kategori');
+		$this->db->from('ms_santri_donatur');
+		$this->db->join('ms_donatur', 'ms_donatur.id_donatur = ms_santri_donatur.id_donatur');
+		$this->db->where('no_registrasi',$no_registrasi);
+        
+        return $this->db->get()->result();
+	}
 	
 	function addto_data_santri($no_registrasi,$data_santri){
 		// var_dump($data_santri);
@@ -319,6 +351,10 @@ class Mpendaftaran extends CI_Model
 		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->update('ms_kecakapan_santri');
+
+		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->update('ms_santri_donatur');
 	}
 
 	function delete_all_data_santri($no_registrasi){
@@ -339,6 +375,9 @@ class Mpendaftaran extends CI_Model
 
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->delete('ms_kecakapan_santri');
+
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->delete('ms_santri_donatur');
 	}
 
 	function get_gedung(){
@@ -352,12 +391,19 @@ class Mpendaftaran extends CI_Model
 	}
 
 	function get_kelas(){
-		$data = $this->db->query ("SELECT * FROM ms_kelas ORDER BY kode_kelas");
+		$data = $this->db->query ("SELECT ms_kelasHD.tingkat, ms_kelasHD.tipe_kelas, ms_kelasDT.kode_kelas, ms_kelasDT.nama, ms_kelasDT.kapasitas
+				FROM ms_kelasDT
+				inner join ms_kelasHD on ms_kelasDT.id_kelas = ms_kelasHD.id_kelas ORDER BY ms_kelasDT.kode_kelas");
 		return $data;
 	}
 
 	function get_bagian(){
 		$data = $this->db->query ("SELECT * FROM ms_bagian ORDER BY kode_bagian");
+		return $data;
+	}
+
+	function get_donatur(){
+		$data = $this->db->query ("SELECT * FROM ms_donatur ORDER BY id_donatur");
 		return $data;
 	}
 	

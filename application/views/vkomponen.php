@@ -26,6 +26,7 @@
                                     <th>ID</th>
                                     <th>Nama Komponen</th>
                                     <th>Type</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -38,7 +39,6 @@
         </div>
 
   <!-- modal add -->
-
 
 <div id="m_add" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
@@ -77,6 +77,21 @@
                                 </label>
                                 <label class="mt-radio">
                                     <input type="radio" name="optionsRadios" id="optkeluar" value="B">Bulanan
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Status</label>
+                        <div class="col-md-5">
+                            <div class="mt-radio-inline">
+                                <label class="mt-radio">
+                                    <input type="radio" name="optionsRadiosStatus" id="optaktif" value="1" checked="checked">Aktif
+                                    <span></span>
+                                </label>
+                                <label class="mt-radio">
+                                    <input type="radio" name="optionsRadiosStatus" id="optnonaktif" value="0">Nonaktif
                                     <span></span>
                                 </label>
                             </div>

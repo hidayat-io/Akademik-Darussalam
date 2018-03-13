@@ -92,7 +92,7 @@
                                                 </div> -->
                                             </div>
                                             <input type="hidden" name="hid_param_kurikulumsore" id="hid_param_kurikulumsore" />
-                                            <div class="portlet-body">
+                                            <div class="portlet-body"  style="overflow-x:auto;">
                                                 <!--span-->
                                                 <div class="col-md-4 col-sm-12">
                                                     <div class="form-group">

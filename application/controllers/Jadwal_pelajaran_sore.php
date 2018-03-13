@@ -25,7 +25,7 @@ class jadwal_pelajaran_sore extends IO_Controller
                             =$b->deskripsi;
                         }
         //get Kelas
-			$select_kelas= $this->model->get_kelas()->result();
+			$select_kelas= $this->mcommon->mget_list_kelas()->result();
             
                         $vdata['kode_kelas'][NULL] = '';
                         foreach ($select_kelas as $b) {
@@ -357,7 +357,7 @@ class jadwal_pelajaran_sore extends IO_Controller
 		$santri 		= urldecode($santri);
 		$id_thn_ajar 	= urldecode($id_thn_ajar);
 		$semester 		= urldecode($semester);
-		$this->model->delete_jadwal_pelajaran($kode_kelas,$santri,$id_thn_ajar,$semester);
+		$this->model->delete_jadwal_pelajaran_sore($kode_kelas,$santri,$id_thn_ajar,$semester);
 	}
 
 	function GetKurikulum($id_thn_ajar,$semester,$tingkat,$tipe_kelas,$kode_kelas,$santri)

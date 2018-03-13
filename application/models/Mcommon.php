@@ -68,11 +68,24 @@ class Mcommon extends CI_Model {
     }
 
     function mget_list_kelas(){
-
-        $this->db->order_by('nama');
-
-        return $this->db->get('ms_kelas');
+        $this->db->select('ms_kelasHD.id_kelas,ms_kelasHD.tingkat, ms_kelasHD.tipe_kelas, ms_kelasDT.kode_kelas, ms_kelasDT.nama, ms_kelasDT.kapasitas');
+        $this->db->from('ms_kelasDT');
+        $this->db->join('ms_kelasHD', 'ms_kelasDT.id_kelas = ms_kelasHD.id_kelas');
+        $this->db->order_by('ms_kelasDT.nama');
+        return $this->db->get();
     }
+
+    function mget_list_tingkat(){
+        $this->db->order_by('tingkat');
+
+        return $this->db->get('ms_kelasHD');
+    }
+    // function mget_list_kelas(){
+
+    //     $this->db->order_by('nama');
+
+    //     return $this->db->get('ms_kelas');
+    // }
 
     function mget_list_donatur(){
         $this->db->order_by('nama_donatur');

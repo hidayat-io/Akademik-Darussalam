@@ -132,7 +132,15 @@ class semester extends IO_Controller
 		$data = $this->model->query_bulan($semester);
     	echo json_encode($data);
 		// var_dump($data);
-		exit;
+		// exit;
+	}
+
+	function cek_data_bulan($bulan)
+	{
+		$data = $this->model->query_cekbulan($bulan);
+    	echo json_encode($data);
+		// var_dump($data);
+		// exit;
 	}
     
 	function get_edit_semester($semester)
@@ -143,7 +151,3 @@ class semester extends IO_Controller
 	}
 
 }
-
-	
-
-	

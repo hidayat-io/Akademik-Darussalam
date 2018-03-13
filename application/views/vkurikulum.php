@@ -82,7 +82,7 @@
                                         <span class="caption-subject font-red sbold uppercase">STRUKTUR KURIKULUM DAN ALOKASI WAKTU DI TMI</span>
                                     </div>
                                 </div>
-                                <div class="portlet-body">
+                                <div class="portlet-body" >
                                     <div class="form-body">                                
                                         <!-- BEGIN FORM-->
                                         <form action="#" id="add_kurikulum">
@@ -92,7 +92,7 @@
                                                 </div> -->
                                             </div>
                                             <input type="hidden" name="hid_param_kurikulum" id="hid_param_kurikulum" />
-                                            <div class="portlet-body">
+                                            <div class="portlet-body"  style="overflow-x:auto;">
                                                 <!--span-->
                                                 <div class="col-md-4 col-sm-12">
                                                     <div class="form-group">
@@ -112,7 +112,7 @@
                                                     </div>    
                                                 </div>
                                                     <!--span-->
-                                                <table class="table table-striped table-bordered table-hover" id="tb_list_kurikulum">
+                                                <table class="table table-striped table-bordered table-hover" id="tb_list_kurikulum" >
                                                     <thead>                                                                    
                                                     <tr>
                                                         <td width="173" rowspan="3">NO</td>

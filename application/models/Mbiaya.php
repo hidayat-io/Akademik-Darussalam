@@ -44,7 +44,7 @@ class Mbiaya extends CI_Model
                                             ms_biaya.nominal
                                     FROM ms_biaya_komponen 
                                     LEFT JOIN ms_biaya on ms_biaya_komponen.id_komponen = ms_biaya.nama_item
-                                    WHERE tipe = '$tipe' ORDER BY id_komponen ASC")->result_array();
+                                    WHERE tipe = '$tipe' and isActive ='1' ORDER BY id_komponen ASC")->result_array();
 		return $data;
     }
 	
@@ -68,10 +68,37 @@ class Mbiaya extends CI_Model
 		$this->db->order_by('rec_date','desc');
 		return $this->db->get('ms_biaya_potongan')->row();
 	}
+
+	function get_list_data_potongan(){     
+
+		$sql = "SELECT *
+                FROM ms_biaya_potongan
+				order by id_potongan asc";
+		
+
+		return $this->db->query($sql)->result();
+	}
+	
+	function query_potongan($id_potongan){
+		$data = array();
+		$data=$this->db->query("SELECT * from ms_biaya_potongan where id_potongan ='$id_potongan'")->row_array();
+		return $data;
+	}
 	
 	function _save_potongan($data_potongan)
 	{
 		$this->db->insert('ms_biaya_potongan',$data_potongan);
+	}
+
+	function _update_potongan($id_potongan,$data_potongan)
+	{
+		$this->db->where('id_potongan',$id_potongan);
+		$this->db->update('ms_biaya_potongan',$data_potongan);
+	}
+
+	function _DelPotongan($id_potongan){
+		$this->db->where('id_potongan',$id_potongan);
+		$this->db->delete('ms_biaya_potongan');
 	}
 #endregion 
     

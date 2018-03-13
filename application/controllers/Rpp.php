@@ -25,7 +25,7 @@ class rpp extends IO_Controller
                             =$b->deskripsi;
                         }
         //get Kelas
-			$select_kelas= $this->model->get_kelas()->result();
+			$select_kelas= $this->mcommon->mget_list_kelas()->result();
             
                         $vdata['kode_kelas'][NULL] = '';
                         foreach ($select_kelas as $b) {
@@ -34,13 +34,23 @@ class rpp extends IO_Controller
 							=$b->nama." | ".$b->tingkat." | ".$b->tipe_kelas;
                         }
         //get Mata Pelajaran
-			$mt_pelajaran= $this->mcommon->mget_list_mata_pelajaran()->result();
+			$select_mtpelajaran= $this->mcommon->mget_list_mata_pelajaran()->result();
             
                         $vdata['mat_pal'][NULL] = '';
-                        foreach ($mt_pelajaran as $b) {
+                        foreach ($select_mtpelajaran as $b) {
             
 							$vdata['mat_pal'][$b->id_matpal]
 							=$b->id_matpal." | ".$b->nama_matpal;
+						}						
+		//get Guru
+			$type ='guru';
+			$select_guru= $this->mcommon->mget_list_master_guru($type)->result();
+            
+                        $vdata['idguru'][NULL] = '';
+                        foreach ($select_guru as $b) {
+            
+							$vdata['idguru'][$b->id_guru]
+							=$b->id_guru." | ".$b->nama_lengkap;
                         }
 		
 		$vdata['title'] 		= 'RPP';
@@ -88,7 +98,7 @@ class rpp extends IO_Controller
 		$fdate = 'd-m-Y';
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_rpp.'\',\''.$data[$i]->kode_kelas.'\',\''.$data[$i]->tingkat.'\',\''.$data[$i]->tipe_kelas.'\',\''.$data[$i]->nama.'\',\''.$data[$i]->santri.'\',\''.$data[$i]->id_thn_ajar.'\',\''.$data[$i]->deskripsi.'\',\''.$data[$i]->semester.'\',\''.$data[$i]->id_mapel.'\')">
+			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_rpp.'\',\''.$data[$i]->kode_kelas.'\',\''.$data[$i]->tingkat.'\',\''.$data[$i]->tipe_kelas.'\',\''.$data[$i]->nama.'\',\''.$data[$i]->santri.'\',\''.$data[$i]->id_thn_ajar.'\',\''.$data[$i]->deskripsi.'\',\''.$data[$i]->semester.'\',\''.$data[$i]->id_guru.'\',\''.$data[$i]->id_mapel.'\')">
 					<i class="fa fa-edit"></i>
 					</a>
 					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->id_rpp.'\')">
@@ -100,6 +110,7 @@ class rpp extends IO_Controller
 				$data[$i]->id_mapel,
 				$data[$i]->deskripsi,
 				$data[$i]->semester,
+				$data[$i]->nama_lengkap,
 		     	$data[$i]->kode_kelas,
                 $data[$i]->nama,
   				$data[$i]->santri,
@@ -196,13 +207,14 @@ class rpp extends IO_Controller
 	function simpan_rpp($status)
 	{
 		$id_rpp 			= $this->input->post('id_rpp_hide');
-		$id_thn_ajar 		= $this->input->post('hide_Kurikulum');
+		$id_thn_ajar 		= $this->input->post('select_thnajar');
 		$semester  		    = $this->input->post('semester');
 		$tingkat  		    = $this->input->post('tingkat');
 		$tipe_kelas  		= $this->input->post('tipe_kelas');
 		$kode_kelas  		= $this->input->post('kode_kelas');
 		$santri  			= $this->input->post('santri');
-		$mt_pelajaran 		= $this->input->post('mt_pelajaran');
+		$id_guru  			= $this->input->post('select_guru');
+		$mt_pelajaran 		= $this->input->post('select_mtpelajaran');
 		$recdate            = date('y-m-d');
 	    $userid 			= $this->session->userdata('logged_in')['uid'];
 		
@@ -211,12 +223,12 @@ class rpp extends IO_Controller
 					
 			if ($semester == 1)
 			{
-				$kolom_sm = $this->model->_GetRPPSM1Tambah($id_thn_ajar,$tingkat,$tipe_kelas,$santri,$kode_kelas,$mt_pelajaran);
+				$kolom_sm = $this->model->_GetRPPSM1Tambah($id_thn_ajar,$semester,$tingkat,$tipe_kelas,$santri,$id_guru,$kode_kelas,$mt_pelajaran);
 				
 			}
 			else if ($semester == 2)
 			{
-				$kolom_sm = $this->model->_GetRPPSM2Tambah($id_thn_ajar,$tingkat,$tipe_kelas,$santri,$kode_kelas,$mt_pelajaran);
+				$kolom_sm = $this->model->_GetRPPSM2Tambah($id_thn_ajar,$semester,$tingkat,$tipe_kelas,$santri,$id_guru,$kode_kelas,$mt_pelajaran);
 				
 			}
 			//#region save ke RPP HD
@@ -224,15 +236,16 @@ class rpp extends IO_Controller
 				'id_thn_ajar' 		=> $id_thn_ajar,
 				'santri' 			=> $santri,
 				'semester' 		    => $semester,
+				'id_guru' 		    => $id_guru,
 				'kode_kelas' 		=> $kode_kelas,
 				'id_mapel' 		    => $mt_pelajaran,
 				'recdate'           => $recdate,
 				'userid' 			=> $userid
 			);
+			// var_dump($data_rpp);
+			// exit();
 			$id = $this->model->simpan_data_rpp($data_rpp);
 			//#endregion save ke RPP HD
-			// var_dump($id);
-			// exit();
 			$row = $kolom_sm;
 			$ilength = count($kolom_sm);
 				for($i=0;$i<$ilength;$i++)
@@ -330,7 +343,7 @@ class rpp extends IO_Controller
     	// echo json_encode($data);
 	// }
 
-	function cek_duplicate_data($id_thn_ajar,$santri,$semester,$kode_kelas,$mt_pelajaran)
+	function cek_duplicate_data($id_thn_ajar,$santri,$id_guru,$semester,$kode_kelas,$mt_pelajaran)
 	{
         $id_thn_ajar 	= urldecode($id_thn_ajar);
         $santri 		= urldecode($santri);
@@ -368,23 +381,24 @@ class rpp extends IO_Controller
     	
 	}
 	
-	function GetRPPTambah($id_thn_ajar,$semester,$tingkat,$tipe_kelas,$santri,$kode_kelas,$mt_pelajaran)
+	function GetRPPTambah($id_thn_ajar,$semester,$tingkat,$tipe_kelas,$santri,$id_guru,$kode_kelas,$mt_pelajaran)
 	{
 		$id_thn_ajar 	= urldecode($id_thn_ajar);
 		$semester 		= urldecode($semester);
 		$tingkat 		= urldecode($tingkat);
 		$tipe_kelas 	= urldecode($tipe_kelas);
 		$santri 		= urldecode($santri);
+		$id_guru 		= urldecode($id_guru);
 		$kode_kelas 	= urldecode($kode_kelas);
 		$mt_pelajaran 	= urldecode($mt_pelajaran);
 		if ($semester == 1)
 		{
-			$data = $this->model->_GetRPPSM1Tambah($id_thn_ajar,$tingkat,$tipe_kelas,$santri,$kode_kelas,$mt_pelajaran);
+			$data = $this->model->_GetRPPSM1Tambah($id_thn_ajar,$semester,$tingkat,$tipe_kelas,$santri,$id_guru,$kode_kelas,$mt_pelajaran);
 			
 		}
 		else if ($semester == 2)
 		{
-			$data = $this->model->_GetRPPSM2Tambah($id_thn_ajar,$tingkat,$tipe_kelas,$santri,$kode_kelas,$mt_pelajaran);
+			$data = $this->model->_GetRPPSM2Tambah($id_thn_ajar,$semester,$tingkat,$tipe_kelas,$santri,$id_guru,$kode_kelas,$mt_pelajaran);
 			
 		}
 		echo json_encode($data);
