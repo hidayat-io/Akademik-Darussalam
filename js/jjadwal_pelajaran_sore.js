@@ -589,25 +589,25 @@ function edit(kode_kelas,tingkat, tipe_kelas,nama,santri,id_thn_ajar,deskripsi,s
 // }
 
 function hapus(kode_kelas,santri,id_thn_ajar,deskripsi,semester){
-	var str_url  	= encodeURI(base_url+"jadwal_pelajaran_sore/Deljadwal_pelajaran_sore/"+kode_kelas+'/'+santri+'/'+id_thn_ajar+'/'+semester);
-	bootbox.confirm("Anda yakin akan menghapus Mata Pelajaran kurikulum "+deskripsi+", Kode Kelas "+kode_kelas+", Santri "+santri+", dan semester "+semester+"  ini ?",
-		function(result){
-			if(result==true){				
-			$.ajax({
-			type:"POST",
-			url:str_url,
-			dataType:"html",
-			success:function(data){
-					bootbox.alert({
-						message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Berhasil dihapus",
-						size: 'small',
-						callback: function () {
+	var str_url = encodeURI(base_url + "jadwal_pelajaran_sore/Deljadwal_pelajaran_sore/" + kode_kelas + '/' + santri + '/' + id_thn_ajar + '/' + semester);
+	bootbox.confirm("Anda yakin akan menghapus Mata Pelajaran kurikulum " + deskripsi + ", Kode Kelas " + kode_kelas + ", Santri " + santri + ", dan semester " + semester + "  ini ?",
+		function (result) {
+			if (result == true) {
+				$.ajax({
+					type: "POST",
+					url: str_url,
+					dataType: "html",
+					success: function (data) {
+						bootbox.alert({
+							message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Berhasil dihapus",
+							size: 'small',
+							callback: function () {
 
-							window.location = base_url+'jadwal_pelajaran_sore';
-						}
-					});
-				}
-			});
+								window.location = base_url + 'jadwal_pelajaran_sore';
+							}
+						});
+					}
+				});
 			}
 		}
 	);
