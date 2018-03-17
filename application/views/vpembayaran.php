@@ -10,7 +10,7 @@
         <div class="portlet box green-jungle">
         <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-database"></i><?php echo $title;?>
+                    <i class="fa fa-database"></i><?php echo $title_table ?>
                 </div>
                 <div class="tools">
                   <div class="btn-group pull-right">

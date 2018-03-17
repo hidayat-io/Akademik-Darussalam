@@ -13,14 +13,23 @@ class biaya extends IO_Controller
 	}
 
 	function index() {		
+		 //get Tahun Ajaran Data
+			$select_thnajar= $this->mcommon->get_thn_ajar()->result();
+
+			$vdata['kode_deskripsi'][NULL] = '';
+			foreach ($select_thnajar as $b) {
+
+				$vdata['kode_deskripsi'][$b->id]
+				=$b->deskripsi;
+			}
         //get komponen bulanan
         $vdata['komponen_bulanan'] = $this->model->get_komponen($tipe='B');
         //get komponen semester
         $vdata['komponen_semester'] = $this->model->get_komponen($tipe='S');
 		       
-       	$vdata['title'] = 'MASTER BIAYA';
-       	$vdata['title2'] = 'POTONGAN SANTRI';
-	    $data['content'] = $this->load->view('vbiaya',$vdata,TRUE);
+       	$vdata['title'] 	= 'MASTER BIAYA';
+       	$vdata['title2'] 	= 'POTONGAN SANTRI';
+	    $data['content'] 	= $this->load->view('vbiaya',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
 
@@ -61,12 +70,14 @@ class biaya extends IO_Controller
             }
 
             //get nominal
-            $kategori                   = $data[$i]->tipe;
-            $total_nominal 				= $this->model->get_nominal($kategori);
+            $kategori               = $data[$i]->tipe;
+            $deskripsi              = $data[$i]->deskripsi;
+            $total_nominal 			= $this->model->get_nominal($kategori);
             // var_dump($total_nominal);
             // exit();
 
 			$records["data"][] = array(
+				'<div align="center" style="width: 100%">'.$deskripsi.'</div>',
 				'<div align="center" style="width: 100%">'.$tipe.'</div>',
 				'<div align="center" style="width: 100%">'.number_format($total_nominal->NOMINAL,0,",",".").'</div>',
                 '<div align="center" style="width: 100%">'.$act.'</div>'

@@ -103,6 +103,21 @@ function simpankomponen(){
 		
 			$('#m_add').modal('toggle');
 
+			var title = "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;BERHASIL !!";
+			var str_message = "Jangan lupa update modul master biaya!!!";
+
+			bootbox.alert({
+				size: 'small',
+				title: title,
+				message: str_message,
+				buttons: {
+					ok: {
+						label: 'OK',
+						className: 'btn-green-jungle'
+					}
+				}
+			});
+
 		}
 	});
 
@@ -143,8 +158,25 @@ function deleteData(id){
 						var table = $('#tb-list').DataTable();
 						table.ajax.reload( null, false );
 						table.draw();
+						
+						var title = "<span class='fa fa-exclamation-triangle text-succes'></span>&nbsp;BERHASIL !!";
+						var str_message = "Jangan lupa update modul master biaya!!!";
+
+						bootbox.alert({
+							size: 'small',
+							title: title,
+							message: str_message,
+							buttons: {
+								ok: {
+									label: 'OK',
+									className: 'btn-green-jungle'
+								}
+							}
+						});
 					}
+					
 				);
+				
 			}
 		}
 	);
