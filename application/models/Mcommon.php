@@ -95,6 +95,12 @@ class Mcommon extends CI_Model {
     function get_kurikulum_aktif() {
 		$this->db->select('param_value');
 		return $this->db->get('sys_param')->row();
+    }
+    
+    function get_thn_ajar(){
+		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran  order by id desc Limit 3 ");
+		// $data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='UTAMA' order by id desc Limit 2 ");
+		return $data;
 	}
     
 }

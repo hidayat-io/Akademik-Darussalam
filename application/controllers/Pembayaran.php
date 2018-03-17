@@ -25,7 +25,8 @@ class pembayaran extends IO_Controller
 							=$b->id_matpal." | ".$b->nama_matpal;
                         }
 		
-		$vdata['title'] = 'DATA SOAL';
+		$vdata['title'] = 'PEMBAYARAN BULANAN';
+		$vdata['title_table'] = 'TRANSAKSI PEMBAYARAN BULANAN';
 	    $data['content'] = $this->load->view('vpembayaran',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}

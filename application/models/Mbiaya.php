@@ -12,11 +12,11 @@ class Mbiaya extends CI_Model
 #region ms_biaya
 	function get_list_data(){     
 
-		$sql = "SELECT DISTINCT ms_biaya_komponen.tipe
+		$sql = "SELECT DISTINCT ms_biaya_komponen.tipe, ms_tahun_ajaran.deskripsi
                 FROM ms_biaya_komponen
 				LEFT JOIN ms_biaya ON ms_biaya_komponen.id_komponen = ms_biaya.nama_item
+				INNER JOIN ms_tahun_ajaran on ms_biaya.id_thn_ajar = ms_tahun_ajaran.id
 				order by tipe asc";
-		
 
 		return $this->db->query($sql)->result();
     }
@@ -40,13 +40,20 @@ class Mbiaya extends CI_Model
     
     function get_komponen($tipe){
 		$data = array();
-		$data = $this->db->query ("SELECT ms_biaya_komponen.id_komponen, ms_biaya_komponen.nama_komponen, ms_biaya_komponen.tipe, ms_biaya_komponen.id_komponen,
-                                            ms_biaya.nominal
+		$data = $this->db->query ("SELECT *
                                     FROM ms_biaya_komponen 
-                                    LEFT JOIN ms_biaya on ms_biaya_komponen.id_komponen = ms_biaya.nama_item
                                     WHERE tipe = '$tipe' and isActive ='1' ORDER BY id_komponen ASC")->result_array();
 		return $data;
     }
+    // function get_komponen($tipe){
+	// 	$data = array();
+	// 	$data = $this->db->query ("SELECT ms_biaya_komponen.id_komponen, ms_biaya_komponen.nama_komponen, ms_biaya_komponen.tipe, ms_biaya_komponen.id_komponen,
+    //                                         ms_biaya.nominal
+    //                                 FROM ms_biaya_komponen 
+    //                                 LEFT JOIN ms_biaya on ms_biaya_komponen.id_komponen = ms_biaya.nama_item
+    //                                 WHERE tipe = '$tipe' and isActive ='1' ORDER BY id_komponen ASC")->result_array();
+	// 	return $data;
+    // }
 	
 	function delete_ms_biaya($kategori){
 		$this->db->where('kategori',$kategori);
