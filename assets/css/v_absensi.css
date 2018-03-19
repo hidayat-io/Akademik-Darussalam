@@ -10,7 +10,7 @@ h4.form-section{
 .form-section{
 
 	margin: 10px 0px !important;
-  	font-weight: bold;
+  font-weight: bold;
 }
 
 #tb_list th,
@@ -154,4 +154,15 @@ h4.form-section{
 .form-body{
 
   padding: 5px 20px;
+}
+
+.cell-middle-left{
+
+  vertical-align: middle !important;
+  text-align: center;
+}
+
+.cell-text-center{
+
+  text-align: center;
 }

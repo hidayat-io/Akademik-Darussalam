@@ -147,7 +147,7 @@ class Tabungan_model extends CI_Model {
 				                    ON lm.no_reg = sl.no_registrasi
 				       LEFT OUTER JOIN ms_kamar k
 				                    ON s.kamar = k.kode_kamar
-				       INNER JOIN ms_kelas kl
+				       INNER JOIN ms_kelasdt kl
 				       				ON s.kel_sekarang = kl.kode_kelas
 				WHERE  s.no_registrasi LIKE 'T%' ".$param;
 

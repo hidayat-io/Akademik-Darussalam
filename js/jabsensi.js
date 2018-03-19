@@ -53,4 +53,27 @@ function setTable(){
 function modalEdit(id_jadwal){
 
 	$('#modal_editing').modal('show');
+	loadDataAbsensiSiswa(id_jadwal);
+}
+
+function loadDataAbsensiSiswa(id_jadwal){
+
+	var param = {
+		'id_absensi' : id_jadwal,
+		'tgl_absensi' : 'x'
+	};
+
+	var json_absensi = [];
+
+	$.ajax({
+
+		type: "GET",
+		url: base_url + "absensi/get_data_absensi/",
+		dataType: "json",
+		data:param,
+		success: function (data) {
+			json_absensi = data;
+			console.log('data json_abesensi >> '+data);
+		}
+	});
 }

@@ -63,16 +63,16 @@
                         <table width="100%" class="table table-striped table-bordered table-hover" id="tb_absensi">
                             <thead>
                                 <tr>
-                                    <th rowspan="2">No.</th>
-                                    <th rowspan="2">No.Reg</th>
-                                    <th rowspan="2">Nama Siswa</th>
-                                    <th colspan="4">Absensi</th>
+                                    <th rowspan="2" class="cell-middle-left">No.</th>
+                                    <th rowspan="2" class="cell-middle-left">No.Reg</th>
+                                    <th rowspan="2" class="cell-middle-left">Nama Siswa</th>
+                                    <th colspan="4" class="cell-middle-left">Absensi</th>
                                 </tr>
                                 <tr>
-                                    <th>Hadir</th>
-                                    <th>Ijin</th>
-                                    <th>Sakit</th>
-                                    <th>Alpa</th>
+                                    <th class="cell-text-center">Hadir</th>
+                                    <th class="cell-text-center">Ijin</th>
+                                    <th class="cell-text-center">Sakit</th>
+                                    <th class="cell-text-center">Alpa</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>

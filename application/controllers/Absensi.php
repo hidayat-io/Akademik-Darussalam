@@ -76,4 +76,8 @@ class Absensi extends IO_Controller{
 
 		return $string_param;
 	}
+
+	function get_data_absensi(){
+		
+	}
 }
