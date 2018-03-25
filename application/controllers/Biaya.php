@@ -33,6 +33,15 @@ class biaya extends IO_Controller
 	    $this->load->view('main',$data);
 	}
 
+	function kurikulum_aktif() {
+	$sys_param			= $this->mcommon->get_kurikulum_aktif();
+	$sys_param_value	= $sys_param->param_value;
+	// var_dump($sys_param_value);
+	// exit();
+	
+	echo json_encode($sys_param_value);
+	}
+
 #region ms_biaya
 	function load_grid() {
 		$data 				= $this->model->get_list_data();
