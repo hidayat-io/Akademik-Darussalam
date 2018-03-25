@@ -206,7 +206,7 @@ function hapusHD(id_kelas) {
 					dataType: "html",
 					success: function (data) {
 						bootbox.alert({
-							message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Hapus Berhasil Berhasil",
+							message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Hapus Berhasil",
 							size: 'small',
 							callback: function () {
 
