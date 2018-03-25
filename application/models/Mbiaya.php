@@ -12,22 +12,23 @@ class Mbiaya extends CI_Model
 #region ms_biaya
 	function get_list_data(){     
 
-		$sql = "SELECT DISTINCT ms_biaya_komponen.tipe, ms_tahun_ajaran.deskripsi
+		$sql = "SELECT DISTINCT ms_biaya_komponen.tipe, ms_tahun_ajaran.id,ms_tahun_ajaran.deskripsi
                 FROM ms_biaya_komponen
 				LEFT JOIN ms_biaya ON ms_biaya_komponen.id_komponen = ms_biaya.nama_item
 				INNER JOIN ms_tahun_ajaran on ms_biaya.id_thn_ajar = ms_tahun_ajaran.id
-				order by tipe asc";
+				order by id desc";
 
 		return $this->db->query($sql)->result();
     }
     
-    function get_nominal($kategori) {
+    function get_nominal($kategori,$id_thn_ajar) {
 		$data = array();
 		if($kategori !='')
 		{
 		$data=$this->db->query("SELECT sum(nominal) AS NOMINAL
 								FROM ms_biaya
-								WHERE kategori = '$kategori'")->row();
+								WHERE kategori = '$kategori'
+								AND id_thn_ajar = '$id_thn_ajar'")->row();
 		}
 		else {
 			$data=$this->db->query("SELECT sum(nominal) AS NOMINAL
@@ -44,30 +45,39 @@ class Mbiaya extends CI_Model
                                     FROM ms_biaya_komponen 
                                     WHERE tipe = '$tipe' and isActive ='1' ORDER BY id_komponen ASC")->result_array();
 		return $data;
-    }
-    // function get_komponen($tipe){
-	// 	$data = array();
-	// 	$data = $this->db->query ("SELECT ms_biaya_komponen.id_komponen, ms_biaya_komponen.nama_komponen, ms_biaya_komponen.tipe, ms_biaya_komponen.id_komponen,
-    //                                         ms_biaya.nominal
-    //                                 FROM ms_biaya_komponen 
-    //                                 LEFT JOIN ms_biaya on ms_biaya_komponen.id_komponen = ms_biaya.nama_item
-    //                                 WHERE tipe = '$tipe' and isActive ='1' ORDER BY id_komponen ASC")->result_array();
-	// 	return $data;
-    // }
+	}
 	
-	function delete_ms_biaya($kategori){
-		$this->db->where('kategori',$kategori);
-		$this->db->delete('ms_biaya');
+	function query_databiaya($id_thn_ajar,$tipe){
+		$data = array();
+		$data = $this->db->query ("SELECT *
+									FROM ms_biaya
+									WHERE id_thn_ajar = '$id_thn_ajar' 
+									AND kategori = '$tipe'")->row_array();
+		return $data;
 	}
 
-	function update_data($data){
+	function query_databiaya_edit($id_thn_ajar,$tipe){
+		$data = array();
+		$data = $this->db->query ("SELECT ms_biaya.id, ms_biaya.id_thn_ajar, ms_biaya.kategori,ms_biaya.nama_item, ms_biaya.nominal, ms_biaya_komponen.nama_komponen
+									FROM ms_biaya
+									INNER JOIN ms_biaya_komponen on ms_biaya.nama_item= ms_biaya_komponen.id_komponen
+									WHERE ms_biaya.id_thn_ajar = '$id_thn_ajar' 
+									AND ms_biaya.kategori = '$tipe'")->result_array();
+		return $data;
+	}
+	
+
+
+	function simpan_biaya($data){
 		$this->db->insert('ms_biaya',$data);
 	}
 
-	function insert_data_histori_ms_biaya($data)
-	{
-		$this->db->insert('histori_master_biaya',$data);
+	function del_biaya($select_thnaajar,$tipe){
+		$this->db->where('id_thn_ajar',$select_thnaajar);	
+		$this->db->where('kategori',$tipe);
+		$this->db->delete('ms_biaya');
 	}
+
 #endregion ms_biaya
 
 #region potongan
