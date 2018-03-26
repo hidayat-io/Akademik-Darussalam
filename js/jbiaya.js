@@ -13,8 +13,7 @@ $(document).ready(function()
 			return true;
 		return false;
 	});
-	$('input[id^="b_nominal_"]').maskMoney({ precision: 0 });
-	$('input[id^="s_nominal_"]').maskMoney({ precision: 0 });
+	
 	$('#nominal_potongan').maskMoney({ precision: 0 });
 
 	validate_add_potongan();
@@ -27,6 +26,10 @@ $(document).ready(function()
 
 
 });
+
+function initMaskMoney() {
+	$('input[id^="nominalkomponen"]').maskMoney({ precision: 0 });
+}
 
 function upperCaseF(a) {
 	setTimeout(function () {
@@ -71,40 +74,11 @@ function upperCaseF(a) {
 		document.getElementById("add_biaya").reset();
 	}
 
-	function edit(tipe) {
-		clearvalidate_add_biaya();
-		if (tipe == 'B') {
-			$('#save_button').text('UPDATE_BULANAN');
-
-			$("#nav_tab_semester").removeClass("active");
-			$("#nav_tab_bulanan").addClass("active");
-
-			$("#nav_tab_semester").addClass("hidden");
-			$("#nav_tab_bulanan").removeClass("hidden");
-
-			$("#tab_semester").removeClass("active");
-			$("#tab_bulanan").addClass("active");
-		}
-		else {
-			$('#save_button').text('UPDATE_SEMESTER');
-
-			$("#nav_tab_bulanan").removeClass("active");
-			$("#nav_tab_semester").addClass("active");
-
-			$("#nav_tab_semester").removeClass("hidden");
-			$("#nav_tab_bulanan").addClass("hidden");
-
-			$("#tab_bulanan").removeClass("active");
-			$("#tab_semester").addClass("active");
-		}
-		$('#Modal_add_biaya').modal('show');
-
-	}
-
 	function add_biaya(tipe) {
 		clearvalidate_add_biaya();
+		$('#save_button').text('SIMPAN');
 		if (tipe == 'B') {
-			$('#save_button').text('SIMPAN_BULANAN');
+			
 			$('#hid_tipekomponen').val('B');
 			$("#nav_tab_semester").removeClass("active");
 			$("#nav_tab_bulanan").addClass("active");
@@ -116,7 +90,6 @@ function upperCaseF(a) {
 			$("#tab_bulanan").addClass("active");
 		}
 		else {
-			$('#save_button').text('SIMPAN_SEMESTER');
 			$('#hid_tipekomponen').val('S');
 			$("#nav_tab_bulanan").removeClass("active");
 			$("#nav_tab_semester").addClass("active");
@@ -221,105 +194,334 @@ function upperCaseF(a) {
 	}
 
 	function SaveData() {
-		if ($("#add_biaya").valid() == true) {
-		
+		if ($("#add_biaya").valid() == true) { //cek validasi data yg kosong
+				
 			$status = $('#save_button').text();
-			var iform = $('#add_biaya')[0];
-			var data = new FormData(iform);
-			if ($status == 'UPDATE_BULANAN') {
-				msg = "Update Data Biaya Bulanan Berhasil"
+			$('#id_thn_ajar').attr('disabled', false);
+			var tipe = $('#hid_tipekomponen').val()
+			var id_thn_ajar = $('#id_thn_ajar').val()
+			if (tipe == 'B') {
+				var item_data_tb_list_komponen = "";
+				var oTable = document.getElementById('tb_list_bulanan');
+				var rowLength = oTable.rows.length;
+				var data_komponenONtable = $('#hid_jumlah_item_bulanan').val();
+				var hid_table_item_komponen= '#hid_table_item_bulanan';
 			}
 			else {
-				msg = "Update Data Biaya Semester Berhasil"
+				var item_data_tb_list_komponen = "";
+				var oTable = document.getElementById('tb_list_semester');
+				var rowLength = oTable.rows.length;
+				var data_komponenONtable = $('#hid_jumlah_item_semester').val();
+				var hid_table_item_komponen = '#hid_table_item_semester';
 			}
+			var str_url = encodeURI(base_url + "biaya/get_data_biaya/" + id_thn_ajar + "/" +tipe);
 			$.ajax({
-
 				type: "POST",
-				url: base_url + "biaya/simpan_biaya/" + $status,
-				enctype: 'multipart/form-data',
-				contentType: false,
-				processData: false,
-				data: data,
+				url: str_url,
+				dataType: "html",
 				success: function (data) {
+					$data = $.parseJSON(data);
+					if ($data != null & $status == 'SIMPAN') {
+						bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>Data sudah ada!, Silahkan Edit data </div>",
+							function (result) {
+								if (result == true) {
+								}
+							}
+						);
 
+					}
+					else {//OK tidak ada data sebelumnya
+						if (data_komponenONtable == '0') {
+							bootbox.alert("input komponen dulu!!");
+
+						}
+						else {
+							if (data_komponenONtable == 0) {
+								rowLength = rowLength - 2;
+							} else {
+								rowLength = rowLength - 1;
+							}
+
+
+							for (i = 1; i <= rowLength; i++) {
+
+								var irow = oTable.rows.item(i);
+								// var rowIDkomponen = irow.cells[1].innerHTML;
+								// var rowID = 'nominalkomponen' + rowIDkomponen;
+								var nominal = document.getElementById('nominalkomponen' + irow.cells[1].innerHTML).value;
+								item_data_tb_list_komponen += irow.cells[1].innerHTML + "#"; //IDKomponen
+								item_data_tb_list_komponen += nominal + "#"; //nominal
+								item_data_tb_list_komponen += ';';
+
+							}
+
+							$(hid_table_item_komponen).val(item_data_tb_list_komponen);
+							var iform = $('#add_biaya')[0];
+							var data = new FormData(iform);
+							if ($status == 'SIMPAN') {
+								msg = "Simpan Berhasil"
+							}
+							else {
+								msg = "Update Berhasil"
+							}
+							$.ajax({
+
+								type: "POST",
+								url: base_url + "biaya/simpan_biaya/" + $status,
+								enctype: 'multipart/form-data',
+								contentType: false,
+								processData: false,
+								data: data,
+								success: function (data) {
+
+									bootbox.alert({
+										message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;" + msg + "!!",
+										size: 'small',
+										callback: function () {
+
+											window.location = base_url + 'biaya';
+										}
+									});
+								}
+							});
+						}
+					}
+				}
+			});
+			
+
+			
+		}
+	}
+
+	function edit(id, tipe) {
+		var str_url = encodeURI(base_url + "biaya/kurikulum_aktif/");
+		$.ajax({
+
+			type: "POST",
+			url: str_url,
+			dataType: "html",
+			success: function (data) {
+
+				var data = $.parseJSON(data);
+				var isys_param = data.split('#');
+				var id_thn_ajar = isys_param[0];
+
+				if (id_thn_ajar >= id) {
 					bootbox.alert({
-						message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;" + msg + "!!",
+						message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Tidak bisa edit ",
 						size: 'small',
 						callback: function () {
 
-							window.location = base_url + 'biaya';
+							// window.location = base_url + 'biaya';
 						}
 					});
 				}
-			});	
-		}
-	}	
+				else {
+					clearvalidate_add_biaya();
+					$('#save_button').text('UPDATE');
+					$('#id_thn_ajar').attr('disabled', true);
+					$('#id_thn_ajar').val(id);
+					$('#hid_tipekomponen').val(tipe);
+					if (tipe == 'B') {
 
-	//#region modal komponen
-		function getValueUsingClass() {
-			/* declare an checkbox array */
-			var chkArray = [];
+						$("#nav_tab_semester").removeClass("active");
+						$("#nav_tab_bulanan").addClass("active");
 
-			/* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
-			$(".chk:checked").each(function () {
-				chkArray.push($(this).val());
-			});
+						$("#nav_tab_semester").addClass("hidden");
+						$("#nav_tab_bulanan").removeClass("hidden");
 
-			/* we join the array separated by the comma */
-			var selected;
-			selected = chkArray.join(',');
+						$("#tab_semester").removeClass("active");
+						$("#tab_bulanan").addClass("active");
+						var tb_list_data = '#tb_list_bulanan tbody';
+						var hide_jml_item = '#hid_jumlah_item_bulanan';
+						var tb_list_data_detail = '#tb_list_bulanan tr.tb-detail';
+					}
+					else {
 
-			/* check if there is selected checkboxes, by default the length is 1 as it contains one single comma */
-			if (selected.length > 0) {
-				alert("You have selected " + selected);
-			} else {
-				alert("Please at least check one of the checkbox");
-			}
-		}
+						$("#nav_tab_bulanan").removeClass("active");
+						$("#nav_tab_semester").addClass("active");
 
-		function Tambahkomponen() {
-			if ($("#add_komponen").valid() == true) {
-				var semester = $('#txt_semester').val()
-				var tipe = $('#hid_tipekomponen').val()
-				if(tipe == 'B'){
-					var hid_jumlah_item = $('hid_jumlah_item_bulanan').val()
-				}
-				else
-				{
-					var hid_jumlah_item = $('hid_jumlah_item_semester').val()
-				}
-				
-				if (cekItemkomponen() == true) {
+						$("#nav_tab_semester").removeClass("hidden");
+						$("#nav_tab_bulanan").addClass("hidden");
 
-													var bln = { '1': 'Januari', '2': 'Februari', '3': 'Maret', '4': 'April', '5': 'Mei', '6': 'Juni', '7': 'Juli', '8': 'Agustus', '9': 'September', '10': 'Oktober', '11': 'November', '12': 'Desember' };
-								var komponenH = bln[komponen];
-								var row_count = $('#tb_list_komponen tr.tb-detail').length;
-								var content_data = '<tr class="tb-detail" id="row' + komponen + '">';
+						$("#tab_bulanan").removeClass("active");
+						$("#tab_semester").addClass("active");
+						var tb_list_data = '#tb_list_semester tbody';
+						var hide_jml_item = '#hid_jumlah_item_semester';
+						var tb_list_data_detail = '#tb_list_semester tr.tb-detail';
+					}
+
+					$(tb_list_data).html('');
+					$.ajax({
+
+						type: "POST",
+						url: base_url + "biaya/get_data_biaya_edit/" + id + "/" + tipe,
+						dataType: "html",
+						success: function (data) {
+
+							var data = $.parseJSON(data);
+
+							$.each(data, function (index, value) {
+
+								var row_count = $(tb_list_data_detail).length;
+								var content_data = '<tr class="tb-detail" id="row' + value['nama_item'] + '">';
 								content_data += "<td>" + (row_count + 1) + "</td>";
-								content_data += "<td class='hidden'>" + komponen + "</td>";
-								content_data += "<td>" + komponenH + "</td>";
+								content_data += "<td class='hidden'>" + value['nama_item'] + "</td>";
+								content_data += "<td>" + value['nama_komponen'] + "</td>";
+								content_data += '<td> <input type="text" id="nominalkomponen' + value['nama_item'] + '" name="nominalkomponen' + value['nama_item'] + '" value="' + value['nominal'] + '" /> </td>';
 								content_data += '<td><button type="button" class="btn btn-danger btn-xs" ';
-								content_data += ' onclick="hapusItemkomponen(\'' + komponen + '\')"><i class="fa fa-fw fa-trash"></i>Hapus</button></td>';
+								content_data += ' onclick="hapusItemkomponen(\'' + value['nama_item'] + '\')"><i class="fa fa-fw fa-trash"></i>Hapus</button></td>';
 								content_data += "</tr>";
 
 								if (row_count < 1) {
 
-									$('#tb_list_komponen tbody').html(content_data);
+									$(tb_list_data).html(content_data);
 								}
 								else {
 
-									$('#tb_list_komponen tbody').append(content_data);
+									$(tb_list_data).append(content_data);
 								}
 
-								$("#hid_jumlah_item_komponen").val(row_count + 1);
+								$(hide_jml_item).val(row_count + 1);
 								urutkanNomorkomponen();
+								initMaskMoney();
+							});
+						}
+					});
 
-								$('#Modal_add_komponen').modal('hide');
+					$('#Modal_add_biaya').modal('show');
 				}
-				else {
+			}
+		});
+	}
 
-					bootbox.alert("<span class='glyphicon glyphicon-exclamation-sign'></span>&nbsp;komponen di semester " + semester + " sudah ada atau komponen tidak urut");
+	function delete_biaya(id,tipe) {
+		// var hasilcek	= cek_thn_smster_aktif(id);
+		// if (hasilcek != 'valid') { //cek validasi data yg kosong
+		var str_url = encodeURI(base_url + "biaya/kurikulum_aktif/");
+		$.ajax({
+
+			type: "POST",
+			url: str_url,
+			dataType: "html",
+			success: function (data) {
+
+				var data = $.parseJSON(data);
+				var isys_param = data.split('#');
+				var id_thn_ajar = isys_param[0];
+
+				if (id_thn_ajar >= id) {
+					bootbox.alert({
+						message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Tidak bisa dihapus ",
+						size: 'small',
+						callback: function () {
+
+							// window.location = base_url + 'biaya';
+						}
+					});
 				}
+				else{
+					var str_url = encodeURI(base_url + "biaya/delete_biaya/" + id + "/" + tipe);
+					bootbox.confirm("Anda yakin akan menghapus ?",
+						function (result) {
+							if (result == true) {
+
+								$.ajax({
+									type: "POST",
+									url: str_url,
+									dataType: "html",
+									success: function (data) {
+										bootbox.alert({
+											message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Hapus Berhasil ",
+											size: 'small',
+											callback: function () {
+
+												window.location = base_url + 'biaya';
+											}
+										});
+									}
+								});
+							}
+						}
+					);
+				}
+			}
+		});
+	}
+
+
+	//#region modal komponen
+
+		function Tambahkomponen() {
+			if ($("#add_komponen").valid() == true) {
+				
+				var chkArray = [];
+
+				$(".chk:checked").each(function () {
+					chkArray.push($(this).val());
+				});
+
+				if (chkArray.length > 0) {
+
+					for (ci = 0; ci < chkArray.length; ci++) {
+						
+						var tipe = $('#hid_tipekomponen').val()
+						if (tipe == 'B') {
+							var row_count = $('#tb_list_bulanan tr.tb-detail').length;
+							var tb_list = 'bulanan';
+							var hid_jumlah_item = '#hid_jumlah_item_bulanan';
+						}
+						else {
+							var row_count = $('#tb_list_semester tr.tb-detail').length;
+							var tb_list = 'semester';
+							var hid_jumlah_item = '#hid_jumlah_item_semester';
+						}	
+						
+						var data_checklist = chkArray[ci];
+						var data_checklist = data_checklist.split('#');
+						var id_komponen = data_checklist[0];
+						var nama_komponen = data_checklist[1];
+
+						//cek apakah kompnen sudah ada dilist master biaya
+						if (cekItemkomponen(id_komponen) == true) {
+
+							
+							var content_data = '<tr class="tb-detail" id="row' + id_komponen + '">';
+							content_data += "<td>" + (row_count + 1) + "</td>";
+							content_data += "<td class='hidden'>" + id_komponen + "</td>";
+							content_data += "<td>" + nama_komponen + "</td>";
+							content_data += '<td> <input type="text" id="nominalkomponen' + id_komponen +'" name="nominalkomponen'+id_komponen+'" /> </td>';
+							content_data += '<td><button type="button" class="btn btn-danger btn-xs" ';
+							content_data += ' onclick="hapusItemkomponen(\'' + id_komponen + '\')"><i class="fa fa-fw fa-trash"></i>Hapus</button></td>';
+							content_data += "</tr>";
+
+							if (row_count < 1) {
+
+								$('#tb_list_' + tb_list + ' tbody').html(content_data);
+							}
+							else {
+
+								$('#tb_list_' + tb_list + ' tbody').append(content_data);
+							}
+
+							$(hid_jumlah_item).val(row_count + 1);
+							urutkanNomorkomponen();
+							initMaskMoney();
+						}
+
+						
+
+						
+					}
+					$('#Modal_add_komponen').modal('hide'); 
+					
+
+				} else {
+					bootbox.alert("tidak ada data");
+				}
+
+				
 			}
 		}
 
@@ -343,7 +545,7 @@ function upperCaseF(a) {
 			}
 		}
 
-		function cekItemkomponen() {
+		function cekItemkomponen(i_id_komponen) {
 			var tipe = $('#hid_tipekomponen').val()
 			if (tipe == 'B') {
 				var oTable = document.getElementById('tb_list_bulanan');
@@ -357,7 +559,7 @@ function upperCaseF(a) {
 			var rowLength = oTable.rows.length;
 			
 			rowLength = rowLength - 1;
-			var nextkomponen = parseInt(oTable.rows.item(itemcount).cells[1].innerHTML) + 1;
+			// var nextid_komponen = parseInt(oTable.rows.item(itemcount).cells[1].innerHTML) + 1;
 
 			if (itemcount == "0") { //jika item kosong
 
@@ -366,16 +568,16 @@ function upperCaseF(a) {
 			else {
 
 				for (i = 1; i <= rowLength; i++) {
-					var komponen = oTable.rows.item(i).cells[1].innerHTML;
+					var id_komponen = oTable.rows.item(i).cells[1].innerHTML;
 					// print(kode_kategori);
-					if (komponen == i_komponen) {
+					if (id_komponen == i_id_komponen) {
 
 						return false;
 					}
 				}
-				if (nextkomponen != i_komponen) {
-					return false;
-				}
+				// if (nextid_komponen != i_id_komponen) {
+				// 	return false;
+				// }
 				return true;
 			}
 		}
@@ -385,19 +587,30 @@ function upperCaseF(a) {
 			bootbox.confirm("Anda yakin akan menghapus item ini ?",
 				function (result) {
 					if (result == true) {
+						var tipe = $('#hid_tipekomponen').val()
+						if (tipe == 'B') {
+							var row_count = $('#tb_list_bulanan tr.tb-detail').length;
+							var tb_list = 'bulanan';
+							var hid_jumlah_item = '#hid_jumlah_item_bulanan';
+						}
+						else {
+							var row_count = $('#tb_list_semester tr.tb-detail').length;
+							var tb_list = 'semester';
+							var hid_jumlah_item = '#hid_jumlah_item_semester';
+						}	
 
 						$('#row' + komponen).remove();
 						urutkanNomorkomponen();
 
-						var row_count = $('#tb_list_komponen tr.tb-detail').length;
+						// var row_count = $('#tb_list_komponen tr.tb-detail').length;
 
-						$("#hid_jumlah_item_komponen").val(row_count); //simpan jumlah item
+						$(hid_jumlah_item).val(row_count - 1); //simpan jumlah item
 
 
 						if (row_count < 1) {
 
-							var content_data = "<tr><td colspan=\"30\" align=\"center\">Belum Ada Data.</td></tr>";
-							$('#tb_list_komponen tbody').append(content_data);
+							var content_data = "<tr><td colspan=\"4\" align=\"center\">Belum Ada Data.</td></tr>";
+							$('#tb_list_' + tb_list + ' tbody').append(content_data);
 						}
 					}
 				}

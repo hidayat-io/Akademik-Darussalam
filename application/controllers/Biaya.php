@@ -33,6 +33,15 @@ class biaya extends IO_Controller
 	    $this->load->view('main',$data);
 	}
 
+	function kurikulum_aktif() {
+	$sys_param			= $this->mcommon->get_kurikulum_aktif();
+	$sys_param_value	= $sys_param->param_value;
+	// var_dump($sys_param_value);
+	// exit();
+	
+	echo json_encode($sys_param_value);
+	}
+
 #region ms_biaya
 	function load_grid() {
 		$data 				= $this->model->get_list_data();
@@ -50,12 +59,12 @@ class biaya extends IO_Controller
 		$fdate = 'd-m-Y';
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->tipe.'\')">
+			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->id.'\',\''.$data[$i]->tipe.'\')">
 						<i class="fa fa-edit"></i>
+					</a>
+					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="delete_biaya(\''.$data[$i]->id.'\',\''.$data[$i]->tipe.'\')">
+						<i class="fa fa-remove"></i>
 					</a>';
-			// $act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->tipe.'\')">
-			// 			<i class="fa fa-edit"></i>
-            // 		</a>';
             if ($data[$i]->tipe == 'S')
             {
                 $tipe = 'SEMESTER';
@@ -71,8 +80,9 @@ class biaya extends IO_Controller
 
             //get nominal
             $kategori               = $data[$i]->tipe;
+            $id_thn_ajar            = $data[$i]->id;
             $deskripsi              = $data[$i]->deskripsi;
-            $total_nominal 			= $this->model->get_nominal($kategori);
+            $total_nominal 			= $this->model->get_nominal($kategori,$id_thn_ajar);
             // var_dump($total_nominal);
             // exit();
 
@@ -93,106 +103,90 @@ class biaya extends IO_Controller
 		
 	}
 
-	function get_data_biaya_byID($id_guru) {
-		//get thn ajar dan semester aktif
-		$sys_param			= $this->kurikulum_aktif();
-		$isys_param 		= explode('#',$sys_param);
-		$thn_ajar_aktif		= $isys_param[0];
-		$semester_aktif		= $isys_param[1];
-
-		$data 				= $this->model->query_get_biaya($id_guru,$thn_ajar_aktif,$semester_aktif);
-		// var_dump($id_guru);
-		// exit();
-		echo json_encode($data);
-		
-
-	}
-
 	function simpan_biaya($status) {
 		
-		$userid 			= $this->session->userdata('logged_in')['uid'];			
-		
-		if ($status == 'UPDATE_BULANAN')
-		{
-			$komponen_bulanan 	= $this->model->get_komponen($tipe='B');
-
-			$sequence = 0;
-			$kategori			= 'B';
-			$this->model->delete_ms_biaya($kategori);
-			foreach ($komponen_bulanan as $row) { 
-					$nama_item	         	= $this->input->post('b_hid_nama_item_'.$row['id_komponen']);
-					$nominal	            = $this->input->post('b_nominal_'.$row['id_komponen']);					
-					
-
-					$data_bulanan = array(
-					'kategori' 			=> $kategori,
-					'nama_item' 		=> $nama_item,
-					'nominal' 			=> str_replace(array('.',','), array('',''),$nominal)
-					);
-					
-					
-					$this->model->update_data($data_bulanan);
-					
-					$sequence++;
-			} 
-				
-			//update histori master biaya
-			$total_nominal 				= $this->model->get_nominal($kategori='');
-			// var_dump($total_nominal);
-			// exit();
-			$update_nominal	 = array(
-				'userid' 			=> $userid,
-				'nominal' 			=> $total_nominal->NOMINAL
-				);
-				
-			// 	var_dump($update_nominal	);
-			// exit();
-				$this->model->insert_data_histori_ms_biaya($update_nominal);
-
-			echo "true";
-		}
-		elseif ($status == 'UPDATE_SEMESTER')
-		{			
-			$komponen_semester 	= $this->model->get_komponen($tipe='S');
-
-			$sequence 			= 0;
-			$kategori			= 'S';
-			$this->model->delete_ms_biaya($kategori);
-			foreach ($komponen_semester as $row) { 
-					$nama_item	         = $this->input->post('s_hid_nama_item_'.$row['id_komponen']);
-					$nominal	            = $this->input->post('s_nominal_'.$row['id_komponen']);					
-					
-
-					$data_semester = array(
-					'kategori' 			=> $kategori,
-					'nama_item' 		=> $nama_item,
-					'nominal' 			=> str_replace(array('.',','), array('',''),$nominal)
-					);
-					
-	
-					
-					$this->model->update_data($data_semester);
-					
-					$sequence++;
+		$userid 	= $this->session->userdata('logged_in')['uid'];
+		$tipe		= $this->input->post('hid_tipekomponen');	
+		$select_thnajar		= $this->input->post('select_thnajar');	
+		if ($tipe == 'B') {
+				$data_komponen_biaya = $this->input->post('hid_table_item_bulanan');	
 			}
-				
-			//update histori master biaya
-			$total_nominal 				= $this->model->get_nominal($kategori='');
-			
-			$update_nominal	 = array(
-				'userid' 			=> $userid,
-				'nominal' 			=> $total_nominal->NOMINAL
-				);
-				
-			// 	var_dump($update_nominal	);
-			// exit();
-				$this->model->insert_data_histori_ms_biaya($update_nominal);
+			else {
+				$data_komponen_biaya = $this->input->post('hid_table_item_semester');	
+		}	
 
-			echo "true";
+		$data_komponen_biaya  = explode(';',$data_komponen_biaya);
+		
+		if ($status == 'SIMPAN')
+		{
+			
+			
+			foreach ($data_komponen_biaya as $i) {
+					$idetail = explode('#',$i);
+					
+					if(count($idetail)>1){
+							$data_biaya = array(
+
+								'id_thn_ajar'		=> $select_thnajar,
+								'kategori'			=> $tipe,
+								'nama_item'			=> $idetail[0],
+								'nominal'			=> str_replace(array('.',','), array('',''),$idetail[1]),
+								'userid' 			=> $userid
+								
+							);
+							// var_dump($data_biaya);
+							// exit();
+							$this->model->simpan_biaya($data_biaya);
+
+					}
+			}
+			
+			
 		}
-		else {
-			echo "status error";
+		else
+		{			
+			$this->model->del_biaya($select_thnajar,$tipe);//hapus semua data biaya
+			foreach ($data_komponen_biaya as $i) {
+					$idetail = explode('#',$i);
+					
+					if(count($idetail)>1){
+							$data_biaya = array(
+
+								'id_thn_ajar'		=> $select_thnajar,
+								'kategori'			=> $tipe,
+								'nama_item'			=> $idetail[0],
+								'nominal'			=> str_replace(array('.',','), array('',''),$idetail[1]),
+								'userid' 			=> $userid
+								
+							);
+							// var_dump($data_biaya);
+							// exit();
+							$this->model->simpan_biaya($data_biaya);
+
+					}
+			}
 		}
+	}
+
+	function delete_biaya($id,$tipe){
+		$id_thn_ajar	= urldecode($id);
+		$kategori		= urldecode($tipe);
+		$data			= $this->model->del_biaya($id_thn_ajar,$kategori);
+		echo json_encode($data);
+	}
+
+	function get_data_biaya($id_thn_ajar,$tipe){
+		$id_thn_ajar 	= urldecode($id_thn_ajar);
+		$tipe			= urldecode($tipe);
+		$data 			= $this->model->query_databiaya($id_thn_ajar,$tipe);
+    	echo json_encode($data);
+	}
+
+	function get_data_biaya_edit($id_thn_ajar,$tipe){
+		$id_thn_ajar 	= urldecode($id_thn_ajar);
+		$tipe			= urldecode($tipe);
+		$data 			= $this->model->query_databiaya_edit($id_thn_ajar,$tipe);
+    	echo json_encode($data);
 	}
 
 #endregion ms_biaya

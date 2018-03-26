@@ -31,12 +31,12 @@
                             </a>
                         </li>
                     </ul>
-                  <button type="button" class="btn btn-default" title="Search Data" onclick="Modalcari()">
+                  <!-- <button type="button" class="btn btn-default" title="Search Data" onclick="Modalcari()">
                         <i class="fa fa-search"></i>&nbsp;Search
                     </button>
                     <button type="button" class="btn btn-default" title="Export Data to Excel" onclick="downloadExcel()">
                         <i class="fa fa-file-excel-o"></i>&nbsp;Excel
-                    </button>
+                    </button> -->
                 </div>
             </div>
             <input type="text" class="hidden" name="hid_param" id="hid_param" />
@@ -176,8 +176,7 @@
                                         $att_item = ' type="text" class="form-control select" style="width: 100%;" id="id_thn_ajar" required';
                                         echo form_dropdown('select_thnajar', $kode_deskripsi, null, $att_item);
                                     ?>
-                                    <input type="hidden" class="form-control" name="hide_Kurikulum" id="hide_Kurikulum" >
-                                    <input type="text" id="hid_tipekomponen" CLASS="" />
+                                    <input type="text" id="hid_tipekomponen" name="hid_tipekomponen" CLASS="hidden" />
                                 </div>
                             </div>    
                         </div>
@@ -214,7 +213,7 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th style="text-align:center">No</th>
-                                                                    <th style="text-align:center" class="hidden">bln</th>
+                                                                    <th style="text-align:center" class="hidden">id_komponen</th>
                                                                     <th style="text-align:center">Komponen Bulanan</th>
                                                                     <th style="text-align:center">Nominal</th>
                                                                     <th style="text-align:center" width="10%">Action</th>
@@ -227,10 +226,6 @@
                                                                 </td>
                                                             </tr>
                                                             </tbody>
-                                                            <!-- <tfoot>
-                                                                <tr>
-                                                                </tr>
-                                                            </tfoot> -->
                                                         </table>
                                                     </div>
                                                 </div>
@@ -256,7 +251,7 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th style="text-align:center">No</th>
-                                                                    <th style="text-align:center" class="hidden">bln</th>
+                                                                    <th style="text-align:center" class="hidden">id_komponen</th>
                                                                     <th style="text-align:center">Komponen Semester</th>
                                                                     <th style="text-align:center">Nominal</th>
                                                                     <th style="text-align:center" width="10%">Action</th>
@@ -269,10 +264,6 @@
                                                                 </td>
                                                             </tr>
                                                             </tbody>
-                                                            <!-- <tfoot>
-                                                                <tr>
-                                                                </tr>
-                                                            </tfoot> -->
                                                         </table>
                                                     </div>
                                                 </div>
@@ -342,7 +333,7 @@
                                                             <div id="checkboxlist">
                                                              <?php  $no =1;
                                                                     foreach ($komponen_bulanan as $row) { ?>
-                                                                <div><input type="checkbox" value="<?php echo $row['id_komponen']; ?>" class="chk"> <?php echo $row['nama_komponen']; ?></div>
+                                                                <div><input type="checkbox" value="<?php echo $row['id_komponen'].'#'.$row['nama_komponen']; ?>" class="chk"> <?php echo $row['nama_komponen']; ?></div>
                                                             <?php $no++; } ?>
                                                             </div>
                                                         </div>
@@ -368,7 +359,7 @@
                                                                 <div id="checkboxlist">
                                                                 <?php  $no =1;
                                                                         foreach ($komponen_semester as $row) { ?>
-                                                                    <div><input type="checkbox" value="<?php echo $row['id_komponen']; ?>" class="chk"> <?php echo $row['nama_komponen']; ?></div>
+                                                                    <div><input type="checkbox" value="<?php echo $row['id_komponen'].'#'.$row['nama_komponen']; ?>" class="chk"> <?php echo $row['nama_komponen']; ?></div>
                                                                 <?php $no++; } ?>
                                                                 </div>
                                                             </div>
