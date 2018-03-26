@@ -64,16 +64,6 @@ function upperCaseF(a) {
 		});
 	}
 
-	function clearvalidate_add_biaya() {
-
-		$("#add_biaya div").removeClass('has-error');
-		$("#add_biaya i").removeClass('fa-warning');
-		$("#add_biaya div").removeClass('has-success');
-		$("#add_biaya i").removeClass('fa-check');
-
-		document.getElementById("add_biaya").reset();
-	}
-
 	function add_biaya(tipe) {
 		clearvalidate_add_biaya();
 		$('#save_button').text('SIMPAN');
