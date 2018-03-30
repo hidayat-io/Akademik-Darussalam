@@ -47,7 +47,7 @@ class Common_lib{
     		}
     	}
 
-    	echo $string_menu;
+		echo $string_menu;
     }
 
     function build_child_menu($parent_modul,$user_id,$string_child_menu=''){

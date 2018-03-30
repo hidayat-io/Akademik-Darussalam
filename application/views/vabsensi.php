@@ -47,15 +47,24 @@
             <div class="modal-body-form">
                 <div class="portlet-form">
                     <form id="form_editing" enctype="multipart/form-data">
-                        <h4 class="form-section">
-                            Absensi Siswa
-                            <div style="font-size: 12px;float:right">
-                                <strong>Hari : </strong><label id="lbl_hari"></label>
-                                <strong>Tanggal : </strong><label id="lbl_tanggal"></label>
-                                <strong>Tahun Ajaran : </strong><label id="lbl_tahun_ajar"></label>
-                                <strong>Semester : </strong><label id="lbl_tahun_ajar"></label>
-                            </div>
+                        <h4 style="font-size:90%">
+                            <strong>Absensi Siswa</strong>
+                            <table border="0" style="float:right" id="tb-title">
+                                <tr>
+                                    <td><strong>Hari : </strong><label id="lbl_hari"></label></td>
+                                    <td><strong>Tanggal : </strong>
+                                        <input type="text" class="form-control datepicker input-sm input-small" 
+                                            style="display:inline-block" readonly="" name="dtp_tgl_absensi" id="dtp_tgl_absensi"
+                                            value="<?php echo date('d-m-Y')?>">
+                                    </td>
+                                    <td>
+                                        <strong>Tahun Ajaran : </strong><label id="lbl_tahun_ajar"></label>
+                                    </td>
+                                    <td><strong>Semester : </strong><label id="lbl_tahun_ajar"></label></td>
+                                </tr>
+                            </table>
                         </h4>
+                        <hr style="margin: 20px 0px 0px;">
                         <div style="float:right;color:blue">
                             <strong>Guru :</strong><label id="lbl_nama_guru"></label>
                             <strong>Kelas :</strong><label id="lbl_nama_kelas"></label>

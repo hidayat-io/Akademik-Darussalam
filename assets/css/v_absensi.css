@@ -166,3 +166,13 @@ h4.form-section{
 
   text-align: center;
 }
+
+#tb-title td{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#dtp_tgl_absensi{
+  width: 100px !important;
+  text-align: center;
+}

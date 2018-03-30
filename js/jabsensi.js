@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 	setTable();
-	modalEdit('s');
+	modalEdit('317');
 
 	$('.datepicker').datepicker({
         orientation: "left",
@@ -58,9 +58,10 @@ function modalEdit(id_jadwal){
 
 function loadDataAbsensiSiswa(id_jadwal){
 
+	var tgl_absensi = $('#dtp_tgl_absensi').val();
 	var param = {
-		'id_absensi' : id_jadwal,
-		'tgl_absensi' : 'x'
+		'id_jadwal' : id_jadwal,
+		'tgl_absensi' : tgl_absensi
 	};
 
 	var json_absensi = [];
@@ -73,7 +74,6 @@ function loadDataAbsensiSiswa(id_jadwal){
 		data:param,
 		success: function (data) {
 			json_absensi = data;
-			console.log('data json_abesensi >> '+data);
 		}
 	});
 }
