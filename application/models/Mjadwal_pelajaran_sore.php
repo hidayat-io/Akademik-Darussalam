@@ -26,8 +26,8 @@ class Mjadwal_pelajaran_sore extends CI_Model
         $sql = "SELECT DISTINCT a.kode_kelas,d.tingkat, d.tipe_kelas,c.nama, a.santri, a.semester, a.id_thn_ajar, b.deskripsi, c.nama
                 FROM trans_jadwal_pelajaran a
                 INNER JOIN ms_tahun_ajaran b ON b.id = a.id_thn_ajar
-                INNER JOIN ms_kelasDT c ON c.kode_kelas=a.kode_kelas
-                INNER JOIN ms_kelasHD d ON c.id_kelas=d.id_kelas";
+                INNER JOIN ms_kelasdt c ON c.kode_kelas=a.kode_kelas
+                INNER JOIN ms_kelashd d ON c.id_kelas=d.id_kelas";
                     
 
                 if($param!=null){
@@ -73,7 +73,7 @@ class Mjadwal_pelajaran_sore extends CI_Model
         $data = array();
 		$data=$this->db->query("SELECT a.kode_kelas,a.id_guru, a.jam, a.hari, a.id_mapel, d.nama_matpal 
 								FROM trans_jadwal_pelajaran a 
-								INNER JOIN ms_kelasDT b ON a.kode_kelas = b.kode_kelas 
+								INNER JOIN ms_kelasdt b ON a.kode_kelas = b.kode_kelas 
 								INNER JOIN ms_tahun_ajaran c ON a.id_thn_ajar = c.id 
 								INNER JOIN ms_mata_pelajaran d ON a.id_mapel = d.id_matpal 
 								where a.kode_kelas ='$kode_kelas' 
