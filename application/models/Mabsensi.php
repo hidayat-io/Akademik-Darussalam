@@ -81,5 +81,7 @@ class Mabsensi extends CI_Model {
 									AND absd.noreg_santri = snt.no_registrasi			
 						WHERE jp.id_jadwal = 317
 							ORDER BY absd.noreg_santri";
+
+		return $this->db->query($sql_absensi);
 	}
 }

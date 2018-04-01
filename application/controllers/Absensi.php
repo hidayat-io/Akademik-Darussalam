@@ -79,5 +79,11 @@ class Absensi extends IO_Controller{
 
 	function get_data_absensi(){
 		
+		$tgl_absensi = $this->input->get('tgl_absensi');
+		$id_jadwal = $this->input->get('id_jadwal');
+
+		$data = $this->model->mget_data_absensi('')->result();
+
+		echo json_encode($data);
 	}
 }
