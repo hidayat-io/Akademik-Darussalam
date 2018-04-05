@@ -15,6 +15,26 @@ class daftarulang extends IO_Controller
 
 	function index()
 	{
+		//get tahun ajar
+		//get kurikulum aktif
+		$sys_param						= $this->kurikulum_aktif();
+		$isys_param 					= explode('#',$sys_param);
+		$id_thn_ajar					= $isys_param[0];
+		$id_thn_ajar_value				= $this->model->get_kurikulum($id_thn_ajar);
+		$vdata['id_thn_ajar']			= $id_thn_ajar_value->id;
+		$vdata['deskripsi']				= $id_thn_ajar_value->deskripsi;
+		$vdata['semester_aktif']		= $isys_param[1];
+
+        // get ID Potongan
+        $select_potongan = $this->model->get_potongan()->result();
+
+        $vdata['id_potongan'][NULL] = '-';
+        foreach ($select_potongan as $b) {
+
+            $vdata['id_potongan'][$b->id_potongan."#".$b->nama_potongan."#".$b->persen."#".$b->nominal]
+                =$b->id_potongan." | ".$b->nama_potongan." | ".$b->persen." | ".$b->nominal;
+        }
+		
         //get ID Gedung
         $hide_id_gedung = $this->model->get_gedung()->result();
 
@@ -58,6 +78,13 @@ class daftarulang extends IO_Controller
 		$vdata['title'] = 'DATA DAFTAR ULANG';
 	    $data['content'] = $this->load->view('vdaftarulang',$vdata,TRUE);
 	    $this->load->view('main',$data);
+	}
+
+	function kurikulum_aktif() {
+		$sys_param			= $this->mcommon->get_kurikulum_aktif();
+		$sys_param_value	= $sys_param->param_value;
+		
+		return $sys_param_value;
 	}
 
     #region index daftar ulang
@@ -141,36 +168,154 @@ class daftarulang extends IO_Controller
         $no_registrasi      = urldecode($no_registrasi);
 		$data               = $this->model->query_data_santri($no_registrasi);
     	echo json_encode($data);
+	}
+	
+    function get_data_daftarulang($id_thn_ajar,$no_registrasi)
+	{
+        $no_registrasi      = urldecode($no_registrasi);
+        $id_thn_ajar      	= urldecode($id_thn_ajar);
+		$data               = $this->model->query_data_daftarulang($id_thn_ajar,$no_registrasi);
+    	echo json_encode($data);
     }
     
     function simpan_daftarulang($status)
 	{
-		$kode_daftarulang 		= $this->input->post('kode_daftarulang');
-		$nama  		        = $this->input->post('nama');
-        $recdate            = date('y-m-d');
+		$id_thn_ajar 		= $this->input->post('id_thn_ajar');
+		$no_registrasi 		= $this->input->post('no_registrasi');
+		$rayon 				= $this->input->post('rayon');
+		$kamar 				= $this->input->post('kamar');
+		$bagian 			= $this->input->post('bagian');
+		$kel_sekarang 		= $this->input->post('kel_sekarang');
+		$id_potongan 		= $this->input->post('id_potongan');
+		$tipe_potongan 		= $this->input->post('tipe_potongan');
+		
+		if ($tipe_potongan == 'persen'){
+			$nominal_potongan = $this->input->post('potongan_persen');
+		}else {
+			$nominal_potongan = $this->input->post('potongan_nominal');
+		}
 	    $userid 			= $this->session->userdata('logged_in')['uid'];
 
-		$data_daftarulang = array(
-			'kode_daftarulang' 			=> $kode_daftarulang,
-			'nama' 		            => $nama,
-            'recdate'               => $recdate,
+		//ambil kelas, rayon,kamar sebelumnya
+		$data_santri_lama 		= $this->model->query_data_santri($no_registrasi);
+		$kel_sebelumnya        	= $data_santri_lama->kel_sekarang;
+		$rayon_sebelumnya 		= $data_santri_lama->rayon;
+		$kamar_sebelumnya      	= $data_santri_lama->kamar;
+		$bagian_sebelumnya     	= $data_santri_lama->bagian;
+		
+		$data_update_ms_santri = array( //data ms_santri
+			// 'id_thn_ajar' 			=> $id_thn_ajar,
+			// 'no_registrasi' 		=> $no_registrasi,
+            'kel_sekarang'       	=> $kel_sekarang,
+			'rayon' 				=> $rayon,
+            'kamar'      			=> $kamar,
+            'bagian'     			=> $bagian,
+            // 'kel_sebelumnya'     => $kel_sebelumnya,
+			// 'rayon_sebelumnya' 	=> $rayon_sebelumnya,
+            // 'kamar_sebelumnya'   => $kamar_sebelumnya,
+            // 'bagian_sebelumnya'     => $bagian_sebelumnya,
+            // 'id_potongan'     	=> $id_potongan,
+            // 'tipe_potongan'     	=> $tipe_potongan,
+            // 'nominal_potongan'   => $nominal_potongan,
+			// 'userid' 				=> $userid
+		);
+ 
+		$data_daftarulang = array( //data trans_daftar ulang
+			'id_thn_ajar' 			=> $id_thn_ajar,
+			'no_registrasi' 		=> $no_registrasi,
+            // 'kel_sekarang'       => $kel_sekarang,
+			// 'rayon' 				=> $rayon,
+            // 'kamar'      		=> $kamar,
+            // 'bagian'     		=> $bagian,
+            'kel_sebelumnya'        => $kel_sebelumnya,
+			'rayon_sebelumnya' 		=> $rayon_sebelumnya,
+            'kamar_sebelumnya'      => $kamar_sebelumnya,
+            'bagian_sebelumnya'     => $bagian_sebelumnya,
+            'id_potongan'     		=> $id_potongan,
+            'tipe_potongan'     	=> $tipe_potongan,
+            // 'nominal_potongan'   => $nominal_potongan,
 			'userid' 				=> $userid
 		);
-        
-		if($status=='SAVE')	
-		{// cek apakah add new atau editdata
-			
-		// save data daftarulang
-         	$this->model->simpan_data_daftarulang($data_daftarulang);
+		
 
+		//get total tagihan per semester&perbulan
+		$tipe_tagihan_semester 		= 'S';
+		$tipe_tagihan_bulanan 		= 'B';
+		$total_tagihan_semester		= $this->model->query_data_tagihan($id_thn_ajar,$tipe_tagihan_semester);
+		$total_tagihan_bulanan		= $this->model->query_data_tagihan($id_thn_ajar,$tipe_tagihan_bulanan);
+
+		$total_tagihan_semester		= (int)$total_tagihan_semester->total_tagihan;
+		$total_tagihan_bulanan		= (int)$total_tagihan_bulanan->total_tagihan;
+		
+		//hasil akhir tagihan setelah dipotong
+		if ($tipe_potongan == 'persen'){ //POTONGAN BERDASARKAN PERSENTASI
+				$prcn = $nominal_potongan / 100;
+				$nominal_potongan_semester 			= $prcn * $total_tagihan_semester;
+				$nominal_potongan_bulanan  			= $prcn * $total_tagihan_bulanan;
+				
+				$grand_total_tagihan_semester 		= $total_tagihan_semester - $nominal_potongan_semester;
+				$grand_total_tagihan_bulanan 		= $total_tagihan_bulanan - 	$nominal_potongan_bulanan;
+		}else {//POTONGAN BERDASARKAN NOMINAL
+				$grand_total_tagihan_semester 		= $total_tagihan_semester - $nominal_potongan;
+				$grand_total_tagihan_bulanan 		= $total_tagihan_bulanan - $nominal_potongan;
 		}
-        else //update data
-		{		
-			// save data daftarulang
-         	$this->model->update_data_daftarulang($kode_daftarulang,$data_daftarulang);
-        }	    
+        				
+		//save trans_tagihan /semester
+		$semester		= $this->model->query_data_ms_semester();
+		$row_semester	= count($semester);
+		for($isemester=0;$isemester<$row_semester;$isemester++)
+		{
+			$data_tagihan_semester 		= array(
+				'id_thn_ajar' 			=> $id_thn_ajar,
+				'no_registrasi' 		=> $no_registrasi,
+				'tipe_tagihan' 			=> 'S',
+				'ket_semester' 			=> 'SEMESTER'.$semester[$isemester]['semester'],
+				'ket_bulan' 			=> '',
+				'id_potongan' 			=> $id_potongan,
+				'tipe_potongan' 		=> $tipe_potongan,
+				'nominal_potongan' 		=> $nominal_potongan,
+				'total_tagihan' 		=> $grand_total_tagihan_semester,
+				'userid' 				=> $userid,
 
-			echo "true";
+				
+			);
+			
+			$semester_bulanan	= $semester[$isemester]['semester'];
+			$bulanan			= $this->model->query_data_ms_semester_bulanan($semester_bulanan);
+			
+			$row_bulanan		= count($bulanan);
+
+			for($ibulanan=0;$ibulanan<$row_bulanan;$ibulanan++)
+			{
+				$data_tagihan_bulanan 		= array(
+					'id_thn_ajar' 			=> $id_thn_ajar,
+					'no_registrasi' 		=> $no_registrasi,
+					'tipe_tagihan' 			=> 'B',
+					'ket_semester' 			=> 'SEMESTER'.$semester_bulanan,
+					'ket_bulan' 			=> $bulanan[$ibulanan]['bulan'],
+					'id_potongan' 			=> $id_potongan,
+					'tipe_potongan' 		=> $tipe_potongan,
+					'nominal_potongan' 		=> $nominal_potongan,
+					'total_tagihan' 		=> $grand_total_tagihan_bulanan,
+					'userid' 				=> $userid,
+
+					
+				);
+			$this->model->simpan_data_tagihan($data_tagihan_bulanan);//simpan tagihan per bulan			
+				
+			}
+
+			$this->model->simpan_data_tagihan($data_tagihan_semester);//simpan tagihan per semester		
+				
+				
+		}
+		// save data daftarulang
+			$this->model->simpan_data_daftarulang($data_daftarulang);
+			$this->model->update_ms_santri($data_update_ms_santri,$no_registrasi);//update kelas, bagian, rayon, kamar ms_santri
+
+
+
+		echo "true";
 	}	
     #endregion modal add daftar ulang
 
@@ -257,7 +402,3 @@ class daftarulang extends IO_Controller
 
 
 }
-
-	
-
-	

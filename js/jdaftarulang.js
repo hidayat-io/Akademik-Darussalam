@@ -13,6 +13,7 @@ $(document).ready(function()
     pilihItemKamar();
     pilihItemKelas();
     pilihItemBagian();
+    pilihItemPotongan();
 
     //fungsi key enter
     $("#no_registrasi").keyup(function (event) {
@@ -127,6 +128,32 @@ function pilihItemBagian() {
     $('#spansearchcloseBagian').hide();
 }
 
+function idPotonganshow() {
+    $('#hiddenidPotongan').show();
+    $('#spansearchPotongan').hide();
+    $('#spansearchclosePotongan').show();
+}
+
+function idPotonganhide() {
+    $('#hiddenidPotongan').hide();
+    $('#spansearchPotongan').show();
+    $('#spansearchclosePotongan').hide();
+}
+
+function pilihItemPotongan() {
+
+    $item = $('#hide_id_Potongan').val();
+    $item = $item.split('#');
+
+    $('#id_potongan').val($item[0]);
+    $('#nama_potongan').val($item[1]);
+    $('#potongan_persen').val($item[2]);
+    $('#potongan_nominal').val($item[3]);
+    $('#hiddenidPotongan').hide();
+    $('#spansearchPotongan').show();
+    $('#spansearchclosePotongan').hide();
+}
+
 function setTable() {
     $('#tb_list').DataTable({
         "order": [[0, "desc"]],
@@ -149,6 +176,8 @@ function adddaftarulang() {
     // clearvalidate_add_daftarulang();
     idregishide();  
     $('#save_button').text('SAVE');
+    // $('#no_registrasi').val('T39180001');
+
     $('#Modal_add_daftarulang').modal('show');    
     
 }
@@ -281,9 +310,11 @@ function clearvalidate_add_daftarulang() {
 
 function svdaftarulang() {
     if ($("#add_daftarulang").valid() == true) {
-        $kode_daftarulang = $('#kode_daftarulang').val();
+        var no_registrasi = $('#no_registrasi').val();
+        var id_thn_ajar = $('#id_thn_ajar').val();
         $status = $('#save_button').text();
-        var str_url = encodeURI(base_url + "daftarulang/get_data_daftarulang/" + $kode_daftarulang);
+        //cek sudah pernah daftar ulang di kurikulum yang sama?
+        var str_url = encodeURI(base_url + "daftarulang/get_data_daftarulang/"+ id_thn_ajar +"/" + no_registrasi);
         $.ajax({
             type: "POST",
             url: str_url,
@@ -291,22 +322,21 @@ function svdaftarulang() {
             success: function (data) {
                 $data = $.parseJSON(data);
                 if ($data != null & $status == 'SAVE') {
-                    bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>SUDAH ADA DI DATABASE! </div>",
-                        function (result) {
-                            if (result == true) {
-                            }
-                        }
-                    );
+                    bootbox.alert({
+                        title: "<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span> <b>ERROR</b></div>",
+                        message: " NO Register " + no_registrasi + " Sudah Terdaftar. ",
+                        size: 'small'
+                    });
 
                 }
-                else {
+                else {                    
                     var iform = $('#add_daftarulang')[0];
                     var data = new FormData(iform);
-                    if ($status == 'UPDATE') {
-                        msg = "Update Data Berhasil"
+                    if ($status == 'SAVE') {
+                        msg = "Simpan Data Berhasil"
                     }
                     else {
-                        msg = "Simpan Data Berhasil"
+                        msg = "Update Data Berhasil"
                     }
                     $.ajax({
 

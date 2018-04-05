@@ -10,7 +10,13 @@ class Mdaftarulang extends CI_Model
 		parent::__construct();
     }
     
-    #region index
+	#region index
+	
+	function get_kurikulum($id) {
+		$this->db->where('id',$id);
+		return $this->db->get('ms_tahun_ajaran')->row();
+	}
+
      function get_gedung(){
 		$data = $this->db->query ("SELECT * FROM ms_gedung ORDER BY kode_gedung");
 		return $data;
@@ -30,6 +36,11 @@ class Mdaftarulang extends CI_Model
 
 	function get_bagian(){
 		$data = $this->db->query ("SELECT * FROM ms_bagian ORDER BY kode_bagian");
+		return $data;
+	}
+	
+	function get_potongan(){
+		$data = $this->db->query ("SELECT * FROM ms_biaya_potongan ORDER BY id_potongan");
 		return $data;
     }
 
@@ -67,16 +78,55 @@ class Mdaftarulang extends CI_Model
     
     #region modal add daftar ulang
     function query_data_santri($no_registrasi){
+        // $data = array();
+		$data=$this->db->query("SELECT * from ms_santri where no_registrasi ='$no_registrasi' and no_registrasi NOT LIKE 'CT%' and no_registrasi NOT LIKE 'A%' AND no_registrasi NOT LIKE 'CA%'")->row();
+		return $data;
+	}  
+	
+    function query_data_tagihan($id_thn_ajar,$tipe_tagihan){
+		$data=$this->db->query("select sum(nominal) as total_tagihan from ms_biaya where id_thn_ajar ='3' and kategori ='$tipe_tagihan'")->row();
+		return $data;
+	}
+
+	function query_data_ms_semester(){
         $data = array();
-		$data=$this->db->query("SELECT * from ms_santri where no_registrasi ='$no_registrasi' and no_registrasi NOT LIKE 'A%' AND no_registrasi NOT LIKE 'CA%'")->row_array();
+		$data=$this->db->query("select distinct semester from ms_semester order by semester ASC")->result_array();
+		return $data;
+	}
+
+	function query_data_ms_semester_bulanan($semester){
+        $data = array();
+		$data=$this->db->query("select bulan from ms_semester where semester = '$semester' order by semester ASC")->result_array();
+		return $data;
+	}
+	
+    function query_data_daftarulang($id_thn_ajar,$no_registrasi){
+        $data = array();
+		$data=$this->db->query("SELECT * from trans_daftar_ulang where id_thn_ajar ='$id_thn_ajar' and no_registrasi ='$no_registrasi' ")->row_array();
 		return $data;
     }
+	
+	function simpan_data_tagihan($data_tagihan){
+		// var_dump($data_tagihan);
+		// exit();
+
+		$this->db->replace('trans_tagihan',$data_tagihan);
+		// $query = $this->db->last_query();
+		// var_dump($query);
+		// exit();
+	}
 
     function simpan_data_daftarulang($data_daftarulang){
 
-		$this->db->replace('ms_daftarulang',$data_daftarulang);
-    }
-    
+		$this->db->replace('trans_daftar_ulang',$data_daftarulang);
+	}
+	    
+    function update_ms_santri($data_update_ms_santri,$no_registrasi){
+        
+        $this->db->where('no_registrasi',$no_registrasi);
+		$this->db->update('ms_santri',$data_update_ms_santri);
+	} 
+
     function update_data_daftarulang($kode_daftarulang,$data_daftarulang){
         
         $this->db->where('kode_daftarulang',$kode_daftarulang);

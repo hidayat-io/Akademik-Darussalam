@@ -9,8 +9,7 @@
                     <i class="fa fa-database"></i><?php echo $title;?>
                 </div>
                 <div class="tools">
-                  <div class="btn-group pull-right">
-                      
+                  <div class="btn-group pull-right">                      
                   </div>
                 </div>
                 <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
@@ -81,6 +80,15 @@
                                                             <label class="control-label"></label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">
+                                                                    TAHUN AJAR AKTIF : <?php echo $deskripsi ?>
+                                                                </span>
+                                                                <input type="text" class="hidden" name="id_thn_ajar" id="id_thn_ajar" value="<?php echo $id_thn_ajar ?>">                                                                    
+                                                            </div>                                                            
+                                                    </div> 
+                                                    <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
                                                                     No Registrasi
                                                                 </span>
                                                                 <input type="text" class="form-control" name="no_registrasi" id="no_registrasi" placeholder="Masukan No Registrasi Santri TMI" onkeydown="OtomatisKapital(this)" maxlength="10" required>
@@ -104,10 +112,10 @@
                                                                     </span>
                                                             </div>                                                            
                                                     </div> 
-                                                    <div id="data_santri_detail" class="portlet box green">
+                                                    <div id="data_santri_detail" class="portlet box green-jungle">
                                                         <div class="portlet-title">
                                                             <div class="caption">
-                                                                <i class="fa fa-gift"></i>Data Santri Ditemukan</div>
+                                                                <i class="fa fa-child"></i>Data Santri Ditemukan</div>
                                                         </div>
                                                         <div class="portlet-body">
                                                                 <!--span-->
@@ -259,6 +267,59 @@
                                                                         </button>
                                                                     </span>
                                                                 </div>
+                                                            </div>     
+                                                            <!--span-->
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">
+                                                                        Potongan
+                                                                    </span>
+                                                                    <div class="input" id= "hiddenidPotongan">
+                                                                        <?php
+                                                                            $att_item = 'id="hide_id_Potongan"  class="form-control select2" style="width:100%"  onchange="pilihItemPotongan()"';
+                                                                            echo form_dropdown('hide_id_Potongan', $id_potongan, null, $att_item);
+                                                                        ?>
+                                                                    </div>
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i><input type class="hidden" readonly name="id_potongan" id="id_potongan" required>
+                                                                        <input type class="form-control" style="width: 88%;" readonly name="nama_potongan" id="nama_potongan" required>                                                                    
+                                                                        <span class="input-group-btn"
+                                                                                style="cursor: pointer;"
+                                                                                title="Cari Potongan"
+                                                                                id="spansearchPotongan"
+                                                                                onclick="idPotonganshow()">
+                                                                            <button class="btn default" type="button">
+                                                                                <i class="fa fa-search"></i>
+                                                                            </button>
+                                                                        </span>
+                                                                        <span class="input-group-btn"
+                                                                                style="cursor: pointer;"
+                                                                                title="Cari Potongan"
+                                                                                id="spansearchclosePotongan"
+                                                                                onclick="idPotonganhide()">
+                                                                            <button class="btn default" type="button">
+                                                                                <i class="fa fa-times-circle"></i>
+                                                                            </button>
+                                                                        </span>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon">
+                                                                                <input type="radio" class="chk" name="tipe_potongan" value="persen" checked="checked">Persen
+                                                                            </span>
+                                                                            <div class="input-icon right">
+                                                                            <i class="fa"></i><input type class="form-control" readonly name="potongan_persen" id="potongan_persen"  required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon">
+                                                                                <input type="radio" class="chk" name="tipe_potongan" value="nominal" >Nominal
+                                                                            </span>
+                                                                            <div class="input-icon right">
+                                                                            <i class="fa"></i><input type class="form-control" readonly name="potongan_nominal" id="potongan_nominal"  required>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>                                                                   
+                                                                </div>
+                                                                
                                                             </div>     
                                                         </div>
                                                     </div>
