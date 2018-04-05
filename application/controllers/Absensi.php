@@ -20,7 +20,7 @@ class Absensi extends IO_Controller{
 
 		$iparam 		= json_decode($_REQUEST['param']);
 		$string_param 	= $this->build_param($iparam);
-
+		
 		//sorting
 		$sort_by 		= $_REQUEST['order'][0]['column'];
 		$sort_type 		= $_REQUEST['order'][0]['dir'];
@@ -75,5 +75,15 @@ class Absensi extends IO_Controller{
 		}
 
 		return $string_param;
+	}
+
+	function get_data_absensi(){
+		
+		$tgl_absensi = $this->input->get('tgl_absensi');
+		$id_jadwal = $this->input->get('id_jadwal');
+
+		$data = $this->model->mget_data_absensi('')->result();
+
+		echo json_encode($data);
 	}
 }

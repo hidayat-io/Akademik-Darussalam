@@ -18,7 +18,7 @@ class Mkelas extends CI_Model
         $cols = array('id_kelas','tingkat','tipe_kelas');
 
         $sql = "SELECT *
-				FROM ms_kelasHD";
+				FROM ms_kelashd";
                     
 
             if($param!=null){
@@ -37,7 +37,7 @@ class Mkelas extends CI_Model
 	function query_cekkelasHD($tingkat,$tipe_kelas){
         $data = array();
 		// $data=$this->db->query("SELECT * from ms_kelas where kode_kelas ='$kode_kelas'")->row_array();
-		$data=$this->db->query("SELECT * FROM ms_kelasHD
+		$data=$this->db->query("SELECT * FROM ms_kelashd
 								where tingkat ='$tingkat' and tipe_kelas ='$tipe_kelas'")->row_array();
 		return $data;
 	}
@@ -45,25 +45,25 @@ class Mkelas extends CI_Model
 	function query_kelasHD($id_kelas){
         $data = array();
 		// $data=$this->db->query("SELECT * from ms_kelas where kode_kelas ='$kode_kelas'")->row_array();
-		$data=$this->db->query("SELECT * FROM ms_kelasHD
+		$data=$this->db->query("SELECT * FROM ms_kelashd
 								where id_kelas ='$id_kelas'")->row_array();
 		return $data;
 	}
 
 	function simpan_data_kelasHD($data_kelasHD){
 
-		$this->db->replace('ms_kelasHD',$data_kelasHD);
+		$this->db->replace('ms_kelashd',$data_kelasHD);
 	}
     
     function update_data_kelasHD($id_kelas,$data_kelasHD){
         
         $this->db->where('id_kelas',$id_kelas);
-		$this->db->update('ms_kelasHD',$data_kelasHD);
+		$this->db->update('ms_kelashd',$data_kelasHD);
 	}
 
 	function delete_kelasHD($id_kelas){
 		$this->db->where('id_kelas',$id_kelas);
-		$this->db->delete('ms_kelasHD');
+		$this->db->delete('ms_kelashd');
 	}
 	#endregion kelasHD
 
@@ -74,9 +74,9 @@ class Mkelas extends CI_Model
 		
         $cols = array('tingkat','tipe_kelas','kode_kelas','nama','kapasitas');
 
-        $sql = "SELECT ms_kelasHD.tingkat, ms_kelasHD.tipe_kelas, ms_kelasDT.kode_kelas, ms_kelasDT.nama, ms_kelasDT.kapasitas
-				FROM ms_kelasDT
-				inner join ms_kelasHD on ms_kelasDT.id_kelas = ms_kelasHD.id_kelas";
+        $sql = "SELECT ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kelasdt.kapasitas
+				FROM ms_kelasdt
+				inner join ms_kelashd on ms_kelasdt.id_kelas = ms_kelashd.id_kelas";
                     
 
             if($param!=null){
@@ -94,27 +94,27 @@ class Mkelas extends CI_Model
 	
 	function delete_kelas($kode_kelas){
 		$this->db->where('kode_kelas',$kode_kelas);
-		$this->db->delete('ms_kelasDT');
+		$this->db->delete('ms_kelasdt');
 	}
 
 	function simpan_data_kelas($data_kelas){
 
-		$this->db->replace('ms_kelasDT',$data_kelas);
+		$this->db->replace('ms_kelasdt',$data_kelas);
 	}
     
     function update_data_kelas($kode_kelas,$data_kelas){
         
         $this->db->where('kode_kelas',$kode_kelas);
-		$this->db->update('ms_kelasDT',$data_kelas);
+		$this->db->update('ms_kelasdt',$data_kelas);
 	}
 
     function query_kelas($kode_kelas){
         $data = array();
 		// $data=$this->db->query("SELECT * from ms_kelas where kode_kelas ='$kode_kelas'")->row_array();
-		$data=$this->db->query("SELECT ms_kelasHD.id_kelas, ms_kelasHD.tingkat, ms_kelasHD.tipe_kelas, ms_kelasDT.kode_kelas, ms_kelasDT.nama, ms_kelasDT.kapasitas
-				FROM ms_kelasDT
-				inner join ms_kelasHD on ms_kelasDT.id_kelas = ms_kelasHD.id_kelas 
-				where ms_kelasDT.kode_kelas ='$kode_kelas'")->row_array();
+		$data=$this->db->query("SELECT ms_kelashd.id_kelas, ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kelasdt.kapasitas
+				FROM ms_kelasdt
+				inner join ms_kelashd on ms_kelasdt.id_kelas = ms_kelashd.id_kelas 
+				where ms_kelasdt.kode_kelas ='$kode_kelas'")->row_array();
 		return $data;
 	}
 	#endregion KelasDT

@@ -26,7 +26,7 @@ class Mrpp extends CI_Model
         $sql = "SELECT DISTINCT a.id_rpp, a.kode_kelas,a.id_guru,e.tingkat, e.tipe_kelas,c.nama, a.santri, a.semester, a.id_thn_ajar, a.id_mapel, b.deskripsi, c.nama, d.nama_lengkap
                 FROM trans_rpp a
                 INNER JOIN ms_tahun_ajaran b ON b.id = a.id_thn_ajar
-                INNER JOIN ms_kelasDT c ON c.kode_kelas=a.kode_kelas
+                INNER JOIN ms_kelasdt c ON c.kode_kelas=a.kode_kelas
 				INNER JOIN ms_guru d ON d.id_guru=a.id_guru
 				INNER JOIN ms_kelasHD e ON c.id_kelas=e.id_kelas";
 				

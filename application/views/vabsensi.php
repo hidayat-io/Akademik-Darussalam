@@ -1,3 +1,4 @@
+<link href="<?=base_url()?>assets/css/v_absensi.css" rel="stylesheet" type="text/css">
 <script src="<?php echo base_url(); ?>js/jabsensi.js"></script>
 <input type="hidden" name="hid_param" id="hid_param" value='' />
 
@@ -19,7 +20,7 @@
                 <table class="table table-striped table-bordered table-hover" id="tb-list">
                     <thead>
                         <tr>
-                            <th>Kode Kelas</th>                  
+                            <th>Kode Kelas</th>
                             <th>Nama Kelas</th>
                             <th>Tingkat</th>
                             <th>Tipe Kelas</th>
@@ -27,7 +28,7 @@
                             <th>Jam</th>
                             <th>Mata Pelajaran</th>
                             <th>Guru</th>
-                            <th>Edit</th>                                       
+                            <th>Edit</th>                   
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -37,3 +38,65 @@
         <!-- END EXAMPLE TABLE PORTLET-->        
     </div>
 </div>
+
+<!-- Modal Form Editing -->
+<div id="modal_editing" class="modal modal-form fade bs-modal-lg modal-fullscreen force-fullscreen"
+    role="dialog" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-form modal-lg" id="portlet_form_scan">
+        <div class="modal-content modal-content-form">
+            <div class="modal-body-form">
+                <div class="portlet-form">
+                    <form id="form_editing" enctype="multipart/form-data">
+                        <h4 style="font-size:90%">
+                            <strong>Absensi Siswa</strong>
+                            <table border="0" style="float:right" id="tb-title">
+                                <tr>
+                                    <td><strong>Hari : </strong><label id="lbl_hari"></label></td>
+                                    <td><strong>Tanggal : </strong>
+                                        <input type="text" class="form-control datepicker input-sm input-small" 
+                                            style="display:inline-block" readonly="" name="dtp_tgl_absensi" id="dtp_tgl_absensi"
+                                            value="<?php echo date('d-m-Y')?>">
+                                    </td>
+                                    <td>
+                                        <strong>Tahun Ajaran : </strong><label id="lbl_tahun_ajar"></label>
+                                    </td>
+                                    <td><strong>Semester : </strong><label id="lbl_tahun_ajar"></label></td>
+                                </tr>
+                            </table>
+                        </h4>
+                        <hr style="margin: 20px 0px 0px;">
+                        <div style="float:right;color:blue">
+                            <strong>Guru :</strong><label id="lbl_nama_guru"></label>
+                            <strong>Kelas :</strong><label id="lbl_nama_kelas"></label>
+                        </div>
+                        <table width="100%" class="table table-striped table-bordered table-hover" id="tb_absensi">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" class="cell-middle-left">No.</th>
+                                    <th rowspan="2" class="cell-middle-left">No.Reg</th>
+                                    <th rowspan="2" class="cell-middle-left">Nama Siswa</th>
+                                    <th colspan="4" class="cell-middle-left">Absensi</th>
+                                </tr>
+                                <tr>
+                                    <th class="cell-text-center">Hadir</th>
+                                    <th class="cell-text-center">Ijin</th>
+                                    <th class="cell-text-center">Sakit</th>
+                                    <th class="cell-text-center">Alpa</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </form>                    
+                </div>
+            </div>
+            <div class="modal-footer modal-footer-form">
+                <a href="javascript:;" class="btn btn-sm default" data-dismiss="modal">
+                    <i class="glyphicon glyphicon-minus-sign"></i>&nbsp;CLOSE
+                </a>
+                <img id="load_save" style="margin-left:5px;display: none"
+                    src="<?php echo base_url(); ?>images/pre_loader.gif" />
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal Form Editing -->

@@ -18,7 +18,8 @@ class Common_lib{
     	$uid 			= $CI->session->userdata('logged_in')['uid'];
     	$string_menu 	= '';
  
-    	$main_menu_data = $this->look_up_menu(0,$uid);
+        $main_menu_data = $this->look_up_menu(0,$uid);
+        
 
     	if($main_menu_data!=null){
 
@@ -47,7 +48,7 @@ class Common_lib{
     		}
     	}
 
-    	echo $string_menu;
+		echo $string_menu;
     }
 
     function build_child_menu($parent_modul,$user_id,$string_child_menu=''){

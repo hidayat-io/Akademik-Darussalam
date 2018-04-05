@@ -1,0 +1,178 @@
+body, html {
+    height: 100%;
+}
+
+h4.form-section{
+
+  font-size: 90%;
+}
+
+.form-section{
+
+	margin: 10px 0px !important;
+  font-weight: bold;
+}
+
+#tb_list th,
+#tb_list td {
+  white-space: nowrap;
+}
+
+#form_search{
+
+  margin-top: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.portlet > .portlet-title {
+    min-height: 40px;    
+    margin-bottom: 0px;
+    background: green;
+    padding-left: 10px;
+}
+
+.portlet-form{
+
+  padding: 5px 20px;
+  height: 100%;
+}
+
+.portlet{
+
+  margin-bottom: 0px;
+}
+
+.modal-form {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.modal-dialog-form {
+  position: fixed;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.modal-content-form {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border: 2px solid #098040;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.modal-header-form {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 50px;
+  padding: 10px;
+  background: #6598d9;
+  border: 0;
+}
+
+.modal-title-form {
+  font-weight: 300;
+  color: #fff;
+  line-height: 30px;
+}
+
+.modal-body-form {
+  position: absolute;
+  top: 0px;
+  bottom: 50px;
+  width: 100%;
+  font-weight: 300;
+  overflow: auto;
+  height:95%;
+  background: #fff;
+}
+
+.modal-footer-form {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  padding: 10px;
+  background: #fff;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 10px;
+  background: #fff;
+  border-left: 1px solid darken(#fff, 10%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: darken(#fff, 20%);
+}
+
+.inline-button{
+
+  margin-top: 8px;  
+}
+
+#form-editing > .medium-width{
+
+  width: 50%;
+}
+
+#form-editing > .xsmall-width{
+
+  width: 20%;
+}
+
+#form-editing > .small-width{
+
+  width: 30%;
+}
+
+.row{
+
+  margin-bottom: 15px;
+}
+
+.form-body{
+
+  padding: 5px 20px;
+}
+
+.cell-middle-left{
+
+  vertical-align: middle !important;
+  text-align: center;
+}
+
+.cell-text-center{
+
+  text-align: center;
+}
+
+#tb-title td{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#dtp_tgl_absensi{
+  width: 100px !important;
+  text-align: center;
+}
