@@ -45,10 +45,8 @@ class Mdaftarulang extends CI_Model
     }
 
     function get_list_data($param,$sortby=0,$sorttype='desc'){
-        // var_dump($param);
-        // exit();
 		
-        $cols = array('id_thn_ajar','no_registrasi','kode_kelas','date');
+        $cols = array('id','id_thn_ajar','no_registrasi','kode_kelas','date');
 
         $sql = "SELECT trans_daftar_ulang.id, ms_tahun_ajaran.deskripsi, trans_daftar_ulang.no_registrasi, trans_daftar_ulang.date, ms_santri.rayon, ms_santri.bagian, ms_santri.kamar, ms_santri.kel_sekarang 
                 FROM trans_daftar_ulang
@@ -70,9 +68,25 @@ class Mdaftarulang extends CI_Model
     }
     
     function delete_daftarulang($kode_daftarulang){
-		$this->db->where('kode_daftarulang',$kode_daftarulang);
-		$this->db->delete('ms_daftarulang');
+		$this->db->where('id',$kode_daftarulang);
+		$this->db->delete('trans_daftar_ulang');
 	}
+
+    function delete_tagihan($id_thn_ajar,$no_registrasi){
+		$this->db->where('id_thn_ajar',$id_thn_ajar);
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->delete('trans_tagihan');
+	}
+
+	function query_get_dataID_tagihan($id_thn_ajar,$no_registrasi){
+        $data = array();
+		$data=$this->db->query("SELECT trans_tagihan.id_tagihan  
+								from trans_tagihan 
+								INNER JOIN trans_pembayaran on trans_tagihan.id_tagihan = trans_pembayaran.id_tagihan
+								Where trans_tagihan.id_thn_ajar ='$id_thn_ajar' and trans_tagihan.no_registrasi = '$no_registrasi'")->row_array();
+		return $data;
+	}
+
     #endregion index
    
     
@@ -104,11 +118,20 @@ class Mdaftarulang extends CI_Model
         $data = array();
 		$data=$this->db->query("SELECT * from trans_daftar_ulang where id_thn_ajar ='$id_thn_ajar' and no_registrasi ='$no_registrasi' ")->row_array();
 		return $data;
+	}
+	
+    function query_dataedit_daftarulang($kode_daftarulang){
+        $data = array();
+		$data=$this->db->query("SELECT trans_daftar_ulang.id, trans_daftar_ulang.id_thn_ajar, trans_daftar_ulang.no_registrasi, trans_daftar_ulang.kel_sebelumnya, trans_daftar_ulang.rayon_sebelumnya, trans_daftar_ulang.kamar_sebelumnya, trans_daftar_ulang.bagian_sebelumnya, trans_daftar_ulang.id_potongan, trans_daftar_ulang.tipe_potongan,
+										ms_santri.nama_lengkap, ms_santri.rayon, ms_santri.kamar, ms_santri.bagian, ms_santri.kel_sekarang, ms_biaya_potongan.nama_potongan, ms_biaya_potongan.persen, ms_biaya_potongan.nominal
+								from trans_daftar_ulang
+								inner join ms_santri on trans_daftar_ulang.no_registrasi = ms_santri.no_registrasi 
+								left join ms_biaya_potongan on trans_daftar_ulang.id_potongan = ms_biaya_potongan.id_potongan 
+								where trans_daftar_ulang.id='$kode_daftarulang'")->row_array();
+		return $data;
     }
 	
 	function simpan_data_tagihan($data_tagihan){
-		// var_dump($data_tagihan);
-		// exit();
 
 		$this->db->replace('trans_tagihan',$data_tagihan);
 		// $query = $this->db->last_query();
@@ -127,10 +150,11 @@ class Mdaftarulang extends CI_Model
 		$this->db->update('ms_santri',$data_update_ms_santri);
 	} 
 
-    function update_data_daftarulang($kode_daftarulang,$data_daftarulang){
+    function update_data_daftarulang($id_thn_ajar,$no_registrasi,$data_daftarulang){
         
-        $this->db->where('kode_daftarulang',$kode_daftarulang);
-		$this->db->update('ms_daftarulang',$data_daftarulang);
+        $this->db->where('id_thn_ajar',$id_thn_ajar);
+        $this->db->where('no_registrasi',$no_registrasi);
+		$this->db->update('trans_daftar_ulang',$data_daftarulang);
 	} 
     
     #endregion modal add daftar ulang

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 08, 2018 at 07:07 PM
+-- Generation Time: Apr 09, 2018 at 05:58 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -29,8 +29,8 @@ USE `hidayati_pesantren`;
 --
 
 INSERT INTO `infaq_temp` (`id_donatur`, `saldo`, `recuser`, `recdate`) VALUES
-(3, 7500000, 'admin', '2017-12-12 07:37:57'),
-(5, 3500000, 'admin', '2017-12-12 07:33:32');
+(3, 0, 'admin', '2018-03-13 03:46:26'),
+(5, 3000000, 'admin', '2018-03-13 03:46:35');
 
 --
 -- Dumping data for table `login_history`
@@ -322,7 +322,44 @@ INSERT INTO `login_history` (`id`, `user_id`, `time`, `ip_addr`) VALUES
 (334, 'admin', '2018-03-06 02:36:24', '::1'),
 (335, 'admin', '2018-03-06 06:47:32', '::1'),
 (336, 'admin', '2018-03-08 02:17:03', '::1'),
-(337, 'admin', '2018-03-08 16:50:35', '::1');
+(337, 'admin', '2018-03-08 16:50:35', '::1'),
+(338, 'admin', '2018-03-13 02:53:48', '::1'),
+(339, 'admin', '2018-03-13 04:08:21', '::1'),
+(340, 'admin', '2018-03-14 03:55:47', '::1'),
+(341, 'admin', '2018-03-14 13:23:19', '::1'),
+(342, 'admin', '2018-03-14 13:23:43', '::1'),
+(343, 'admin', '2018-03-15 08:15:52', '::1'),
+(344, 'admin', '2018-03-15 15:38:18', '::1'),
+(345, 'admin', '2018-03-17 03:23:01', '::1'),
+(346, 'admin', '2018-03-17 08:28:23', '::1'),
+(347, 'admin', '2018-03-18 16:21:20', '::1'),
+(348, 'admin', '2018-03-20 15:15:17', '::1'),
+(349, 'admin', '2018-03-20 15:22:53', '::1'),
+(350, 'admin', '2018-03-23 02:46:39', '::1'),
+(351, 'admin', '2018-03-23 06:00:59', '::1'),
+(352, 'admin', '2018-03-23 15:12:31', '::1'),
+(353, 'admin', '2018-03-23 23:18:36', '::1'),
+(354, 'admin', '2018-03-25 07:14:30', '::1'),
+(355, 'admin', '2018-03-25 13:00:02', '::1'),
+(356, 'admin', '2018-03-26 02:11:40', '::1'),
+(357, 'admin', '2018-03-27 02:34:17', '::1'),
+(358, 'admin', '2018-03-27 09:13:11', '::1'),
+(359, 'admin', '2018-03-29 13:35:25', '::1'),
+(360, 'admin', '2018-03-31 13:32:04', '::1'),
+(361, 'admin', '2018-03-31 15:40:31', '::1'),
+(362, 'admin', '2018-04-01 07:51:45', '::1'),
+(363, 'admin', '2018-04-02 02:46:28', '::1'),
+(364, 'admin', '2018-04-02 08:17:12', '::1'),
+(365, 'admin', '2018-04-03 03:03:10', '::1'),
+(366, 'admin', '2018-04-03 07:27:31', '::1'),
+(367, 'admin', '2018-04-04 06:16:04', '::1'),
+(368, 'admin', '2018-04-04 15:12:15', '::1'),
+(369, 'admin', '2018-04-04 15:41:59', '::1'),
+(370, 'admin', '2018-04-04 15:44:53', '::1'),
+(371, 'admin', '2018-04-04 16:11:32', '::1'),
+(372, 'admin', '2018-04-05 02:22:27', '::1'),
+(373, 'admin', '2018-04-09 01:46:55', '::1'),
+(374, 'admin', '2018-04-09 15:12:17', '::1');
 
 --
 -- Dumping data for table `ms_bagian`
@@ -384,12 +421,6 @@ INSERT INTO `ms_banksoal` (`id_soal`, `id_matpal`, `tingkat`, `soal`, `jwb_a`, `
 (47, 'MP01', 1, 'Mana jawaban yang benar?', 'ini jawaban yang benar', 'ini juga jawaban yang benar', 'a dan b benar', 'semua salah', 'b', 'admin', '2017-12-13 00:00:00'),
 (48, 'MP01', 1, 'Mana jawaban yang benar?', 'ini jawaban yang benar', 'ini juga jawaban yang benar', 'a dan b benar', 'semua salah', 'b', 'admin', '2017-12-13 00:00:00'),
 (49, 'MP01', 1, 'Mana jawaban yang benar?', 'ini jawaban yang benar', 'ini juga jawaban yang benar', 'a dan b benar', 'semua salah', 'b', 'admin', '2017-12-13 00:00:00'),
-(50, 'MP05', 4, 'ini adalah soal salah', 'iya soal itu memang salah', 'soal itu benar', 'soal ini sedikit benarnya', 'ini soal asalan', 'd', 'admin', '2017-12-13 00:00:00'),
-(51, 'MP05', 4, 'ini adalah soal salah', 'iya soal itu memang salah', 'soal itu benar', 'soal ini sedikit benarnya', 'ini soal asalan', 'd', 'admin', '2017-12-13 00:00:00'),
-(52, 'MP05', 4, 'ini adalah soal salah', 'iya soal itu memang salah', 'soal itu benar', 'soal ini sedikit benarnya', 'ini soal asalan', 'd', 'admin', '2017-12-13 00:00:00'),
-(53, 'MP05', 4, 'ini adalah soal salah', 'iya soal itu memang salah', 'soal itu benar', 'soal ini sedikit benarnya', 'ini soal asalan', 'd', 'admin', '2017-12-13 00:00:00'),
-(54, 'MP05', 4, 'ini adalah soal salah', 'iya soal itu memang salah', 'soal itu benar', 'soal ini sedikit benarnya', 'ini soal asalan', 'd', 'admin', '2017-12-13 00:00:00'),
-(55, 'MP05', 4, 'ini adalah soal salah', 'iya soal itu memang salah', 'soal itu benar', 'soal ini sedikit benarnya', 'ini soal asalan', 'd', 'admin', '2017-12-13 00:00:00'),
 (56, 'MP05', 4, 'ini adalah soal salah', 'iya soal itu memang salah', 'soal itu benar', 'soal ini sedikit benarnya', 'ini soal asalan', 'd', 'admin', '2017-12-13 00:00:00'),
 (57, 'MP05', 4, 'ini adalah soal salah', 'iya soal itu memang salah', 'soal itu benar', 'soal ini sedikit benarnya', 'ini soal asalan', 'd', 'admin', '2017-12-13 00:00:00'),
 (58, 'MP04', 2, 'Mana jawaban yang benar?', 'ini jawaban yang benar', 'ini juga jawaban yang benar', 'a dan b benar', 'semua salah', 'd', 'admin', '2017-12-02 00:00:00'),
@@ -411,8 +442,7 @@ INSERT INTO `ms_banksoal` (`id_soal`, `id_matpal`, `tingkat`, `soal`, `jwb_a`, `
 (74, 'MP01', 1, 'Mana jawaban yang benar?', 'ini jawaban yang benar', 'ini juga jawaban yang benar', 'a dan b benar', 'semua salah', 'b', 'admin', '2017-12-13 00:00:00'),
 (75, 'MP01', 1, 'Mana jawaban yang benar?', 'ini jawaban yang benar', 'ini juga jawaban yang benar', 'a dan b benar', 'semua salah', 'b', 'admin', '2017-12-13 00:00:00'),
 (76, 'MP01', 1, 'Mana jawaban yang benar?', 'ini jawaban yang benar', 'ini juga jawaban yang benar', 'a dan b benar', 'semua salah', 'b', 'admin', '2017-12-13 00:00:00'),
-(77, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'admin', '2018-01-08 00:00:00'),
-(78, 'TJDRORI', 3, 'werwer', 'wer', 'w', 'wer', 'wr', 'a', 'admin', '2018-03-08 00:00:00');
+(77, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'admin', '2018-01-08 00:00:00');
 
 --
 -- Dumping data for table `ms_bebanguru`
@@ -426,15 +456,24 @@ INSERT INTO `ms_bebanguru` (`id_guru`, `jml_beban`, `id_thn_ajar`, `semester`, `
 -- Dumping data for table `ms_biaya`
 --
 
-INSERT INTO `ms_biaya` (`id`, `kategori`, `nama_item`, `nominal`) VALUES
-(82, 'S', '11', 275000),
-(83, 'S', '12', 150000),
-(84, 'S', '13', 170000),
-(85, 'S', '14', 300000),
-(86, 'S', '15', 50000),
-(125, 'B', '8', 400000),
-(126, 'B', '9', 200000),
-(127, 'B', '16', 250000);
+INSERT INTO `ms_biaya` (`id`, `id_thn_ajar`, `kategori`, `nama_item`, `nominal`, `recdate`, `userid`) VALUES
+(163, 3, 'S', '11', 250000, '2018-03-23 08:09:57', 'admin'),
+(164, 3, 'S', '12', 350000, '2018-03-23 08:09:57', 'admin'),
+(165, 3, 'S', '13', 300000, '2018-03-23 08:09:57', 'admin'),
+(166, 3, 'S', '14', 250000, '2018-03-23 08:09:57', 'admin'),
+(183, 3, 'B', '8', 250000, '2018-03-25 08:02:45', 'admin'),
+(184, 3, 'B', '15', 350000, '2018-03-25 08:02:45', 'admin'),
+(185, 2, 'B', '8', 500000, '2018-03-25 13:16:39', 'admin'),
+(186, 2, 'B', '9', 500000, '2018-03-25 13:16:39', 'admin'),
+(192, 4, 'S', '11', 21312, '2018-03-25 13:31:14', 'admin'),
+(193, 4, 'S', '12', 312321000, '2018-03-25 13:31:14', 'admin'),
+(195, 2, 'S', '11', 350000, '2018-03-25 13:41:15', 'admin'),
+(196, 2, 'S', '12', 500000, '2018-03-25 13:41:15', 'admin'),
+(197, 2, 'S', '13', 200000, '2018-03-25 13:41:15', 'admin'),
+(198, 2, 'S', '14', 350000, '2018-03-25 13:41:15', 'admin'),
+(199, 4, 'B', '8', 350000, '2018-04-04 16:12:47', 'admin'),
+(200, 4, 'B', '9', 250000, '2018-04-04 16:12:47', 'admin'),
+(201, 4, 'B', '15', 300000, '2018-04-04 16:12:47', 'admin');
 
 --
 -- Dumping data for table `ms_biaya_komponen`
@@ -447,15 +486,15 @@ INSERT INTO `ms_biaya_komponen` (`id_komponen`, `nama_komponen`, `tipe`, `isActi
 (12, 'OPPD & KESEHATAN', 'S', 1, 'admin', '2018-01-12 06:05:19'),
 (13, 'EVALUASI BELAJAR', 'S', 1, 'admin', '2018-01-12 06:05:21'),
 (14, 'PEMBANGUNAN PONDOK', 'S', 1, 'admin', '2018-01-12 06:05:23'),
-(15, 'FIGUR', 'S', 1, 'admin', '2018-01-12 06:05:25'),
-(16, 'ALAT TULIS', 'B', 1, 'admin', '2018-01-20 04:24:39');
+(15, 'LAIN LAIN', 'B', 1, 'admin', '2018-03-14 13:29:36'),
+(16, 'TES', 'S', 0, 'admin', '2018-03-15 15:57:03');
 
 --
 -- Dumping data for table `ms_biaya_potongan`
 --
 
 INSERT INTO `ms_biaya_potongan` (`id_potongan`, `nama_potongan`, `persen`, `nominal`, `userid`, `rec_date`) VALUES
-(51, 'SANTRI LOKAL', 10, 300000, 'admin', '2018-01-24 15:52:58'),
+(51, 'SANTRI LOKAL', 30, 300000, 'admin', '2018-01-24 15:52:58'),
 (52, 'ANAK GURU', 30, 500000, 'admin', '2018-01-24 15:53:20');
 
 --
@@ -631,15 +670,6 @@ INSERT INTO `ms_guru_struktural` (`id_jabatan`, `id_guru`) VALUES
 (3, 66);
 
 --
--- Dumping data for table `ms_infaq`
---
-
-INSERT INTO `ms_infaq` (`id_infaq`, `id_donatur`, `tgl_infaq`, `tipe`, `nominal`, `keterangan`, `userid`, `recdate`) VALUES
-(52, 5, '2017-12-12', 'o', 1500000, 'untuk ini', 'admin', NULL),
-(51, 5, '2017-12-12', 'i', 5000000, 'saldo awal', 'admin', NULL),
-(53, 3, '2017-12-12', 'i', 7500000, 'sld awal', 'admin', NULL);
-
---
 -- Dumping data for table `ms_kamar`
 --
 
@@ -775,10 +805,10 @@ INSERT INTO `ms_santri` (`kategori`, `no_registrasi`, `no_stambuk`, `thn_masuk`,
 ('TMI', 'CT38170008', 0, 2018, NULL, NULL, NULL, NULL, '11223344', '0', 'MUHTAR', 'خحها', 'MUHTAR', 'NGOPI', 1000000, 113345587, 3355777, 'TANJUNG ENIM', '1989-07-10', 'KONSULAT 1', NULL, NULL, NULL, 'SUMATERA', 'INDONESIA', 'PERUMAHAN MEDANG', 'NO3 RT 003 RW 013', 'MEDANG', 'PAGEDANGAN', 'LEGOK', 'TANGERANG SELATAN', 'BANTEN', 523314, 21558877, 2147483647, 'faritno@me.com', 'faritno@faceboo', 'TANJUNG ENIM', 'CoWhmFmcJ0nt3S5jbf5s.pdf', 'J8PywCgZ7VHjkmGqF8lD.jpg', 'rAt6IRPZixfk4BkPnuaJ.pdf', '2bmJoaZ3jpFr8ls4HZZG.pdf', 'lLkvUG5fKbl8HfIS7kgG.PDF', 'QqBicZPU3YxgKSNz7Dey.pdf', 'vKUpKarTdnVbJkW1EuzD.pdf', 'NQrIxQDvHtJIDcQzbYyM.pdf', 'aitam_jamiah'),
 ('TMI', 'T38170001', 1, 2017, 'GD01', 'K01', 'B01', 'KR1A', '123456789', '1234567890', 'RUDI HERMAWAN', 'قعيه اثقةشصشى', 'RUDI', 'OLAHRAGE', 300000, 2147483647, 2147483647, 'GARUT', '2004-03-08', 'SINDANG', NULL, NULL, NULL, 'SUNDA', 'INDONESIA', 'JL. LANCAR JAYA', 'NO.18 007/008', 'KEJAYAAN', 'MAJU TERUS', 'KECAMATAN1', 'KABUPATEN1', 'JAWA BARAT', 11876, 24765984, 2147483647, 'rudi@gmail.com', 'rudi@facebook', 'garut', NULL, 'mnWyWkatVr4JTzcE0abP.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('TMI', 'T39170013', 14, 2017, 'GD01', 'K01', 'B01', 'K023', '112233', '2147483647', 'namalengkap nya1', 'namaarab nya1', 'namapanggi', 'hoinya apa', 500000, 123, 321, 'Tempat_lahir', '1990-02-13', 'konsulat1', NULL, NULL, NULL, 'suku1', 'Kewarga1', 'jaln1', 'norUMah1', 'Dusun1', 'desa1', 'kecamatan1', 'kabupaten1', 'provinsi1', 51280, 2155677, 2147483647, 'email1@yahoo.com', 'fb1', 'dfdfdfdfdf', 'MyScl8mlnNJCn7wLGxJu.pdf', 'eWSaMJ2sXheTNvKMrWUW.jpg', 'tMiZ5AUeYPb2H2P4WC3b.pdf', 'EzPpovTpLyAsy30oyjti.jpg', 'S2VAG4eIxziv8HYND4qA.jpg', 'ThG2pY575DBNDV6GfOmO.pdf', 'YLKopMNGWvs1jsF8HNg4.pdf', '55R4fRiOc63MD8M7UM4R.pdf', NULL),
-('TMI', 'T39170014', 15, 2017, 'GD02', 'K02', 'B01', 'KR1A', '112233', '2147483647', 'BOBI', 'namaarab nya1', 'namapanggi', 'hoinya apa', 500000, 123, 321, 'Tempat_lahir', '0000-00-00', 'konsulat1', NULL, NULL, NULL, 'suku1', 'Kewarga1', 'jaln1', 'norUMah1', 'Dusun1', 'desa1', 'kecamatan1', 'kabupaten1', 'provinsi1', 51280, 2155677, 2147483647, 'email1@yahoo.com', 'fb1', 'dfdfdfdfdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('TMI', 'T39170019', 20, 2017, NULL, NULL, NULL, NULL, '11223344', '51023205143239170019', 'AHDIAN', 'حغغفىلا ت', 'AHDIAN', 'NGOPI', 1000000, 113345587, 3355777, 'TANJUNG ENIM', '1989-07-10', 'KONSULAT 1', NULL, NULL, NULL, 'SUMATERA', 'INDONESIA', 'PERUMAHAN MEDANG', 'NO3 RT 003 RW 013', 'MEDANG', 'PAGEDANGAN', 'LEGOK', 'TANGERANG SELAT', 'BANTEN', 523314, 21558877, 2147483647, 'faritno@me.com', 'faritno@faceboo', 'TANJUNG EN', 'CoWhmFmcJ0nt3S5jbf5s.pdf', '5tzrpZTl8IQ06C1aEcx1.jpg', 'rAt6IRPZixfk4BkPnuaJ.pdf', '2bmJoaZ3jpFr8ls4HZZG.pdf', 'lLkvUG5fKbl8HfIS7kgG.PDF', 'QqBicZPU3YxgKSNz7Dey.pdf', 'vKUpKarTdnVbJkW1EuzD.pdf', 'NQrIxQDvHtJIDcQzbYyM.pdf', NULL),
-('TMI', 'T39180001', 21, 2018, 'GD01', 'K04', 'B02', 'KR1C', '97878', '51023205143239180001', 'JOLA', '', 'ASd', 'ASDA', 234, 234, 2342, '23423', '2018-01-17', '34234', NULL, NULL, NULL, '23423', '2342', '234', '23234', '234', '234', '2342', '4234', '3423', 2342, 234, 234, '', '', '23', NULL, 'GeLr9gHRlMSalNYxAhZ8.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('TMI', 'T39180018', 37, 2015, 'GD02', 'K03', 'B02', 'KR1A', '234234', '51023205143239180018', 'JONI S', 'REREW', 'WEREW', '23432', 0, 423423423, 4535345, '23423', '2017-11-16', 'WERWER', NULL, NULL, NULL, '234234', '23423', '23', '234', '23', '23432', '234', '22342', '23423', 3423, 4234, 4234234, '', '', 'WERWER', NULL, 'WK815803OJqTon7uPA3Z.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+('TMI', 'T39170014', 15, 2017, 'GD01', 'K01', 'B01', 'KR1B', '112233', '2147483647', 'BOBI', 'namaarab nya1', 'namapanggi', 'hoinya apa', 500000, 123, 321, 'Tempat_lahir', '0000-00-00', 'konsulat1', NULL, NULL, NULL, 'suku1', 'Kewarga1', 'jaln1', 'norUMah1', 'Dusun1', 'desa1', 'kecamatan1', 'kabupaten1', 'provinsi1', 51280, 2155677, 2147483647, 'email1@yahoo.com', 'fb1', 'dfdfdfdfdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('TMI', 'T39170019', 20, 2017, 'GD02', 'K02', 'B02', 'KR2A', '11223344', '51023205143239170019', 'AHDIAN', 'حغغفىلا ت', 'AHDIAN', 'NGOPI', 1000000, 113345587, 3355777, 'TANJUNG ENIM', '1989-07-10', 'KONSULAT 1', NULL, NULL, NULL, 'SUMATERA', 'INDONESIA', 'PERUMAHAN MEDANG', 'NO3 RT 003 RW 013', 'MEDANG', 'PAGEDANGAN', 'LEGOK', 'TANGERANG SELAT', 'BANTEN', 523314, 21558877, 2147483647, 'faritno@me.com', 'faritno@faceboo', 'TANJUNG EN', 'CoWhmFmcJ0nt3S5jbf5s.pdf', '5tzrpZTl8IQ06C1aEcx1.jpg', 'rAt6IRPZixfk4BkPnuaJ.pdf', '2bmJoaZ3jpFr8ls4HZZG.pdf', 'lLkvUG5fKbl8HfIS7kgG.PDF', 'QqBicZPU3YxgKSNz7Dey.pdf', 'vKUpKarTdnVbJkW1EuzD.pdf', 'NQrIxQDvHtJIDcQzbYyM.pdf', NULL),
+('TMI', 'T39180001', 21, 2018, 'GD03', 'K03', 'B03', 'KR3A', '97878', '51023205143239180001', 'JOLA', '', 'ASd', 'ASDA', 234, 234, 2342, '23423', '2018-01-17', '34234', NULL, NULL, NULL, '23423', '2342', '234', '23234', '234', '234', '2342', '4234', '3423', 2342, 234, 234, '', '', '23', NULL, 'GeLr9gHRlMSalNYxAhZ8.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('TMI', 'T39180018', 37, 2015, 'GD02', 'K02', 'B02', 'KR2A', '234234', '51023205143239180018', 'JONI S', 'REREW', 'WEREW', '23432', 0, 423423423, 4535345, '23423', '2017-11-16', 'WERWER', NULL, NULL, NULL, '234234', '23423', '23', '234', '23', '23432', '234', '22342', '23423', 3423, 4234, 4234234, '', '', 'WERWER', NULL, 'WK815803OJqTon7uPA3Z.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Dumping data for table `ms_santri_donatur`
@@ -792,18 +822,6 @@ INSERT INTO `ms_santri_donatur` (`no_registrasi`, `id_donatur`) VALUES
 ('T39180018', 3);
 
 --
--- Dumping data for table `ms_semester`
---
-
-INSERT INTO `ms_semester` (`id_semester`, `semester`, `bulan`) VALUES
-(40, 2, '7'),
-(41, 2, '8'),
-(42, 2, '9'),
-(48, 1, '1'),
-(49, 1, '2'),
-(50, 1, '3');
-
---
 -- Dumping data for table `santri_limit_harian`
 --
 
@@ -811,7 +829,8 @@ INSERT INTO `santri_limit_harian` (`id`, `no_reg`, `limit`, `up_time`, `up_by`) 
 (7, 'T39170001', 5000, '2017-10-21 15:52:01', 'admin'),
 (8, 'T39170002', 7000, '2017-10-21 15:52:06', 'admin'),
 (11, 'T38170001', 21000, '2017-11-23 18:03:06', 'admin'),
-(13, 'T39170017', 17000, '2017-12-23 15:43:45', 'admin');
+(13, 'T39170017', 17000, '2017-12-23 15:43:45', 'admin'),
+(15, 'T39170014', 66000, '2018-04-01 09:18:52', 'admin');
 
 --
 -- Dumping data for table `santri_saldo`
@@ -821,8 +840,9 @@ INSERT INTO `santri_saldo` (`no_registrasi`, `saldo`, `recuser`, `recdate`) VALU
 ('T38170001', 0, 'admin', '2018-01-20 10:50:50'),
 ('T39170001', 171100, 'admin', '2017-10-21 15:52:01'),
 ('T39170002', 221000, 'admin', '2017-10-21 15:52:06'),
-('T39170014', 7000, 'admin', '2018-01-20 10:50:38'),
-('T39170017', 0, 'admin', '2018-01-20 10:50:39');
+('T39170014', 2007000, 'admin', '2018-04-01 09:18:52'),
+('T39170017', 0, 'admin', '2018-01-20 10:50:39'),
+('T39170019', 0, 'admin', '2018-04-01 09:16:39');
 
 --
 -- Dumping data for table `sequence`
@@ -846,7 +866,10 @@ INSERT INTO `trans_banksoaldt` (`id_hd`, `id_soal`) VALUES
 (8, 18),
 (7, 20),
 (7, 19),
-(7, 18);
+(7, 18),
+(9, 20),
+(9, 19),
+(9, 18);
 
 --
 -- Dumping data for table `trans_banksoalhd`
@@ -854,20 +877,23 @@ INSERT INTO `trans_banksoaldt` (`id_hd`, `id_soal`) VALUES
 
 INSERT INTO `trans_banksoalhd` (`id`, `kode_soal`, `kurikulum`, `semester`, `id_matpal`, `tingkat`, `user_id`, `recdate`) VALUES
 (7, '4/1/MP04/1', 4, 1, 'MP04', 1, 'admin', '2018-01-20 11:07:14'),
-(8, '4/2/MP04/1', 4, 2, 'MP04', 1, 'admin', '2018-03-08 07:05:04');
+(8, '4/2/MP04/1', 4, 2, 'MP04', 1, 'admin', '2018-03-08 07:05:04'),
+(9, '3/1/MP04/1', 3, 1, 'MP04', 1, 'admin', '2018-03-14 14:52:16');
+
+--
+-- Dumping data for table `trans_daftar_ulang`
+--
+
+INSERT INTO `trans_daftar_ulang` (`id`, `id_thn_ajar`, `no_registrasi`, `kel_sebelumnya`, `rayon_sebelumnya`, `kamar_sebelumnya`, `bagian_sebelumnya`, `id_potongan`, `tipe_potongan`, `date`, `userid`) VALUES
+(25, 3, 'T38170001', 'KR1A', 'GD01', 'K01', 'B01', 0, '', '2018-04-09 01:50:57', 'admin'),
+(27, 3, 'T39170014', 'KR3A', 'GD03', 'K03', 'B03', 51, 'persen', '2018-04-09 03:16:06', 'admin'),
+(29, 4, 'T39170014', 'KR1B', 'GD01', 'K01', 'B01', 51, 'nominal', '2018-04-09 04:11:31', 'admin');
 
 --
 -- Dumping data for table `trans_jadwal_pelajaran`
 --
 
 INSERT INTO `trans_jadwal_pelajaran` (`id_jadwal`, `santri`, `id_thn_ajar`, `semester`, `kode_kelas`, `id_guru`, `jam`, `hari`, `id_mapel`, `kategori`, `userid`, `recdate`) VALUES
-(326, 'PUTRI', 4, '1', 'K023', 62, 'MAHGRIB', 'KAMIS', 'JRMYH', 'SORE', 'admin', '2018-03-08 00:00:00'),
-(325, 'PUTRI', 4, '1', 'K023', 65, 'MAHGRIB', 'JUMAT', 'SLMTFQ', 'SORE', 'admin', '2018-03-08 00:00:00'),
-(320, 'PUTRI', 4, '1', 'K023', 74, 'SUBUH', 'SENIN', 'MPSSORE', 'SORE', 'admin', '2018-03-08 00:00:00'),
-(321, 'PUTRI', 4, '1', 'K023', 69, 'SORE', 'SENIN', 'MPEKSORE2', 'SORE', 'admin', '2018-03-08 00:00:00'),
-(322, 'PUTRI', 4, '1', 'K023', 69, 'SORE', 'SELASA', 'MPEKSORE2', 'SORE', 'admin', '2018-03-08 00:00:00'),
-(323, 'PUTRI', 4, '1', 'K023', 69, 'MAHGRIB', 'RABU', 'TJDRORI', 'SORE', 'admin', '2018-03-08 00:00:00'),
-(324, 'PUTRI', 4, '1', 'K023', 70, 'SORE', 'RABU', 'SLMTFQ', 'SORE', 'admin', '2018-03-08 00:00:00'),
 (319, 'PUTRI', 3, '1', 'KR1B', 58, 'II', 'SELASA', 'MPSO', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
 (318, 'PUTRI', 3, '1', 'KR1B', 58, 'I', 'SELASA', 'MPSO', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
 (317, 'PUTRI', 3, '1', 'KR1B', 72, 'I', 'SENIN', 'MPEK', 'UTAMA', 'admin', '2018-03-08 00:00:00'),
@@ -1053,6 +1079,13 @@ INSERT INTO `trans_kurikulum` (`id_thn_ajar`, `tingkat`, `tipe_kelas`, `id_mapel
 ('4', '1', 'REGULER', 'MPEKSORE2', '1', '0', 'SORE', 'admin', '2018-03-08 00:00:00');
 
 --
+-- Dumping data for table `trans_pembayaran`
+--
+
+INSERT INTO `trans_pembayaran` (`id_pembayaran`, `id_tagihan`, `tanggal`, `type_pembayaran`, `nominal`, `remarks`, `userid`, `userdate`) VALUES
+(2, 228, NULL, NULL, NULL, NULL, NULL, NULL);
+
+--
 -- Dumping data for table `trans_pembiayaan_siswa`
 --
 
@@ -1072,44 +1105,6 @@ INSERT INTO `trans_pembiayaan_siswa` (`no_registrasi`, `pembiaya`, `biaya_perbul
 ('T39180019', 'IBU', 234234, 2423423, 423423);
 
 --
--- Dumping data for table `trans_rpp`
---
-
-INSERT INTO `trans_rpp` (`id_rpp`, `id_thn_ajar`, `santri`, `id_guru`, `semester`, `kode_kelas`, `id_mapel`, `userid`, `recdate`) VALUES
-(7, 3, 'PUTRI', 61, '1', 'KR1A', 'MPSO', 'admin', '2018-02-13 00:00:00'),
-(10, 3, 'PUTRI', 72, '1', 'KR1A', 'MPEK', 'admin', '2018-02-15 00:00:00');
-
---
--- Dumping data for table `trans_rpp_detail`
---
-
-INSERT INTO `trans_rpp_detail` (`id_rpp_dtl`, `id_rpp`, `bulan`, `minggu`, `hari`, `hissos`, `materi_pokok`, `alokasi_waktu`, `TIU`, `jns_tagihan`) VALUES
-(85, 7, 'JANUARI', 'I', 'SELASA', 'I', '6', '7', '7', '7'),
-(86, 7, 'JANUARI', 'II', 'SELASA', 'I', '6', '5', '5', '5'),
-(87, 7, 'JANUARI', 'III', 'SELASA', 'I', '6', '7', '8', '8'),
-(88, 7, 'JANUARI', 'IV', 'SELASA', 'I', '7', '6', '5', '4'),
-(89, 7, 'FEBRUARI', 'I', 'SELASA', 'I', '5', '6', '7', '2'),
-(90, 7, 'FEBRUARI', 'II', 'SELASA', 'I', '8', '3', '7', '7'),
-(91, 7, 'FEBRUARI', 'III', 'SELASA', 'I', '6', '5', '5', '6'),
-(92, 7, 'FEBRUARI', 'IV', 'SELASA', 'I', '7', '8', '8', '7'),
-(93, 7, 'MARET', 'I', 'SELASA', 'I', '4', '5', '6', '7'),
-(94, 7, 'MARET', 'II', 'SELASA', 'I', '7', '8', '7', '6'),
-(95, 7, 'MARET', 'III', 'SELASA', 'I', '6', '6', '7', '8'),
-(96, 7, 'MARET', 'IV', 'SELASA', 'I', '23', '3', '3', '3'),
-(97, 10, 'JANUARI', 'I', 'SENIN', 'I', '1', '0', '0', '0'),
-(98, 10, 'JANUARI', 'II', 'SENIN', 'I', '0', '0', '0', '0'),
-(99, 10, 'JANUARI', 'III', 'SENIN', 'I', '0', '0', '0', '0'),
-(100, 10, 'JANUARI', 'IV', 'SENIN', 'I', '0', '0', '0', '0'),
-(101, 10, 'FEBRUARI', 'I', 'SENIN', 'I', '0', '0', '0', '0'),
-(102, 10, 'FEBRUARI', 'II', 'SENIN', 'I', '0', '0', '0', '0'),
-(103, 10, 'FEBRUARI', 'III', 'SENIN', 'I', '0', '0', '0', '0'),
-(104, 10, 'FEBRUARI', 'IV', 'SENIN', 'I', '0', '0', '0', '0'),
-(105, 10, 'MARET', 'I', 'SENIN', 'I', '0', '0', '0', '0'),
-(106, 10, 'MARET', 'II', 'SENIN', 'I', '0', '0', '0', '0'),
-(107, 10, 'MARET', 'III', 'SENIN', 'I', '0', '0', '0', '0'),
-(108, 10, 'MARET', 'IV', 'SENIN', 'I', '0', '0', '2', '0');
-
---
 -- Dumping data for table `trans_tabungan`
 --
 
@@ -1123,7 +1118,41 @@ INSERT INTO `trans_tabungan` (`id`, `no_registrasi`, `tgl_tabungan`, `tipe`, `no
 (13, 'T39170002', '2017-10-21', 'i', 50000, 'fds', 'admin'),
 (14, 'T39170002', '2017-10-21', 'i', 80000, 'test', 'admin'),
 (15, 'T39170002', '2017-10-21', 'i', 90000, 'sdf', 'admin'),
-(16, 'T39170001', '2017-10-21', 'i', 100, 'fds', 'admin');
+(16, 'T39170001', '2017-10-21', 'i', 100, 'fds', 'admin'),
+(18, 'T39170014', '2018-04-01', 'i', 500000, '', 'admin'),
+(19, 'T39170014', '2018-04-01', 'i', 500000, '', 'admin'),
+(20, 'T39170014', '2018-04-01', 'i', 500000, '', 'admin'),
+(21, 'T39170014', '2018-04-01', 'i', 500000, '', 'admin');
+
+--
+-- Dumping data for table `trans_tagihan`
+--
+
+INSERT INTO `trans_tagihan` (`id_tagihan`, `id_thn_ajar`, `no_registrasi`, `tipe_tagihan`, `ket_semester`, `ket_bulan`, `id_potongan`, `tipe_potongan`, `nominal_potongan`, `total_tagihan`, `userid`, `userdate`) VALUES
+(205, 3, 'T38170001', 'B', 'SEMESTER1', '1', 0, '', 0, 600000, 'admin', '2018-04-09 01:50:57'),
+(206, 3, 'T38170001', 'B', 'SEMESTER1', '2', 0, '', 0, 600000, 'admin', '2018-04-09 01:50:57'),
+(207, 3, 'T38170001', 'B', 'SEMESTER1', '3', 0, '', 0, 600000, 'admin', '2018-04-09 01:50:57'),
+(208, 3, 'T38170001', 'S', 'SEMESTER1', '', 0, '', 0, 1150000, 'admin', '2018-04-09 01:50:57'),
+(209, 3, 'T38170001', 'B', 'SEMESTER2', '7', 0, '', 0, 600000, 'admin', '2018-04-09 01:50:57'),
+(210, 3, 'T38170001', 'B', 'SEMESTER2', '8', 0, '', 0, 600000, 'admin', '2018-04-09 01:50:57'),
+(211, 3, 'T38170001', 'B', 'SEMESTER2', '9', 0, '', 0, 600000, 'admin', '2018-04-09 01:50:57'),
+(212, 3, 'T38170001', 'S', 'SEMESTER2', '', 0, '', 0, 1150000, 'admin', '2018-04-09 01:50:57'),
+(221, 3, 'T39170014', 'B', 'SEMESTER1', '1', 51, NULL, 300000, 300000, 'admin', '2018-04-09 03:16:06'),
+(222, 3, 'T39170014', 'B', 'SEMESTER1', '2', 51, NULL, 300000, 300000, 'admin', '2018-04-09 03:16:06'),
+(223, 3, 'T39170014', 'B', 'SEMESTER1', '3', 51, NULL, 300000, 300000, 'admin', '2018-04-09 03:16:06'),
+(224, 3, 'T39170014', 'S', 'SEMESTER1', '', 51, NULL, 300000, 850000, 'admin', '2018-04-09 03:16:06'),
+(225, 3, 'T39170014', 'B', 'SEMESTER2', '7', 51, NULL, 300000, 300000, 'admin', '2018-04-09 03:16:06'),
+(226, 3, 'T39170014', 'B', 'SEMESTER2', '8', 51, NULL, 300000, 300000, 'admin', '2018-04-09 03:16:06'),
+(227, 3, 'T39170014', 'B', 'SEMESTER2', '9', 51, NULL, 300000, 300000, 'admin', '2018-04-09 03:16:06'),
+(228, 3, 'T39170014', 'S', 'SEMESTER2', '', 51, NULL, 300000, 850000, 'admin', '2018-04-09 03:16:06'),
+(229, 4, 'T39170014', 'B', 'SEMESTER1', '1', 51, 'nominal', 300000, 300000, 'admin', '2018-04-09 04:11:31'),
+(230, 4, 'T39170014', 'B', 'SEMESTER1', '2', 51, 'nominal', 300000, 300000, 'admin', '2018-04-09 04:11:31'),
+(231, 4, 'T39170014', 'B', 'SEMESTER1', '3', 51, 'nominal', 300000, 300000, 'admin', '2018-04-09 04:11:31'),
+(232, 4, 'T39170014', 'S', 'SEMESTER1', '', 51, 'nominal', 300000, 850000, 'admin', '2018-04-09 04:11:31'),
+(233, 4, 'T39170014', 'B', 'SEMESTER2', '7', 51, 'nominal', 300000, 300000, 'admin', '2018-04-09 04:11:31'),
+(234, 4, 'T39170014', 'B', 'SEMESTER2', '8', 51, 'nominal', 300000, 300000, 'admin', '2018-04-09 04:11:31'),
+(235, 4, 'T39170014', 'B', 'SEMESTER2', '9', 51, 'nominal', 300000, 300000, 'admin', '2018-04-09 04:11:31'),
+(236, 4, 'T39170014', 'S', 'SEMESTER2', '', 51, 'nominal', 300000, 850000, 'admin', '2018-04-09 04:11:31');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

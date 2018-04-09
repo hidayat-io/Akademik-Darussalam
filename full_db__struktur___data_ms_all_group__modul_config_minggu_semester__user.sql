@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 08, 2018 at 07:06 PM
+-- Generation Time: Apr 09, 2018 at 05:57 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -123,7 +123,8 @@ INSERT INTO `group_hak_akses` (`group_id`, `modul_id`, `add`, `edit`, `delete`) 
 (1, 41, 1, 1, 1),
 (1, 42, 1, 1, 1),
 (1, 43, 1, 1, 1),
-(1, 44, 1, 1, 1);
+(1, 44, 1, 1, 1),
+(1, 45, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -226,7 +227,8 @@ INSERT INTO `modul` (`modul_id`, `parent`, `nama_modul`, `url`, `icon`, `sequenc
 (41, 40, 'Data Soal', 'datasoal', 'glyphicon glyphicon-minus', 1),
 (42, 40, 'Soal Ujian', 'datasoalujian', 'glyphicon glyphicon-minus', 2),
 (43, 44, 'Data Biaya', 'biaya', 'glyphicon glyphicon-minus', 4),
-(44, 0, 'Pengaturan', '#', 'glyphicon glyphicon-wrench ', 12);
+(44, 0, 'Pengaturan', '#', 'glyphicon glyphicon-wrench ', 12),
+(45, 1, 'Daftar Ulang', 'daftarulang', 'glyphicon glyphicon-share', 3);
 
 -- --------------------------------------------------------
 
@@ -284,9 +286,12 @@ CREATE TABLE `ms_bebanguru` (
 
 CREATE TABLE `ms_biaya` (
   `id` int(11) NOT NULL,
+  `id_thn_ajar` int(11) DEFAULT NULL,
   `kategori` varchar(8) DEFAULT NULL,
   `nama_item` varchar(25) DEFAULT NULL,
-  `nominal` double DEFAULT NULL
+  `nominal` float DEFAULT NULL,
+  `recdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `userid` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -971,7 +976,7 @@ CREATE TABLE `sys_param` (
 --
 
 INSERT INTO `sys_param` (`param_id`, `param_name`, `param_value`, `notes`) VALUES
-(1, 'kurikulum_semester_aktif', '3#2', 'id_tahun_ajar#semester');
+(1, 'kurikulum_semester_aktif', '3#1', 'id_tahun_ajar#semester');
 
 -- --------------------------------------------------------
 
@@ -1029,6 +1034,26 @@ CREATE TABLE `trans_banksoalhd` (
   `user_id` varchar(20) DEFAULT NULL,
   `recdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `trans_daftar_ulang`
+--
+
+CREATE TABLE `trans_daftar_ulang` (
+  `id` int(10) NOT NULL,
+  `id_thn_ajar` int(10) DEFAULT NULL,
+  `no_registrasi` varchar(15) DEFAULT NULL,
+  `kel_sebelumnya` varchar(10) DEFAULT NULL,
+  `rayon_sebelumnya` varchar(10) DEFAULT NULL,
+  `kamar_sebelumnya` varchar(10) DEFAULT NULL,
+  `bagian_sebelumnya` varchar(10) DEFAULT NULL,
+  `id_potongan` int(11) DEFAULT NULL,
+  `tipe_potongan` varchar(25) DEFAULT NULL,
+  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `userid` varchar(15) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1092,11 +1117,14 @@ CREATE TABLE `trans_pedidikan` (
 --
 
 CREATE TABLE `trans_pembayaran` (
-  `tipe` varchar(20) DEFAULT NULL,
-  `no_registrasi` varchar(15) DEFAULT NULL,
-  `tgl` date DEFAULT NULL,
-  `nominal` double DEFAULT NULL,
-  `keterangan` varchar(50) DEFAULT NULL
+  `id_pembayaran` int(11) NOT NULL,
+  `id_tagihan` int(11) DEFAULT NULL,
+  `tanggal` date DEFAULT NULL,
+  `type_pembayaran` int(11) DEFAULT NULL,
+  `nominal` float DEFAULT NULL,
+  `remarks` varchar(50) DEFAULT NULL,
+  `userid` varchar(20) DEFAULT NULL,
+  `userdate` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1164,6 +1192,27 @@ CREATE TABLE `trans_tabungan` (
   `nominal` double DEFAULT NULL,
   `keterangan` varchar(50) DEFAULT NULL,
   `userid` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `trans_tagihan`
+--
+
+CREATE TABLE `trans_tagihan` (
+  `id_tagihan` int(11) NOT NULL,
+  `id_thn_ajar` int(11) DEFAULT NULL,
+  `no_registrasi` varchar(15) DEFAULT NULL,
+  `tipe_tagihan` varchar(30) DEFAULT NULL,
+  `ket_semester` varchar(25) DEFAULT NULL,
+  `ket_bulan` varchar(25) DEFAULT NULL,
+  `id_potongan` int(11) DEFAULT NULL,
+  `tipe_potongan` varchar(10) DEFAULT NULL,
+  `nominal_potongan` float DEFAULT NULL,
+  `total_tagihan` float DEFAULT NULL,
+  `userid` varchar(20) DEFAULT NULL,
+  `userdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1396,6 +1445,12 @@ ALTER TABLE `trans_banksoalhd`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `trans_daftar_ulang`
+--
+ALTER TABLE `trans_daftar_ulang`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `trans_jadwal_pelajaran`
 --
 ALTER TABLE `trans_jadwal_pelajaran`
@@ -1406,6 +1461,12 @@ ALTER TABLE `trans_jadwal_pelajaran`
 --
 ALTER TABLE `trans_kurikulum`
   ADD PRIMARY KEY (`id_thn_ajar`,`tingkat`,`id_mapel`,`tipe_kelas`);
+
+--
+-- Indexes for table `trans_pembayaran`
+--
+ALTER TABLE `trans_pembayaran`
+  ADD KEY `id_pembayaran` (`id_pembayaran`);
 
 --
 -- Indexes for table `trans_rpp`
@@ -1426,6 +1487,12 @@ ALTER TABLE `trans_tabungan`
   ADD KEY `pk` (`id`);
 
 --
+-- Indexes for table `trans_tagihan`
+--
+ALTER TABLE `trans_tagihan`
+  ADD KEY `id` (`id_tagihan`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -1444,17 +1511,17 @@ ALTER TABLE `group`
 -- AUTO_INCREMENT for table `histori_master_biaya`
 --
 ALTER TABLE `histori_master_biaya`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `login_history`
 --
 ALTER TABLE `login_history`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=338;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=375;
 --
 -- AUTO_INCREMENT for table `modul`
 --
 ALTER TABLE `modul`
-  MODIFY `modul_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `modul_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 --
 -- AUTO_INCREMENT for table `ms_banksoal`
 --
@@ -1464,7 +1531,7 @@ ALTER TABLE `ms_banksoal`
 -- AUTO_INCREMENT for table `ms_biaya`
 --
 ALTER TABLE `ms_biaya`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
 --
 -- AUTO_INCREMENT for table `ms_biaya_komponen`
 --
@@ -1544,7 +1611,7 @@ ALTER TABLE `ms_tahun_ajaran`
 -- AUTO_INCREMENT for table `santri_limit_harian`
 --
 ALTER TABLE `santri_limit_harian`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `sys_param`
 --
@@ -1554,27 +1621,42 @@ ALTER TABLE `sys_param`
 -- AUTO_INCREMENT for table `trans_banksoalhd`
 --
 ALTER TABLE `trans_banksoalhd`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `trans_daftar_ulang`
+--
+ALTER TABLE `trans_daftar_ulang`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT for table `trans_jadwal_pelajaran`
 --
 ALTER TABLE `trans_jadwal_pelajaran`
   MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=327;
 --
+-- AUTO_INCREMENT for table `trans_pembayaran`
+--
+ALTER TABLE `trans_pembayaran`
+  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `trans_rpp`
 --
 ALTER TABLE `trans_rpp`
-  MODIFY `id_rpp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_rpp` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `trans_rpp_detail`
 --
 ALTER TABLE `trans_rpp_detail`
-  MODIFY `id_rpp_dtl` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `id_rpp_dtl` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `trans_tabungan`
 --
 ALTER TABLE `trans_tabungan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+--
+-- AUTO_INCREMENT for table `trans_tagihan`
+--
+ALTER TABLE `trans_tagihan`
+  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=237;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

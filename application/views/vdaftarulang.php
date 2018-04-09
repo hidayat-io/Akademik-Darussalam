@@ -81,6 +81,7 @@
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">
                                                                     TAHUN AJAR AKTIF : <?php echo $deskripsi ?>
+                                                                    <input type="text" class="hidden" name="deskripsi" id="deskripsi" value="<?php echo $deskripsi ?>">       
                                                                 </span>
                                                                 <input type="text" class="hidden" name="id_thn_ajar" id="id_thn_ajar" value="<?php echo $id_thn_ajar ?>">                                                                    
                                                             </div>                                                            
@@ -281,8 +282,8 @@
                                                                         ?>
                                                                     </div>
                                                                     <div class="input-icon right">
-                                                                        <i class="fa"></i><input type class="hidden" readonly name="id_potongan" id="id_potongan" required>
-                                                                        <input type class="form-control" style="width: 88%;" readonly name="nama_potongan" id="nama_potongan" required>                                                                    
+                                                                        <i class="fa"></i><input type class="hidden" readonly name="id_potongan" id="id_potongan" value="">
+                                                                        <input type class="form-control" style="width: 88%;" readonly name="nama_potongan" id="nama_potongan" >                                                                    
                                                                         <span class="input-group-btn"
                                                                                 style="cursor: pointer;"
                                                                                 title="Cari Potongan"
@@ -303,18 +304,18 @@
                                                                         </span>
                                                                         <div class="input-group">
                                                                             <span class="input-group-addon">
-                                                                                <input type="radio" class="chk" name="tipe_potongan" value="persen" checked="checked">Persen
+                                                                                <input type="radio" class="chk" name="tipe_potongan" id="tipe_potongan_persen" value="persen" >Persen
                                                                             </span>
                                                                             <div class="input-icon right">
-                                                                            <i class="fa"></i><input type class="form-control" readonly name="potongan_persen" id="potongan_persen"  required>
+                                                                            <i class="fa"></i><input type class="form-control" readonly name="potongan_persen" id="potongan_persen"  >
                                                                             </div>
                                                                         </div>
                                                                         <div class="input-group">
                                                                             <span class="input-group-addon">
-                                                                                <input type="radio" class="chk" name="tipe_potongan" value="nominal" >Nominal
+                                                                                <input type="radio" class="chk" name="tipe_potongan" id="tipe_potongan_nominal" value="nominal" >Nominal
                                                                             </span>
                                                                             <div class="input-icon right">
-                                                                            <i class="fa"></i><input type class="form-control" readonly name="potongan_nominal" id="potongan_nominal"  required>
+                                                                            <i class="fa"></i><input type class="form-control" readonly name="potongan_nominal" id="potongan_nominal"  >
                                                                             </div>
                                                                         </div>
                                                                     </div>                                                                   
@@ -373,9 +374,9 @@
                                                             <label class="control-label"></label>
                                                             <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                Kode daftarulang
+                                                                No Registrasi
                                                             </span>
-                                                            <input type="text" class="form-control" name="s_kodedaftarulang" id="s_kodedaftarulang" onkeydown="OtomatisKapital(this)" required></div>
+                                                            <input type="text" class="form-control" name="s_no_registrasi" id="s_no_registrasi" onkeydown="OtomatisKapital(this)" required></div>
                                                     </div>
                                                 <!--span-->
                                                     <!-- <div class="form-group">

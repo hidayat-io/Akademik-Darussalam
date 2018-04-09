@@ -13,9 +13,7 @@ class daftarulang extends IO_Controller
 		 	$this->load->model('mdaftarulang','model');
 	}
 
-	function index()
-	{
-		//get tahun ajar
+	function index(){
 		//get kurikulum aktif
 		$sys_param						= $this->kurikulum_aktif();
 		$isys_param 					= explode('#',$sys_param);
@@ -94,7 +92,7 @@ class daftarulang extends IO_Controller
 
 		if($param!=null){
 
-			if(isset($param->kode_daftarulang)) $string_param .= " noregistrasi LIKE '%".$param->noregistrasi."%' ";
+			if(isset($param->no_registrasi)) $string_param .= " trans_daftar_ulang.no_registrasi LIKE '%".$param->no_registrasi."%' ";
 		}
 
 		return $string_param;
@@ -157,29 +155,62 @@ class daftarulang extends IO_Controller
 
     function Deldaftarulang($kode_daftarulang){
 		$kode_daftarulang = urldecode($kode_daftarulang);
+		$userid 			= $this->session->userdata('logged_in')['uid'];
+		//get all data data ulang, untuk penembalian data sebelumnya.
+		$fulldata_daftarulang	= $this->model->query_dataedit_daftarulang($kode_daftarulang);
+		$id_thn_ajar			= $fulldata_daftarulang['id_thn_ajar'];
+		$no_registrasi			= $fulldata_daftarulang['no_registrasi'];
+		$rayon_sebelumnya		= $fulldata_daftarulang['rayon_sebelumnya'];
+		$kel_sebelumnya			= $fulldata_daftarulang['kel_sebelumnya'];
+		$kamar_sebelumnya		= $fulldata_daftarulang['kamar_sebelumnya'];
+		$bagian_sebelumnya		= $fulldata_daftarulang['bagian_sebelumnya'];
+		// var_dump($id_thn_ajar,$no_registrasi,$rayon_sebelumnya,$kel_sebelumnya,$kamar_sebelumnya,$bagian_sebelumnya);
+		// exit();
+
+		$data_update_ms_santri = array( //update data ms_santri
+            'kel_sekarang'       	=> $kel_sebelumnya,
+			'rayon' 				=> $rayon_sebelumnya,
+            'kamar'      			=> $kamar_sebelumnya,
+            'bagian'     			=> $bagian_sebelumnya,
+			// 'userid' 				=> $userid
+		);
+
+		$this->model->update_ms_santri($data_update_ms_santri,$no_registrasi);//update kelas, bagian, rayon, kamar ms_santri
 		$this->model->delete_daftarulang($kode_daftarulang);
+		$this->model->delete_tagihan($id_thn_ajar,$no_registrasi);
 	}
+
+    function get_dataID_tagihan($id_thn_ajar,$no_registrasi){
+		$id_thn_ajar 		= urldecode($id_thn_ajar);
+		$no_registrasi 		= urldecode($no_registrasi);
+		$data               = $this->model->query_get_dataID_tagihan($id_thn_ajar,$no_registrasi);
+		echo json_encode($data);
+	}
+
     #endregion index daftar ulang
 	
     
     #region modal add daftar ulang
-    function get_data_santri($no_registrasi)
-	{
+    function get_data_santri($no_registrasi){
         $no_registrasi      = urldecode($no_registrasi);
 		$data               = $this->model->query_data_santri($no_registrasi);
     	echo json_encode($data);
 	}
 	
-    function get_data_daftarulang($id_thn_ajar,$no_registrasi)
-	{
+    function get_data_daftarulang($id_thn_ajar,$no_registrasi){
         $no_registrasi      = urldecode($no_registrasi);
         $id_thn_ajar      	= urldecode($id_thn_ajar);
 		$data               = $this->model->query_data_daftarulang($id_thn_ajar,$no_registrasi);
     	echo json_encode($data);
+	}
+	
+    function get_dataedit_daftarulang($kode_daftarulang){
+        $kode_daftarulang      	= urldecode($kode_daftarulang);
+		$data               	= $this->model->query_dataedit_daftarulang($kode_daftarulang);
+    	echo json_encode($data);
     }
     
-    function simpan_daftarulang($status)
-	{
+    function simpan_daftarulang($status){
 		$id_thn_ajar 		= $this->input->post('id_thn_ajar');
 		$no_registrasi 		= $this->input->post('no_registrasi');
 		$rayon 				= $this->input->post('rayon');
@@ -187,13 +218,19 @@ class daftarulang extends IO_Controller
 		$bagian 			= $this->input->post('bagian');
 		$kel_sekarang 		= $this->input->post('kel_sekarang');
 		$id_potongan 		= $this->input->post('id_potongan');
-		$tipe_potongan 		= $this->input->post('tipe_potongan');
 		
-		if ($tipe_potongan == 'persen'){
-			$nominal_potongan = $this->input->post('potongan_persen');
-		}else {
-			$nominal_potongan = $this->input->post('potongan_nominal');
+		if($id_potongan ==''){
+			$tipe_potongan 		= '';
+			$nominal_potongan = '0';
+		}else{
+			$tipe_potongan 			= $this->input->post('tipe_potongan');
+			if ($tipe_potongan == 'persen'){
+				$nominal_potongan 	= $this->input->post('potongan_persen');
+			}else {
+				$nominal_potongan 	= $this->input->post('potongan_nominal');
+			}
 		}
+
 	    $userid 			= $this->session->userdata('logged_in')['uid'];
 
 		//ambil kelas, rayon,kamar sebelumnya
@@ -236,169 +273,115 @@ class daftarulang extends IO_Controller
             // 'nominal_potongan'   => $nominal_potongan,
 			'userid' 				=> $userid
 		);
+
+		$data_daftarulang_update = array( //data trans_daftar ulang
+			// 'id_thn_ajar' 			=> $id_thn_ajar,
+			// 'no_registrasi' 		=> $no_registrasi,
+            // 'kel_sekarang'       => $kel_sekarang,
+			// 'rayon' 				=> $rayon,
+            // 'kamar'      		=> $kamar,
+            // 'bagian'     		=> $bagian,
+            'kel_sebelumnya'        => $kel_sebelumnya,
+			'rayon_sebelumnya' 		=> $rayon_sebelumnya,
+            'kamar_sebelumnya'      => $kamar_sebelumnya,
+            'bagian_sebelumnya'     => $bagian_sebelumnya,
+            // 'id_potongan'     		=> $id_potongan,
+            // 'tipe_potongan'     	=> $tipe_potongan,
+            // 'nominal_potongan'   => $nominal_potongan,
+			'userid' 				=> $userid
+		);
 		
+		if($status =="SAVE"){
+					//get total tagihan per semester&perbulan
+			$tipe_tagihan_semester 		= 'S';
+			$tipe_tagihan_bulanan 		= 'B';
+			$total_tagihan_semester		= $this->model->query_data_tagihan($id_thn_ajar,$tipe_tagihan_semester);
+			$total_tagihan_bulanan		= $this->model->query_data_tagihan($id_thn_ajar,$tipe_tagihan_bulanan);
 
-		//get total tagihan per semester&perbulan
-		$tipe_tagihan_semester 		= 'S';
-		$tipe_tagihan_bulanan 		= 'B';
-		$total_tagihan_semester		= $this->model->query_data_tagihan($id_thn_ajar,$tipe_tagihan_semester);
-		$total_tagihan_bulanan		= $this->model->query_data_tagihan($id_thn_ajar,$tipe_tagihan_bulanan);
-
-		$total_tagihan_semester		= (int)$total_tagihan_semester->total_tagihan;
-		$total_tagihan_bulanan		= (int)$total_tagihan_bulanan->total_tagihan;
-		
-		//hasil akhir tagihan setelah dipotong
-		if ($tipe_potongan == 'persen'){ //POTONGAN BERDASARKAN PERSENTASI
-				$prcn = $nominal_potongan / 100;
-				$nominal_potongan_semester 			= $prcn * $total_tagihan_semester;
-				$nominal_potongan_bulanan  			= $prcn * $total_tagihan_bulanan;
-				
-				$grand_total_tagihan_semester 		= $total_tagihan_semester - $nominal_potongan_semester;
-				$grand_total_tagihan_bulanan 		= $total_tagihan_bulanan - 	$nominal_potongan_bulanan;
-		}else {//POTONGAN BERDASARKAN NOMINAL
-				$grand_total_tagihan_semester 		= $total_tagihan_semester - $nominal_potongan;
-				$grand_total_tagihan_bulanan 		= $total_tagihan_bulanan - $nominal_potongan;
-		}
-        				
-		//save trans_tagihan /semester
-		$semester		= $this->model->query_data_ms_semester();
-		$row_semester	= count($semester);
-		for($isemester=0;$isemester<$row_semester;$isemester++)
-		{
-			$data_tagihan_semester 		= array(
-				'id_thn_ajar' 			=> $id_thn_ajar,
-				'no_registrasi' 		=> $no_registrasi,
-				'tipe_tagihan' 			=> 'S',
-				'ket_semester' 			=> 'SEMESTER'.$semester[$isemester]['semester'],
-				'ket_bulan' 			=> '',
-				'id_potongan' 			=> $id_potongan,
-				'tipe_potongan' 		=> $tipe_potongan,
-				'nominal_potongan' 		=> $nominal_potongan,
-				'total_tagihan' 		=> $grand_total_tagihan_semester,
-				'userid' 				=> $userid,
-
-				
-			);
+			$total_tagihan_semester		= (int)$total_tagihan_semester->total_tagihan;
+			$total_tagihan_bulanan		= (int)$total_tagihan_bulanan->total_tagihan;
 			
-			$semester_bulanan	= $semester[$isemester]['semester'];
-			$bulanan			= $this->model->query_data_ms_semester_bulanan($semester_bulanan);
+			//hasil akhir tagihan setelah dipotong
+			if($id_potongan ==''){
+				$grand_total_tagihan_semester 		= $total_tagihan_semester;
+				$grand_total_tagihan_bulanan 		= $total_tagihan_bulanan;
+			}else{
+				if ($tipe_potongan == 'persen'){ //POTONGAN BERDASARKAN PERSENTASI
+					$prcn = $nominal_potongan / 100;
+					$nominal_potongan_semester 			= $prcn * $total_tagihan_semester;
+					$nominal_potongan_bulanan  			= $prcn * $total_tagihan_bulanan;
+					
+					$grand_total_tagihan_semester 		= $total_tagihan_semester - $nominal_potongan_semester;
+					$grand_total_tagihan_bulanan 		= $total_tagihan_bulanan - 	$nominal_potongan_bulanan;
+				}else {//POTONGAN BERDASARKAN NOMINAL
+						$grand_total_tagihan_semester 		= $total_tagihan_semester - $nominal_potongan;
+						$grand_total_tagihan_bulanan 		= $total_tagihan_bulanan - $nominal_potongan;
+				}
+			}
 			
-			$row_bulanan		= count($bulanan);
-
-			for($ibulanan=0;$ibulanan<$row_bulanan;$ibulanan++)
+							
+			//save trans_tagihan /semester
+			$semester		= $this->model->query_data_ms_semester();
+			$row_semester	= count($semester);
+			for($isemester=0;$isemester<$row_semester;$isemester++)
 			{
-				$data_tagihan_bulanan 		= array(
+				$data_tagihan_semester 		= array(
 					'id_thn_ajar' 			=> $id_thn_ajar,
 					'no_registrasi' 		=> $no_registrasi,
-					'tipe_tagihan' 			=> 'B',
-					'ket_semester' 			=> 'SEMESTER'.$semester_bulanan,
-					'ket_bulan' 			=> $bulanan[$ibulanan]['bulan'],
+					'tipe_tagihan' 			=> 'S',
+					'ket_semester' 			=> 'SEMESTER'.$semester[$isemester]['semester'],
+					'ket_bulan' 			=> '',
 					'id_potongan' 			=> $id_potongan,
 					'tipe_potongan' 		=> $tipe_potongan,
 					'nominal_potongan' 		=> $nominal_potongan,
-					'total_tagihan' 		=> $grand_total_tagihan_bulanan,
-					'userid' 				=> $userid,
+					'total_tagihan' 		=> $grand_total_tagihan_semester,
+					'userid' 				=> $userid
 
 					
 				);
-			$this->model->simpan_data_tagihan($data_tagihan_bulanan);//simpan tagihan per bulan			
 				
-			}
+				$semester_bulanan	= $semester[$isemester]['semester'];
+				$bulanan			= $this->model->query_data_ms_semester_bulanan($semester_bulanan);
+				
+				$row_bulanan		= count($bulanan);
 
-			$this->model->simpan_data_tagihan($data_tagihan_semester);//simpan tagihan per semester		
-				
-				
+				for($ibulanan=0;$ibulanan<$row_bulanan;$ibulanan++)
+				{
+					$data_tagihan_bulanan 		= array(
+						'id_thn_ajar' 			=> $id_thn_ajar,
+						'no_registrasi' 		=> $no_registrasi,
+						'tipe_tagihan' 			=> 'B',
+						'ket_semester' 			=> 'SEMESTER'.$semester_bulanan,
+						'ket_bulan' 			=> $bulanan[$ibulanan]['bulan'],
+						'id_potongan' 			=> $id_potongan,
+						'tipe_potongan' 		=> $tipe_potongan,
+						'nominal_potongan' 		=> $nominal_potongan,
+						'total_tagihan' 		=> $grand_total_tagihan_bulanan,
+						'userid' 				=> $userid
+
+						
+					);
+				$this->model->simpan_data_tagihan($data_tagihan_bulanan);//simpan tagihan per bulan			
+					
+				}
+
+				$this->model->simpan_data_tagihan($data_tagihan_semester);//simpan tagihan per semester		
+					
+					
+			}
+			// save data daftarulang
+				$this->model->simpan_data_daftarulang($data_daftarulang);
+				$this->model->update_ms_santri($data_update_ms_santri,$no_registrasi);//update kelas, bagian, rayon, kamar ms_santri
+
+		}else if($status =="UPDATE"){
+				$this->model->update_data_daftarulang($id_thn_ajar,$no_registrasi,$data_daftarulang_update);
+				$this->model->update_ms_santri($data_update_ms_santri,$no_registrasi);//update kelas, bagian, rayon, kamar ms_santri
+		}else{
+			alert("error status update");
 		}
-		// save data daftarulang
-			$this->model->simpan_data_daftarulang($data_daftarulang);
-			$this->model->update_ms_santri($data_update_ms_santri,$no_registrasi);//update kelas, bagian, rayon, kamar ms_santri
 
 
 
 		echo "true";
 	}	
     #endregion modal add daftar ulang
-
-	function exportexcel(){
-		// hasil decode // 
-		$str = base64_decode($this->uri->segment(3));
-
-		// merubah hasil decode dari string ke json //
-		$str = json_decode($str);
-
-		// memasukan data json kedalam builparam //
-		// agar json menjadi parameter query //
-		$str = $this->build_param($str);
-
-		$data= $this->model->get_list_data($str);
-
-		//load our new PHPExcel library
-		$this->load->library('excel');
-		//activate worksheet number 1
-		$this->excel->setActiveSheetIndex(0);
-		//name the worksheet
-		$this->excel->getActiveSheet()->setTitle('Master_daftarulang');
-		$this->excel->getActiveSheet()->setCellValue('A1', "Master daftarulang");
-		$this->excel->getActiveSheet()->mergeCells('A1:C1');
-		$this->excel->getActiveSheet()->getStyle('A1:C1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-		//header
-		$this->excel->getActiveSheet()->setCellValue('A3', "No.");
-		$this->excel->getActiveSheet()->setCellValue('B3', "Kode daftarulang");
-		$this->excel->getActiveSheet()->setCellValue('C3', "Nama daftarulang");
-
-		$fdate 	= "d-m-Y";
-		$i  	= 4;
-
-		if($data != null){
-
-			foreach($data as $row){
-
-				$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
-				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->kode_daftarulang);
-				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->nama);
-				
-				$i++;
-			}
-		}
-
-		for($col = 'A'; $col !== 'G'; $col++) {
-
-		    $this->excel->getActiveSheet()
-		        ->getColumnDimension($col)
-		        ->setAutoSize(true);
-		}
-
-		$styleArray = array(
-		  'borders' => array(
-		    'allborders' => array(
-		      'style' => PHPExcel_Style_Border::BORDER_THIN
-		    )
-		  )
-		);
-		$i = $i-1;
-		$cell_to = "C".$i;
-		$this->excel->getActiveSheet()->getStyle('A3:'.$cell_to)->applyFromArray($styleArray);
-		$this->excel->getActiveSheet()->getStyle('A1:C3')->getFont()->setBold(true);
-		$this->excel->getActiveSheet()->getStyle('A3:C3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-		$this->excel->getActiveSheet()->getStyle('A3:C3')->getFill()->getStartColor()->setRGB('2CC30B');
-
-		$filename='Master-daftarulang.xls'; //save our workbook as this file name
-		header('Content-Type: application/vnd.ms-excel'); //mime type
-		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
-		header('Cache-Control: max-age=0');//no cache
-
-		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
-		//if you want to save it as .XLSX Excel 2007 format
-		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
-		//force user to download the Excel file without writing it to server's HD
-		$objWriter->save('php://output');
-
-	}
-
-	
-
-	
-
-
-}

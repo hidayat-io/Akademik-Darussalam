@@ -132,6 +132,8 @@ function idPotonganshow() {
     $('#hiddenidPotongan').show();
     $('#spansearchPotongan').hide();
     $('#spansearchclosePotongan').show();
+    $('#tipe_potongan_persen').prop('checked', false)
+    $('#tipe_potongan_nominal').prop('checked', false)
 }
 
 function idPotonganhide() {
@@ -149,6 +151,13 @@ function pilihItemPotongan() {
     $('#nama_potongan').val($item[1]);
     $('#potongan_persen').val($item[2]);
     $('#potongan_nominal').val($item[3]);
+    if ($('#nama_potongan').val() !=''){
+        $('#tipe_potongan_persen').prop('checked', true);
+        // $('#tipe_potongan_nominal').prop('checked', false);
+    }else{
+        $('#tipe_potongan_persen').prop('checked', false);
+        $('#tipe_potongan_nominal').prop('checked', false);
+    }
     $('#hiddenidPotongan').hide();
     $('#spansearchPotongan').show();
     $('#spansearchclosePotongan').hide();
@@ -312,9 +321,10 @@ function svdaftarulang() {
     if ($("#add_daftarulang").valid() == true) {
         var no_registrasi = $('#no_registrasi').val();
         var id_thn_ajar = $('#id_thn_ajar').val();
+        var deskripsi = $('#deskripsi').val();
         $status = $('#save_button').text();
         //cek sudah pernah daftar ulang di kurikulum yang sama?
-        var str_url = encodeURI(base_url + "daftarulang/get_data_daftarulang/"+ id_thn_ajar +"/" + no_registrasi);
+        var str_url = encodeURI(base_url + "daftarulang/get_data_daftarulang/" + id_thn_ajar + "/" + no_registrasi);
         $.ajax({
             type: "POST",
             url: str_url,
@@ -324,7 +334,7 @@ function svdaftarulang() {
                 if ($data != null & $status == 'SAVE') {
                     bootbox.alert({
                         title: "<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span> <b>ERROR</b></div>",
-                        message: " NO Register " + no_registrasi + " Sudah Terdaftar. ",
+                        message: " NO Register " + no_registrasi + " ditahun ajaran " + deskripsi +" Sudah Terdaftar." ,
                         size: 'small'
                     });
 
@@ -366,7 +376,8 @@ function svdaftarulang() {
 }
 
 function edit(kode_daftarulang) {
-    var str_url = encodeURI(base_url + "daftarulang/get_data_daftarulang/" + kode_daftarulang);
+    var id_thn_ajar_aktif = $('#id_thn_ajar').val();
+    var str_url = encodeURI(base_url + "daftarulang/get_dataedit_daftarulang/" + kode_daftarulang);
     $('#save_button').text('UPDATE');
     $('#kode_daftarulang').attr('readonly', true);
     $.ajax({
@@ -377,40 +388,123 @@ function edit(kode_daftarulang) {
         success: function (data) {
 
             var data = $.parseJSON(data);
-            $('#kode_daftarulang').val(data['kode_daftarulang']);//untuk membaca kategori saat update
-            $('#nama').val(data['nama']);
-
-            $('#Modal_add_daftarulang').modal('show');
-
-
+            if (id_thn_ajar_aktif != data['id_thn_ajar']){
+                bootbox.alert({
+                    message: "<span class='glyphicon glyphicon-remove-sign'></span>&nbsp;Tidak bisa diubah",
+                    size: 'small'
+                });
+            }else
+            {
+                $('#no_registrasi').val(data['no_registrasi']);//untuk membaca kategori saat update
+                $('#nama').val(data['nama_lengkap']);
+                $('#nama').val(data['nama_lengkap']);
+                $('#rayon').val(data['rayon']);
+                $('#kamar').val(data['kamar']);
+                $('#bagian').val(data['bagian']);
+                $('#kel_sekarang').val(data['kel_sekarang']);
+                $('#nama_potongan').val(data['nama_potongan']);
+                $('#potongan_persen').val(data['persen']);
+                $('#potongan_nominal').val(data['nominal']);
+                if (data['tipe_potongan'] == 'persen') {
+                    // $('#tipe_potongan_persen').checked = true;
+                    // $('#tipe_potongan_nominal').checked = false;
+                    $('#tipe_potongan_persen').prop('checked', true);
+                } else if (data['tipe_potongan'] == 'nominal') {
+                    // $('#tipe_potongan_persen').checked = false;
+                    // $('#tipe_potongan_nominal').checked = true;
+                    $('#tipe_potongan_nominal').prop('checked', true);
+                }
+                else {
+                    $('#tipe_potongan_persen').prop('checked', false);
+                    $('#tipe_potongan_nominal').prop('checked', false);
+                }
+                $('#no_registrasi').attr('readonly', true);
+                $('#spansearchregis').hide();
+                $('#spansearchcloseregis').hide();
+                $('#spansearchPotongan').hide();
+                $('#tipe_potongan_persen').attr('disabled', true);
+                $('#tipe_potongan_nominal').attr('disabled', true);
+                $('#Modal_add_daftarulang').modal('show');
+            }
         }
     });
 
 }
 
 function hapus(kode_daftarulang) {
-    var str_url = encodeURI(base_url + "daftarulang/Deldaftarulang/" + kode_daftarulang);
-    bootbox.confirm("Anda yakin akan menghapus " + kode_daftarulang + " ini ?",
-        function (result) {
-            if (result == true) {
+    var id_thn_ajar_aktif = $('#id_thn_ajar').val();
+    var str_url = encodeURI(base_url + "daftarulang/get_dataedit_daftarulang/" + kode_daftarulang); //get all data
+    $.ajax({
+
+        type: "POST",
+        url: str_url,
+        dataType: "html",
+        success: function (data) {
+
+            var data = $.parseJSON(data);
+            if (id_thn_ajar_aktif != data['id_thn_ajar']) {
+                bootbox.alert({
+                    message: "<span class='glyphicon glyphicon-remove-sign'></span>&nbsp;Data Tidak bisa dihapus",
+                    size: 'small'
+                });
+            } 
+            else {
+
+                //cek sudah ada pembayaran belum
+                var id_thn_ajar = data['id_thn_ajar'];
+                var no_registrasi = data['no_registrasi'];
+
+                var str_url = encodeURI(base_url + "daftarulang/get_dataID_tagihan/" + id_thn_ajar + "/" + no_registrasi); //get all data id tagihan
                 $.ajax({
+
                     type: "POST",
                     url: str_url,
                     dataType: "html",
                     success: function (data) {
-                        bootbox.alert({
-                            message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Hapus Berhasil Berhasil",
-                            size: 'small',
-                            callback: function () {
 
-                                window.location = base_url + 'daftarulang';
-                            }
-                        });
+                        var data = $.parseJSON(data);
+                        if(data != null){
+                            bootbox.alert({
+                                message: "<span class='glyphicon glyphicon-remove-sign'></span>&nbsp;Data Tidak bisa dihapus karena sudah ada pembayaran",
+                                size: 'small'
+                            });
+                        }
+                        else{
+                            //#region hapus
+                            var str_url = encodeURI(base_url + "daftarulang/Deldaftarulang/" + kode_daftarulang);
+                            bootbox.confirm("Anda yakin akan menghapus ini ?",
+                                function (result) {
+                                    if (result == true) {
+                                        $.ajax({
+                                            type: "POST",
+                                            url: str_url,
+                                            dataType: "html",
+                                            success: function (data) {
+                                                bootbox.alert({
+                                                    message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Hapus Berhasil Berhasil",
+                                                    size: 'small',
+                                                    callback: function () {
+
+                                                        // window.location = base_url + 'daftarulang';
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                }
+                            );
+                            //#region hapus
+                        }
+
+                       
+                        
                     }
                 });
+                
             }
         }
-    );
+    });
+   
 
 }
 //#endregion modal daftar ulang
@@ -422,9 +516,9 @@ function Modalcari() {
 }
 
 function SearchAction() {
-    var kode_daftarulang = $('#s_kodedaftarulang').val();
-    var nama_lengkap = $('#s_namalengkap').val();
-    var param = { 'kode_daftarulang': kode_daftarulang };
+    var no_registrasi = $('#s_no_registrasi').val();
+    // var nama_lengkap = $('#s_namalengkap').val();
+    var param = { 'no_registrasi': no_registrasi };
     param = JSON.stringify(param);
 
     $('#hid_param').val(param);
