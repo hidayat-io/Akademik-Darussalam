@@ -385,3 +385,4 @@ class daftarulang extends IO_Controller
 		echo "true";
 	}	
     #endregion modal add daftar ulang
+}
