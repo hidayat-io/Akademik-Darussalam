@@ -4,6 +4,7 @@ $(document).ready(function()
 	// addSantri("TMI");
 	setTable();
 	setTable2();
+	setTable3();
 	$('.numbers-only').keypress(function(event) {
 		var charCode = (event.which) ? event.which : event.keyCode;
 			if ((charCode >= 48 && charCode <= 57)
@@ -172,6 +173,7 @@ $(document).ready(function()
 				$('#NPSN').val(data['NPSN']);
 				$('#nama').val(data['nama']);
 				$('#jenis_lembaga').val(data['jenis_lembaga']);
+				$('#alamat').val(data['alamat']);
 
 				$('#Modal_add_msconfig').modal('show');
 
@@ -267,4 +269,87 @@ $(document).ready(function()
 
 
 //#endregion kurikulum
+
+//#region Limit Pengeluaran
+	function setTable3() {
+		$('#tb_list3').DataTable({
+			"order": [[0, "desc"]],
+			"processing": true,
+			"serverSide": true,
+			"bPaginate": false,
+			"info": false,
+			"searching": false,
+			"bFilter": false,
+			"ordering": false,
+			ajax: {
+				'url': base_url + "msconfig/load_grid_LimitPengeluaran",
+				'type': 'GET',
+				'data': function (d) {
+					d.param = $('#hid_param3').val();
+				}
+			},
+		});
+	}
+
+	function edit_LimitPengeluaran(id) {
+		var str_url = encodeURI(base_url + "msconfig/get_edit_LimitPengeluaran/" + id);
+		$('#save_button').text('UPDATE');
+		$.ajax({
+
+			type: "POST",
+			url: str_url,
+			dataType: "html",
+			success: function (data) {
+
+				var data = $.parseJSON(data);
+				$('#id').val(data["id"]);
+				$('#limit_lama').val(data["limit"]);
+				$('#limit').val(data["limit"]);
+
+				$('#Modal_add_LimitPengeluaran').modal('show');
+
+
+			}
+		});
+
+	}
+
+function svLimitPengeluaran() {
+	if ($("#add_LimitPengeluaran").valid() == true) {
+		$status = $('#save_button_pengeluaran').text();
+		var iform = $('#add_LimitPengeluaran')[0];
+		var data = new FormData(iform);
+		if ($status == 'UPDATE') {
+			msg = "Update Limt Pengeluaran Berhasil"
+		}
+		else {
+			msg = "Simpan Data Berhasil"
+		}
+		$.ajax({
+
+			type: "POST",
+			url: base_url + "msconfig/simpan_LimitPengeluaran/",
+			enctype: 'multipart/form-data',
+			// dataType:"JSON",
+			contentType: false,
+			processData: false,
+			data: data,
+			success: function (data) {
+
+				bootbox.alert({
+					message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;" + msg + "!!",
+					size: 'small',
+					callback: function () {
+
+						window.location = base_url + 'msconfig';
+					}
+				});
+			}
+		});
+	}
+
+}
+
+
+//#endregion
 

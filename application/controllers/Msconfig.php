@@ -62,6 +62,7 @@ class msconfig extends IO_Controller
 					'<div align="center" style="width: 100%">'.$data[$i]->NPSN.'</div>',
 					'<div align="center" style="width: 100%">'.$data[$i]->nama.'</div>',
 					'<div align="center" style="width: 100%">'.$data[$i]->jenis_lembaga.'</div>',
+					'<div align="center" style="width: 100%">'.$data[$i]->alamat.'</div>',
 					'<div align="center" style="width: 100%">'.$act.'</div>'
 			);
 			
@@ -82,6 +83,7 @@ class msconfig extends IO_Controller
 			$NPSN 	            = $this->input->post('NPSN');
 			$nama  		        = $this->input->post('nama');
 			$jenis_lembaga 		= $this->input->post('jenis_lembaga');
+			$alamat 			= $this->input->post('alamat');
 			$recdate            = date('y-m-d');
 			$userid 	        = $this->session->userdata('logged_in')['uid'];
 
@@ -91,6 +93,7 @@ class msconfig extends IO_Controller
 				'NPSN' 		        => $NPSN,
 				'nama' 		        => $nama,
 				'jenis_lembaga' 	=> $jenis_lembaga,
+				'alamat' 			=> $alamat,
 				'recdate'           => $recdate,
 				'userid' 		    => $userid
 			);
@@ -194,6 +197,76 @@ class msconfig extends IO_Controller
 		}
 
 	#endregion data kurikulum
+
+	#region limit Pengeluaran
+		function load_grid_LimitPengeluaran(){
+				$data 				= $this->model->get_list_data_LimitPengeluaran();
+				$iTotalRecords  	= count($data);
+				$iDisplayLength 	= intval($_REQUEST['length']);
+				$iDisplayLength 	= $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
+				$iDisplayStart  	= intval($_REQUEST['start']);
+				$sEcho				= intval($_REQUEST['draw']);
+
+				$records            = array();
+				$records["data"]    = array();
+
+				$end = $iDisplayStart + $iDisplayLength;
+				$end = $end > $iTotalRecords ? $iTotalRecords : $end;
+				$fdate = 'd-m-Y';
+
+				for($i = $iDisplayStart; $i < $end; $i++) {
+					$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit_LimitPengeluaran(\''.$data[$i]->id.'\')">
+								<i class="fa fa-edit"></i>
+							</a>';
+					
+					
+					$records["data"][] = array(
+
+						// $data[$i]->id_config,
+						'<div align="center" style="width: 100%">'.$data[$i]->limit.'</div>',
+						'<div align="center" style="width: 100%">'.$act.'</div>'
+				);
+				
+				}
+
+				$records["draw"]            	= $sEcho;
+				$records["recordsTotal"]    	= $iTotalRecords;
+				$records["recordsFiltered"] 	= $iTotalRecords;
+
+				echo json_encode($records);
+				
+		}
+
+		function get_edit_LimitPengeluaran($id) {
+			$id = urldecode($id);
+			$data = $this->model->query_edit_LimitPengeluaran($id);
+			echo json_encode($data);
+		}
+
+		function simpan_LimitPengeluaran() {
+			$id 	        = $this->input->post('id');
+			$limit			= $this->input->post('limit');
+			$limit_lama 	= $this->input->post('limit_lama');
+			$userid 	    = $this->session->userdata('logged_in')['uid'];
+
+			$data_LimitPengeluaran = array(
+				'limit' 	    => $limit,
+				'userid' 	    => $userid
+			);		
+
+			$data_LimitPengeluaran_santri = array(
+				'uang_jajan_perbulan' 	    => $limit
+			);			
+			//update data Limit Peneluaran
+				$this->model->update_data_LimitPengeluaran($id,$data_LimitPengeluaran);   
+
+				//update data uang jajan santri yang nominalnya sama dengan limit global
+				$this->model->update_data_LimitPengeluaran_santri($limit_lama,$data_LimitPengeluaran_santri);   
+
+				echo "true";
+		}
+
+	#endregion Limit Pengeluaran
 }
 
 	
