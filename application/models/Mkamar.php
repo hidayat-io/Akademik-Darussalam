@@ -10,13 +10,20 @@ class Mkamar extends CI_Model
 		parent::__construct();
 	}
 
+	function get_gedung(){
+		$data = $this->db->query ("SELECT * FROM ms_gedung ORDER BY kode_gedung");
+		return $data;
+	}
+
     function get_list_data($param,$sortby=0,$sorttype='desc'){
         // var_dump($param);
         // exit();
 		
-        $cols = array('kode_kamar','nama');
+        $cols = array('kode_kamar','nama','gedung');
 
-        $sql = "SELECT * FROM ms_kamar";
+        $sql = "SELECT ms_kamar.*, ms_gedung.nama AS nama_gedung 
+				FROM ms_kamar
+				INNER JOIN ms_gedung ON ms_kamar.kode_gedung = ms_gedung.kode_gedung";
                     
 
             if($param!=null){
@@ -50,7 +57,10 @@ class Mkamar extends CI_Model
 
     function query_kamar($kode_kamar){
         $data = array();
-		$data=$this->db->query("SELECT * from ms_kamar where kode_kamar ='$kode_kamar'")->row_array();
+		$data=$this->db->query("SELECT ms_kamar.*, ms_gedung.nama AS nama_gedung 
+				FROM ms_kamar
+				INNER JOIN ms_gedung ON ms_kamar.kode_gedung = ms_gedung.kode_gedung
+				where ms_kamar.kode_kamar ='$kode_kamar'")->row_array();
 		return $data;
 	}
 

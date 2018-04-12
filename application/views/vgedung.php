@@ -40,8 +40,8 @@
                 <table class="table table-striped table-bordered table-hover" id="tb_list">
                     <thead>
                         <tr>
-                            <th style="text-align:center">Kode gedung</th>
-                            <th style="text-align:center">Nama gedung</th>
+                            <th style="text-align:center">Kode asrama</th>
+                            <th style="text-align:center">Nama asrama</th>
                             <th style="text-align:center" width="10%">Action</th>
                         </tr>
                     </thead>
@@ -79,7 +79,7 @@
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class=" icon-layers font-red"></i>
-                                        <span class="caption-subject font-red sbold uppercase">INPUT DATA GEDUNG</span>
+                                        <span class="caption-subject font-red sbold uppercase">INPUT DATA ASRAMA</span>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
@@ -92,7 +92,7 @@
                                                             <label class="control-label"></label>
                                                             <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                Kode gedung
+                                                                Kode asrama
                                                             </span>
                                                             <input type="text" class="form-control" name="kode_gedung" id="kode_gedung" onkeydown="OtomatisKapital(this)" maxlength="10" required></div>
                                                     </div>
@@ -101,7 +101,7 @@
                                                         <label class="control-label"></label>
                                                         <div class="input-group">
                                                         <span class="input-group-addon">
-                                                            Nama gedung
+                                                            Nama asrama
                                                         </span>
                                                         <input type="text" class="form-control" name="nama" id="nama" onkeydown="OtomatisKapital(this)" maxlength="20" required></div>
                                                     </div>     
@@ -155,7 +155,7 @@
                                                             <label class="control-label"></label>
                                                             <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                Kode gedung
+                                                                Kode asrama
                                                             </span>
                                                             <input type="text" class="form-control" name="s_kodegedung" id="s_kodegedung" onkeydown="OtomatisKapital(this)" required></div>
                                                     </div>

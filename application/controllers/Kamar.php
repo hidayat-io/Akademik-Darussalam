@@ -15,8 +15,17 @@ class kamar extends IO_Controller
 
 	function index()
 	{
+		//get ID Gedung
+			$hide_id_gedung = $this->model->get_gedung()->result();
+
+			$vdata['kode_gedung'][NULL] = '-';
+			foreach ($hide_id_gedung as $b) {
+
+				$vdata['kode_gedung'][$b->kode_gedung."#".$b->nama]
+					=$b->kode_gedung." | ".$b->nama;
+			}
 		
-		$vdata['title'] = 'DATA KAMAR';
+		$vdata['title'] = 'DATA RUANGAN';
 	    $data['content'] = $this->load->view('vkamar',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
@@ -28,7 +37,7 @@ class kamar extends IO_Controller
 
 		if($param!=null){
 
-			if(isset($param->kode_kamar)) $string_param .= " kode_kamar LIKE '%".$param->kode_kamar."%' ";
+			if(isset($param->kode_kamar)) $string_param .= " ms_kamar.kode_kamar LIKE '%".$param->kode_kamar."%' ";
 		}
 
 		return $string_param;
@@ -67,12 +76,15 @@ class kamar extends IO_Controller
 					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->kode_kamar.'\')">
 						<i class="fa fa-remove"></i>
 					</a>';
+			$iskelas 	= array('1'=>'YA','0'=>'TIDAK');
 			
 			$records["data"][] = array(
-
+				
 		     	$data[$i]->kode_kamar,
   				$data[$i]->nama,
   				$data[$i]->kapasitas,
+  				$data[$i]->nama_gedung,
+  				$iskelas[$data[$i]->iskelas],
                 $act
 		   );
 		
@@ -170,6 +182,15 @@ class kamar extends IO_Controller
 		$kode_kamar 		= $this->input->post('kode_kamar');
 		$nama  		        = $this->input->post('nama');
 		$kapasitas  		= $this->input->post('kapasitas');
+		$kode_gedung  		= $this->input->post('rayon');
+		$iskelas  			= $this->input->post('iskelas');
+		if(isset($iskelas)){
+
+				$iskelas=1;
+			}
+			else{
+				$iskelas=0;
+			}
         $recdate            = date('y-m-d');
 	    $userid 			= $this->session->userdata('logged_in')['uid'];
 
@@ -177,10 +198,11 @@ class kamar extends IO_Controller
 			'kode_kamar' 			=> $kode_kamar,
 			'nama' 		            => $nama,
 			'kapasitas' 		    => $kapasitas,
+			'kode_gedung' 		    => $kode_gedung,
+			'iskelas' 		    	=> $iskelas,
             'recdate'               => $recdate,
 			'userid' 				=> $userid
 		);
-        
 		if($status=='SAVE')	
 		{// cek apakah add new atau editdata
 			
