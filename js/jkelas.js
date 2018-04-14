@@ -4,6 +4,7 @@ $(document).ready(function()
 	// addSantri("TMI");
 	setTable();
 	setTableHD();
+	pilihItemKamar();
 	$('.datepicker').datepicker(
 	{
 		rtl: App.isRTL(),
@@ -231,6 +232,30 @@ function downloadExcelHD() {
 //#endregion kelasHF
 
 //#region kelasDT
+function idKamarshow() {
+	$('#hiddenidKamar').show();
+	$('#spansearchKamar').hide();
+	$('#spansearchcloseKamar').show();
+}
+
+function idKamarhide() {
+	$('#hiddenidKamar').hide();
+	$('#spansearchKamar').show();
+	$('#spansearchcloseKamar').hide();
+}
+
+function pilihItemKamar() {
+
+	$item = $('#hide_id_Kamar').val();
+	$item = $item.split('#');
+
+	$('#kamar').val($item[0]);
+	$('#nama_kamar').val($item[1]);
+	$('#hiddenidKamar').hide();
+	$('#spansearchKamar').show();
+	$('#spansearchcloseKamar').hide();
+}
+
 function setTable() {
 	$('#tb_list').DataTable({
 		"order": [[0, "asc"]],
@@ -392,6 +417,8 @@ function edit(kode_kelas) {
 			$('#select_tingkat').val(data['id_kelas']);
 			$('#nama').val(data['nama']);
 			$('#kapasitas').val(data['kapasitas']);
+			$('#kamar').val(data['kode_kamar']);
+			$('#nama_kamar').val(data['nama_kamar']);
 
 			$('#Modal_add_kelas').modal('show');
 
