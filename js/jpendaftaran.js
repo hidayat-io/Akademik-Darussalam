@@ -7,7 +7,7 @@ $(document).ready(function()
 		autoclose: true 
 	});
 	$("#thn_masuk").datepicker({ 
-		dateFormat: 'yy',
+		dateFormat: 'yyyy-mm-dd',
 		autoclose: true 
 	});
 	$("#thn_fisik").datepicker({ 
@@ -41,7 +41,7 @@ $(document).ready(function()
 		dropdownParent:$('#Modal_add_Santri')
 		// dropdownParent: parentElement
 	});
-	pilihItemGedung();
+	// pilihItemGedung();
 	pilihItemKamar();
 	pilihItemKelas();
 	pilihItemBagian();
@@ -4089,6 +4089,7 @@ function pilihItemKamar(){
 	$item 	= $item.split('#');
 
     $('#kamar').val($item[0]);
+    $('#rayon').val($item[2]);
 	$('#hiddenidKamar').hide();
     $('#spansearchKamar').show();
     $('#spansearchcloseKamar').hide();

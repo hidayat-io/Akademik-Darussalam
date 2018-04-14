@@ -221,7 +221,7 @@
                                                                             </span>
                                                                                 <div class="input-icon right">
                                                                                     <i class="fa"></i><i class="fa"></i>
-                                                                                    <input type class="form-control datepicker"  data-date-format="yyyy" name="thn_masuk" id="thn_masuk" readonly="true" required>
+                                                                                    <input type class="form-control datepicker"  data-date-format="dd-mm-yyyy" name="thn_masuk" id="thn_masuk" readonly="true" required>
                                                                                 </div>
                                                                                 <span class="input-group-btn">
                                                                                     <button class="btn default" type="button">
@@ -235,42 +235,7 @@
                                                                         <div class="col-md-6">
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon">
-                                                                                    Gedung
-                                                                                </span>
-                                                                                <div class="input" id= "hiddenidgedung">
-                                                                                    <?php
-                                                                                        $att_item = 'id="hide_id_gedung"  class="form-control select" style="width:100%"  onchange="pilihItemGedung()"';
-                                                                                        echo form_dropdown('hide_id_gedung', $kode_gedung, null, $att_item);
-                                                                                    ?>
-                                                                                </div>
-                                                                                <div class="input-icon right">
-                                                                                    <i class="fa"></i>
-                                                                                    <input type class="form-control" readonly name="rayon" id="rayon" onkeydown="OtomatisKapital(this)" required>
-                                                                                </div>
-                                                                                <span class="input-group-btn"
-                                                                                        style="cursor: pointer;"
-                                                                                        title="Cari Kode Gedung"
-                                                                                        id="spansearchgedung"
-                                                                                        onclick="idgedungshow()">
-                                                                                    <button class="btn default" type="button">
-                                                                                        <i class="fa fa-search"></i>
-                                                                                    </button>
-                                                                                </span>
-                                                                                <span class="input-group-btn"
-                                                                                    style="cursor: pointer;"
-                                                                                        title="Cari Kode Gedung"
-                                                                                        id="spansearchclosegedung"
-                                                                                    onclick="idgedunghide()">
-                                                                                    <button class="btn default" type="button">
-                                                                                        <i class="fa fa-times-circle"></i>
-                                                                                    </button>
-                                                                                </span>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <div class="input-group">
-                                                                                <span class="input-group-addon">
-                                                                                    Kamar
+                                                                                    Ruangan
                                                                                 </span>
                                                                                 <div class="input" id= "hiddenidKamar">
                                                                                     <?php
@@ -302,6 +267,41 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-addon">
+                                                                                    Asrama
+                                                                                </span>
+                                                                                <div class="input" id= "hiddenidgedung">
+                                                                                    <?php
+                                                                                        $att_item = 'id="hide_id_gedung"  class="form-control select" style="width:100%"  onchange="pilihItemGedung()"';
+                                                                                        echo form_dropdown('hide_id_gedung', $kode_gedung, null, $att_item);
+                                                                                    ?>
+                                                                                </div>
+                                                                                <div class="input-icon right">
+                                                                                    <i class="fa"></i>
+                                                                                    <input type class="form-control" readonly name="rayon" id="rayon" onkeydown="OtomatisKapital(this)" required>
+                                                                                </div>
+                                                                                <span class="input-group-btn hidden"
+                                                                                        style="cursor: pointer;"
+                                                                                        title="Cari Kode Gedung"
+                                                                                        id="spansearchgedung"
+                                                                                        onclick="idgedungshow()">
+                                                                                    <button class="btn default" type="button">
+                                                                                        <i class="fa fa-search"></i>
+                                                                                    </button>
+                                                                                </span>
+                                                                                <span class="input-group-btn"
+                                                                                    style="cursor: pointer;"
+                                                                                        title="Cari Kode Gedung"
+                                                                                        id="spansearchclosegedung"
+                                                                                    onclick="idgedunghide()">
+                                                                                    <button class="btn default" type="button">
+                                                                                        <i class="fa fa-times-circle"></i>
+                                                                                    </button>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6 hidden">
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon">
                                                                                     Bagian

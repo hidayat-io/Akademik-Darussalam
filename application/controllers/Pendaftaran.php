@@ -31,8 +31,8 @@ class Pendaftaran extends IO_Controller
 			$vdata['kode_kamar'][NULL] = '-';
 			foreach ($hide_id_Kamar as $b) {
 
-				$vdata['kode_kamar'][$b->kode_kamar."#".$b->nama]
-					=$b->kode_kamar." | ".$b->nama;
+				$vdata['kode_kamar'][$b->kode_kamar."#".$b->nama."#".$b->kode_gedung."#".$b->nama_gedung]
+					=$b->kode_kamar." | ".$b->nama." | ".$b->kode_gedung." | ".$b->nama_gedung;
 			}
 
 			//get ID Bagian
@@ -193,7 +193,7 @@ class Pendaftaran extends IO_Controller
 			$records["data"][] = array(
 
 		     	$data[$i]->no_registrasi,
-  				$data[$i]->thn_masuk,
+  				io_date_format($data[$i]->thn_masuk,$fdate),
   				$data[$i]->nama_lengkap,
 		     	$data[$i]->nama_arab,
 		     	// $data[$i]->nama_panggilan,

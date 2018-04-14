@@ -273,7 +273,7 @@ class Mdatasantri extends CI_Model
 
 	function query_santri($no_registrasi){
 		$data = array();
-		$data=$this->db->query("SELECT a.kategori, a.no_registrasi, a.no_stambuk, a.thn_masuk , a.rayon, a.kamar, a.bagian, 
+		$data=$this->db->query("SELECT a.kategori, a.no_registrasi, a.no_stambuk, DATE_FORMAT(a.thn_masuk,'%d-%m-%Y') as thn_masuk, a.rayon, a.kamar, a.bagian, 
 		a.kel_sekarang, a.nisn, a.nisnlokal, a.nama_lengkap, a.nama_arab, a.nama_panggilan, a.hobi, 
 		a.uang_jajan_perbulan, a.no_kk, a.nik, a.tempat_lahir, DATE_FORMAT(a.tgl_lahir,'%d-%m-%Y') as tgl_lahir, a.konsulat, 
 		a.nama_sekolah, a.kelas_sekolah, a.alamat_sekolah, a.suku, a.kewarganegaraan, 
@@ -417,7 +417,9 @@ class Mdatasantri extends CI_Model
 	}
 
 	function get_kamar(){
-		$data = $this->db->query ("SELECT * FROM ms_kamar ORDER BY kode_kamar");
+		$data = $this->db->query ("SELECT ms_kamar.kode_kamar, ms_kamar.nama, ms_kamar.kapasitas, ms_kamar.kode_gedung, ms_gedung.nama AS nama_gedung
+									FROM ms_kamar
+									INNER JOIN ms_gedung ON ms_kamar.kode_gedung = ms_gedung.kode_gedung WHERE iskelas ='0'");
 		return $data;
 	}
 
