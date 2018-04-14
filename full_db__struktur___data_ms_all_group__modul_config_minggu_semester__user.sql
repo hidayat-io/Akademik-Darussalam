@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2018 at 05:57 PM
+-- Generation Time: Apr 14, 2018 at 07:12 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -210,10 +210,10 @@ INSERT INTO `modul` (`modul_id`, `parent`, `nama_modul`, `url`, `icon`, `sequenc
 (24, 5, 'Nilai', '#', 'glyphicon glyphicon-minus', 8),
 (25, 7, 'Data Pelajaran', 'mata_pelajaran', 'glyphicon glyphicon-minus', 2),
 (26, 7, 'Data Kelas', 'kelas', 'glyphicon glyphicon-minus', 6),
-(27, 7, 'Data Kamar', 'kamar', 'glyphicon glyphicon-minus', 4),
-(28, 7, 'Data Gedung', 'gedung', 'glyphicon glyphicon-minus', 3),
+(27, 7, 'Data Ruangan', 'kamar', 'glyphicon glyphicon-minus', 4),
+(28, 7, 'Data Asrama', 'gedung', 'glyphicon glyphicon-minus', 3),
 (29, 7, 'Data Bidang Studi', 'bidstudi', 'glyphicon glyphicon-minus', 1),
-(30, 7, 'Data Bagian', 'bagian', 'glyphicon glyphicon-minus', 5),
+(30, 7, 'Data Bagian', '#', 'glyphicon glyphicon-minus', 5),
 (31, 5, 'Kurikulum Sore', 'kurikulumsore', 'glyphicon glyphicon-minus', 2),
 (32, 44, 'Komponen Biaya', 'komponen', 'glyphicon glyphicon-minus', 3),
 (33, 7, 'Data Donatur', 'donatur', 'glyphicon glyphicon-minus', 10),
@@ -350,6 +350,7 @@ CREATE TABLE `ms_config` (
   `NPSN` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `nama` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `jenis_lembaga` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `alamat` varchar(250) CHARACTER SET utf8 DEFAULT NULL,
   `userid` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `recdate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -358,8 +359,8 @@ CREATE TABLE `ms_config` (
 -- Dumping data for table `ms_config`
 --
 
-INSERT INTO `ms_config` (`id_config`, `nomor_statistik`, `NPSN`, `nama`, `jenis_lembaga`, `userid`, `recdate`) VALUES
-(1, '510232051432', '69937270 - 69937240', 'TMI - Pondok Pesantren Darussalam', 'Mu\'allimin', 'admin', '2018-03-08 00:00:00');
+INSERT INTO `ms_config` (`id_config`, `nomor_statistik`, `NPSN`, `nama`, `jenis_lembaga`, `alamat`, `userid`, `recdate`) VALUES
+(1, '510232051432', '69937270 - 69937240', 'TMI - Pondok Pesantren Darussalam', 'Mu\'allimin', 'Garut Jawa Barat Indonesia', 'admin', '2018-04-10 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -370,6 +371,7 @@ INSERT INTO `ms_config` (`id_config`, `nomor_statistik`, `NPSN`, `nama`, `jenis_
 CREATE TABLE `ms_donatur` (
   `id_donatur` int(11) NOT NULL,
   `nama_donatur` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lembaga` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `alamat` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `telpon` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kategori` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'AITAM AR RAHMAH/AITAM ISLAH /AITAM BAITUL ZAKAT',
@@ -620,6 +622,8 @@ CREATE TABLE `ms_kamar` (
   `kode_kamar` varchar(11) DEFAULT NULL,
   `nama` varchar(50) DEFAULT NULL,
   `kapasitas` int(3) DEFAULT NULL,
+  `kode_gedung` varchar(15) DEFAULT NULL,
+  `iskelas` int(11) DEFAULT NULL,
   `userid` varchar(20) DEFAULT NULL,
   `recdate` date DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -650,6 +654,7 @@ CREATE TABLE `ms_kelasdt` (
   `id_kelas` int(3) DEFAULT NULL,
   `nama` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
   `kapasitas` int(2) DEFAULT NULL,
+  `kode_kamar` varchar(11) DEFAULT NULL,
   `userid` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
   `recdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -709,6 +714,19 @@ CREATE TABLE `ms_keluarga` (
   `keterangan` varchar(25) DEFAULT NULL,
   `ktp` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ms_limit_pengeluaran`
+--
+
+CREATE TABLE `ms_limit_pengeluaran` (
+  `id` int(11) NOT NULL,
+  `limit` float DEFAULT NULL,
+  `userid` varchar(20) DEFAULT NULL,
+  `recdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1377,6 +1395,12 @@ ALTER TABLE `ms_kelashd`
   ADD KEY `id_kelas` (`id_kelas`);
 
 --
+-- Indexes for table `ms_limit_pengeluaran`
+--
+ALTER TABLE `ms_limit_pengeluaran`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `ms_santri`
 --
 ALTER TABLE `ms_santri`
@@ -1516,7 +1540,7 @@ ALTER TABLE `histori_master_biaya`
 -- AUTO_INCREMENT for table `login_history`
 --
 ALTER TABLE `login_history`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=375;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=382;
 --
 -- AUTO_INCREMENT for table `modul`
 --
@@ -1592,6 +1616,11 @@ ALTER TABLE `ms_infaq`
 --
 ALTER TABLE `ms_kelashd`
   MODIFY `id_kelas` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `ms_limit_pengeluaran`
+--
+ALTER TABLE `ms_limit_pengeluaran`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `ms_semester`
 --

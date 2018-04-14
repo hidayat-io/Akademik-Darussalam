@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2018 at 05:58 PM
+-- Generation Time: Apr 14, 2018 at 07:12 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -359,7 +359,14 @@ INSERT INTO `login_history` (`id`, `user_id`, `time`, `ip_addr`) VALUES
 (371, 'admin', '2018-04-04 16:11:32', '::1'),
 (372, 'admin', '2018-04-05 02:22:27', '::1'),
 (373, 'admin', '2018-04-09 01:46:55', '::1'),
-(374, 'admin', '2018-04-09 15:12:17', '::1');
+(374, 'admin', '2018-04-09 15:12:17', '::1'),
+(375, 'admin', '2018-04-10 07:29:11', '::1'),
+(376, 'admin', '2018-04-10 15:49:21', '::1'),
+(377, 'admin', '2018-04-11 08:43:36', '::1'),
+(378, 'admin', '2018-04-11 09:10:03', '::1'),
+(379, 'admin', '2018-04-12 02:31:04', '::1'),
+(380, 'admin', '2018-04-12 07:15:39', '::1'),
+(381, 'admin', '2018-04-14 16:07:34', '::1');
 
 --
 -- Dumping data for table `ms_bagian`
@@ -513,10 +520,10 @@ INSERT INTO `ms_bidang_study` (`id_bidang`, `nama_bidang`, `kategori`, `userid`,
 -- Dumping data for table `ms_donatur`
 --
 
-INSERT INTO `ms_donatur` (`id_donatur`, `nama_donatur`, `alamat`, `telpon`, `kategori`, `userid`, `recdate`) VALUES
-(3, 'DONATUR34', 'JALAN33', '03454578', 'AITAM_ISLAH ', 'admin', '2017-09-16 00:00:00'),
-(4, 'DONATUR4', 'ALAMAT4', '0545454', 'AITAM_AR_RAHMAH', 'admin', '2017-09-16 00:00:00'),
-(5, 'PEJUANG SUBUH', 'JAKARTA PUSAT', '021559889', 'AITAM_ISLAH ', 'admin', '2017-12-12 00:00:00');
+INSERT INTO `ms_donatur` (`id_donatur`, `nama_donatur`, `lembaga`, `alamat`, `telpon`, `kategori`, `userid`, `recdate`) VALUES
+(3, 'DONATUR34', 'LME', 'JALAN33', '03454578', 'AITAM_ISLAH ', 'admin', '2018-04-12 00:00:00'),
+(4, 'DONATUR4', 'LEMBAGA2', 'ALAMAT4', '0545454', 'AITAM_AR_RAHMAH', 'admin', '2017-09-16 00:00:00'),
+(5, 'PEJUANG SUBUH', 'PRIBADI', 'JAKARTA PUSAT', '021559889', 'AITAM_ISLAH ', 'admin', '2017-12-12 00:00:00');
 
 --
 -- Dumping data for table `ms_fisik_santri`
@@ -673,11 +680,14 @@ INSERT INTO `ms_guru_struktural` (`id_jabatan`, `id_guru`) VALUES
 -- Dumping data for table `ms_kamar`
 --
 
-INSERT INTO `ms_kamar` (`kode_kamar`, `nama`, `kapasitas`, `userid`, `recdate`) VALUES
-('K02', 'KAMAR 02', 150, 'admin', '2017-10-19'),
-('K01', 'KAMAR 01', 200, 'admin', '2017-10-19'),
-('K03', 'KAMAR 03', 95, 'admin', '2017-10-19'),
-('K04', 'KAMAR 4', 100, 'admin', '2017-10-19');
+INSERT INTO `ms_kamar` (`kode_kamar`, `nama`, `kapasitas`, `kode_gedung`, `iskelas`, `userid`, `recdate`) VALUES
+('K02', 'KAMAR 02', 150, 'GD03', 1, 'admin', '2018-04-12'),
+('K01', 'KAMAR 01', 200, 'GD01', 1, 'admin', '2017-10-19'),
+('K03', 'KAMAR 03', 95, 'GD02', 0, 'admin', '2017-10-19'),
+('K04', 'KAMAR 4', 100, 'GD03', 0, 'admin', '2017-10-19'),
+('R01', 'RUANG NO 1', 25, 'GD02', 0, 'admin', '2018-04-12'),
+('R02', 'RUANG 2', 10, 'GD02', 1, 'admin', '2018-04-12'),
+('R03', 'RUANG 3', 30, 'GD02', 0, 'admin', '2018-04-12');
 
 --
 -- Dumping data for table `ms_kecakapan_santri`
@@ -706,14 +716,15 @@ INSERT INTO `ms_kecakapan_santri` (`no_registrasi`, `bid_studi`, `olahraga`, `ke
 -- Dumping data for table `ms_kelasdt`
 --
 
-INSERT INTO `ms_kelasdt` (`kode_kelas`, `id_kelas`, `nama`, `kapasitas`, `userid`, `recdate`) VALUES
-('KR1B', 1, 'KELAS 1B', 20, 'admin', '2017-10-18 17:00:00'),
-('KR1A', 1, 'KELAS 1A', 45, 'admin', '2017-10-18 17:00:00'),
-('KR2A', 3, 'KELAS 2 A', 50, 'admin', '2017-10-18 17:00:00'),
-('KR2B', 4, 'KELAS 2B', 35, 'admin', '2017-10-18 17:00:00'),
-('KR3A', 5, 'KELAS 3A', 40, 'admin', '2017-10-18 17:00:00'),
-('KR1C', 1, 'KELAS 1C', 30, 'admin', '2017-10-18 17:00:00'),
-('K023', 2, 'KELAS 1A', 25, 'admin', '2017-10-18 17:00:00');
+INSERT INTO `ms_kelasdt` (`kode_kelas`, `id_kelas`, `nama`, `kapasitas`, `kode_kamar`, `userid`, `recdate`) VALUES
+('KR1B', 1, 'KELAS 1B', 20, 'R02', 'admin', '2017-10-18 17:00:00'),
+('KR1A', 1, 'KELAS 1A', 45, 'K01', 'admin', '2017-10-18 17:00:00'),
+('KR2A', 3, 'KELAS 2 A', 50, 'K01', 'admin', '2017-10-18 17:00:00'),
+('KR2B', 4, 'KELAS 2B', 35, 'K01', 'admin', '2017-10-18 17:00:00'),
+('KR3A', 5, 'KELAS 3A', 40, 'K02', 'admin', '2017-10-18 17:00:00'),
+('KR1C', 1, 'KELAS 1C', 30, 'K01', 'admin', '2017-10-18 17:00:00'),
+('K023', 2, 'KELAS 1A', 25, 'R02', 'admin', '2017-10-18 17:00:00'),
+('KR6', 1, 'KELAS REGULAR 6', 34, 'R02', 'admin', '2018-04-14 17:03:45');
 
 --
 -- Dumping data for table `ms_kelashd`
@@ -743,6 +754,13 @@ INSERT INTO `ms_keluarga` (`no_registrasi`, `kategori`, `nama`, `nik`, `binbinti
 ('A39170001', 'IBU', 'SUMINAH', 2147483647, 'MUJAROH', 'P', '', '0000-00-00', 0, '', '', 'JANDA', 1500000, 'MALAS', 'MENCUCI', 'KONTRAK', 'PERMANEN', 0, 'TUKANG CUCI', 0x5344, 0x49534c414d, '5345435', 'INDONESIA', 'ORMAS INDONESIA', 'PARINDO', 'IBU RT', 0000, 0, 'BANDUNG', '1969-11-19', '', '', 'Syu7.pdf'),
 ('A39170001', 'SAUDARA', 'SUTEJO', 98890097, 'SUJEWO', 'L', 'MENIKAH', '0000-00-00', 0, '', '', '', 0, '', '', '', '', 0, 'PEDAGANG', 0x534d412f534d4b, 0x49534c414d, '7987', 'INDONESIA', '', '', '-', 2000, 7887878, 'TANGERANG', '1984-08-16', 'KAKAK KANDUNG', 'REFERENSI', '9sWN.pdf'),
 ('A3917002', 'SAUDARA', 'WRTR', 787, '87', 'L', 'BELUM MENI', '0000-00-00', 0, '', '', '', 0, '', '', '', '', 0, '87', 0x5344, 0x3837, '87', '8', '', '', '78', 0000, 77, '8', '2017-11-20', '78', '787', '3kLM.pdf');
+
+--
+-- Dumping data for table `ms_limit_pengeluaran`
+--
+
+INSERT INTO `ms_limit_pengeluaran` (`id`, `limit`, `userid`, `recdate`) VALUES
+(1, 600000, 'admin', '2018-04-11 08:53:29');
 
 --
 -- Dumping data for table `ms_mata_pelajaran`
@@ -804,8 +822,8 @@ INSERT INTO `ms_santri` (`kategori`, `no_registrasi`, `no_stambuk`, `thn_masuk`,
 ('TMI', 'CT38170007', 0, 2017, NULL, NULL, NULL, NULL, '11223344', '0', 'SARAH', 'ناهلات', 'SARAH', 'NGOPI', 1000000, 113345587, 3355777, 'TANJUNG ENIM', '1989-07-10', 'KONSULAT 1', NULL, NULL, NULL, 'SUMATERA', 'INDONESIA', 'PERUMAHAN MEDANG', 'NO3 RT 003 RW 013', 'MEDANG', 'PAGEDANGAN', 'LEGOK', 'TANGERANG SELAT', 'BANTEN', 523314, 21558877, 2147483647, 'faritno@me.com', 'faritno@faceboo', 'TANJUNG EN', 'CoWhmFmcJ0nt3S5jbf5s.pdf', '5tzrpZTl8IQ06C1aEcx1.jpg', 'rAt6IRPZixfk4BkPnuaJ.pdf', '2bmJoaZ3jpFr8ls4HZZG.pdf', 'lLkvUG5fKbl8HfIS7kgG.PDF', 'QqBicZPU3YxgKSNz7Dey.pdf', 'vKUpKarTdnVbJkW1EuzD.pdf', 'NQrIxQDvHtJIDcQzbYyM.pdf', NULL),
 ('TMI', 'CT38170008', 0, 2018, NULL, NULL, NULL, NULL, '11223344', '0', 'MUHTAR', 'خحها', 'MUHTAR', 'NGOPI', 1000000, 113345587, 3355777, 'TANJUNG ENIM', '1989-07-10', 'KONSULAT 1', NULL, NULL, NULL, 'SUMATERA', 'INDONESIA', 'PERUMAHAN MEDANG', 'NO3 RT 003 RW 013', 'MEDANG', 'PAGEDANGAN', 'LEGOK', 'TANGERANG SELATAN', 'BANTEN', 523314, 21558877, 2147483647, 'faritno@me.com', 'faritno@faceboo', 'TANJUNG ENIM', 'CoWhmFmcJ0nt3S5jbf5s.pdf', 'J8PywCgZ7VHjkmGqF8lD.jpg', 'rAt6IRPZixfk4BkPnuaJ.pdf', '2bmJoaZ3jpFr8ls4HZZG.pdf', 'lLkvUG5fKbl8HfIS7kgG.PDF', 'QqBicZPU3YxgKSNz7Dey.pdf', 'vKUpKarTdnVbJkW1EuzD.pdf', 'NQrIxQDvHtJIDcQzbYyM.pdf', 'aitam_jamiah'),
 ('TMI', 'T38170001', 1, 2017, 'GD01', 'K01', 'B01', 'KR1A', '123456789', '1234567890', 'RUDI HERMAWAN', 'قعيه اثقةشصشى', 'RUDI', 'OLAHRAGE', 300000, 2147483647, 2147483647, 'GARUT', '2004-03-08', 'SINDANG', NULL, NULL, NULL, 'SUNDA', 'INDONESIA', 'JL. LANCAR JAYA', 'NO.18 007/008', 'KEJAYAAN', 'MAJU TERUS', 'KECAMATAN1', 'KABUPATEN1', 'JAWA BARAT', 11876, 24765984, 2147483647, 'rudi@gmail.com', 'rudi@facebook', 'garut', NULL, 'mnWyWkatVr4JTzcE0abP.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('TMI', 'T39170013', 14, 2017, 'GD01', 'K01', 'B01', 'K023', '112233', '2147483647', 'namalengkap nya1', 'namaarab nya1', 'namapanggi', 'hoinya apa', 500000, 123, 321, 'Tempat_lahir', '1990-02-13', 'konsulat1', NULL, NULL, NULL, 'suku1', 'Kewarga1', 'jaln1', 'norUMah1', 'Dusun1', 'desa1', 'kecamatan1', 'kabupaten1', 'provinsi1', 51280, 2155677, 2147483647, 'email1@yahoo.com', 'fb1', 'dfdfdfdfdf', 'MyScl8mlnNJCn7wLGxJu.pdf', 'eWSaMJ2sXheTNvKMrWUW.jpg', 'tMiZ5AUeYPb2H2P4WC3b.pdf', 'EzPpovTpLyAsy30oyjti.jpg', 'S2VAG4eIxziv8HYND4qA.jpg', 'ThG2pY575DBNDV6GfOmO.pdf', 'YLKopMNGWvs1jsF8HNg4.pdf', '55R4fRiOc63MD8M7UM4R.pdf', NULL),
-('TMI', 'T39170014', 15, 2017, 'GD01', 'K01', 'B01', 'KR1B', '112233', '2147483647', 'BOBI', 'namaarab nya1', 'namapanggi', 'hoinya apa', 500000, 123, 321, 'Tempat_lahir', '0000-00-00', 'konsulat1', NULL, NULL, NULL, 'suku1', 'Kewarga1', 'jaln1', 'norUMah1', 'Dusun1', 'desa1', 'kecamatan1', 'kabupaten1', 'provinsi1', 51280, 2155677, 2147483647, 'email1@yahoo.com', 'fb1', 'dfdfdfdfdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('TMI', 'T39170013', 14, 2017, 'GD01', 'K01', 'B01', 'K023', '112233', '2147483647', 'namalengkap nya1', 'namaarab nya1', 'namapanggi', 'hoinya apa', 600000, 123, 321, 'Tempat_lahir', '1990-02-13', 'konsulat1', NULL, NULL, NULL, 'suku1', 'Kewarga1', 'jaln1', 'norUMah1', 'Dusun1', 'desa1', 'kecamatan1', 'kabupaten1', 'provinsi1', 51280, 2155677, 2147483647, 'email1@yahoo.com', 'fb1', 'dfdfdfdfdf', 'MyScl8mlnNJCn7wLGxJu.pdf', 'eWSaMJ2sXheTNvKMrWUW.jpg', 'tMiZ5AUeYPb2H2P4WC3b.pdf', 'EzPpovTpLyAsy30oyjti.jpg', 'S2VAG4eIxziv8HYND4qA.jpg', 'ThG2pY575DBNDV6GfOmO.pdf', 'YLKopMNGWvs1jsF8HNg4.pdf', '55R4fRiOc63MD8M7UM4R.pdf', NULL),
+('TMI', 'T39170014', 15, 2017, 'GD01', 'K01', 'B01', 'KR1B', '112233', '2147483647', 'BOBI', 'namaarab nya1', 'namapanggi', 'hoinya apa', 600000, 123, 321, 'Tempat_lahir', '0000-00-00', 'konsulat1', NULL, NULL, NULL, 'suku1', 'Kewarga1', 'jaln1', 'norUMah1', 'Dusun1', 'desa1', 'kecamatan1', 'kabupaten1', 'provinsi1', 51280, 2155677, 2147483647, 'email1@yahoo.com', 'fb1', 'dfdfdfdfdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('TMI', 'T39170019', 20, 2017, 'GD02', 'K02', 'B02', 'KR2A', '11223344', '51023205143239170019', 'AHDIAN', 'حغغفىلا ت', 'AHDIAN', 'NGOPI', 1000000, 113345587, 3355777, 'TANJUNG ENIM', '1989-07-10', 'KONSULAT 1', NULL, NULL, NULL, 'SUMATERA', 'INDONESIA', 'PERUMAHAN MEDANG', 'NO3 RT 003 RW 013', 'MEDANG', 'PAGEDANGAN', 'LEGOK', 'TANGERANG SELAT', 'BANTEN', 523314, 21558877, 2147483647, 'faritno@me.com', 'faritno@faceboo', 'TANJUNG EN', 'CoWhmFmcJ0nt3S5jbf5s.pdf', '5tzrpZTl8IQ06C1aEcx1.jpg', 'rAt6IRPZixfk4BkPnuaJ.pdf', '2bmJoaZ3jpFr8ls4HZZG.pdf', 'lLkvUG5fKbl8HfIS7kgG.PDF', 'QqBicZPU3YxgKSNz7Dey.pdf', 'vKUpKarTdnVbJkW1EuzD.pdf', 'NQrIxQDvHtJIDcQzbYyM.pdf', NULL),
 ('TMI', 'T39180001', 21, 2018, 'GD03', 'K03', 'B03', 'KR3A', '97878', '51023205143239180001', 'JOLA', '', 'ASd', 'ASDA', 234, 234, 2342, '23423', '2018-01-17', '34234', NULL, NULL, NULL, '23423', '2342', '234', '23234', '234', '234', '2342', '4234', '3423', 2342, 234, 234, '', '', '23', NULL, 'GeLr9gHRlMSalNYxAhZ8.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('TMI', 'T39180018', 37, 2015, 'GD02', 'K02', 'B02', 'KR2A', '234234', '51023205143239180018', 'JONI S', 'REREW', 'WEREW', '23432', 0, 423423423, 4535345, '23423', '2017-11-16', 'WERWER', NULL, NULL, NULL, '234234', '23423', '23', '234', '23', '23432', '234', '22342', '23423', 3423, 4234, 4234234, '', '', 'WERWER', NULL, 'WK815803OJqTon7uPA3Z.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
