@@ -106,7 +106,7 @@
                                         <a href="#tab_penyakitn" data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Penyakit</a>
                                     </li>
                                     <li>
-                                        <a href="#tab_kecakapan"  id="tabkecakapan"  data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Kecakapan Khusus</a>
+                                        <a href="#tab_kecakapan"  id="tabkecakapan"  data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Prestasi</a>
                                     </li>
                                     <li>
                                         <a href="#tab_lampiran" data-toggle="tab"><i class="fa fa-graduation-cap"></i>&nbsp;Data Lampiran</a>
@@ -1583,7 +1583,7 @@
                                             <div class="portlet box green-jungle">
                                                 <div class="portlet-title">
                                                     <div class="caption">
-                                                        <i class="fa fa-gift"></i> DATA KECAKAPAN KHUSUS </div>
+                                                        <i class="fa fa-gift"></i> PRESTASI </div>
                                                     <div class="tools">
                                                         <a href="javascript:;" class="collapse"></a>
                                                     </div>
@@ -1600,7 +1600,7 @@
                                                                         <div class="col-md-9">
                                                                             <div class="input-group">
                                                                             <span class="input-group-addon">
-                                                                            Bidang Studi
+                                                                            Bidang Prestasi
                                                                             </span>
                                                                                 <div class="input-icon right">
                                                                                     <i class="fa"></i><input type class="form-control" name="bid_studi" id="bid_studi" onkeydown="OtomatisKapital(this)" maxlength="50" >
@@ -1616,7 +1616,7 @@
                                                                         <div class="col-md-9">
                                                                             <div class="input-group">
                                                                             <span class="input-group-addon">
-                                                                            Olah Raga
+                                                                            Tingkat Prestasi
                                                                             </span>
                                                                                 <div class="input-icon right">
                                                                                     <i class="fa"></i><input type class="form-control" name="olahraga" id="olahraga" onkeydown="OtomatisKapital(this)" maxlength="50"  >
@@ -1635,7 +1635,7 @@
                                                                         <div class="col-md-9">
                                                                             <div class="input-group">
                                                                             <span class="input-group-addon">
-                                                                            Kesenian
+                                                                            Peringkat Yang Diraih
                                                                             </span>
                                                                                 <div class="input-icon right">
                                                                                     <i class="fa"></i><input type class="form-control" name="kesenian" id="kesenian" onkeydown="OtomatisKapital(this)" maxlength="50"  >
@@ -1650,7 +1650,7 @@
                                                                         <div class="col-md-9">
                                                                             <div class="input-group">
                                                                             <span class="input-group-addon">
-                                                                            Keterampilan
+                                                                            Tahun Meraih Prestasi
                                                                             </span>
                                                                                 <div class="input-icon right">
                                                                                     <i class="fa"></i><input type class="form-control" name="keterampilan" id="keterampilan" onkeydown="OtomatisKapital(this)" maxlength="50"  >
@@ -1659,7 +1659,7 @@
                                                                         </div>
                                                                 </div>
                                                                 </div>
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-6 hidden">
                                                                 <div class="form-group">
                                                                     <label class="control-label col-md-3"></label>
                                                                         <div class="col-md-9">
@@ -1825,6 +1825,30 @@
                                                                             </div>
                                                                             <div class="cskhun" ><a id="skhunholder" href="LINKTARGET" target="_blank"> <button type="button" class="btn dark btn-outline" >Lihat SKHUN</button></a></div>
                                                                             <input type="hidden"  id="TfileUpload_skhun" name="TfileUpload_skhun">
+                                                                        </div>
+                                                                    </div>
+                                                                <!-- </div> -->
+                                                                <!--end inputbox-->
+                                                                 <!--inputbbox-->
+                                                                <!-- <div class="col-md-6"> -->
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3"> NISN </label>
+                                                                        <div class="col-md-3">
+                                                                            <div class="fileinput fileinput-new" data-provides="fileinput" id="button_nisn">
+                                                                                <div class="input-group input-large">
+                                                                                    <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+                                                                                        <i class="fa fa-file fileinput-exists"></i>&nbsp;
+                                                                                        <span class="fileinput-filename"> </span>
+                                                                                    </div>
+                                                                                    <span class="input-group-addon btn default btn-file">
+                                                                                        <span class="fileinput-new"> Select file </span>
+                                                                                        <span class="fileinput-exists"> Change </span>
+                                                                                        <input type="file"  id="fileUpload_nisn" name="fileUpload_nisn"> </span>
+                                                                                    <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput" id="RfileUpload_nisn" name="RfileUpload_nisn"> Remove </a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="cnisn" ><a id="nisnholder" href="LINKTARGET" target="_blank"> <button type="button" class="btn dark btn-outline" >Lihat NISN</button></a></div>
+                                                                            <input type="hidden"  id="TfileUpload_nisn" name="TfileUpload_nisn">
                                                                         </div>
                                                                     </div>
                                                                 <!-- </div> -->
@@ -2131,7 +2155,7 @@
                                             <span class="input-group-addon">
                                                 Umur
                                             </span>
-                                    <i class="fa"></i><input type class="form-control numbers-only" name="umur_keluarga" id="umur_keluarga" maxlength="3" required></div>
+                                    <i class="fa"></i><input type class="form-control numbers-only" name="umur_keluarga" id="umur_keluarga" maxlength="3" ></div>
                                 </div>
                             </div>
                         </div>
@@ -2402,7 +2426,7 @@
                                             <span class="input-group-addon">
                                             Tempat Lahir
                                             </span>
-                                                <i class="fa"></i><input type class="form-control" name="tempat_lahir_keluarga" id="tempat_lahir_keluarga" onkeydown="OtomatisKapital(this)" required></div>
+                                                <i class="fa"></i><input type class="form-control" name="tempat_lahir_keluarga" id="tempat_lahir_keluarga" onkeydown="OtomatisKapital(this)" ></div>
                                 </div>
                             </div>
                                 <!--span-->
@@ -2413,7 +2437,7 @@
                                         <span class="input-group-addon">
                                         Tgl. Lahir
                                         </span>
-                                            <i class="fa"></i><input type class="form-control datepicker" readonly="true" data-date-format="dd-mm-yyyy" name="tgl_lahir_keluarga" id="tgl_lahir_keluarga" required><span class="input-group-btn">
+                                            <i class="fa"></i><input type class="form-control datepicker" readonly="true" data-date-format="dd-mm-yyyy" name="tgl_lahir_keluarga" id="tgl_lahir_keluarga" ><span class="input-group-btn">
                                             <button class="btn default" type="button">
                                                 <i class="fa fa-calendar"></i>
                                             </button>
@@ -2453,9 +2477,10 @@
                                         <label class="control-label"></label>
                                         <div class="input-group">
                                         <span class="input-group-addon">
-                                        KTP
+                                        Lampiran
                                         </span>
                                         <input type="file" class="form-control" name="ktp_keluarga" id="ktp_keluarga" ></div>
+                                        <span class="help-block">Lampiran KTP / Surat Kematian</span>
                                         <input type="text" class="hidden" name="hid_ktp_keluarga" id="hid_ktp_keluarga" ></div>
                                     </div>
                                 </div>

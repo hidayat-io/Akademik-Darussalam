@@ -650,6 +650,9 @@ function mati() {
 	$('#button_skhun').hide();
 	$("#skhunholder").hide();
 	$("#skhunholder").hide();
+	$('#button_nisn').hide();
+	$("#nisnholder").hide();
+	$("#nisnholder").hide();
 	$('#button_transkip').hide();
 	$("#transkipholder").hide();
 	$("#transkipholder").hide();
@@ -751,6 +754,8 @@ function filter_tmi() {
 		$("#kkholder").show();
 		$('#button_skhun').show();
 		$("#skhunholder").show();
+		$('#button_nisn').show();
+		$("#nisnholder").show();
 		$('#button_transkip').show();
 		$("#transkipholder").show();
 		$('#button_skbb').show();
@@ -773,6 +778,8 @@ function filter_tmi() {
 		$("#kkholder").hide();
 		$('#button_skhun').show();
 		$("#skhunholder").hide();
+		$('#button_nisn').show();
+		$("#nisnholder").hide();
 		$('#button_transkip').show();
 		$("#transkipholder").hide();
 		$('#button_skbb').show();
@@ -869,6 +876,8 @@ function filter_aitam() {
 		$("#kkholder").show();
 		$('#button_skhun').show();
 		$("#skhunholder").show();
+		$('#button_nisn').show();
+		$("#nisnholder").hide();
 		$('#button_transkip').show();
 		$("#transkipholder").show();
 		$('#button_skbb').show();
@@ -889,8 +898,10 @@ function filter_aitam() {
 		$("#aklahiranholder").hide();
 		$('#button_kk').show();
 		$("#kkholder").hide();
-		$('#button_skhun').hide();
+		$('#button_skhun').show();
 		$("#skhunholder").hide();
+		$('#button_nisn').show();
+		$("#nisnholder").hide();
 		$('#button_transkip').hide();
 		$("#transkipholder").hide();
 		$('#button_skbb').hide();
