@@ -89,8 +89,8 @@ class Pendaftaran extends IO_Controller
 			$vdata['kode_kamar'][NULL] = '-';
 			foreach ($hide_id_Kamar as $b) {
 
-				$vdata['kode_kamar'][$b->kode_kamar."#".$b->nama]
-					=$b->kode_kamar." | ".$b->nama;
+				$vdata['kode_kamar'][$b->kode_kamar."#".$b->nama."#".$b->kode_gedung."#".$b->nama_gedung]
+					=$b->kode_kamar." | ".$b->nama." | ".$b->kode_gedung." | ".$b->nama_gedung;
 			}
 
 			//get ID Bagian
@@ -371,8 +371,8 @@ class Pendaftaran extends IO_Controller
 		$kategori_update  		= $this->input->post('kategori_update');
 		$no_registrasi  		= $this->input->post('no_registrasi');
 		$no_stambuk  			= $this->input->post('no_stambuk');
-		$thn_masuk					= $this->input->post('thn_masuk');
-		// $thn_masuk 				= io_return_date('d-m-Y',$tglm);
+		$thn_masukX				= $this->input->post('thn_masuk');
+		$thn_masuk				= io_return_date('d-m-Y',$thn_masukX);
 		$rayon  				= $this->input->post('rayon');
 		$kamar  				= $this->input->post('kamar');
 		$bagian  				= $this->input->post('bagian');
@@ -387,11 +387,12 @@ class Pendaftaran extends IO_Controller
 		$no_kk  				= $this->input->post('no_kk');
 		$nik  					= $this->input->post('nik');
 		$tempat_lahir  			= $this->input->post('tempat_lahir');
-			$tgll					= $this->input->post('tgl_lahir');
+		$tgll					= $this->input->post('tgl_lahir');
 		$tgl_lahir 				= io_return_date('d-m-Y',$tgll);
 		$konsulat  				= $this->input->post('konsulat');
-		$nama_sekolah_tmi  	= $this->input->post('nama_sekolah_tmi');
-		$thn_lulus_tmi  			= $this->input->post('thn_lulus_tmi');
+		$nama_sekolah_tmi  		= $this->input->post('nama_sekolah_tmi');
+		$thn_lulus_tmiX 		= $this->input->post('thn_lulus_tmi');
+		$thn_lulus_tmi  		= io_return_date('d-m-Y',$thn_lulus_tmiX);
 		$alamat_sekolah_tmi  	= $this->input->post('alamat_sekolah_tmi');
 		$suku  					= $this->input->post('suku');
 		$kewarganegaraan  		= $this->input->post('kewarganegaraan');

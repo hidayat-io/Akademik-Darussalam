@@ -313,7 +313,7 @@
                                                                                     ?>
                                                                                 </div>
                                                                                 <div class="input-icon right">
-                                                                                <i class="fa"></i><input type class="form-control" readonly name="bagian" id="bagian" onkeydown="OtomatisKapital(this)" required>
+                                                                                <i class="fa"></i><input type class="form-control" readonly name="bagian" id="bagian" onkeydown="OtomatisKapital(this)" >
                                                                                 </div>
                                                                                 <span class="input-group-btn"
                                                                                         style="cursor: pointer;"
@@ -854,7 +854,7 @@
                                                                     <div class="col-md-9"> -->
                                                                         <div class="input-group">
                                                                         <span class="input-group-addon">
-                                                                        Nama Sekolah
+                                                                        Nama Sekolah Asal
                                                                         </span>
                                                                             <div class="input-icon right">
                                                                                 <i class="fa"></i><input type class="form-control" name="nama_sekolah_tmi" id="nama_sekolah_tmi" onkeydown="OtomatisKapital(this)" required>
@@ -892,7 +892,7 @@
                                                                         Alamat Sekolah
                                                                         </span>
                                                                             <div class="input-icon right">
-                                                                                <i class="fa"></i><input type class="form-control" name="alamat_sekolah_aitam" id="alamat_sekolah_aitam" onkeydown="OtomatisKapital(this)" required>
+                                                                                <i class="fa"></i><input type class="form-control" name="alamat_sekolah_tmi" id="alamat_sekolah_tmi" onkeydown="OtomatisKapital(this)" required>
                                                                             </div>
                                                                         </div>
                                                                     <!-- </div>

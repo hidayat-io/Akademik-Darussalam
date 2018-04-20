@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2018 at 07:12 PM
+-- Generation Time: Apr 20, 2018 at 06:58 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -109,7 +109,6 @@ INSERT INTO `group_hak_akses` (`group_id`, `modul_id`, `add`, `edit`, `delete`) 
 (1, 27, 1, 1, 1),
 (1, 28, 1, 1, 1),
 (1, 29, 1, 1, 1),
-(1, 30, 1, 1, 1),
 (1, 31, 1, 1, 1),
 (1, 32, 1, 1, 1),
 (1, 33, 1, 1, 1),
@@ -780,7 +779,7 @@ CREATE TABLE `ms_santri` (
   `kategori` varchar(15) DEFAULT NULL,
   `no_registrasi` varchar(15) CHARACTER SET latin1 NOT NULL COMMENT 'YY masehi  + YY hijriyah + xxxx',
   `no_stambuk` int(11) DEFAULT NULL,
-  `thn_masuk` year(4) DEFAULT NULL,
+  `thn_masuk` date DEFAULT NULL,
   `rayon` varchar(15) CHARACTER SET latin1 DEFAULT NULL,
   `kamar` varchar(15) CHARACTER SET latin1 DEFAULT NULL,
   `bagian` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
@@ -798,7 +797,7 @@ CREATE TABLE `ms_santri` (
   `tgl_lahir` date DEFAULT NULL,
   `konsulat` varchar(15) CHARACTER SET latin1 DEFAULT NULL,
   `nama_sekolah` varchar(15) CHARACTER SET latin1 DEFAULT NULL,
-  `kelas_sekolah` varchar(6) CHARACTER SET latin1 DEFAULT NULL,
+  `thn_lulus` date DEFAULT NULL,
   `alamat_sekolah` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
   `suku` varchar(15) CHARACTER SET latin1 DEFAULT NULL,
   `kewarganegaraan` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
@@ -820,6 +819,7 @@ CREATE TABLE `ms_santri` (
   `lamp_akta_kelahiran` varchar(25) CHARACTER SET latin1 DEFAULT NULL COMMENT 'File Upload',
   `lamp_kk` varchar(25) CHARACTER SET latin1 DEFAULT NULL COMMENT 'File Upload',
   `lamp_skhun` varchar(25) CHARACTER SET latin1 DEFAULT NULL COMMENT 'File Upload',
+  `lamp_nisn` varchar(25) DEFAULT NULL,
   `lamp_transkip_nilai` varchar(25) CHARACTER SET latin1 DEFAULT NULL COMMENT 'File Upload',
   `lamp_skkb` varchar(25) CHARACTER SET latin1 DEFAULT NULL COMMENT 'File Upload',
   `lamp_surat_kesehatan` varchar(25) CHARACTER SET latin1 DEFAULT NULL COMMENT 'File Upload',
@@ -1540,7 +1540,7 @@ ALTER TABLE `histori_master_biaya`
 -- AUTO_INCREMENT for table `login_history`
 --
 ALTER TABLE `login_history`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=382;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=389;
 --
 -- AUTO_INCREMENT for table `modul`
 --

@@ -89,7 +89,7 @@ class Datasantri extends IO_Controller
 			$vdata['kode_kamar'][NULL] = '-';
 			foreach ($hide_id_Kamar as $b) {
 
-				$vdata['kode_kamar'][$b->kode_kamar."#".$b->nama]
+				$vdata['kode_kamar'][$b->kode_kamar."#".$b->nama."#".$b->kode_gedung."#".$b->nama_gedung]
 					=$b->kode_kamar." | ".$b->nama." | ".$b->kode_gedung." | ".$b->nama_gedung;
 			}
 
@@ -384,8 +384,8 @@ class Datasantri extends IO_Controller
 		$kategori_update  		= $this->input->post('kategori_update');
 		$no_registrasi  		= $this->input->post('no_registrasi');
 		$no_stambuk  			= $this->input->post('no_stambuk');
-		$thn_masuk					= $this->input->post('thn_masuk');
-		// $thn_masuk 				= io_return_date('d-m-Y',$tglm);
+		$thn_masukX				= $this->input->post('thn_masuk');
+		$thn_masuk				= io_return_date('d-m-Y',$thn_masukX);
 		$rayon  				= $this->input->post('rayon');
 		$kamar  				= $this->input->post('kamar');
 		$bagian  				= $this->input->post('bagian');
