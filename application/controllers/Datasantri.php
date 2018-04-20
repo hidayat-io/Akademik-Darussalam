@@ -403,9 +403,9 @@ class Datasantri extends IO_Controller
 			$tgll					= $this->input->post('tgl_lahir');
 		$tgl_lahir 				= io_return_date('d-m-Y',$tgll);
 		$konsulat  				= $this->input->post('konsulat');
-		$nama_sekolah_aitam  	= $this->input->post('nama_sekolah_aitam');
-		$kelas_aitam  			= $this->input->post('kelas_aitam');
-		$alamat_sekolah_aitam  	= $this->input->post('alamat_sekolah_aitam');
+		$nama_sekolah_tmi  	= $this->input->post('nama_sekolah_tmi');
+		$thn_lulus_tmi  			= $this->input->post('thn_lulus_tmi');
+		$alamat_sekolah_tmi  	= $this->input->post('alamat_sekolah_tmi');
 		$suku  					= $this->input->post('suku');
 		$kewarganegaraan  		= $this->input->post('kewarganegaraan');
 		$jalan  				= $this->input->post('jalan');
@@ -454,6 +454,7 @@ class Datasantri extends IO_Controller
 		$TfileUpload_akelahiran 		= $this->input->post('TfileUpload_akelahiran');
 		$TfileUpload_kk 		= $this->input->post('TfileUpload_kk');
 		$TfileUpload_skhun 		= $this->input->post('TfileUpload_skhun');
+		$TfileUpload_nisn 		= $this->input->post('TfileUpload_nisn');
 		$TfileUpload_transkip 		= $this->input->post('TfileUpload_transkip');
 		$TfileUpload_skbb 		= $this->input->post('TfileUpload_skbb');
 		$TfileUpload_skes 		= $this->input->post('TfileUpload_skes');
@@ -481,9 +482,9 @@ class Datasantri extends IO_Controller
 			'tempat_lahir' 			=> $tempat_lahir,
 			'tgl_lahir' 			=> $tgl_lahir,
 			'konsulat' 				=> $konsulat,
-			'nama_sekolah' 			=> $nama_sekolah_aitam,
-			'kelas_sekolah' 		=> $kelas_aitam,
-			'alamat_sekolah' 		=> $alamat_sekolah_aitam,
+			'nama_sekolah' 			=> $nama_sekolah_tmi,
+			'thn_lulus' 		=> $thn_lulus_tmi,
+			'alamat_sekolah' 		=> $alamat_sekolah_tmi,
 			'suku' 					=> $suku,
 			'kewarganegaraan' 		=> $kewarganegaraan,
 			'jalan' 				=> $jalan,
@@ -766,6 +767,24 @@ class Datasantri extends IO_Controller
 			if($this->upload->do_upload('fileUpload_skhun')){
 
 				$this->model->update_photo_skhun($no_registrasi,$filename);
+			}
+			else{
+
+				echo $this->upload->display_errors();
+			};
+		//upload file nisn
+			$string_name 				= io_random_string(20);
+			$temp						= explode(".",$_FILES['fileUpload_nisn']['name']);
+			$filename 					= $string_name.'.'.end($temp);
+			$config['upload_path']   	= './assets/images/fileupload/nisn/';
+			$config['allowed_types'] 	= '*';
+			$config['file_name'] 		= $filename;
+			$config['overwrite'] 		= true;
+			$this->load->library('upload');
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('fileUpload_nisn')){
+
+				$this->model->update_photo_nisn($no_registrasi,$filename);
 			}
 			else{
 
@@ -1085,7 +1104,7 @@ class Datasantri extends IO_Controller
 					};
 				}
 
-			//upload file skhun
+			//upload file kk
 				if($_FILES['fileUpload_kk'] != '')
 				
 				{
@@ -1126,6 +1145,29 @@ class Datasantri extends IO_Controller
 
 						$this->model->update_photo_skhun($no_registrasi,$filename);
 						unlink('./assets/images/fileupload/skhun/'.$TfileUpload_skhun);
+					}
+					else{
+
+						echo $this->upload->display_errors();
+					};
+				}
+			//upload file nisn
+				if($_FILES['fileUpload_nisn'] != '')
+				
+				{
+					$string_name 				= io_random_string(20);
+					$temp						= explode(".",$_FILES['fileUpload_nisn']['name']);
+					$filename 					= $string_name.'.'.end($temp);
+					$config['upload_path']   	= './assets/images/fileupload/nisn/';
+					$config['allowed_types'] 	= '*';
+					$config['file_name'] 		= $filename;
+					$config['overwrite'] 		= true;
+					$this->load->library('upload');
+					$this->upload->initialize($config);
+					if($this->upload->do_upload('fileUpload_nisn')){
+
+						$this->model->update_photo_nisn($no_registrasi,$filename);
+						unlink('./assets/images/fileupload/nisn/'.$TfileUpload_nisn);
 					}
 					else{
 

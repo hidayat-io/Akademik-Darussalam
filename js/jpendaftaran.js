@@ -10,6 +10,10 @@ $(document).ready(function()
 		dateFormat: 'yyyy-mm-dd',
 		autoclose: true 
 	});
+	$("#thn_lulus_tmi").datepicker({
+		dateFormat: 'yyyy-mm-dd',
+		autoclose: true
+	});
 	$("#thn_fisik").datepicker({ 
 		dateFormat: 'yy',
 		autoclose: true 
@@ -330,6 +334,42 @@ $(document).ready(function()
 
 	});
 
+	$("#fileUpload_nisn").on('change', function (e) {
+
+		var files = e.originalEvent.target.files;
+		//Get count of selected files
+		var countFiles = $(this)[0].files.length;
+		var size = files[0].size;
+		var imgPath = $(this)[0].value;
+		var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+
+		if (size > 1048576) {
+			bootbox.alert("Cannot upload file more than 1 MB.");
+			$("#fileUpload_nisn").val('');
+			return false;
+		}
+		else if (extn == "png" || extn == "jpg" || extn == "jpeg" || extn == "pdf" || extn == "doc" || extn == "docx") {
+
+		}
+		else {
+			bootbox.alert("File tidak didukung");
+			$("#fileUpload_nisn").val('');
+			return false;
+		}
+
+		if ($("#fileUpload_nisn").val() != '' && $("#no_registrasi").val() != '') {
+			$("#nisnholder").hide();
+		}
+	});
+
+	$("#RfileUpload_nisn").on('click', function (e) {
+
+		if ($("#fileUpload_nisn").val() != '' && $("#no_registrasi").val() != '') {
+			$("#nisnholder").show();
+		}
+
+	});
+
 	$("#fileUpload_transkip").on('change', function(e) {
 
 		var files = e.originalEvent.target.files;
@@ -518,9 +558,9 @@ function kosong(){
 	$('#tempat_lahir').val('');
 	$('#tgl_lahir').val('');
 	$('#konsulat').val('');
-	$('#nama_sekolah_aitam').val('');
-	$('#kelas_aitam').val('');
-	$('#alamat_sekolah_aitam').val('');
+	$('#nama_sekolah_tmi').val('');
+	$('#thn_lulus_tmi').val('');
+	$('#alamat_sekolah_tmi').val('');
 	$('#suku').val('');
 	$('#kewarganegaraan').val('');
 	$('#jalan').val('');
@@ -617,9 +657,9 @@ function mati(){
 		$('#tempat_lahir').attr('disabled', true);
 		$('#tgl_lahir').attr('disabled', true);
 		$('#konsulat').attr('disabled', true);
-		$('#nama_sekolah_aitam').attr('disabled', true);
-		$('#kelas_aitam').attr('disabled', true);
-		$('#alamat_sekolah_aitam').attr('disabled', true);
+		$('#nama_sekolah_tmi').attr('disabled', true);
+		$('#thn_lulus_tmi').attr('disabled', true);
+		$('#alamat_sekolah_tmi').attr('disabled', true);
 		$('#suku').attr('disabled', true);
 		$('#kewarganegaraan').attr('disabled', true);
 		$('#jalan').attr('disabled', true);
@@ -724,9 +764,9 @@ function filter_tmi(){
 	$('#tempat_lahir').attr('disabled', false);
 	$('#tgl_lahir').attr('disabled', false);
 	$('#konsulat').attr('disabled', false);
-	$('#nama_sekolah_aitam').attr('disabled', true);
-	$('#kelas_aitam').attr('disabled', true);
-	$('#alamat_sekolah_aitam').attr('disabled', true);
+	$('#nama_sekolah_tmi').attr('disabled', false);
+	$('#thn_lulus_tmi').attr('disabled', false);
+	$('#alamat_sekolah_tmi').attr('disabled', false);
 	$('#suku').attr('disabled', false);
 	$('#kewarganegaraan').attr('disabled', false);
 	$('#jalan').attr('disabled', false);
@@ -826,7 +866,7 @@ function filter_tmi(){
 function filter_aitam(){
 	$('#no_registrasi').attr('disabled', false);
 	$('#no_stambuk').attr('disabled', true);
-	$('#thn_masuk').attr('disabled', true);
+	$('#thn_masuk').attr('disabled', false);
 	if ($('#hid_page').val() == 'DAFTAR') {
 		$('#rayon').attr('disabled', true);
 		$('#kamar').attr('disabled', true);
@@ -851,9 +891,9 @@ function filter_aitam(){
 	$('#tempat_lahir').attr('disabled', false);
 	$('#tgl_lahir').attr('disabled', false);
 	$('#konsulat').attr('disabled', true);
-	$('#nama_sekolah_aitam').attr('disabled', false);
-	$('#kelas_aitam').attr('disabled', false);
-	$('#alamat_sekolah_aitam').attr('disabled', false);
+	$('#nama_sekolah_tmi').attr('disabled', true);
+	$('#thn_lulus_tmi').attr('disabled', true);
+	$('#alamat_sekolah_tmi').attr('disabled', true);
 	$('#suku').attr('disabled', false);
 	$('#kewarganegaraan').attr('disabled', false);
 	$('#jalan').attr('disabled', false);
@@ -911,12 +951,12 @@ function filter_aitam(){
 		$("#skhunholder").show();
 		$('#button_nisn').show();
 		$("#nisnholder").show();
-		$('#button_transkip').show();
-		$("#transkipholder").show();
-		$('#button_skbb').show();
-		$("#skbbholder").show();
-		$('#button_skes').show();
-		$("#skesholder").show();	
+		$('#button_transkip').hide();
+		$("#transkipholder").hide();
+		$('#button_skbb').hide();
+		$("#skbbholder").hide();
+		$('#button_skes').hide();
+		$("#skesholder").hide();	
 	}
 	else
 	{
@@ -1315,9 +1355,9 @@ function view(no_registrasi) {
 			$('#tempat_lahir').val(data['tempat_lahir']);
 			$('#tgl_lahir').val(data['tgl_lahir']);;
 			$('#konsulat').val(data['konsulat']);
-			$('#nama_sekolah_aitam').val(data['nama_sekolah']);
-			$('#kelas_aitam').val(data['kelas_sekolah']);
-			$('#alamat_sekolah_aitam').val(data['alamat_sekolah']);
+			$('#nama_sekolah_tmi').val(data['nama_sekolah']);
+			$('#thn_lulus_tmi').val(data['thn_lulus']);
+			$('#alamat_sekolah_tmi').val(data['alamat_sekolah']);
 			$('#suku').val(data['suku']);
 			$('#kewarganegaraan').val(data['kewarganegaraan']);
 			$('#jalan').val(data['jalan']);
@@ -1433,6 +1473,16 @@ function view(no_registrasi) {
 			else {
 
 				$('.cskhun').hide();
+			}
+			//show nisn 
+			if (data['lamp_nisn'] != null) {
+				var image_holder = $("#nisnholder");
+				$('#nisnholder').attr("href", base_url + 'assets/images/fileupload/nisn/' + data['lamp_nisn']);
+				image_holder.show();
+			}
+			else {
+
+				$('.cnisn').hide();
 			}
 			//show ranskip 
 			if (data['lamp_transkip_nilai'] != null) {
@@ -1728,9 +1778,9 @@ function edit(no_registrasi) {
 			$('#tempat_lahir').val(data['tempat_lahir']);
 			$('#tgl_lahir').val(data['tgl_lahir']);;
 			$('#konsulat').val(data['konsulat']);
-			$('#nama_sekolah_aitam').val(data['nama_sekolah']);
-			$('#kelas_aitam').val(data['kelas_sekolah']);
-			$('#alamat_sekolah_aitam').val(data['alamat_sekolah']);
+			$('#nama_sekolah_tmi').val(data['nama_sekolah']);
+			$('#thn_lulus_tmi').val(data['thn_lulus']);
+			$('#alamat_sekolah_tmi').val(data['alamat_sekolah']);
 			$('#suku').val(data['suku']);
 			$('#kewarganegaraan').val(data['kewarganegaraan']);
 			$('#jalan').val(data['jalan']);
@@ -1832,6 +1882,17 @@ function edit(no_registrasi) {
 			}
 			else {
 				$('.cskhun').hide();
+			}
+			//show nisn 
+			$("#TfileUpload_nisn").val('');
+			if (data['lamp_nisn'] != null) {
+				$("#TfileUpload_nisn").val(data['lamp_nisn']);
+				var image_holder = $("#nisnholder");
+				$('#nisnholder').attr("href", base_url + 'assets/images/fileupload/nisn/' + data['lamp_nisn']);
+				image_holder.show();
+			}
+			else {
+				$('.cnisn').hide();
 			}
 			//show ranskip 
 			$("#TfileUpload_transkip").val('');
@@ -2204,9 +2265,9 @@ function ToTMI(no_registrasi) {
 			$('#tempat_lahir').val(data['tempat_lahir']);
 			$('#tgl_lahir').val(data['tgl_lahir']);;
 			$('#konsulat').val(data['konsulat']);
-			$('#nama_sekolah_aitam').val(data['nama_sekolah']);
-			$('#kelas_aitam').val(data['kelas_sekolah']);
-			$('#alamat_sekolah_aitam').val(data['alamat_sekolah']);
+			$('#nama_sekolah_tmi').val(data['nama_sekolah']);
+			$('#thn_lulus_tmi').val(data['thn_lulus']);
+			$('#alamat_sekolah_tmi').val(data['alamat_sekolah']);
 			$('#suku').val(data['suku']);
 			$('#kewarganegaraan').val(data['kewarganegaraan']);
 			$('#jalan').val(data['jalan']);

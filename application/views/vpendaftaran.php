@@ -844,6 +844,63 @@
                                                             </div>
                                                         </div>
                                                         <!--end inputbox-->
+                                                        <h3 class="form-section <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">Sekolah</h3>
+                                                        <!--row begin-->
+                                                        <!--inputbbox-->
+                                                        <div class="row">
+                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
+                                                            <!-- <div class="form-group">
+                                                                <label class="control-label col-md-3"></label>
+                                                                    <div class="col-md-9"> -->
+                                                                        <div class="input-group">
+                                                                        <span class="input-group-addon">
+                                                                        Nama Sekolah
+                                                                        </span>
+                                                                            <div class="input-icon right">
+                                                                                <i class="fa"></i><input type class="form-control" name="nama_sekolah_tmi" id="nama_sekolah_tmi" onkeydown="OtomatisKapital(this)" required>
+                                                                            </div>
+                                                                        </div>
+                                                                    <!-- </div>
+                                                            </div> -->
+                                                            </div>
+                                                            <!--span-->
+                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
+                                                            <!-- <div class="form-group">
+                                                                <label class="control-label col-md-3"></label>
+                                                                    <div class="col-md-9"> -->
+                                                                        <div class="input-group">
+                                                                        <span class="input-group-addon">
+                                                                        Tahun Lulus
+                                                                        </span>
+                                                                            <div class="input-icon right">
+                                                                                <!-- <i class="fa"></i><input type class="form-control" name="thn_lulus_tmi" id="thn_lulus_tmi" onkeydown="OtomatisKapital(this)" required> -->
+                                                                                <input type class="form-control datepicker"  data-date-format="dd-mm-yyyy" name="thn_lulus_tmi" id="thn_lulus_tmi" readonly="true" required>
+                                                                            </div>
+                                                                        </div>
+                                                                    <!-- </div>
+                                                            </div> -->
+                                                            </div>
+                                                        </div>
+                                                        <!--end inputbox-->
+                                                        <!--inputbbox-->
+                                                        <div class="row">
+                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
+                                                            <!-- <div class="form-group">
+                                                                <label class="control-label col-md-3"></label>
+                                                                    <div class="col-md-9"> -->
+                                                                        <div class="input-group">
+                                                                        <span class="input-group-addon">
+                                                                        Alamat Sekolah
+                                                                        </span>
+                                                                            <div class="input-icon right">
+                                                                                <i class="fa"></i><input type class="form-control" name="alamat_sekolah_tmi" id="alamat_sekolah_tmi" onkeydown="OtomatisKapital(this)" required>
+                                                                            </div>
+                                                                        </div>
+                                                                    <!-- </div>
+                                                            </div> -->
+                                                            </div>
+                                                        </div>
+                                                        <!--end inputbox-->
                                                         <!--/row-->
                                                     </div>
                                                     <!-- END FORM-->
@@ -960,63 +1017,7 @@
                                                 <div class="portlet-body form">
                                                     <!-- BEGIN FORM-->
                                                     <div class="form-body">
-                                                            <h3 class="form-section">Sekolah</h3>
-                                                            <!--row begin-->
-                                                            <!--inputbbox-->
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="control-label col-md-3"></label>
-                                                                        <div class="col-md-9">
-                                                                            <div class="input-group">
-                                                                            <span class="input-group-addon">
-                                                                            Nama Sekolah
-                                                                            </span>
-                                                                                <div class="input-icon right">
-                                                                                    <i class="fa"></i><input type class="form-control" name="nama_sekolah_aitam" id="nama_sekolah_aitam" onkeydown="OtomatisKapital(this)" required>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                </div>
-                                                                </div>
-                                                                <!--span-->
-                                                                <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="control-label col-md-3"></label>
-                                                                        <div class="col-md-9">
-                                                                            <div class="input-group">
-                                                                            <span class="input-group-addon">
-                                                                            Kelas
-                                                                            </span>
-                                                                                <div class="input-icon right">
-                                                                                    <i class="fa"></i><input type class="form-control" name="kelas_aitam" id="kelas_aitam" onkeydown="OtomatisKapital(this)" required>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                            <!--end inputbox-->
-                                                            <!--inputbbox-->
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="control-label col-md-3"></label>
-                                                                        <div class="col-md-9">
-                                                                            <div class="input-group">
-                                                                            <span class="input-group-addon">
-                                                                            Alamat Sekolah
-                                                                            </span>
-                                                                                <div class="input-icon right">
-                                                                                    <i class="fa"></i><input type class="form-control" name="alamat_sekolah_aitam" id="alamat_sekolah_aitam" onkeydown="OtomatisKapital(this)" required>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                            <!--end inputbox-->
-                                                            <!--/row-->
+                                                            <!-- NANTI AKAN DI DETAIL -->
                                                         </div>
 
                                                     <!-- END FORM-->
