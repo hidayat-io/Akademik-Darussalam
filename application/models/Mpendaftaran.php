@@ -391,9 +391,9 @@ class Mpendaftaran extends CI_Model
 	}
 
 	function get_kelas(){
-		$data = $this->db->query ("SELECT ms_kelashd.tingkat, ms_kelasHD.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kelasdt.kapasitas
+		$data = $this->db->query ("SELECT ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kelasdt.kapasitas
 				FROM ms_kelasdt
-				inner join ms_kelasHD on ms_kelasdt.id_kelas = ms_kelasHD.id_kelas ORDER BY ms_kelasdt.kode_kelas");
+				inner join ms_kelashd on ms_kelasdt.id_kelas = ms_kelashd.id_kelas ORDER BY ms_kelasdt.kode_kelas");
 		return $data;
 	}
 

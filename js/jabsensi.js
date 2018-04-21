@@ -58,13 +58,17 @@ function modalEdit(id_jadwal){
 
 function loadDataAbsensiSiswa(id_jadwal){
 
+	//clear table absensi
+	$("#tb_absensi tbody").empty();
+
 	var tgl_absensi = $('#dtp_tgl_absensi').val();
 	var param = {
 		'id_jadwal' : id_jadwal,
 		'tgl_absensi' : tgl_absensi
 	};
 
-	var json_absensi = [];
+	var json_absensi 	= [];
+	var str_row 		= "";
 
 	$.ajax({
 
@@ -74,6 +78,45 @@ function loadDataAbsensiSiswa(id_jadwal){
 		data:param,
 		success: function (data) {
 			json_absensi = data;
+
+			if(json_absensi.length > 0){
+
+				$('#lbl_nama_guru').text(json_absensi[0].nama_guru);
+				$('#lbl_nama_kelas').text(json_absensi[0].kode_kelas+' - '+json_absensi[0].nama_kelas);
+
+				let seqno = 1;
+
+				for (let r of json_absensi) {
+
+					str_row = `<tr>`;
+					str_row += `<td class="cell-text-center">${seqno}</td>`;
+					str_row += `<td>${r.no_registrasi}</td>`;
+					str_row += `<td>${r.nama_lengkap}</td>`;
+					str_row += `<td class="cell-text-center cur-hand" onclick="clickAbsen('${r.no_registrasi}','h')">${checkValueAbsensi(r.no_registrasi,'h')}</td>`;
+					str_row += `<td class="cell-text-center cur-hand" onclick="clickAbsen('${r.no_registrasi}','i')">${checkValueAbsensi(r.no_registrasi,'i')}</td>`;
+					str_row += `<td class="cell-text-center cur-hand" onclick="clickAbsen('${r.no_registrasi}','s')">${checkValueAbsensi(r.no_registrasi,'s')}</td>`;
+					str_row += `<td class="cell-text-center cur-hand" onclick="clickAbsen('${r.no_registrasi}','a')">${checkValueAbsensi(r.no_registrasi,'a')}</td>`;
+					str_row += `</tr>`;
+
+					$("#tb_absensi tbody").append(str_row);
+					seqno++;
+				}
+			}
 		}
 	});
+}
+
+function checkValueAbsensi(noreg_santri,val_absen){
+
+	return `<input type="radio" id="rdo${noreg_santri+val_absen}" name="rdo_${noreg_santri}" value="${val_absen}" class="cur-hand">`;
+}
+
+function clickAbsen(noreg_santri, val_absen){
+
+	$('#rdo' + noreg_santri + val_absen).prop('checked', true);
+}
+
+function saveForm(){
+
+	
 }

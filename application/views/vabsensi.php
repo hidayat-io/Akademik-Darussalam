@@ -1,3 +1,4 @@
+<link href="<?=base_url()?>assets/global/plugins/icheck/skins/all.css" rel="stylesheet" type="text/css" />
 <link href="<?=base_url()?>assets/css/v_absensi.css" rel="stylesheet" type="text/css">
 <script src="<?php echo base_url(); ?>js/jabsensi.js"></script>
 <input type="hidden" name="hid_param" id="hid_param" value='' />
@@ -66,8 +67,8 @@
                         </h4>
                         <hr style="margin: 20px 0px 0px;">
                         <div style="float:right;color:blue">
-                            <strong>Guru :</strong><label id="lbl_nama_guru"></label>
-                            <strong>Kelas :</strong><label id="lbl_nama_kelas"></label>
+                            <strong>Guru :&nbsp;</strong><label id="lbl_nama_guru"></label>
+                            <strong style="padding-left:10px">Kelas :&nbsp;</strong><label id="lbl_nama_kelas"></label>
                         </div>
                         <table width="100%" class="table table-striped table-bordered table-hover" id="tb_absensi">
                             <thead>
@@ -92,6 +93,9 @@
             <div class="modal-footer modal-footer-form">
                 <a href="javascript:;" class="btn btn-sm default" data-dismiss="modal">
                     <i class="glyphicon glyphicon-minus-sign"></i>&nbsp;CLOSE
+                </a>
+				<a href="javascript:;" class="btn btn-sm green-jungle" onclick="savevForm()" id="cmd_save">
+                    <i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;SIMPAN
                 </a>
                 <img id="load_save" style="margin-left:5px;display: none"
                     src="<?php echo base_url(); ?>images/pre_loader.gif" />

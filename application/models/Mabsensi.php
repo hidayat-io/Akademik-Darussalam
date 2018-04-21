@@ -18,7 +18,7 @@ class Mabsensi extends CI_Model {
 					klh.tipe_kelas, 
 					pl.nama_matpal, 
 					gr.nama_lengkap, 
-					jp.hari, 
+				jp.hari, 
 					jp.jam 
 				FROM   ms_kelasdt kld 
 					INNER JOIN ms_kelashd klh
@@ -47,10 +47,10 @@ class Mabsensi extends CI_Model {
         return $this->db->query($sql)->result();
 	}
 
-	function mget_data_absensi($param){
+	function mget_data_absensi($id_jadwal,$tgl_absensi){
 
 		$sql_absensi = "SELECT jp.id_jadwal,
-							kld.nama, 
+							kld.nama as nama_kelas, 
 							kld.kode_kelas, 
 							klh.tingkat, 
 							klh.tipe_kelas, 
@@ -59,7 +59,7 @@ class Mabsensi extends CI_Model {
 							jp.hari, 
 							jp.jam,
 							absh.tgl_absensi,
-							absd.noreg_santri,
+							snt.no_registrasi,
 							snt.nama_lengkap,
 							absd.absensi
 						FROM   ms_kelasdt kld 
@@ -75,11 +75,11 @@ class Mabsensi extends CI_Model {
 								ON jp.kode_kelas = snt.kel_sekarang
 							LEFT OUTER JOIN trans_absensi_h absh
 								ON absh.id_jadwal = jp.id_jadwal
-									AND absh.tgl_absensi = '2018-01-01'
+									AND absh.tgl_absensi = '$tgl_absensi'
 							LEFT JOIN trans_absensi_d absd
 								ON absh.id_jadwal = absd.header_id
-									AND absd.noreg_santri = snt.no_registrasi			
-						WHERE jp.id_jadwal = 317
+									AND absd.noreg_santri = snt.no_registrasi
+						WHERE jp.id_jadwal = $id_jadwal and snt.kategori='TMI'
 							ORDER BY absd.noreg_santri";
 
 		return $this->db->query($sql_absensi);
