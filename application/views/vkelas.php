@@ -72,10 +72,6 @@
                     <button class="btn btn-default " type="button" onclick="addkelas()">
                         <i class="fa fa-edit"></i>&nbsp;Tambah Data Kelas&nbsp;
                     </button>
-                    <!-- <ul class="dropdown-menu" role="menu">
-                      <li><a href="#" onclick="addSantri('TMI')"> TMI </a></li>
-                      <li><a href="#" onclick="addSantri('AITAM')"> AITAM </a></li>
-                    </ul> -->
                     <button type="button" class="btn btn-default" title="Search Data" onclick="Modalcari()">
                         <i class="fa fa-search"></i>&nbsp;Search
                     </button>
@@ -89,11 +85,12 @@
                 <table class="table table-striped table-bordered table-hover" id="tb_list">
                     <thead>
                         <tr>
-                            <th style="text-align:center">Tingkat</th>
-                            <th style="text-align:center">Tipe Kelas</th>
                             <th style="text-align:center">Kode Kelas</th>
                             <th style="text-align:center">Nama Kelas</th>
+                            <th style="text-align:center">Tingkat</th>
+                            <th style="text-align:center">Tipe Kelas</th>
                             <th style="text-align:center">Kapasitas</th>
+                            <th style="text-align:center">Ruangan</th>
                             <th style="text-align:center" width="10%">Action</th>
                         </tr>
                     </thead>
@@ -284,6 +281,50 @@
                                                             </div>
                                                         </div>
                                                     </div>   
+                                                    <div class="form-group">
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                Kode Ruangan
+                                                            </span>
+                                                            <div class="input" id= "hiddenidKamar">
+                                                                <?php
+                                                                    $att_item = 'id="hide_id_Kamar"  class="form-control select" style="width:100%"  onchange="pilihItemKamar()"';
+                                                                    echo form_dropdown('hide_id_Kamar', $kode_kamar, null, $att_item);
+                                                                ?>
+                                                            </div>
+                                                            <div class="input-icon right">
+                                                            <i class="fa"></i><input type class="form-control" readonly name="kamar" id="kamar" onkeydown="OtomatisKapital(this)" required>
+                                                            </div>
+                                                            <span class="input-group-btn"
+                                                                    style="cursor: pointer;"
+                                                                    title="Cari Kode Kamar"
+                                                                    id="spansearchKamar"
+                                                                    onclick="idKamarshow()">
+                                                                <button class="btn default" type="button">
+                                                                    <i class="fa fa-search"></i>
+                                                                </button>
+                                                            </span>
+                                                            <span class="input-group-btn"
+                                                                style="cursor: pointer;"
+                                                                    title="Cari Kode Kamar"
+                                                                    id="spansearchcloseKamar"
+                                                                    onclick="idKamarhide()">
+                                                                <button class="btn default" type="button">
+                                                                    <i class="fa fa-times-circle"></i>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                Nama Ruangan
+                                                            </span>
+                                                            <div class="input-icon right">
+                                                            <i class="fa"></i><input type class="form-control" name="nama_kamar" id="nama_kamar" readonly="true">
+                                                            </div>
+                                                         </div> 
+                                                    </div>
                                             <!--end inputbox-->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>

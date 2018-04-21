@@ -16,7 +16,7 @@ class gedung extends IO_Controller
 	function index()
 	{
 		
-		$vdata['title'] = 'DATA GEDUNG';
+		$vdata['title'] = 'DATA ASRAMA';
 	    $data['content'] = $this->load->view('vgedung',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}

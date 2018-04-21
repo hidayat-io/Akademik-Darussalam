@@ -14,7 +14,7 @@ class Mdonatur extends CI_Model
         // var_dump($param);
         // exit();
 		
-        $cols = array('id_donatur','nama_donatur','alamat','telpon','kategori');
+        $cols = array('id_donatur','nama_donatur','lembaga','alamat','telpon','kategori');
 
         $sql = "SELECT * FROM ms_donatur";
                     

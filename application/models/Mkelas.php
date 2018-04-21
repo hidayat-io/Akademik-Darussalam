@@ -68,15 +68,21 @@ class Mkelas extends CI_Model
 	#endregion kelasHD
 
 	#region kelasDT
+	function get_kamar(){
+		$data = $this->db->query ("SELECT * FROM ms_kamar where iskelas ='1' ORDER BY kode_kamar");
+		return $data;
+	}
+
     function get_list_data($param,$sortby=0,$sorttype='desc'){
         // var_dump($param);
         // exit();
 		
-        $cols = array('tingkat','tipe_kelas','kode_kelas','nama','kapasitas');
+        $cols = array('kode_kelas','tingkat','tipe_kelas','nama','kapasitas','nama_kamar');
 
-        $sql = "SELECT ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kelasdt.kapasitas
+        $sql = "SELECT ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kelasdt.kapasitas, ms_kamar.kode_kamar,ms_kamar.nama as nama_kamar
 				FROM ms_kelasdt
-				inner join ms_kelashd on ms_kelasdt.id_kelas = ms_kelashd.id_kelas";
+				inner join ms_kelashd on ms_kelasdt.id_kelas = ms_kelashd.id_kelas
+				inner join ms_kamar on ms_kelasdt.kode_kamar = ms_kamar.kode_kamar";
                     
 
             if($param!=null){
@@ -111,9 +117,10 @@ class Mkelas extends CI_Model
     function query_kelas($kode_kelas){
         $data = array();
 		// $data=$this->db->query("SELECT * from ms_kelas where kode_kelas ='$kode_kelas'")->row_array();
-		$data=$this->db->query("SELECT ms_kelashd.id_kelas, ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kelasdt.kapasitas
+		$data=$this->db->query("SELECT ms_kelashd.id_kelas, ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kelasdt.kapasitas, ms_kamar.kode_kamar,ms_kamar.nama as nama_kamar
 				FROM ms_kelasdt
 				inner join ms_kelashd on ms_kelasdt.id_kelas = ms_kelashd.id_kelas 
+				inner join ms_kamar on ms_kelasdt.kode_kamar = ms_kamar.kode_kamar 
 				where ms_kelasdt.kode_kelas ='$kode_kelas'")->row_array();
 		return $data;
 	}

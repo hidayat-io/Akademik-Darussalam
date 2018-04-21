@@ -32,6 +32,7 @@
                                 <th style="text-align:center">NPSN</th>
                                 <th style="text-align:center">Nama Satuan Pendidikan</th>
                                 <th style="text-align:center">Jenis Lembaga</th>
+                                <th style="text-align:center">Alamat</th>
                                 <th style="text-align:center" width="10%">Action</th>
                             </tr>
                         </thead>
@@ -84,6 +85,51 @@
                         <tbody>
                             <tr>
                             <td colspan="5" align="center">
+                                Tidak ada data ditemukan.
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+        <!-- table LimitPengeluaran -->
+        <div class="col-md-12">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet box green-jungle">
+            <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-database"></i>SETTING LIMIT PENGELUARAN GLOBAL
+                    </div>
+                    <div class="tools">
+                    <div class="btn-group pull-right">
+                        
+                    </div>
+                    </div>
+                    <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
+                        <!-- <button class="btn btn-default " type="button" onclick="addmsconfig()">
+                            <i class="fa fa-edit"></i>&nbsp;Tambah Data&nbsp;
+                        </button> -->
+                    </div>
+                </div>
+                <input type="hidden" name="hid_param3" id="hid_param3" />
+                <div class="portlet-body">
+                    <table class="table table-striped table-bordered table-hover" id="tb_list3">
+                        <thead>
+                            <tr>
+                                <!-- <th style="text-align:center">ID</th> -->
+                                <th style="text-align:center">Limit Pengeluaran</th>
+                                <th style="text-align:center" width="10%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <td colspan="2" align="center">
                                 Tidak ada data ditemukan.
                             </td>
                         </tr>
@@ -162,6 +208,18 @@
                                                                 Jenis Lembaga
                                                             </span>
                                                             <input type="text" class="form-control" name="jenis_lembaga" id="jenis_lembaga" maxlength="15" required>
+                                                        </div>
+                                                    </div>
+                                                  <!--span-->
+                                                      <!--span-->
+                                                    <div class="form-group">
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                Alamat
+                                                            </span>
+                                                            <!-- <input type="text" class="form-control" name="alamat" id="alamat" maxlength="15" required> -->
+                                                            <textarea class="form-control" name="alamat" id="alamat" maxlength="250" required></textarea>
                                                         </div>
                                                     </div>
                                                   <!--span-->
@@ -260,4 +318,62 @@
         <!-- /.modal-dialog -->
     </div>
 <!-- end of modal kurikulum-->
+<!-- modal add LimitPengeluaran -->
+    <div class="modal fade draggable-modal" id="Modal_add_LimitPengeluaran" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <!--<h4 class="modal-title">Start Dragging Here</h4>-->
+                </div>
+                <div class="modal-body">
+                     <!-- isi body modal mulai -->
+                    <div class="row">
+                        <div class="col-md-12">
+                        <!-- BEGIN VALIDATION STATES-->
+                        <div class="portlet light portlet-fit portlet-form bordered">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class=" icon-layers font-red"></i>
+                                        <span class="caption-subject font-red sbold uppercase">SETTING LIMIT PENGELUARAN GLOBAL</span>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="form-body">                                
+                                        <!-- BEGIN FORM-->
+                                        <form action="#" id="add_LimitPengeluaran">
+                                            <!--inputbox-->
+                                                <!--span-->
+                                               <div class="form-group">
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            Limit Pengeluaran
+                                                        </span>
+                                                        <input type="text" class="hidden" name="id" id="id" >
+                                                        <input type="text" class="hidden" name="limit_lama" id="limit_lama" >
+                                                        <input type="number" class="form-control" name="limit" id="limit"  required></div>
+                                                    </div>
+                                                      <!--span-->
+                                                      <!--span-->
+                                                   <!--end inputbox-->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn green-jungle" id="save_button_pengeluaran" onclick="svLimitPengeluaran()">Update</button>
+                                            </div>
+                                        </form>
+                                        <!-- END FORM-->
+                                    </div>
+                                </div>
+                        </div>
+                        <!-- END VALIDATION STATES-->
+                        </div>
+                    </div>
+                </div><!--end modal-body-->
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+<!-- end of modal LimitPengeluaran-->
 

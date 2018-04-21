@@ -72,6 +72,7 @@ class donatur extends IO_Controller
 
 		     	$data[$i]->id_donatur,
 				$data[$i]->nama_donatur,
+				$data[$i]->lembaga,
   				$data[$i]->alamat,
 				$data[$i]->telpon,
 				$data[$i]->kategori,
@@ -175,6 +176,7 @@ class donatur extends IO_Controller
 	{
 		$id_donatur 	= $this->input->post('id_donatur');
 		$nama_donatur 	= $this->input->post('nama_donatur');
+		$lembaga 		= $this->input->post('lembaga');
 		$alamat  		= $this->input->post('alamat');
 		$telpon 		= $this->input->post('telpon');
 		$kategori 	    = $this->input->post('kategori');
@@ -184,6 +186,7 @@ class donatur extends IO_Controller
 		$data_donatur = array(
 			'id_donatur' 		=> $id_donatur,
 			'nama_donatur' 		=> $nama_donatur,
+			'lembaga' 			=> $lembaga,
 			'alamat' 		    => $alamat,
 			'telpon' 			=> $telpon,
 			'kategori' 	        => $kategori,

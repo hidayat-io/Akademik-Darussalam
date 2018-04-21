@@ -77,5 +77,34 @@ class Mmsconfig extends CI_Model
             $this->db->update('sys_param',$data);
         }
     #endregion kurikulum
+
+    #region limit Pengeluaran
+        function get_list_data_LimitPengeluaran(){
+            // var_dump($param);
+            // exit();
+            
+            $sql = "SELECT * FROM ms_limit_pengeluaran";
+           
+
+            return $this->db->query($sql)->result();
+        }
+
+        function query_edit_LimitPengeluaran($id){
+            $data = array();
+            $data=$this->db->query("SELECT * from ms_limit_pengeluaran where id ='$id'")->row_array();
+            return $data;
+        }
+
+        function update_data_LimitPengeluaran($id,$data_LimitPengeluaran){
+            $this->db->where('id',$id);
+            $this->db->update('ms_limit_pengeluaran',$data_LimitPengeluaran);
+        }
+
+        function update_data_LimitPengeluaran_santri($limit_lama,$data_LimitPengeluaran_santri){
+            $this->db->where('uang_jajan_perbulan',$limit_lama);
+            // $this->db->and('uang_jajan_perbulan',$limit_lama);
+            $this->db->update('ms_santri',$data_LimitPengeluaran_santri);
+        }
+    #endregion Limit Pengeluaran
     
 }

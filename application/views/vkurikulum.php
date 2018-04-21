@@ -162,7 +162,7 @@
                                                         </tr>
                                                             <?php $no++; } ?>
                                                         <tr>
-                                                            <td width="80" colspan="3">Jumlah Khisos</td>
+                                                            <td width="80" colspan="3">Jumlah jumlah tatap muka</td>
                                                                 <?php  ;
                                                                 foreach ($headertablekurikulum as $rowheader) { 
                                                                 $JK_SM1 = 'JK_SM1_'.$rowheader['tingkat'].'_'.$rowheader['tipe_kelas'];

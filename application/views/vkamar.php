@@ -40,15 +40,17 @@
                 <table class="table table-striped table-bordered table-hover" id="tb_list">
                     <thead>
                         <tr>
-                            <th style="text-align:center">Kode kamar</th>
-                            <th style="text-align:center">Nama kamar</th>
+                            <th style="text-align:center">Kode ruangan</th>
+                            <th style="text-align:center">Nama ruangan</th>
                             <th style="text-align:center">Kapasitas</th>
+                            <th style="text-align:center">Asrama</th>
+                            <th style="text-align:center">Kelas</th>
                             <th style="text-align:center" width="10%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                        <td colspan="3" align="center">
+                        <td colspan="6" align="center">
                             Tidak ada data ditemukan.
                         </td>
                     </tr>
@@ -93,7 +95,7 @@
                                                             <label class="control-label"></label>
                                                             <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                Kode kamar
+                                                                Kode ruangan
                                                             </span>
                                                             <input type="text" class="form-control" name="kode_kamar" id="kode_kamar" onkeydown="OtomatisKapital(this)" maxlength="10" required></div>
                                                     </div>
@@ -102,7 +104,7 @@
                                                         <label class="control-label"></label>
                                                         <div class="input-group">
                                                         <span class="input-group-addon">
-                                                            Nama kamar
+                                                            Nama ruangan
                                                         </span>
                                                         <input type="text" class="form-control" name="nama" id="nama" onkeydown="OtomatisKapital(this)" maxlength="20" required></div>
                                                     </div>     
@@ -114,7 +116,60 @@
                                                             Kapasitas
                                                         </span>
                                                         <input type="number" class="form-control" name="kapasitas" id="kapasitas" maxlength="3" required></div>
-                                                    </div>     
+                                                    </div>  
+                                                    <div class="form-group">
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                Kode asrama
+                                                            </span>
+                                                            <div class="input" id= "hiddenidgedung">
+                                                                <?php
+                                                                    $att_item = 'id="hide_id_gedung"  class="form-control select" style="width:100%"  onchange="pilihItemGedung()"';
+                                                                    echo form_dropdown('hide_id_gedung', $kode_gedung, null, $att_item);
+                                                                ?>
+                                                            </div>
+                                                            <div class="input-icon right">
+                                                                <i class="fa"></i>
+                                                                <input type class="form-control" readonly name="rayon" id="rayon" onkeydown="OtomatisKapital(this)" required>
+                                                            </div>
+                                                            <span class="input-group-btn"
+                                                                    style="cursor: pointer;"
+                                                                    title="Cari Kode Gedung"
+                                                                    id="spansearchgedung"
+                                                                    onclick="idgedungshow()">
+                                                                <button class="btn default" type="button">
+                                                                    <i class="fa fa-search"></i>
+                                                                </button>
+                                                            </span>
+                                                            <span class="input-group-btn"
+                                                                style="cursor: pointer;"
+                                                                    title="Cari Kode Gedung"
+                                                                    id="spansearchclosegedung"
+                                                                onclick="idgedunghide()">
+                                                                <button class="btn default" type="button">
+                                                                    <i class="fa fa-times-circle"></i>
+                                                                </button>
+                                                            </span>
+                                                        </div>  
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            Nama Asrama
+                                                        </span>
+                                                        <input type="text" class="form-control" name="nama_asrama" id="nama_asrama" readonly="true"></div>
+                                                    </div>   
+                                                    <div class="form-group">
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                           <input type="checkbox" id="iskelas" name="iskelas" value="1"> Jadikan Kelas
+                                                        </span>
+                                                         
+                                                        </div>
+                                                    </div>   
                                             <!--end inputbox-->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>

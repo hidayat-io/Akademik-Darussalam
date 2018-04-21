@@ -39,6 +39,7 @@
                             <tr>
                                 <th style="text-align:center">ID Donatur</th>
                                 <th style="text-align:center">Nama</th>
+                                <th style="text-align:center">Lembaga</th>
                                 <th style="text-align:center">Alamat</th>
                                 <th style="text-align:center">Telpon</th>
                                 <th style="text-align:center">Kategori</th>
@@ -47,7 +48,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                            <td colspan="5" align="center">
+                            <td colspan="6" align="center">
                                 Tidak ada data ditemukan.
                             </td>
                         </tr>
@@ -113,6 +114,16 @@
                                                         <label class="control-label"></label>
                                                         <div class="input-group">
                                                         <span class="input-group-addon">
+                                                            Lembaga
+                                                        </span>
+                                                        <input type="text" class="form-control" name="lembaga" id="lembaga" onkeydown="OtomatisKapital(this)" maxlength="50" required></div>
+                                                    </div>
+                                                      <!--span-->
+                                                      <!--span-->
+                                                    <div class="form-group">
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                        <span class="input-group-addon">
                                                             Alamat
                                                         </span>
                                                         <input type="text" class="form-control" name="alamat" id="alamat" onkeydown="OtomatisKapital(this)" maxlength="20" ></div>
@@ -137,6 +148,7 @@
                                                         </span>
                                                        <select class="form-control" name="kategori" id="kategori" required >
                                                             <option value=""></option>
+                                                            <option value="AITAM_AR_RAHMAH">UMUM</option>
                                                             <option value="AITAM_AR_RAHMAH">AITAM AR RAHMAH</option>
                                                             <option value="AITAM_ISLAH ">AITAM ISLAH</option>
                                                             <option value="AITAM_BAITUL_ZAKAT ">AITAM BAITUL ZAKAT</option>

@@ -24,6 +24,16 @@ class Kelas extends IO_Controller
 						$vdata['id_kelas'][$b->id_kelas]
 						=$b->tingkat." | ".$b->tipe_kelas;
 					}
+
+		//get ID Kamar/ruangan
+		$hide_id_Kamar= $this->model->get_kamar()->result();
+
+		$vdata['kode_kamar'][NULL] = '-';
+		foreach ($hide_id_Kamar as $b) {
+
+			$vdata['kode_kamar'][$b->kode_kamar."#".$b->nama]
+				=$b->kode_kamar." | ".$b->nama;
+		}
 						
 		$vdata['titleHD'] = 'DATA TINGKAT KELAS';
 		$vdata['title'] = 'DATA KELAS';
@@ -225,6 +235,7 @@ class Kelas extends IO_Controller
 	#endregion kelasHD
 
 	#region kelasDT
+	
 	function build_param($param)
 	{        
 		// merubah hasil json menjadi parameter Query //
@@ -274,11 +285,12 @@ class Kelas extends IO_Controller
 			
 			$records["data"][] = array(
 
+				$data[$i]->kode_kelas,
+				$data[$i]->nama,
 				$data[$i]->tingkat,
 				$data[$i]->tipe_kelas,
-		     	$data[$i]->kode_kelas,
-  				$data[$i]->nama,
   				$data[$i]->kapasitas,
+  				$data[$i]->nama_kamar,
                 $act
 		   );
 		
@@ -297,6 +309,7 @@ class Kelas extends IO_Controller
 		$id_kelas 			= $this->input->post('select_tingkat');
 		$nama  		        = $this->input->post('nama');
 		$kapasitas  		= $this->input->post('kapasitas');
+		$kode_kamar  		= $this->input->post('kamar');
 	    $userid 			= $this->session->userdata('logged_in')['uid'];
 
 		$data_kelas = array(
@@ -304,6 +317,7 @@ class Kelas extends IO_Controller
 			'id_kelas' 				=> $id_kelas,
 			'nama' 		            => $nama,
 			'kapasitas' 		    => $kapasitas,
+			'kode_kamar' 		    => $kode_kamar,
 			'userid' 				=> $userid
 		);
         
@@ -354,8 +368,8 @@ class Kelas extends IO_Controller
 		//name the worksheet
 		$this->excel->getActiveSheet()->setTitle('Master_Kelas');
 		$this->excel->getActiveSheet()->setCellValue('A1', "Master Kelas");
-		$this->excel->getActiveSheet()->mergeCells('A1:F1');
-		$this->excel->getActiveSheet()->getStyle('A1:F1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->mergeCells('A1:G1');
+		$this->excel->getActiveSheet()->getStyle('A1:G1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 		//header
 		$this->excel->getActiveSheet()->setCellValue('A3', "No.");
@@ -364,6 +378,7 @@ class Kelas extends IO_Controller
 		$this->excel->getActiveSheet()->setCellValue('D3', "Nama kelas");
 		$this->excel->getActiveSheet()->setCellValue('E3', "Kapasitas");
 		$this->excel->getActiveSheet()->setCellValue('F3', "Tipe Kelas");
+		$this->excel->getActiveSheet()->setCellValue('G3', "Nama Ruangan");
 
 		$fdate 	= "d-m-Y";
 		$i  	= 4;
@@ -378,12 +393,13 @@ class Kelas extends IO_Controller
 				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->nama);
 				$this->excel->getActiveSheet()->setCellValue('E'.$i, $row->kapasitas);
 				$this->excel->getActiveSheet()->setCellValue('F'.$i, $row->tipe_kelas);
+				$this->excel->getActiveSheet()->setCellValue('G'.$i, $row->nama_kamar);
 				
 				$i++;
 			}
 		}
 
-		for($col = 'A'; $col !== 'F'; $col++) {
+		for($col = 'A'; $col !== 'G'; $col++) {
 
 		    $this->excel->getActiveSheet()
 		        ->getColumnDimension($col)
@@ -398,11 +414,11 @@ class Kelas extends IO_Controller
 		  )
 		);
 		$i = $i-1;
-		$cell_to = "F".$i;
+		$cell_to = "G".$i;
 		$this->excel->getActiveSheet()->getStyle('A3:'.$cell_to)->applyFromArray($styleArray);
-		$this->excel->getActiveSheet()->getStyle('A1:F3')->getFont()->setBold(true);
-		$this->excel->getActiveSheet()->getStyle('A3:F3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-		$this->excel->getActiveSheet()->getStyle('A3:F3')->getFill()->getStartColor()->setRGB('2CC30B');
+		$this->excel->getActiveSheet()->getStyle('A1:G3')->getFont()->setBold(true);
+		$this->excel->getActiveSheet()->getStyle('A3:G3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+		$this->excel->getActiveSheet()->getStyle('A3:G3')->getFill()->getStartColor()->setRGB('2CC30B');
 
 		$filename='Master-Kelas.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
