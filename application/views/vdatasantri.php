@@ -1016,10 +1016,47 @@
                                                 <div class="portlet-body form">
                                                     <!-- BEGIN FORM-->
                                                     <div class="form-body">
-                                                            <!-- NANTI AKAN DIBUAT DETAIL -->
+                                                        <div class="form-body">
+                                                        <!-- BEGIN FORM-->
+                                                            <h3 class="form-section">
+                                                            <button type="button" class="btn red" id="button_sekolahAitam" onclick="modalAddsekolahAitam()" >
+                                                                <i class="fa fa-plus"> </i> Tambah Data Sekolah
+                                                            </button></h3>                                                            
+                                                            <!--row begin-->
+                                                            <input type="text" id="hid_jumlah_item_sekolahAitam" value="0" class="hidden"/>
+                                                            <input type="text" name="hid_table_item_sekolahAitam" id="hid_table_item_sekolahAitam" class="hidden"/>
+                                                            <input type="text" name="hid_Xaitam" id="hid_Xaitam" class="hidden"/>
+                                                            <div class="portlet-body table-both-scroll">
+                                                                <div class="table-responsive">
+                                                                    <table id="tb_list_sekolahAitam" class="table table-striped table-bordered table-hover">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th> No</th>
+                                                                                <th> Nama Sekolah</th>
+                                                                                <th> Alamat sekolah</th>
+                                                                                <th> Kelas</th>
+                                                                                <th> Tahun</th>
+                                                                                <th> Lampiran</th>
+                                                                                <th> Action</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="7" align="center">
+                                                                                Belum Ada Data.
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        <!--<tfoot>
+                                                                            <tr>
+                                                                            </tr>
+                                                                        </tfoot>-->
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            <!-- END FORM-->
                                                         </div>
-
-                                                    <!-- END FORM-->
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -2015,6 +2052,113 @@
         </div>
   </div>
 <!--modal untuk add new santri selesai##########################################################################################################################-->
+<!-- modal add sekolahAitam -->
+    <div class="modal fade draggable-modal" id="Modal_add_sekolahAitam" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <!--<h4 class="modal-title">Start Dragging Here</h4>-->
+                </div>
+                <div class="modal-body">
+                     <!-- isi body modal mulai -->
+                    <div class="row">
+                        <div class="col-md-12">
+                                <!-- BEGIN VALIDATION STATES-->
+                                <div class="portlet light portlet-fit portlet-form bordered">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class=" icon-layers font-red"></i>
+                                            <span class="caption-subject font-red sbold uppercase">INPUT DATA sekolahAitam</span>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="form-body">
+                                            <!-- BEGIN FORM-->
+                                            <form action="#" id="add_sekolahAitam">
+                                                <!--inputbox-->
+                                                    <!--span-->
+                                                        <input class="hidden" name="hid_kdsekolahAitam" id="hid_kdsekolahAitam">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Nama Sekolah
+                                                                </span>
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i><input type class="form-control" name="nama_sekolahAitam" id="nama_sekolahAitam" onkeydown="OtomatisKapital(this)" maxlength="25" required >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--span-->
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Alamat Sekolah
+                                                                </span>
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i><input type class="form-control" name="alamat_sekolahAitam" id="alamat_sekolahAitam" onkeydown="OtomatisKapital(this)" maxlength="50" required >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--span-->
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Kelas
+                                                                </span>
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i><input type class="form-control" name="kelas_sekolahAitam" id="kelas_sekolahAitam" onkeydown="OtomatisKapital(this)" maxlength="15" required >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--span-->
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Tahun
+                                                                </span>
+                                                                <div class="input-icon right">
+                                                                <i class="fa"></i><input type class="form-control input-small datepicker" data-date-format="yyyy" name="thn_sekolahAitam" id="thn_sekolahAitam" required readonly="true"><span class="input-group-btn">
+                                                                    <button class="btn default" type="button">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </button>
+                                                                </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--span-->
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                Lampiran Surat Pindah
+                                                            </span>
+                                                            <input type="file" class="form-control" name="lamp_SuratPindah" id="lamp_SuratPindah" ></div>
+                                                            <input type="text" class="hidden" name="hid_lamp_SuratPindah" id="hid_lamp_SuratPindah" ></div>
+                                                        </div>
+                                                <!--end inputbox-->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn green-jungle" id="btn_sekolahAitam" onclick="TambahsekolahAitam()">Tambah</button>
+                                                </div>
+                                            </form>
+                                            <!-- END FORM-->
+                                        </div>
+                                    </div>
+                                </div><!-- END VALIDATION STATES-->
+                        </div>
+                    </div>
+                </div><!--end modal-body-->
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+<!-- end of modal sekolahAitam-->
 <!-- modal add KELUARGA -->
     <div class="modal fade bs-modal-lg" id="Modal_add_keluarga_santri" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg">

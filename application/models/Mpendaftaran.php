@@ -175,6 +175,16 @@ class Mpendaftaran extends CI_Model
 		$this->db->update('ms_fisik_santri',$data_ms_fisik_santri);
 	}
 
+	function delete_item_sekolahAitam($no_registrasi){
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->delete('ms_santri_sekolah');
+	}
+
+	function simpan_item_sekolahAitam($detail_sekolahAitam){
+
+		$this->db->replace('ms_santri_sekolah',$detail_sekolahAitam);
+	}
+
 	function delete_item_keluarga($no_registrasi){
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->delete('ms_keluarga');
@@ -295,6 +305,14 @@ class Mpendaftaran extends CI_Model
 		ms_fisik_santri c ON a.no_registrasi= c.no_registrasi
 		WHERE a.no_registrasi = '$no_registrasi'")->row_array();
 		return $data;
+	}
+
+	function query_sekolahAitam($no_registrasi){
+		$this->db->select('*');
+        $this->db->from('ms_santri_sekolah');
+        $this->db->where('no_registrasi',$no_registrasi);
+        
+        return $this->db->get()->result();
 	}
 
 	function query_keluarga($no_registrasi){

@@ -433,11 +433,12 @@ class Pendaftaran extends IO_Controller
 		$thn_fisik					= $this->input->post('thn_fisik');
 		// $thn_fisik 				= io_return_date('d-m-Y',$tglf);
 		$kelainan_fisik  		= $this->input->post('kelainan_fisik');
+		$item_sekolahAitam  		= $this->input->post('hid_table_item_sekolahAitam');
 		$item_keluarga 			= $this->input->post('hid_table_item_Keluarga');
 		$item_penyakit 			= $this->input->post('hid_table_item_penyakit');
 		$item_kckhusus 			= $this->input->post('hid_table_item_KecakapanKhusus');
 		$item_donatur 			= $this->input->post('hid_table_item_donatur');
-		$TfileUpload 		= $this->input->post('TfileUpload');
+		$TfileUpload 			= $this->input->post('TfileUpload');
 		$TfileUpload_ijazah 		= $this->input->post('TfileUpload_ijazah');
 		$TfileUpload_akelahiran 		= $this->input->post('TfileUpload_akelahiran');
 		$TfileUpload_kk 		= $this->input->post('TfileUpload_kk');
@@ -543,6 +544,36 @@ class Pendaftaran extends IO_Controller
 			);
 			
 			$this->model->simpan_ms_fisik_santri($data_ms_fisik_santri);
+
+		//save sekolahAitam
+			
+			$item_sekolahAitam  = explode(';',$item_sekolahAitam );
+			foreach ($item_sekolahAitam   as $i) 
+				{
+					$idetail = explode('#',$i);
+					if(count($idetail)>1)
+					{
+
+							$detail_sekolahAitam = array(
+
+								'no_registrasi' 			=> $no_registrasi,
+								'nama_sekolah'				=> $idetail[0],
+								'alamat_sekolah'			=> $idetail[1],
+								'kelas'						=> $idetail[2],
+								'tanggal'					=> $idetail[3],
+								'lampiran'					=> $idetail[4]
+
+							);
+
+							//pindahkan filenya
+							if(file_exists ('./assets/images/uploadtemp/'.$detail_sekolahAitam['lampiran'])){
+							rename('./assets/images/uploadtemp/'.$detail_sekolahAitam['lampiran'],'./assets/images/fileupload/lamp_sekolah/'.$detail_sekolahAitam['lampiran']);	
+							}
+							
+							$this->model->simpan_item_sekolahAitam($detail_sekolahAitam);
+
+					}
+				}
 
 		//save keluarga
 			$item_keluarga  = explode(';',$item_keluarga );
@@ -903,6 +934,37 @@ class Pendaftaran extends IO_Controller
 				
 				$this->model->update_ms_fisik_santri($no_registrasi,$data_ms_fisik_santri);
 
+		//save sekolahAitam
+			
+				$this->model->delete_item_sekolahAitam($no_registrasi);
+				$item_sekolahAitam  = explode(';',$item_sekolahAitam );
+				foreach ($item_sekolahAitam   as $i) 
+					{
+						$idetail = explode('#',$i);
+							if(count($idetail)>1)
+							{
+
+									$detail_sekolahAitam = array(
+
+										'no_registrasi' 		=> $no_registrasi,
+										'nama_sekolah'			=> $idetail[0],
+										'alamat_sekolah'		=> $idetail[1],
+										'kelas'					=> $idetail[2],
+										'tanggal'				=> $idetail[3],
+										'lampiran'				=> $idetail[4]
+
+									);
+									//pindahkan filenya
+									if(file_exists ('./assets/images/uploadtemp/'.$detail_sekolahAitam['lampiran'])){
+									rename('./assets/images/uploadtemp/'.$detail_sekolahAitam['lampiran'],'./assets/images/fileupload/lamp_sekolah/'.$detail_sekolahAitam['lampiran']);	
+									}
+									
+									$this->model->simpan_item_sekolahAitam($detail_sekolahAitam);
+
+							}
+					}
+
+		
 		//save keluarga
 			
 				$this->model->delete_item_keluarga($no_registrasi);	//delete semua isi keluarga
@@ -1259,6 +1321,30 @@ class Pendaftaran extends IO_Controller
 			echo "true";
 	}
 
+	function upload_lamp_sekolahAitam()
+	{
+    	$this->load->library('upload');
+    	//upload file
+		$ioname		 				= io_random_string(4);
+		$temp						= explode(".",$_FILES['lamp_SuratPindah']['name']);
+		$filename 					= $ioname.'.'.end($temp);
+		$config['upload_path']   	= './assets/images/uploadtemp/';				
+		$config['file_name'] 		= $filename;				
+		$config['allowed_types']    = '*';
+
+		$this->upload->initialize($config);
+
+		if($this->upload->do_upload('lamp_SuratPindah')){
+
+			$response = array(
+
+				'name' => $filename
+			);
+
+			echo json_encode($response);
+		}
+	}
+	
 	function upload_lamp_keluarga()
 	{
     	$this->load->library('upload');
@@ -1315,6 +1401,12 @@ class Pendaftaran extends IO_Controller
     	echo json_encode($data);
 	}
 	
+	function get_data_sekolahAitam($no_registrasi)
+	{
+		$data = $this->model->query_sekolahAitam($no_registrasi);
+    	echo json_encode($data);
+	}
+
 	function get_data_keluarga($no_registrasi)
 	{
 		$data = $this->model->query_keluarga($no_registrasi);

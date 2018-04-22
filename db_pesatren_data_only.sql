@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2018 at 06:58 PM
+-- Generation Time: Apr 22, 2018 at 07:09 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -373,7 +373,11 @@ INSERT INTO `login_history` (`id`, `user_id`, `time`, `ip_addr`) VALUES
 (385, 'admin', '2018-04-20 14:01:02', '::1'),
 (386, 'admin', '2018-04-20 14:18:01', '::1'),
 (387, 'admin', '2018-04-20 14:38:22', '::1'),
-(388, 'admin', '2018-04-20 16:48:50', '::1');
+(388, 'admin', '2018-04-20 16:48:50', '::1'),
+(389, 'admin', '2018-04-22 07:18:36', '::1'),
+(390, 'admin', '2018-04-22 10:16:11', '::1'),
+(391, 'admin', '2018-04-22 15:10:37', '::1'),
+(392, 'admin', '2018-04-22 15:23:54', '::1');
 
 --
 -- Dumping data for table `ms_bagian`
@@ -720,9 +724,9 @@ INSERT INTO `ms_kecakapan_santri` (`no_registrasi`, `bid_studi`, `olahraga`, `ke
 ('T39180019', '234', '234', '234', '234324', '234234'),
 ('T39180018', '234', '234', '234', '234324', '234234'),
 ('CT39180001', 'BIDPRES SA', 'TINGPRES SA', 'PERING SA', 'THN MERAIH SA', ''),
-('CA39180001', NULL, NULL, NULL, NULL, NULL),
 ('A39180001', NULL, NULL, NULL, NULL, NULL),
-('T39180001', '', '', '', '', '');
+('T39180001', '', '', '', '', ''),
+('CA39180001', NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Dumping data for table `ms_kelasdt`
@@ -767,11 +771,11 @@ INSERT INTO `ms_keluarga` (`no_registrasi`, `kategori`, `nama`, `nik`, `binbinti
 ('CT39180001', 'AYAH', 'NAMA AYAH SA', 34234, 'BIN AYAH SA', 'L', '', '0000-00-00', 0, '', '', '', 0, '', '', '', '', 0, 'PEKER AYAH SA', 0x534d412f534d4b, 0x4147414d412041594148, '8767', '234234', 'ORMAS AYAH SA', 'ORPOL AYAH', '', 1990, 2, 'T4LAHIT AYAH SA', '1970-06-04', '', '', 'tsan.pdf'),
 ('CT39180001', 'IBU', 'NAMA IBU SA', 88, 'BIN IBU SA', 'P', '', '0000-00-00', 0, '', '', '', 0, '', '', '', '', 0, 'PEKER IBU SA', 0x534d412f534d4b, 0x4147414d412049425520, '2354234', 'KEWAR IBU ', 'ORMASIBU SA', 'ORPOL IU S', 'KEDUKMASIBU SA', 1994, 70, 'T4LAHIRIBU SA', '1975-12-10', '', '', '3DAc.pdf'),
 ('CT39180001', 'WALI', 'NAMAWALI SA', 25254, 'BINWALI SA', 'P', 'MENIKAH', '0000-00-00', 0, '', '', '', 0, '', '', '', '', 2, 'PEKERWALSA', 0x534d502f534c5441, 0x4147414d4157414c4920, '23423', 'KEWARWAL S', 'ORMASWAL SA', 'ORPOL WAL ', 'KEDUKMASWAL SA', 0000, 0, 'T4LAHIRWAL SA', '1980-10-20', 'BIBI SA', '', 'lYhz.pdf'),
-('CA39180001', 'AYAH', 'NAMA AYAH RE', 988, 'BIN AYAH RE', 'L', '', '2016-06-08', 67, 'HARI AYAH ', 'SEBWAFAT AYAH RE', '', 0, '', '', '', '', 0, 'PEKERAYAH RE', 0x534d412f534d4b, 0x4147414d414159414820, '988', 'KEWAR AYAH', 'ORMASAYAH RE', 'ORPOLAYAH ', 'KEDUMAS AYAH RE', 1999, 120, 'T4LAHR AYAH RE', '1981-04-07', '', '', 'dfBq.pdf'),
-('CA39180001', 'IBU', 'NAMA BU RE', 8787, 'BIN IBU RE', 'P', '', '0000-00-00', 0, '', '', 'JANDA', 500000, 'SBBTKERJA IBU RE', 'KEAHLIAN IBU RE', 'KONTRAK', 'SEDERHANA', 0, 'PEKERJAANIBU RE', 0x5344, 0x4147414d412049425520, '676', 'KEWARIBU R', 'ORMAS IBU RE', 'ORPOLIBU R', 'KEDUKMASIBU RE', 1998, 130, 'T4LAHIR IBU RE', '1975-02-21', '', '', 'IH6c.pdf'),
 ('A39180001', 'AYAH', 'AYAH WE', 8787, 'IN AYAH WE', 'L', '', '2018-04-11', 78, 'HARI AYA W', 'SBBWAFAT AYAH WE', '', 0, '', '', '', '', 0, 'PEKERAYAH WE', 0x534d502f534c5441, 0x4147414d414159414820, '9898', 'KEWAR AYAH', 'ORMAS AYAHWE', 'ORPOLAYAH ', 'KEDUKMAS AYAH W', 2018, 4, 'T4LAHIR AYAH WE', '2018-04-19', '', '', 'uA0G.jpg'),
 ('A39180001', 'SAUDARA', 'SAUDARA WE', 89898, 'BINSAU WE', 'L', 'MENIKAH', '0000-00-00', 0, '', '', '', 0, '', '', '', '', 0, 'PEKER SAU WE', 0x4449504c4f4d41, 0x4147414d534155205745, '9989', 'KEWARSAU W', '', '', 'KEDUKMAS SAU WE', 0000, 0, 'T4LAHIR SAU WE', '1984-06-13', 'SAUDARA LAKI-LAKI WE', 'KET WE', 'iLct.jpg'),
-('T39180001', 'AYAH', 'SFS', 345, 'FSDF', 'L', '', '0000-00-00', 0, '', '', '', 0, '', '', '', '', 0, 'SDF', 0x544b, 0x53465344, '34534', 'SFS', 'FSFF', 'SFS', 'SF', 0000, 0, 'SDF', '2018-04-17', '', '', 'd88l.pdf');
+('T39180001', 'AYAH', 'SFS', 345, 'FSDF', 'L', '', '0000-00-00', 0, '', '', '', 0, '', '', '', '', 0, 'SDF', 0x544b, 0x53465344, '34534', 'SFS', 'FSFF', 'SFS', 'SF', 0000, 0, 'SDF', '2018-04-17', '', '', 'd88l.pdf'),
+('CA39180001', 'AYAH', 'NAMA AYAH RE', 988, 'BIN AYAH RE', 'L', '', '2016-06-08', 67, 'HARI AYAH ', 'SEBWAFAT AYAH RE', '', 0, '', '', '', '', 0, 'PEKERAYAH RE', 0x534d412f534d4b, 0x4147414d414159414820, '988', 'KEWAR AYAH', 'ORMASAYAH RE', 'ORPOLAYAH ', 'KEDUMAS AYAH RE', 1999, 120, 'T4LAHR AYAH RE', '1981-04-07', '', '', 'dfBq.pdf'),
+('CA39180001', 'IBU', 'NAMA BU RE', 8787, 'BIN IBU RE', 'P', '', '0000-00-00', 0, '', '', 'JANDA', 500000, 'SBBTKERJA IBU RE', 'KEAHLIAN IBU RE', 'KONTRAK', 'SEDERHANA', 0, 'PEKERJAANIBU RE', 0x5344, 0x4147414d412049425520, '676', 'KEWARIBU R', 'ORMAS IBU RE', 'ORPOLIBU R', 'KEDUKMASIBU RE', 1998, 130, 'T4LAHIR IBU RE', '1975-02-21', '', '', 'IH6c.pdf');
 
 --
 -- Dumping data for table `ms_limit_pengeluaran`
@@ -825,10 +829,11 @@ INSERT INTO `ms_penyakit` (`no_registrasi`, `nama_penyakit`, `thn_penyakit`, `ka
 ('T39180015', 'JYUTYU', 2018, 'KRONIS', 'MENULAR', ''),
 ('T39180018', 'WERWER', 2018, 'KRONIS', 'MENULAR', 'o2Br.jpg'),
 ('CT39180001', 'NAMAPENYAKIT SA', 2016, 'TIDAK KRONIS', 'TIDAK MENULAR', 'g2VH.pdf'),
-('CA39180001', 'NAMAPENYAKIT RE', 2018, 'KRONIS', 'MENULAR', 'kiQn.pdf'),
 ('T39180001', 'ETEYRY', 2018, 'KRONIS', 'MENULAR', ''),
 ('T39180001', '4545646456', 2018, 'KRONIS', 'TIDAK MENULAR', ''),
-('T39180001', 'WER', 2018, 'KRONIS', 'TIDAK MENULAR', 'Eo0O.pdf');
+('T39180001', 'WER', 2018, 'KRONIS', 'TIDAK MENULAR', 'Eo0O.pdf'),
+('CA39180001', 'NAMAPENYAKIT RE', 2018, 'KRONIS', 'MENULAR', 'kiQn.pdf'),
+('CA39180001', 'DFSDF', 2018, 'KRONIS', 'MENULAR', '');
 
 --
 -- Dumping data for table `ms_santri`
@@ -850,11 +855,19 @@ INSERT INTO `ms_santri_donatur` (`no_registrasi`, `id_donatur`) VALUES
 ('T39180017', 3),
 ('T39180018', 3),
 ('CT39180001', 3),
-('CA39180001', 5),
-('CA39180001', 3),
 ('A39180001', 4),
 ('T39180001', 5),
-('T39180001', 5);
+('T39180001', 5),
+('CA39180001', 5),
+('CA39180001', 3);
+
+--
+-- Dumping data for table `ms_santri_sekolah`
+--
+
+INSERT INTO `ms_santri_sekolah` (`no_registrasi`, `nama_sekolah`, `alamat_sekolah`, `kelas`, `tanggal`, `lampiran`) VALUES
+('CA39180001', 'RRR', 'RRR', 'RRR', 2018, ''),
+('CA39180001', 'TTT', 'TTT', 'YYY', 2018, 'MUDG.pdf');
 
 --
 -- Dumping data for table `santri_limit_harian`

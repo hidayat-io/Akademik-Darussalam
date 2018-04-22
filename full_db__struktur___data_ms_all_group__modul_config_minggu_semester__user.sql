@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2018 at 06:58 PM
+-- Generation Time: Apr 22, 2018 at 07:08 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -851,6 +851,21 @@ CREATE TABLE `ms_santri_pengeluaran` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ms_santri_sekolah`
+--
+
+CREATE TABLE `ms_santri_sekolah` (
+  `no_registrasi` varchar(25) DEFAULT NULL,
+  `nama_sekolah` varchar(25) DEFAULT NULL,
+  `alamat_sekolah` varchar(50) DEFAULT NULL,
+  `kelas` varchar(15) DEFAULT NULL,
+  `tanggal` year(4) DEFAULT NULL,
+  `lampiran` varchar(25) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ms_semester`
 --
 
@@ -1540,7 +1555,7 @@ ALTER TABLE `histori_master_biaya`
 -- AUTO_INCREMENT for table `login_history`
 --
 ALTER TABLE `login_history`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=389;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=393;
 --
 -- AUTO_INCREMENT for table `modul`
 --
