@@ -40,7 +40,7 @@
                 <thead>
                     <tr>
                         <th>No Registrasi</th>
-                        <th>Tahun Masuk</th>
+                        <th>Tanggal Masuk</th>
                         <th>Nama Lengkap</th>
                         <th>Nama Arab</th>
                         <!-- <th >Nama Panggilan</th> -->
@@ -217,11 +217,11 @@
                                                                         <div class="col-md-6">
                                                                             <div class="input-group">
                                                                             <span class="input-group-addon">
-                                                                                Tahun Masuk
+                                                                                Tahun Daftar
                                                                             </span>
                                                                                 <div class="input-icon right">
                                                                                     <i class="fa"></i><i class="fa"></i>
-                                                                                    <input type class="form-control datepicker"  data-date-format="dd-mm-yyyy" name="thn_masuk" id="thn_masuk" readonly="true" required>
+                                                                                    <input type class="form-control datepicker"  data-date-format="dd-mm-yyyy" name="thn_daftar" id="thn_daftar" readonly="true" required>
                                                                                 </div>
                                                                                 <span class="input-group-btn">
                                                                                     <button class="btn default" type="button">
@@ -262,6 +262,22 @@
                                                                                         onclick="idKamarhide()">
                                                                                     <button class="btn default" type="button">
                                                                                         <i class="fa fa-times-circle"></i>
+                                                                                    </button>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="input-group">
+                                                                            <span class="input-group-addon">
+                                                                                Tanggal Masuk
+                                                                            </span>
+                                                                                <div class="input-icon right">
+                                                                                    <i class="fa"></i><i class="fa"></i>
+                                                                                    <input type class="form-control datepicker"  data-date-format="dd-mm-yyyy" name="thn_masuk" id="thn_masuk" readonly="true" required>
+                                                                                </div>
+                                                                                    <span class="input-group-btn">
+                                                                                    <button class="btn default" type="button">
+                                                                                        <i class="fa fa-calendar"></i>
                                                                                     </button>
                                                                                 </span>
                                                                             </div>
@@ -480,11 +496,12 @@
                                                                             Uang Jajan Perbulan
                                                                         </span>
                                                                             <div class="input-icon right">
-                                                                                <i class="fa"></i><input type class="form-control" name="uang_jajan_perbulan" id="uang_jajan_perbulan" required>
+                                                                                <i class="fa"></i><input type class="form-control" name="uang_jajan_perbulan" id="uang_jajan_perbulan" value="<?php echo $pengeluaran_global ?>" required>
                                                                             </div>
                                                                         </div>
                                                                     <!-- </div>
                                                                 </div> -->
+                                                                <span class="help-block">Silahkan ubah nominal jika tidak mengikuti limit pengeluaran, nominal limit pengeluaran: <?php echo $pengeluaran_global ?></span>
                                                             </div>
                                                             <!--span-->
                                                             <div class="col-md-6">

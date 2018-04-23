@@ -64,7 +64,11 @@ class Datasantri extends IO_Controller
 				$vdata['id_donatur'][$b->id_donatur."#".$b->nama_donatur."#".$b->kategori]
 					=$b->id_donatur." | ".$b->nama_donatur." | ".$b->kategori;
 			}
-			
+
+			//get pengeluaran global
+			$pengeluaran_global= $this->model->get_pengeluaran_global();
+
+		$vdata['pengeluaran_global']	= $pengeluaran_global['limit'];
 		$vdata['kategori_santri']		= 'TMI';
 		$vdata['page']					= 'SANTRI';
 		$vdata['title'] = 'DATA SANTRI TMI';
@@ -122,7 +126,10 @@ class Datasantri extends IO_Controller
 				$vdata['id_donatur'][$b->id_donatur."#".$b->nama_donatur."#".$b->kategori]
 					=$b->id_donatur." | ".$b->nama_donatur." | ".$b->kategori;
 			}
-			
+			//get pengeluaran global
+			$pengeluaran_global= $this->model->get_pengeluaran_global();
+
+		$vdata['pengeluaran_global']	= $pengeluaran_global['limit'];
 		$vdata['kategori_santri']		= 'AITAM';
 		$vdata['page']					= 'SANTRI';
 		$vdata['title'] 				= 'DATA SANTRI AITAM';
@@ -183,23 +190,52 @@ class Datasantri extends IO_Controller
 		
 			if ($kategori_santri == 'TMI')
 			{
+				if($data[$i]->isnonaktif == 1){//cek apakah sudah nonaktif
+					$act = '<a class="btn green btn-xs" title="LIHAT DATA" onclick="view(\''.$data[$i]->no_registrasi.'\')">
+						<i class="fa fa-file-o"></i>';
+				}
+				else {
 					$act = '<a class="btn green btn-xs" title="LIHAT DATA" onclick="view(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-file-o"></i>
 					<a class="btn blue btn-xs" title="UBAH DATA" onclick="edit(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-edit"></i>
-					<a class="btn red btn-xs" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->no_registrasi.'\')">
-						<i class="fa fa-trash"></i>';
+					<a class="btn red btn-xs" title="NONAKTIF" onclick="keluarkan(\''.$data[$i]->no_registrasi.'\')">
+						<i class="fa  fa-arrow-right"></i>';
+				}		
+				
+				    // $act = '<a class="btn green btn-xs" title="LIHAT DATA" onclick="view(\''.$data[$i]->no_registrasi.'\')">
+					// 	<i class="fa fa-file-o"></i>
+					// <a class="btn blue btn-xs" title="UBAH DATA" onclick="edit(\''.$data[$i]->no_registrasi.'\')">
+					// 	<i class="fa fa-edit"></i>
+					// <a class="btn red btn-xs" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->no_registrasi.'\')">
+					// 	<i class="fa fa-trash"></i>';
+					
 			}
 			else
 			{
+				if($data[$i]->isnonaktif == 1){//cek apakah sudah nonaktif
+					$act = '<a class="btn green btn-xs" title="LIHAT DATA" onclick="view(\''.$data[$i]->no_registrasi.'\')">
+						<i class="fa fa-file-o"></i>';
+				}
+				else {
 					$act = '<a class="btn green btn-xs" title="LIHAT DATA" onclick="view(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-file-o"></i>
 					<a class="btn blue btn-xs" title="UBAH DATA" onclick="edit(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-edit"></i>
-					<a class="btn red btn-xs" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->no_registrasi.'\')">
-						<i class="fa fa-trash"></i>
+					<a class="btn red btn-xs" title="NONAKTIF" onclick="keluarkan(\''.$data[$i]->no_registrasi.'\')">
+						<i class="fa fa-arrow-right"></i>
 					<a class="btn yellow btn-xs" title="Jadikan TMI" onclick="ToTMI(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-exchange"></i>';
+				}
+
+				// $act = '<a class="btn green btn-xs" title="LIHAT DATA" onclick="view(\''.$data[$i]->no_registrasi.'\')">
+				// 		<i class="fa fa-file-o"></i>
+				// 	<a class="btn blue btn-xs" title="UBAH DATA" onclick="edit(\''.$data[$i]->no_registrasi.'\')">
+				// 		<i class="fa fa-edit"></i>
+				// 	<a class="btn red btn-xs" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->no_registrasi.'\')">
+				// 		<i class="fa fa-trash"></i>
+				// 	<a class="btn yellow btn-xs" title="Jadikan TMI" onclick="ToTMI(\''.$data[$i]->no_registrasi.'\')">
+				// 		<i class="fa fa-exchange"></i>';
 			}
 		}			
 					
@@ -384,6 +420,8 @@ class Datasantri extends IO_Controller
 		$kategori_update  		= $this->input->post('kategori_update');
 		$no_registrasi  		= $this->input->post('no_registrasi');
 		$no_stambuk  			= $this->input->post('no_stambuk');
+		$thn_daftarX				= $this->input->post('thn_daftar');
+		$thn_daftar				= io_return_date('d-m-Y',$thn_daftarX);
 		$thn_masukX				= $this->input->post('thn_masuk');
 		$thn_masuk				= io_return_date('d-m-Y',$thn_masukX);
 		$rayon  				= $this->input->post('rayon');
@@ -466,6 +504,7 @@ class Datasantri extends IO_Controller
 			'kategori' 				=> $kategori_santri,
 			'no_registrasi' 		=> $no_registrasi,
 			'no_stambuk' 			=> $no_stambuk,
+			'thn_daftar' 			=> $thn_daftar,
 			'thn_masuk' 			=> $thn_masuk,
 			'rayon' 				=> $rayon,
 			'kamar' 				=> $kamar,
@@ -1587,6 +1626,7 @@ class Datasantri extends IO_Controller
 	{
 		$kategori_santri  		= $this->input->post('kategori_update');
 		$no_registrasi  		= $this->input->post('no_registrasi');
+		$thn_daftar				= $this->input->post('thn_daftar');
 		$thn_masuk				= $this->input->post('thn_masuk');
 		$nisnlokal  			= $this->input->post('nisnlokal');
 		$no_stambuk  			= $this->input->post('no_stambuk');
@@ -1725,6 +1765,12 @@ class Datasantri extends IO_Controller
 	function DelSantri($no_registrasi)
 	{
 		$this->model->delete_all_data_santri($no_registrasi);
+	}
+
+	function Keluarkan_santri($no_registrasi,$keterangan)
+	{
+		
+		$this->model->nonaktif_santri($no_registrasi,$keterangan);
 	}
 
 }

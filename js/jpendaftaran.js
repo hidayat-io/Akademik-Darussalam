@@ -6,6 +6,10 @@ $(document).ready(function()
 		dateFormat: 'yy',
 		autoclose: true 
 	});
+	$("#thn_daftar").datepicker({ 
+		dateFormat: 'yyyy-mm-dd',
+		autoclose: true 
+	});
 	$("#thn_masuk").datepicker({ 
 		dateFormat: 'yyyy-mm-dd',
 		autoclose: true 
@@ -570,6 +574,7 @@ function kosong(){
 	$('#kategori_santri').val('');
 	$('#no_registrasi').val('');
 	$('#no_stambuk').val('');
+	$('#thn_daftar').val('');
 	$('#thn_masuk').val('');
 	$('#rayon').val('');
 	$('#kamar').val('');
@@ -661,12 +666,16 @@ function mati(){
 		
 	if ($('#hid_page').val() == 'DAFTAR') {
 		$('#rayon').attr('disabled', true);
-		$('#kamar').attr('disabled', true);
+		$('#thn_daftar').attr('disabled', false);
+		$('#thn_masuk').attr('disabled', true);
+		$('#kamar').attr('disabled', true); 
 		$('#bagian').attr('disabled', true);
 		$('#kel_sekarang').attr('disabled', true);
 	}
 	else {
 		$('#rayon').attr('disabled', false);
+		$('#thn_daftar').attr('disabled', true);
+		$('#thn_masuk').attr('disabled', true);
 		$('#kamar').attr('disabled', false);
 		$('#bagian').attr('disabled', false);
 		$('#kel_sekarang').attr('disabled', false);
@@ -771,12 +780,14 @@ function filter_tmi(){
 	$('#no_stambuk').attr('disabled', false);
 	$('#thn_masuk').attr('disabled', false);
 	if ($('#hid_page').val() == 'DAFTAR') {
+		$('#thn_masuk').attr('disabled', true);
 		$('#rayon').attr('disabled', true);
 		$('#kamar').attr('disabled', true);
 		$('#bagian').attr('disabled', true);
 		$('#kel_sekarang').attr('disabled', true);
 	}
 	else {
+		$('#thn_masuk').attr('disabled', false);
 		$('#rayon').attr('disabled', false);
 		$('#kamar').attr('disabled', false);
 		$('#bagian').attr('disabled', false);
@@ -898,12 +909,14 @@ function filter_aitam(){
 	$('#no_stambuk').attr('disabled', true);
 	$('#thn_masuk').attr('disabled', false);
 	if ($('#hid_page').val() == 'DAFTAR') {
+		$('#thn_masuk').attr('disabled', true);
 		$('#rayon').attr('disabled', true);
 		$('#kamar').attr('disabled', true);
 		$('#bagian').attr('disabled', true);
 		$('#kel_sekarang').attr('disabled', true);
 	}
 	else {
+		$('#thn_masuk').attr('disabled', false);
 		$('#rayon').attr('disabled', false);
 		$('#kamar').attr('disabled', false);
 		$('#bagian').attr('disabled', false);
@@ -1398,6 +1411,7 @@ function view(no_registrasi) {
 			$('#kategori_update').val(data['kategori']);
 			$('#no_registrasi').val(data['no_registrasi']);
 			$('#no_stambuk').val(data['no_stambuk']);
+			$('#thn_daftar').val(data['thn_daftar']);
 			$('#thn_masuk').val(data['thn_masuk']);
 			$('#rayon').val(data['rayon']);
 			$('#kamar').val(data['kamar']);
@@ -1479,6 +1493,14 @@ function view(no_registrasi) {
 			else {
 				$('#kel_sekarang').attr('disabled', false);
 			}
+			$('#thn_daftar').attr('disabled', true);
+			if ($('#hid_page').val() == 'DAFTAR') {
+				$('#thn_masuk').attr('disabled', false);
+			}
+			else{
+				$('#thn_masuk').attr('disabled', true);
+			}
+			
 			$('#kamar').attr('disabled', false);
 			$('#bagian').attr('disabled', false);
 			
@@ -1870,6 +1892,7 @@ function edit(no_registrasi) {
 			$('#kategori_santri').val(data['kategori']);
 			$('#no_registrasi').val(data['no_registrasi']);
 			$('#no_stambuk').val(data['no_stambuk']);
+			$('#thn_daftar').val(data['thn_daftar']);
 			$('#thn_masuk').val(data['thn_masuk']);
 			$('#rayon').val(data['rayon']);
 			$('#kamar').val(data['kamar']);
@@ -2343,7 +2366,7 @@ function hapus(no_registrasi) {
 					dataType: "html",
 					success: function (data) {
 						bootbox.alert({
-							message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Hapus Berhasil Berhasil",
+							message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Hapus Berhasil",
 							size: 'small',
 							callback: function () {
 
@@ -2352,6 +2375,39 @@ function hapus(no_registrasi) {
 						});
 					}
 				});
+			}
+		}
+	);
+
+}
+
+function keluarkan(no_registrasi) {
+	bootbox.prompt("Alasan menonaktif no registrasi " + no_registrasi + " ini ?",
+		function (result) {
+
+
+			if (result != null) {
+
+				if (result == "") {
+					bootbox.alert("Alasan menonaktif  harus diisi!");
+				}
+				else {
+					$.ajax({
+						type: "POST",
+						url: base_url + "datasantri/Keluarkan_santri/" + no_registrasi + "/" + result,
+						dataType: "html",
+						success: function (data) {
+							bootbox.alert({
+								message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp; Non Aktif Berhasil ",
+								size: 'small',
+								callback: function () {
+
+									window.location = base_url + 'datasantri';
+								}
+							});
+						}
+					});
+				}
 			}
 		}
 	);
@@ -2406,6 +2462,7 @@ function ToTMI(no_registrasi) {
 			$('#kategori_update').val('TMI'); 
 			$('#no_registrasi').val(data['no_registrasi']);
 			$('#no_stambuk').val(data['no_stambuk']);
+			$('#thn_daftar').val(data['thn_daftar']);
 			$('#thn_masuk').val(data['thn_masuk']);
 			$('#rayon').val(data['rayon']);
 			$('#kamar').val(data['kamar']);

@@ -32,7 +32,7 @@
                             <th style="text-align:center">Tahun Ajar</th>
                             <th style="text-align:center">No Registrasi</th>
                             <th style="text-align:center">Gedung</th>
-                            <th style="text-align:center">Bagian</th>
+                            <!-- <th style="text-align:center">Bagian</th> -->
                             <th style="text-align:center">Kamar</th>
                             <th style="text-align:center">Kelas</th>
                             <th style="text-align:center">Tanggal</th>
@@ -200,7 +200,7 @@
                                                                 </div>
                                                             </div>     
                                                             <!--span-->
-                                                            <div class="form-group">
+                                                            <div class="form-group hidden">
                                                                 <div class="input-group">
                                                                     <span class="input-group-addon">
                                                                         Bagian

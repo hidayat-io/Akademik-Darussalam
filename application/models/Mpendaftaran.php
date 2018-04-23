@@ -366,6 +366,10 @@ class Mpendaftaran extends CI_Model
 
 		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
 		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->update('ms_santri_sekolah');
+
+		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
+		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->update('ms_keluarga');
 
 		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
@@ -381,6 +385,14 @@ class Mpendaftaran extends CI_Model
 		$this->db->update('ms_santri_donatur');
 	}
 
+	function nonaktif_santri($no_registrasi,$keterangan){
+		
+		$this->db->set('isnonaktif','1');
+		$this->db->set('keterangan',$keterangan);
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->update('ms_santri');
+	}
+	
 	function delete_all_data_santri($no_registrasi){
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->delete('ms_santri');
@@ -390,6 +402,9 @@ class Mpendaftaran extends CI_Model
 		
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->delete('ms_fisik_santri');
+
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->delete('ms_santri_sekolah');
 
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->delete('ms_keluarga');
@@ -430,6 +445,12 @@ class Mpendaftaran extends CI_Model
 
 	function get_donatur(){
 		$data = $this->db->query ("SELECT * FROM ms_donatur ORDER BY id_donatur");
+		return $data;
+	}
+
+	function get_pengeluaran_global(){
+		$data = array();
+		$data = $this->db->query ("SELECT * FROM ms_limit_pengeluaran")->row_array();
 		return $data;
 	}
 	
