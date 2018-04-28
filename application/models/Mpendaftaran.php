@@ -396,6 +396,9 @@ class Mpendaftaran extends CI_Model
 	function delete_all_data_santri($no_registrasi){
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->delete('ms_santri');
+
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->delete('ms_santri_sekolah');
 		
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->delete('trans_pembiayaan_siswa');
