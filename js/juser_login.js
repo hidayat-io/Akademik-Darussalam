@@ -20,7 +20,23 @@ $(document).ready(function()
 				return true;
 		return false;
 	});
+	$(".select2").select2({
+		dropdownParent: $('#add_user_login')
+		// dropdownParent: parentElement
+	});
 
+	$("#changePWD").click(function () {
+		$("#password").attr("disabled", !this.checked);
+		$("#confirmPassword").attr("disabled", !this.checked);
+	});
+	// $("#changePWD").click(function () {
+	// if ($('#changePWD').prop("checked", true)) {
+	// 	$("#password").attr("disabled", false);
+	// }
+	// else {
+	// 	$("#password").attr("disabled", true);
+	// }
+	// });
 	//validasi form modal add_kecakapan_khusus
 	validate_add_user_login();
 });
@@ -80,17 +96,16 @@ function pilihItemmsgroup() {
 }
 
 function setTable(){
-	 $('#tb_list').DataTable( {
-		"order": [[ 0, "desc" ]],
-        "processing": true,
-		"serverSide": true,
-		"search": false,
+	$('#tb_list').DataTable({
+		processing: true,
+		serverSide: true,
+		bFilter: false,
 		ajax: {
-			'url':base_url+"user_login/load_grid",
-			'type':'GET',
-			'data': function ( d ) {
-                d.param = $('#hid_param').val();
-            }
+			'url': base_url + "user_login/load_grid",
+			'type': 'GET',
+			'data': function (d) {
+				d.param = $('#hid_param').val();
+			}
 		},
     } );
 }
@@ -102,8 +117,8 @@ function Modalcari(){
 
 function SearchAction(){
     // var id_user_login 	    = $('#s_kodeuser_login').val();
-    var nama_user_login	= $('#s_namauser_login').val();
-	var param 			= {'nama_user_login':nama_user_login};
+	var user_id 		= $('#s_user_id').val();
+	var param 			= { 'user_id': user_id};
 		param 			= JSON.stringify(param);
 
 	$('#hid_param').val(param);
@@ -125,6 +140,11 @@ var validate_add_user_login = function () {
 		errorElement: 'span', //default input error message container
 		errorClass: 'help-block help-block-error', // default input error message class
 		focusInvalid: false, // do not focus the last invalid input
+		rules: {
+			confirmPassword: {
+				equalTo: "#password"
+			}	
+		},
 
 		invalidHandler: function (event, validator) { //display error alert on form submit              
 			success2.hide();
@@ -174,9 +194,9 @@ function clearvalidate_add_user_login() {
 
 function svuser_login(){
 	if($("#add_user_login").valid()==true){
-        $nama_user_login = $('#nama_user_login').val();
+		$user_id = $('#user_id').val();
 		$status = $('#save_button').text();
-		var str_url  	= encodeURI(base_url+"user_login/get_data_user_login/"+$nama_user_login);
+		var str_url = encodeURI(base_url + "user_login/get_data_user_login/" + $user_id);//cek user id sudah ada atau tidak
        $.ajax({
 		type:"POST",
 		url:str_url,
@@ -184,7 +204,7 @@ function svuser_login(){
 		success:function(data){	
             $data = $.parseJSON(data);
                 if( $data != null & $status =='SAVE'){
-                        bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>"+$nama_user_login+" SUDAH ADA DI DATABASE! </div>",
+					bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>User ID " + $user_id+" sudah ada! </div>",
                             function(result){
                                 if(result==true){
                                 }
@@ -232,16 +252,24 @@ function svuser_login(){
 
 function adduser_login(){
 	clearvalidate_add_user_login();
+	$('#spansearchmskaryawan').show();
+	$("#cls_changePWD").addClass("hidden");
+	$('#password').attr('disabled', false);
+	$('#confirmPassword').attr('disabled', false);
     $('#save_button').text('SAVE');
 	// kosong();
 	$('#Modal_add_user_login').modal('show');
 }
 
-function edit(id_user_login){
+function edit(user_id){
 	clearvalidate_add_user_login();
-	var str_url  	= encodeURI(base_url+"user_login/get_edit_user_login/"+id_user_login);
-    $('#save_button').text('UPDATE');
-    $('#id_user_login').attr('readonly',true);
+	var str_url = encodeURI(base_url + "user_login/get_edit_user_login/" + user_id);
+	$('#save_button').text('UPDATE');
+	$("#cls_changePWD").removeClass("hidden");
+	$('#spansearchmskaryawan').hide();
+	$('#password').attr('disabled',true);
+	$('#confirmPassword').attr('disabled', true);
+	
 	$.ajax({
 
 		type:"POST",
@@ -250,12 +278,10 @@ function edit(id_user_login){
 		success:function(data){
 			
 			var data = $.parseJSON(data);
-			$('#id_user_login').val(data['id_user_login']);//untuk membaca kategori saat update
-			$('#nama_user_login').val(data['nama_user_login']);
-			$('#lembaga').val(data['lembaga']);
-			$('#alamat').val(data['alamat']);
-			$('#telpon').val(data['telpon']);
-			$('#kategori').val(data['kategori']);
+			$('#user_id').val(data['user_id']);//untuk membaca kategori saat update
+			$('#nama_user_login').val(data['nama_lengkap']);
+			$('#id_group').val(data['group_id']);
+			$('#group_name').val(data['group_name']);
 			
 			$('#Modal_add_user_login').modal('show');
 			
@@ -265,9 +291,9 @@ function edit(id_user_login){
 	
 }
 
-function hapus(id_user_login,nama_user_login){
-	var str_url  	= encodeURI(base_url+"user_login/Deluser_login/"+id_user_login);
-	bootbox.confirm("Anda yakin akan menghapus "+nama_user_login+" ?",
+function hapus(user_id){
+	var str_url = encodeURI(base_url + "user_login/Deluser_login/" + user_id);
+	bootbox.confirm("Anda yakin akan menghapus " + user_id+" ?",
 		function(result){
 			if(result==true){
 				
@@ -293,7 +319,7 @@ function hapus(id_user_login,nama_user_login){
 }
 
 function clearformcari(){
-	$('#s_namauser_login').val('');
+	$('#s_user_id').val('');
 }
 
 

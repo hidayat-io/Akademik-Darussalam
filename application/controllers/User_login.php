@@ -47,7 +47,7 @@ class user_login extends IO_Controller
 
 		if($param!=null){
 
-			if(isset($param->nama_user_login)) $string_param .= " nama_user_login LIKE '%".$param->nama_user_login."%' ";
+			if(isset($param->user_id)) $string_param .= " user.user_id LIKE '%".$param->user_id."%' ";
 		}
 
 		return $string_param;
@@ -106,145 +106,66 @@ class user_login extends IO_Controller
 		
 	}
 
-	function exportexcel(){
-		// hasil decode // 
-		$str = base64_decode($this->uri->segment(3));
-
-		// merubah hasil decode dari string ke json //
-		$str = json_decode($str);
-
-		// memasukan data json kedalam builparam //
-		// agar json menjadi parameter query //
-		$str = $this->build_param($str);
-
-		$data= $this->model->get_list_data($str);
-
-		//load our new PHPExcel library
-		$this->load->library('excel');
-		//activate worksheet number 1
-		$this->excel->setActiveSheetIndex(0);
-		//name the worksheet
-		$this->excel->getActiveSheet()->setTitle('Master_user_login');
-		$this->excel->getActiveSheet()->setCellValue('A1', "Master user_login");
-		$this->excel->getActiveSheet()->mergeCells('A1:F1');
-		$this->excel->getActiveSheet()->getStyle('A1:F1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-		//header
-		$this->excel->getActiveSheet()->setCellValue('A3', "No.");
-		$this->excel->getActiveSheet()->setCellValue('B3', "ID user_login");
-		$this->excel->getActiveSheet()->setCellValue('C3', "Nama user_login");
-		$this->excel->getActiveSheet()->setCellValue('D3', "Alamat");
-		$this->excel->getActiveSheet()->setCellValue('E3', "Telpon");
-		$this->excel->getActiveSheet()->setCellValue('F3', "Kategori");
-
-		$fdate 	= "d-m-Y";
-		$i  	= 4;
-
-		if($data != null){
-
-			foreach($data as $row){
-
-				$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
-				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->id_user_login);
-				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->nama_user_login);
-				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->alamat);
-				$this->excel->getActiveSheet()->setCellValue('E'.$i, $row->telpon);
-				$this->excel->getActiveSheet()->setCellValue('F'.$i, $row->kategori);
-				
-				$i++;
-			}
-		}
-
-		for($col = 'A'; $col !== 'F'; $col++) {
-
-		    $this->excel->getActiveSheet()
-		        ->getColumnDimension($col)
-		        ->setAutoSize(true);
-		}
-
-		$styleArray = array(
-		  'borders' => array(
-		    'allborders' => array(
-		      'style' => PHPExcel_Style_Border::BORDER_THIN
-		    )
-		  )
-		);
-		$i = $i-1;
-		$cell_to = "E".$i;
-		$this->excel->getActiveSheet()->getStyle('A3:'.$cell_to)->applyFromArray($styleArray);
-		$this->excel->getActiveSheet()->getStyle('A1:F3')->getFont()->setBold(true);
-		$this->excel->getActiveSheet()->getStyle('A3:F3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-		$this->excel->getActiveSheet()->getStyle('A3:F3')->getFill()->getStartColor()->setRGB('2CC30B');
-
-		$filename='Master-user_login.xls'; //save our workbook as this file name
-		header('Content-Type: application/vnd.ms-excel'); //mime type
-		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
-		header('Cache-Control: max-age=0');//no cache
-
-		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
-		//if you want to save it as .XLSX Excel 2007 format
-		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
-		//force user to download the Excel file without writing it to server's HD
-		$objWriter->save('php://output');
-
-	}
-
 	function simpan_user_login($status)
 	{
-		$id_user_login 	= $this->input->post('id_user_login');
-		$nama_user_login 	= $this->input->post('nama_user_login');
-		$lembaga 		= $this->input->post('lembaga');
-		$alamat  		= $this->input->post('alamat');
-		$telpon 		= $this->input->post('telpon');
-		$kategori 	    = $this->input->post('kategori');
-        $recdate        = date('y-m-d');
-	    $userid 	    = $this->session->userdata('logged_in')['uid'];
+		$user_id 			= $this->input->post('user_id');
+		$nama_lengkap 		= $this->input->post('nama_user_login');
+		$group_id 			= $this->input->post('id_group');
+		$password 			= $this->input->post('password');
+		$pwd 			= substr(md5($password),0,15);
+		$alamat  			= $this->input->post('alamat');
+	    $userid 	    	= $this->session->userdata('logged_in')['uid'];
 
-		$data_user_login = array(
-			'id_user_login' 		=> $id_user_login,
-			'nama_user_login' 		=> $nama_user_login,
-			'lembaga' 			=> $lembaga,
-			'alamat' 		    => $alamat,
-			'telpon' 			=> $telpon,
-			'kategori' 	        => $kategori,
-            'recdate'           => $recdate,
-			'userid' 		    => $userid
+		$data_user = array(
+			'user_id' 				=> $user_id,
+			'password' 				=> $pwd,
+			'nama_lengkap' 			=> $nama_lengkap
+		);
+
+		$data_user_grup = array(
+			'user_id' 				=> $user_id,
+			'group_id' 				=> $group_id
 		);
         
 		if($status=='SAVE')	
 		{// cek apakah add new atau editdata
 			
 		// save data user_login
-         	$this->model->simpan_data_user_login($data_user_login);
+         	$this->model->simpan_data_user_login($data_user);
+         	$this->model->simpan_data_user_grup($data_user_grup);
 
 		}
         else //update data
-		{		
+		{	
+			if ($password!=""){
+				$this->model->simpan_data_user_login($data_user);
+			}
 			// save data user_login
-         	$this->model->update_data_user_login($id_user_login,$data_user_login);
+         	$this->model->update_data_user_grup($user_id,$data_user_grup);
         }	    
 
 			echo "true";
 	}
 
-	function get_data_user_login($nama_user_login)
+	function get_data_user_login($user_id)
 	{
-		$nama_user_login = urldecode($nama_user_login);
-		$data = $this->model->query_user_login($nama_user_login);
+		$user_id 		= urldecode($user_id);
+		$data 			= $this->model->query_user_login($user_id);
     	echo json_encode($data);
     }
     
-	function get_edit_user_login($id_user_login)
+	function get_edit_user_login($user_id)
 	{
-		$id_user_login = urldecode($id_user_login);
-		$data = $this->model->query_edit_user_login($id_user_login);
+		$user_id 		= urldecode($user_id);
+		$data 			= $this->model->query_edit_user_login($user_id);
     	echo json_encode($data);
 	}
 
-	function Deluser_login($id_user_login)
+	function Deluser_login($user_id)
 	{
-		$id_user_login = urldecode($id_user_login);
-		$this->model->delete_user_login($id_user_login);
+		$id_user_login = urldecode($user_id);
+		$this->model->delete_user_login($user_id);
+		$this->model->delete_user_grup($user_id);
 	}
 
 

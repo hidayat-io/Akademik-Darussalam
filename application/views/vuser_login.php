@@ -149,7 +149,7 @@
                                                             </div>
                                                             <div class="input-icon right">                                                                   
                                                             <input type class="form-control" style="width: 80%;" readonly name="id_group" id="id_group" required > 
-                                                            <input type class="form-control" style="width: 80%;" readonly name="group_name" id="group_name" > 
+                                                            <input type class="form-control" style="width: 80%;" readonly name="group_name" id="group_name" required> 
                                                                 <span class="input-group-btn"
                                                                         style="cursor: pointer;"
                                                                         title="Cari msgroup"
@@ -179,7 +179,7 @@
                                                         <span class="input-group-addon">
                                                             Password
                                                         </span>
-                                                        <input type="password" class="form-control" name="pwd" id="pwd" maxlength="20" required></div>
+                                                        <input type="password" class="form-control" name="password" id="password" maxlength="20" required></div>
                                                     </div>
                                                       <!--span-->
                                                       <!--span-->
@@ -189,8 +189,12 @@
                                                         <span class="input-group-addon">
                                                             Password Konfirmasi
                                                         </span>
-                                                        <input type="password" class="form-control" name="pwdc" id="pwdc" maxlength="20" required></div>
+                                                        <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" maxlength="20" required></div>
                                                     </div>
+                                                    <label id="cls_changePWD" class="mt-checkbox mt-checkbox-outline ">
+                                                        <input type="checkbox" id="changePWD"> Change Password
+                                                        <span></span>
+                                                    </label>
                                                       <!--span-->
                                                     <!--end inputbox-->
                                             <div class="modal-footer">
@@ -242,9 +246,9 @@
                                                             <label class="control-label"></label>
                                                             <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                nama user_login
+                                                                ID
                                                             </span>
-                                                            <input type="text" class="form-control" name="s_namauser_login" id="s_namauser_login" onkeydown="OtomatisKapital(this)" required></div>
+                                                            <input type="text" class="form-control" name="s_user_id" id="s_user_id" onkeydown="OtomatisKapital(this)" required></div>
                                                     </div>
                                                 <!--span-->
                                                     <!-- <div class="form-group">
