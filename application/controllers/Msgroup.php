@@ -3,40 +3,21 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class user_login extends IO_Controller
+class msgroup extends IO_Controller
 {
 
 	public function __construct()
 	{
-			$modul = 47;
+			$modul = 48;
 			parent::__construct($modul);
-		 	$this->load->model('muser_login','model');
+		 	$this->load->model('mmsgroup','model');
 	}
 
 	function index()
 	{
-	    // get ID karyawan
-        $select_karyawan = $this->model->get_mskaryawan()->result();
 
-        $vdata['mskaryawan'][NULL] = '-';
-        foreach ($select_karyawan as $b) {
-
-            $vdata['mskaryawan'][$b->no_reg."#".$b->nama_lengkap]
-                =$b->no_reg." | ".$b->nama_lengkap;
-        }
-
-         // get ID group
-        $select_group = $this->model->get_group()->result();
-
-        $vdata['group'][NULL] = '-';
-        foreach ($select_group as $b) {
-
-            $vdata['group'][$b->group_id."#".$b->group_name]
-                =$b->group_id." | ".$b->group_name;
-        }
-
-		$vdata['title'] = 'DATA USER LOGIN';
-	    $data['content'] = $this->load->view('vuser_login',$vdata,TRUE);
+		$vdata['title'] = 'DATA MASTER GROUP';
+	    $data['content'] = $this->load->view('vmsgroup',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
 
@@ -47,7 +28,7 @@ class user_login extends IO_Controller
 
 		if($param!=null){
 
-			if(isset($param->user_id)) $string_param .= " user.user_id LIKE '%".$param->user_id."%' ";
+			if(isset($param->group_id)) $string_param .= " group_name LIKE '%".$param->group_id."%' ";
 		}
 
 		return $string_param;
@@ -80,17 +61,15 @@ class user_login extends IO_Controller
 		$fdate = 'd-m-Y';
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->user_id.'\')">
+			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->group_id.'\')">
 						<i class="fa fa-edit"></i>
 					</a>
-					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->user_id.'\')">
+					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->group_id.'\')">
 						<i class="fa fa-remove"></i>
 					</a>';
 			
 			$records["data"][] = array(
 
-		     	'<div align="center" style="width: 100%">'.$data[$i]->user_id.'</div>',
-				'<div align="center" style="width: 100%">'.$data[$i]->nama_lengkap.'</div>',
 				'<div align="center" style="width: 100%">'.$data[$i]->group_id.'</div>',
   				'<div align="center" style="width: 100%">'.$data[$i]->group_name.'</div>',
                 '<div align="center" style="width: 100%">'.$act.'</div>'
@@ -106,10 +85,10 @@ class user_login extends IO_Controller
 		
 	}
 
-	function simpan_user_login($status)
+	function simpan_msgroup($status)
 	{
-		$user_id 			= $this->input->post('user_id');
-		$nama_lengkap 		= $this->input->post('nama_user_login');
+		$group_id 			= $this->input->post('group_id');
+		$nama_lengkap 		= $this->input->post('nama_msgroup');
 		$group_id 			= $this->input->post('id_group');
 		$password 			= $this->input->post('password');
 		$pwd 			= substr(md5($password),0,15);
@@ -117,55 +96,55 @@ class user_login extends IO_Controller
 	    $userid 	    	= $this->session->userdata('logged_in')['uid'];
 
 		$data_user = array(
-			'user_id' 				=> $user_id,
+			'group_id' 				=> $group_id,
 			'password' 				=> $pwd,
 			'nama_lengkap' 			=> $nama_lengkap
 		);
 
 		$data_user_grup = array(
-			'user_id' 				=> $user_id,
+			'group_id' 				=> $group_id,
 			'group_id' 				=> $group_id
 		);
         
 		if($status=='SAVE')	
 		{// cek apakah add new atau editdata
 			
-		// save data user_login
-         	$this->model->simpan_data_user_login($data_user);
+		// save data msgroup
+         	$this->model->simpan_data_msgroup($data_user);
          	$this->model->simpan_data_user_grup($data_user_grup);
 
 		}
         else //update data
 		{	
 			if ($password!=""){
-				$this->model->simpan_data_user_login($data_user);
+				$this->model->simpan_data_msgroup($data_user);
 			}
-			// save data user_login
-         	$this->model->update_data_user_grup($user_id,$data_user_grup);
+			// save data msgroup
+         	$this->model->update_data_user_grup($group_id,$data_user_grup);
         }	    
 
 			echo "true";
 	}
 
-	function get_data_user_login($user_id)
+	function get_data_msgroup($group_id)
 	{
-		$user_id 		= urldecode($user_id);
-		$data 			= $this->model->query_user_login($user_id);
+		$group_id 		= urldecode($group_id);
+		$data 			= $this->model->query_msgroup($group_id);
     	echo json_encode($data);
     }
     
-	function get_edit_user_login($user_id)
+	function get_edit_msgroup($group_id)
 	{
-		$user_id 		= urldecode($user_id);
-		$data 			= $this->model->query_edit_user_login($user_id);
+		$group_id 		= urldecode($group_id);
+		$data 			= $this->model->query_edit_msgroup($group_id);
     	echo json_encode($data);
 	}
 
-	function Deluser_login($user_id)
+	function Delmsgroup($group_id)
 	{
-		$id_user_login = urldecode($user_id);
-		$this->model->delete_user_login($user_id);
-		$this->model->delete_user_grup($user_id);
+		$id_msgroup = urldecode($group_id);
+		$this->model->delete_msgroup($group_id);
+		$this->model->delete_user_grup($group_id);
 	}
 
 
