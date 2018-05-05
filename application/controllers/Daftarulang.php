@@ -136,7 +136,7 @@ class daftarulang extends IO_Controller
                 '<div align="center" style="width: 100%">'.$data[$i]->deskripsi.'</div>',
                 '<div align="center" style="width: 100%">'.$data[$i]->no_registrasi.'</div>',
                 '<div align="center" style="width: 100%">'.$data[$i]->rayon.'</div>',
-                '<div align="center" style="width: 100%">'.$data[$i]->bagian.'</div>',
+                // '<div align="center" style="width: 100%">'.$data[$i]->bagian.'</div>',
                 '<div align="center" style="width: 100%">'.$data[$i]->kamar.'</div>',
                 '<div align="center" style="width: 100%">'.$data[$i]->kel_sekarang.'</div>',
                 '<div align="center" style="width: 100%">'.io_date_format($data[$i]->date,$fdate).'</div>',

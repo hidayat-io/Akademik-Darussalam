@@ -175,6 +175,16 @@ class Mdatasantri extends CI_Model
 		$this->db->update('ms_fisik_santri',$data_ms_fisik_santri);
 	}
 
+	function delete_item_sekolahAitam($no_registrasi){
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->delete('ms_santri_sekolah');
+	}
+
+	function simpan_item_sekolahAitam($detail_sekolahAitam){
+
+		$this->db->replace('ms_santri_sekolah',$detail_sekolahAitam);
+	}
+
 	function delete_item_keluarga($no_registrasi){
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->delete('ms_keluarga');
@@ -238,6 +248,13 @@ class Mdatasantri extends CI_Model
         $this->db->set('lamp_skhun',$str);
         $this->db->where('no_registrasi',$no_registrasi);
         $this->db->update('ms_santri');   
+	}
+	
+	function update_photo_nisn($no_registrasi,$str){
+
+        $this->db->set('lamp_nisn',$str);
+        $this->db->where('no_registrasi',$no_registrasi);
+        $this->db->update('ms_santri');   
     }
 
 	function update_photo_trasnkip_nilai($no_registrasi,$str){
@@ -273,12 +290,12 @@ class Mdatasantri extends CI_Model
 
 	function query_santri($no_registrasi){
 		$data = array();
-		$data=$this->db->query("SELECT a.kategori, a.no_registrasi, a.no_stambuk, a.thn_masuk , a.rayon, a.kamar, a.bagian, 
+		$data=$this->db->query("SELECT a.kategori, a.no_registrasi, a.no_stambuk, DATE_FORMAT(a.thn_masuk,'%d-%m-%Y') as thn_masuk, a.rayon, a.kamar, a.bagian, 
 		a.kel_sekarang, a.nisn, a.nisnlokal, a.nama_lengkap, a.nama_arab, a.nama_panggilan, a.hobi, 
 		a.uang_jajan_perbulan, a.no_kk, a.nik, a.tempat_lahir, DATE_FORMAT(a.tgl_lahir,'%d-%m-%Y') as tgl_lahir, a.konsulat, 
-		a.nama_sekolah, a.kelas_sekolah, a.alamat_sekolah, a.suku, a.kewarganegaraan, 
+		a.nama_sekolah,  DATE_FORMAT(a.thn_lulus,'%d-%m-%Y') as thn_lulus, a.alamat_sekolah, a.suku, a.kewarganegaraan, 
 		a.jalan, a.no_rumah, a.dusun, a.desa, a.kecamatan, a.kabupaten, a.provinsi, a.kd_pos, a.no_tlp, 
-		a.no_hp, a.email, a.fb, a.dibesarkan_di, a.lamp_ijazah, a.lamp_photo, a.lamp_akta_kelahiran, a.lamp_kk, a.lamp_skhun,
+		a.no_hp, a.email, a.fb, a.dibesarkan_di, a.lamp_ijazah, a.lamp_photo, a.lamp_akta_kelahiran, a.lamp_kk, a.lamp_skhun,a.lamp_nisn,
 		 a.lamp_transkip_nilai, a.lamp_skkb, a.lamp_surat_kesehatan, b.pembiaya, b.biaya_perbulan_min, 
 		b.biaya_perbulan_max, b.penghasilan, c.gol_darah, c.tinggi_badan, 
 		c.berat_badan, c.khitan, c.kondisi_pendidikan, c.ekonomi_keluarga, c.situasi_rumah, 
@@ -289,6 +306,14 @@ class Mdatasantri extends CI_Model
 		ms_fisik_santri c ON a.no_registrasi= c.no_registrasi
 		WHERE a.no_registrasi = '$no_registrasi'")->row_array();
 		return $data;
+	}
+
+	function query_sekolahAitam($no_registrasi){
+		$this->db->select('*');
+        $this->db->from('ms_santri_sekolah');
+        $this->db->where('no_registrasi',$no_registrasi);
+        
+        return $this->db->get()->result();
 	}
 
 	function query_keluarga($no_registrasi){
@@ -342,6 +367,10 @@ class Mdatasantri extends CI_Model
 
 		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
 		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->update('ms_santri_sekolah');
+
+		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
+		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->update('ms_keluarga');
 
 		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
@@ -373,6 +402,10 @@ class Mdatasantri extends CI_Model
 
 		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
 		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->update('ms_santri_sekolah');
+
+		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
+		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->update('ms_keluarga');
 
 		$this->db->set('no_registrasi',$data_santri['no_registrasi']);
@@ -387,16 +420,30 @@ class Mdatasantri extends CI_Model
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->update('ms_santri_donatur');
 	}
+	
+	function nonaktif_santri($no_registrasi,$keterangan){
+		
+		$this->db->set('isnonaktif','1');
+		$this->db->set('keterangan',$keterangan);
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->update('ms_santri');
+	}
 
 	function delete_all_data_santri($no_registrasi){
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->delete('ms_santri');
+
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->delete('ms_santri_sekolah');
 		
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->delete('trans_pembiayaan_siswa');
 		
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->delete('ms_fisik_santri');
+
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->delete('ms_santri_sekolah');
 
 		$this->db->where('no_registrasi',$no_registrasi);
 		$this->db->delete('ms_keluarga');
@@ -411,13 +458,17 @@ class Mdatasantri extends CI_Model
 		$this->db->delete('ms_santri_donatur');
 	}
 
+
+
 	function get_gedung(){
 		$data = $this->db->query ("SELECT * FROM ms_gedung ORDER BY kode_gedung");
 		return $data;
 	}
 
 	function get_kamar(){
-		$data = $this->db->query ("SELECT * FROM ms_kamar ORDER BY kode_kamar");
+		$data = $this->db->query ("SELECT ms_kamar.kode_kamar, ms_kamar.nama, ms_kamar.kapasitas, ms_kamar.kode_gedung, ms_gedung.nama AS nama_gedung
+									FROM ms_kamar
+									INNER JOIN ms_gedung ON ms_kamar.kode_gedung = ms_gedung.kode_gedung WHERE iskelas ='0'");
 		return $data;
 	}
 
@@ -435,6 +486,12 @@ class Mdatasantri extends CI_Model
 
 	function get_donatur(){
 		$data = $this->db->query ("SELECT * FROM ms_donatur ORDER BY id_donatur");
+		return $data;
+	}
+
+	function get_pengeluaran_global(){
+		$data = array();
+		$data = $this->db->query ("SELECT * FROM ms_limit_pengeluaran")->row_array();
 		return $data;
 	}
 	

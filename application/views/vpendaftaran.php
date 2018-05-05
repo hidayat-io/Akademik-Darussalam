@@ -40,7 +40,7 @@
                 <thead>
                     <tr>
                         <th>No Registrasi</th>
-                        <th>Tahun Masuk</th>
+                        <th>Tanggal Daftar</th>
                         <th>Nama Lengkap</th>
                         <th>Nama Arab</th>
                         <!-- <th >Nama Panggilan</th> -->
@@ -217,11 +217,11 @@
                                                                         <div class="col-md-6">
                                                                             <div class="input-group">
                                                                             <span class="input-group-addon">
-                                                                                Tahun Masuk
+                                                                                Tanggal Daftar
                                                                             </span>
                                                                                 <div class="input-icon right">
                                                                                     <i class="fa"></i><i class="fa"></i>
-                                                                                    <input type class="form-control datepicker"  data-date-format="yyyy" name="thn_masuk" id="thn_masuk" readonly="true" required>
+                                                                                    <input type class="form-control datepicker"  data-date-format="dd-mm-yyyy" name="thn_daftar" id="thn_daftar" readonly="true" required>
                                                                                 </div>
                                                                                     <span class="input-group-btn">
                                                                                     <button class="btn default" type="button">
@@ -235,42 +235,7 @@
                                                                         <div class="col-md-6">
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon">
-                                                                                    Gedung
-                                                                                </span>
-                                                                                <div class="input" id= "hiddenidgedung">
-                                                                                    <?php
-                                                                                        $att_item = 'id="hide_id_gedung"  class="form-control select" style="width:100%"  onchange="pilihItemGedung()"';
-                                                                                        echo form_dropdown('hide_id_gedung', $kode_gedung, null, $att_item);
-                                                                                    ?>
-                                                                                </div>
-                                                                                <div class="input-icon right">
-                                                                                    <i class="fa"></i>
-                                                                                    <input type class="form-control" readonly name="rayon" id="rayon" onkeydown="OtomatisKapital(this)" required>
-                                                                                </div>
-                                                                                <span class="input-group-btn"
-                                                                                        style="cursor: pointer;"
-                                                                                        title="Cari Kode Gedung"
-                                                                                        id="spansearchgedung"
-                                                                                        onclick="idgedungshow()">
-                                                                                    <button class="btn default" type="button">
-                                                                                        <i class="fa fa-search"></i>
-                                                                                    </button>
-                                                                                </span>
-                                                                                <span class="input-group-btn"
-                                                                                    style="cursor: pointer;"
-                                                                                        title="Cari Kode Gedung"
-                                                                                        id="spansearchclosegedung"
-                                                                                    onclick="idgedunghide()">
-                                                                                    <button class="btn default" type="button">
-                                                                                        <i class="fa fa-times-circle"></i>
-                                                                                    </button>
-                                                                                </span>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <div class="input-group">
-                                                                                <span class="input-group-addon">
-                                                                                    Kamar
+                                                                                    Ruangan
                                                                                 </span>
                                                                                 <div class="input" id= "hiddenidKamar">
                                                                                     <?php
@@ -303,6 +268,57 @@
                                                                         </div>
                                                                         <div class="col-md-6">
                                                                             <div class="input-group">
+                                                                            <span class="input-group-addon">
+                                                                                Tanggal Masuk
+                                                                            </span>
+                                                                                <div class="input-icon right">
+                                                                                    <i class="fa"></i><i class="fa"></i>
+                                                                                    <input type class="form-control datepicker"  data-date-format="dd-mm-yyyy" name="thn_masuk" id="thn_masuk" readonly="true" required>
+                                                                                </div>
+                                                                                    <span class="input-group-btn">
+                                                                                    <button class="btn default" type="button">
+                                                                                        <i class="fa fa-calendar"></i>
+                                                                                    </button>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-addon">
+                                                                                    Asrama
+                                                                                </span>
+                                                                                <div class="input" id= "hiddenidgedung">
+                                                                                    <?php
+                                                                                        $att_item = 'id="hide_id_gedung"  class="form-control select" style="width:100%"  onchange="pilihItemGedung()"';
+                                                                                        echo form_dropdown('hide_id_gedung', $kode_gedung, null, $att_item);
+                                                                                    ?>
+                                                                                </div>
+                                                                                <div class="input-icon right">
+                                                                                    <i class="fa"></i>
+                                                                                    <input type class="form-control" readonly name="rayon" id="rayon" onkeydown="OtomatisKapital(this)" required>
+                                                                                </div>
+                                                                                <span class="input-group-btn hidden"
+                                                                                        style="cursor: pointer;"
+                                                                                        title="Cari Kode Gedung"
+                                                                                        id="spansearchgedung"
+                                                                                        onclick="idgedungshow()">
+                                                                                    <button class="btn default" type="button">
+                                                                                        <i class="fa fa-search"></i>
+                                                                                    </button>
+                                                                                </span>
+                                                                                <span class="input-group-btn"
+                                                                                    style="cursor: pointer;"
+                                                                                        title="Cari Kode Gedung"
+                                                                                        id="spansearchclosegedung"
+                                                                                    onclick="idgedunghide()">
+                                                                                    <button class="btn default" type="button">
+                                                                                        <i class="fa fa-times-circle"></i>
+                                                                                    </button>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6 hidden">
+                                                                            <div class="input-group">
                                                                                 <span class="input-group-addon">
                                                                                     Bagian
                                                                                 </span>
@@ -313,7 +329,7 @@
                                                                                     ?>
                                                                                 </div>
                                                                                 <div class="input-icon right">
-                                                                                <i class="fa"></i><input type class="form-control" readonly name="bagian" id="bagian" onkeydown="OtomatisKapital(this)" required>
+                                                                                <i class="fa"></i><input type class="form-control" readonly name="bagian" id="bagian" onkeydown="OtomatisKapital(this)"  >
                                                                                 </div>
                                                                                 <span class="input-group-btn"
                                                                                         style="cursor: pointer;"
@@ -480,11 +496,12 @@
                                                                             Uang Jajan Perbulan
                                                                         </span>
                                                                             <div class="input-icon right">
-                                                                                <i class="fa"></i><input type class="form-control" name="uang_jajan_perbulan" id="uang_jajan_perbulan" required>
+                                                                                <i class="fa"></i><input type class="form-control" name="uang_jajan_perbulan" id="uang_jajan_perbulan" value="<?php echo $pengeluaran_global ?>" required>
                                                                             </div>
                                                                         </div>
                                                                     <!-- </div>
                                                                 </div> -->
+                                                                <span class="help-block">Silahkan ubah nominal jika tidak mengikuti limit pengeluaran, nominal limit pengeluaran: <?php echo $pengeluaran_global ?></span>
                                                             </div>
                                                             <!--span-->
                                                             <div class="col-md-6">
@@ -844,6 +861,63 @@
                                                             </div>
                                                         </div>
                                                         <!--end inputbox-->
+                                                        <h3 class="form-section <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">Sekolah</h3>
+                                                        <!--row begin-->
+                                                        <!--inputbbox-->
+                                                        <div class="row">
+                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
+                                                            <!-- <div class="form-group">
+                                                                <label class="control-label col-md-3"></label>
+                                                                    <div class="col-md-9"> -->
+                                                                        <div class="input-group">
+                                                                        <span class="input-group-addon">
+                                                                        Nama Sekolah Asal
+                                                                        </span>
+                                                                            <div class="input-icon right">
+                                                                                <i class="fa"></i><input type class="form-control" name="nama_sekolah_tmi" id="nama_sekolah_tmi" onkeydown="OtomatisKapital(this)" required>
+                                                                            </div>
+                                                                        </div>
+                                                                    <!-- </div>
+                                                            </div> -->
+                                                            </div>
+                                                            <!--span-->
+                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
+                                                            <!-- <div class="form-group">
+                                                                <label class="control-label col-md-3"></label>
+                                                                    <div class="col-md-9"> -->
+                                                                        <div class="input-group">
+                                                                        <span class="input-group-addon">
+                                                                        Tahun Lulus
+                                                                        </span>
+                                                                            <div class="input-icon right">
+                                                                                <!-- <i class="fa"></i><input type class="form-control" name="thn_lulus_tmi" id="thn_lulus_tmi" onkeydown="OtomatisKapital(this)" required> -->
+                                                                                <input type class="form-control datepicker"  data-date-format="dd-mm-yyyy" name="thn_lulus_tmi" id="thn_lulus_tmi" readonly="true" required>
+                                                                            </div>
+                                                                        </div>
+                                                                    <!-- </div>
+                                                            </div> -->
+                                                            </div>
+                                                        </div>
+                                                        <!--end inputbox-->
+                                                        <!--inputbbox-->
+                                                        <div class="row">
+                                                            <div class="col-md-6 <?php if($kategori_santri != 'TMI'){echo 'hidden';} ?>">
+                                                            <!-- <div class="form-group">
+                                                                <label class="control-label col-md-3"></label>
+                                                                    <div class="col-md-9"> -->
+                                                                        <div class="input-group">
+                                                                        <span class="input-group-addon">
+                                                                        Alamat Sekolah
+                                                                        </span>
+                                                                            <div class="input-icon right">
+                                                                                <i class="fa"></i><input type class="form-control" name="alamat_sekolah_tmi" id="alamat_sekolah_tmi" onkeydown="OtomatisKapital(this)" required>
+                                                                            </div>
+                                                                        </div>
+                                                                    <!-- </div>
+                                                            </div> -->
+                                                            </div>
+                                                        </div>
+                                                        <!--end inputbox-->
                                                         <!--/row-->
                                                     </div>
                                                     <!-- END FORM-->
@@ -958,68 +1032,46 @@
                                                     </div>
                                                 </div>
                                                 <div class="portlet-body form">
-                                                    <!-- BEGIN FORM-->
                                                     <div class="form-body">
-                                                            <h3 class="form-section">Sekolah</h3>
-                                                            <!--row begin-->
-                                                            <!--inputbbox-->
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="control-label col-md-3"></label>
-                                                                        <div class="col-md-9">
-                                                                            <div class="input-group">
-                                                                            <span class="input-group-addon">
-                                                                            Nama Sekolah
-                                                                            </span>
-                                                                                <div class="input-icon right">
-                                                                                    <i class="fa"></i><input type class="form-control" name="nama_sekolah_aitam" id="nama_sekolah_aitam" onkeydown="OtomatisKapital(this)" required>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                </div>
-                                                                </div>
-                                                                <!--span-->
-                                                                <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="control-label col-md-3"></label>
-                                                                        <div class="col-md-9">
-                                                                            <div class="input-group">
-                                                                            <span class="input-group-addon">
-                                                                            Kelas
-                                                                            </span>
-                                                                                <div class="input-icon right">
-                                                                                    <i class="fa"></i><input type class="form-control" name="kelas_aitam" id="kelas_aitam" onkeydown="OtomatisKapital(this)" required>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                </div>
-                                                                </div>
+                                                        <!-- BEGIN FORM-->
+                                                        <h3 class="form-section">
+                                                        <button type="button" class="btn red" id="button_sekolahAitam" onclick="modalAddsekolahAitam()" >
+                                                            <i class="fa fa-plus"> </i> Tambah Data Sekolah
+                                                        </button></h3>                                                            
+                                                        <!--row begin-->
+                                                        <input type="text" id="hid_jumlah_item_sekolahAitam" value="0" class="hidden"/>
+                                                        <input type="text" name="hid_table_item_sekolahAitam" id="hid_table_item_sekolahAitam" class="hidden"/>
+                                                        <input type="text" name="hid_Xaitam" id="hid_Xaitam" class="hidden"/>
+                                                        <div class="portlet-body table-both-scroll">
+                                                            <div class="table-responsive">
+                                                                <table id="tb_list_sekolahAitam" class="table table-striped table-bordered table-hover">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th> No</th>
+                                                                            <th> Nama Sekolah</th>
+                                                                            <th> Alamat sekolah</th>
+                                                                            <th> Kelas</th>
+                                                                            <th> Tahun</th>
+                                                                            <th> Lampiran</th>
+                                                                            <th> Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td colspan="7" align="center">
+                                                                            Belum Ada Data.
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                    <!--<tfoot>
+                                                                        <tr>
+                                                                        </tr>
+                                                                    </tfoot>-->
+                                                                </table>
                                                             </div>
-                                                            <!--end inputbox-->
-                                                            <!--inputbbox-->
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="control-label col-md-3"></label>
-                                                                        <div class="col-md-9">
-                                                                            <div class="input-group">
-                                                                            <span class="input-group-addon">
-                                                                            Alamat Sekolah
-                                                                            </span>
-                                                                                <div class="input-icon right">
-                                                                                    <i class="fa"></i><input type class="form-control" name="alamat_sekolah_aitam" id="alamat_sekolah_aitam" onkeydown="OtomatisKapital(this)" required>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                            <!--end inputbox-->
-                                                            <!--/row-->
                                                         </div>
-
-                                                    <!-- END FORM-->
+                                                        <!-- END FORM-->
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -2015,6 +2067,113 @@
         </div>
   </div>
 <!--modal untuk add new santri selesai##########################################################################################################################-->
+<!-- modal add sekolahAitam -->
+    <div class="modal fade draggable-modal" id="Modal_add_sekolahAitam" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <!--<h4 class="modal-title">Start Dragging Here</h4>-->
+                </div>
+                <div class="modal-body">
+                     <!-- isi body modal mulai -->
+                    <div class="row">
+                        <div class="col-md-12">
+                                <!-- BEGIN VALIDATION STATES-->
+                                <div class="portlet light portlet-fit portlet-form bordered">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class=" icon-layers font-red"></i>
+                                            <span class="caption-subject font-red sbold uppercase">INPUT DATA sekolahAitam</span>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="form-body">
+                                            <!-- BEGIN FORM-->
+                                            <form action="#" id="add_sekolahAitam">
+                                                <!--inputbox-->
+                                                    <!--span-->
+                                                        <input class="hidden" name="hid_kdsekolahAitam" id="hid_kdsekolahAitam">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Nama Sekolah
+                                                                </span>
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i><input type class="form-control" name="nama_sekolahAitam" id="nama_sekolahAitam" onkeydown="OtomatisKapital(this)" maxlength="25" required >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--span-->
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Alamat Sekolah
+                                                                </span>
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i><input type class="form-control" name="alamat_sekolahAitam" id="alamat_sekolahAitam" onkeydown="OtomatisKapital(this)" maxlength="50" required >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--span-->
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Kelas
+                                                                </span>
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i><input type class="form-control" name="kelas_sekolahAitam" id="kelas_sekolahAitam" onkeydown="OtomatisKapital(this)" maxlength="15" required >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--span-->
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Tahun
+                                                                </span>
+                                                                <div class="input-icon right">
+                                                                <i class="fa"></i><input type class="form-control input-small datepicker" data-date-format="yyyy" name="thn_sekolahAitam" id="thn_sekolahAitam" required readonly="true"><span class="input-group-btn">
+                                                                    <button class="btn default" type="button">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </button>
+                                                                </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--span-->
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                Lampiran Surat Pindah
+                                                            </span>
+                                                            <input type="file" class="form-control" name="lamp_SuratPindah" id="lamp_SuratPindah" ></div>
+                                                            <input type="text" class="hidden" name="hid_lamp_SuratPindah" id="hid_lamp_SuratPindah" ></div>
+                                                        </div>
+                                                <!--end inputbox-->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn green-jungle" id="btn_sekolahAitam" onclick="TambahsekolahAitam()">Tambah</button>
+                                                </div>
+                                            </form>
+                                            <!-- END FORM-->
+                                        </div>
+                                    </div>
+                                </div><!-- END VALIDATION STATES-->
+                        </div>
+                    </div>
+                </div><!--end modal-body-->
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+<!-- end of modal sekolahAitam-->
 <!-- modal add KELUARGA -->
     <div class="modal fade bs-modal-lg" id="Modal_add_keluarga_santri" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg">
@@ -2024,486 +2183,520 @@
                     <!--<h4 class="modal-title">Start Dragging Here</h4>-->
                 </div>
                 <div class="modal-body">
-                     <!-- isi body modal mulai -->
-              <div class="row">
-    <div class="col-md-12">
-            <!-- BEGIN VALIDATION STATES-->
-        <div class="portlet light portlet-fit portlet-form bordered">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class=" icon-layers font-red"></i>
-                    <span class="caption-subject font-red sbold uppercase">INPUT DATA KELUARGA/WALI/SAUDARA</span>
+                    <!-- isi body modal mulai -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                    <!-- BEGIN VALIDATION STATES-->
+                                <div class="portlet light portlet-fit portlet-form bordered">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class=" icon-layers font-red"></i>
+                                            <span class="caption-subject font-red sbold uppercase">INPUT DATA KELUARGA/WALI/SAUDARA</span>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body">
+                                            <!-- BEGIN FORM-->
+                                        <form action="#" id="add_keluarga_santri">
+                                            <input class="hidden" name="hid_kdkeluarga" id="hid_kdkeluarga">
+                                            <div class="form-body">
+                                                    <!--inputbbox-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">
+                                                                        Kategori
+                                                                    </span>
+                                                                    <select class="form-control" name="kategori_keluarga" id="kategori_keluarga" onchange="cek_jk()" required>
+                                                                        <option value=""></option>
+                                                                        <option value="AYAH">AYAH</option>
+                                                                        <option value="IBU">IBU</option>
+                                                                        <option value="WALI">WALI</option>
+                                                                        <option value="SAUDARA">SAUDARA</option>
+                                                                    </select>
+                                                                </div>
+                                                            <span class="help-block">Pilih Keluarga (Ayah, Ibu, Wali, Saudara)</span>
+                                                        </div>
+                                                    </div>
+                                                        <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon">
+                                                                            Nama
+                                                                        </span>
+                                                                        <i class="fa"></i><input type class="form-control" name="nama_keluarga" id="nama_keluarga" onkeydown="OtomatisKapital(this)" required>
+                                                                    </div>
+                                                            <span class="help-block">Masukan Nama Lengkap</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    NIK
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control numbers-only" name="nik_keluarga" id="nik_keluarga" onkeydown="OtomatisKapital(this)" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Bin/Binti
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control" name="binbinti_keluarga" id="binbinti_keluarga" onkeydown="OtomatisKapital(this)" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Jenis Kelamin
+                                                                </span>
+                                                                <select class="form-control" name="jenis_kelamin_keluarga" id="jenis_kelamin_keluarga" required>
+                                                                    <option value=""></option>
+                                                                    <option value="LAKI-LAKI">LAKI-LAKI</option>
+                                                                    <option value="PEREMPUAN">PEREMPUAN</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                        <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Status
+                                                                </span>
+                                                                <select class="form-control" name="status_pernikahan_keluarga" id="status_pernikahan_keluarga" required>
+                                                                    <option value=""></option>
+                                                                    <option value="MENIKAH">MENIKAH</option>
+                                                                    <option value="BELUM MENIKAH">BELUM MENIKAH</option>
+                                                                    <option value="JANDA/DUDA">JANDA/DUDA</option>
+                                                                    <option value="WAFAT">WAFAT</option>
+                                                                </select>
+                                                            </div>
+                                                            <span class="help-block">Status Pernikahan</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Tgl. Wafat
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control datepicker" data-date-format="dd-mm-yyyy" readonly="true" name="tgl_wafat_keluarga" id="tgl_wafat_keluarga" required>
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn default" type="button">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Umur
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control numbers-only" name="umur_keluarga" id="umur_keluarga" maxlength="3" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Hari
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control" name="hari_keluarga" id="hari_keluarga" onkeydown="OtomatisKapital(this)" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                        <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Sebab Wafat
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control" name="sebab_wafat_keluarga" id="sebab_wafat_keluarga" onkeydown="OtomatisKapital(this)" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Status Pernikahan Ibu
+                                                                </span>
+                                                                <select class="form-control" name="status_perkawinan_ibu_keluarga" id="status_perkawinan_ibu_keluarga" required>
+                                                                    <option value=""></option>
+                                                                    <option value="JANDA">JANDA</option>
+                                                                    <option value="MENIKAH LAGI">MENIKAH LAGI</option>
+                                                                    <option value="WAFAT">WAFAT</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Pendapatan Ibu
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control" name="pedapatan_ibu_keluarga" id="pedapatan_ibu_keluarga" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Sebab Tidak Bekerja
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control" name="sebab_tidak_bekerja_keluarga" id="sebab_tidak_bekerja_keluarga" onkeydown="OtomatisKapital(this)" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Keahlian
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control" name="keahlian_keluarga" id="keahlian_keluarga" onkeydown="OtomatisKapital(this)" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Status Rumah
+                                                                </span>
+                                                                <select class="form-control" name="status_rumah_keluarga" id="status_rumah_keluarga" required>
+                                                                    <option value=""></option>
+                                                                    <option value="KONTRAK">KONTRAK</option>
+                                                                    <option value="MILIK SENDIRI">MILIK SENDIRI</option>
+                                                                </select>
+                                                            </div>                                   
+                                                        </div>
+                                                    </div>
+                                                    <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Kondisi Rumah
+                                                                </span>
+                                                                <select class="form-control" name="kondisi_rumah_keluarga" id="kondisi_rumah_keluarga" required>
+                                                                    <option value=""></option>
+                                                                    <option value="PERMANEN">PERMANEN</option>
+                                                                    <option value="SEDERHANA">SEDERHANA</option>
+                                                                    <option value="SANGAT SEDERHANA">SANGAT SEDERHANA</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Jumlah yang diasuh
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control numbers-only" name="jml_asuh" id="jml_asuh" maxlength="3"  required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Pekerjaan
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control" name="pekerjaan_keluarga" id="pekerjaan_keluarga" onkeydown="OtomatisKapital(this)" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"></label>
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">
+                                                                        Pendidikan Terakhir
+                                                                    </span>
+                                                                    <select class="form-control" name="pendidikan_terakhir" id="pendidikan_terakhir" required>
+                                                                        <option value=""></option>
+                                                                        <option value="TK">TK</option>
+                                                                        <option value="SD">SD</option>
+                                                                        <option value="SMP/SLTA">SMP/SLTA</option>
+                                                                        <option value="SMA/SMK">SMA/SMK</option>
+                                                                        <option value="DIPLOMA">DIPLOMA</option>
+                                                                        <option value="SARJANA">SARJANA</option>
+                                                                        <option value="MAGISTER">MAGISTER</option>
+                                                                        <option value="DOKTOR">DOKTOR</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                    <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Agama
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control" name="agama_keluarga" id="agama_keluarga" onkeydown="OtomatisKapital(this)" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Nomor KK
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control numbers-only" name="suku_keluarga" id="suku_keluarga" onkeydown="OtomatisKapital(this)" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Kewarganegaraan
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control" name="kewarganegaraan_keluarga" id="kewarganegaraan_keluarga" onkeydown="OtomatisKapital(this)" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Ormas
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control" name="ormas_keluarga" id="ormas_keluarga" onkeydown="OtomatisKapital(this)" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Orpol
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control" name="orpol_keluarga" id="orpol_keluarga" onkeydown="OtomatisKapital(this)" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Kedudukan dimasyarakat
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control" name="kedudukandimasyarakat_keluarga" id="kedudukandimasyarakat_keluarga" onkeydown="OtomatisKapital(this)" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <h3 class="form-section">Alumni TMI Darussalam</h3>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Tahun Lulus
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control datepicker" data-date-format="yyyy" readonly="true" name="tahun_lulus_keluarga" id="tahun_lulus_keluarga" >
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn default" type="button">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    No. Stambuk
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control numbers-only" name="nostambuk_keluarga" id="nostambuk_keluarga" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Tempat Lahir
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control" name="tempat_lahir_keluarga" id="tempat_lahir_keluarga" onkeydown="OtomatisKapital(this)" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Tgl. Lahir
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control datepicker" readonly="true" data-date-format="dd-mm-yyyy" name="tgl_lahir_keluarga" id="tgl_lahir_keluarga" >
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn default" type="button">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Hubungan Keluarga
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control" name="hubungan_keluarga" id="hubungan_keluarga" onkeydown="OtomatisKapital(this)" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    keterangan
+                                                                </span>
+                                                                <i class="fa"></i><input type class="form-control" name="keterangan_keluarga" id="keterangan_keluarga" onkeydown="OtomatisKapital(this)" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Lampiran
+                                                                </span>
+                                                                <input type="file" class="form-control" name="ktp_keluarga" id="ktp_keluarga" >
+                                                            </div>
+                                                            <span class="help-block">Lampiran KTP / Surat Kematian</span>
+                                                            <input type="text" class="hidden" name="hid_ktp_keluarga" id="hid_ktp_keluarga" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--span-->
+                                                <!--end inputbox-->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn green-jungle" id="btn_keluarga" onclick="TambahKeluarga()">Tambah</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                            <!-- END FORM-->
+                                    </div>
+                                    <!-- END VALIDATION STATES-->
+                                </div>
+                            </div>
+                        </div>
+                    <!--end modal-body-->
                 </div>
-            </div>
-            <div class="portlet-body">
-                    <!-- BEGIN FORM-->
-                <form action="#" id="add_keluarga_santri">
-                <input class="hidden" name="hid_kdkeluarga" id="hid_kdkeluarga">
-                    <div class="form-body">
-                            <!--inputbbox-->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Kategori
-                                            </span>
-                                        <select class="form-control" name="kategori_keluarga" id="kategori_keluarga" onchange="cek_jk()" required>
-                                            <option value=""></option>
-                                            <option value="AYAH">AYAH</option>
-                                            <option value="IBU">IBU</option>
-                                            <option value="WALI">WALI</option>
-                                            <option value="SAUDARA">SAUDARA</option>
-                                        </select></div>
-                                        <span class="help-block">Pilih Keluarga (Ayah, Ibu, Wali, Saudara)</span>
-                                </div>
-                            </div>
-                                <!--span-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Nama
-                                            </span>
-                                        <i class="fa"></i><input type class="form-control" name="nama_keluarga" id="nama_keluarga" onkeydown="OtomatisKapital(this)" required></div>
-                                    <span class="help-block">Masukan Nama Lengkap</span>
-                                </div>
-                            </div>
-                        </div>
-                                <!--span-->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                NIK
-                                            </span>
-                                        <i class="fa"></i><input type class="form-control numbers-only" name="nik_keluarga" id="nik_keluarga" onkeydown="OtomatisKapital(this)" required></div>
-                                </div>
-                            </div>
-                                        <!--span-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Bin/Binti
-                                            </span>
-                                    <i class="fa"></i><input type class="form-control" name="binbinti_keluarga" id="binbinti_keluarga" onkeydown="OtomatisKapital(this)" ></div>
-                                </div>
-                            </div>
-                        </div>
-                                <!--span-->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Jenis Kelamin
-                                            </span>
-                                            <select class="form-control" name="jenis_kelamin_keluarga" id="jenis_kelamin_keluarga" required>
-                                            <option value=""></option>
-                                            <option value="LAKI-LAKI">LAKI-LAKI</option>
-                                            <option value="PEREMPUAN">PEREMPUAN</option>
-                                        </select></div>
-                                </div>
-                            </div>
-                                <!--span-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Status
-                                            </span>
-                                        <select class="form-control" name="status_pernikahan_keluarga" id="status_pernikahan_keluarga" required>
-                                        <option value=""></option>
-                                        <option value="MENIKAH">MENIKAH</option>
-                                        <option value="BELUM MENIKAH">BELUM MENIKAH</option>
-                                        <option value="JANDA/DUDA">JANDA/DUDA</option>
-                                        <option value="WAFAT">WAFAT</option>
-                                    </select></div>
-                                    <span class="help-block">Status Pernikahan</span>
-                                </div>
-                            </div>
-                        </div>
-                                <!--span-->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Tgl. Wafat
-                                            </span>
-                                    <i class="fa"></i><input type class="form-control datepicker" data-date-format="dd-mm-yyyy" readonly="true" name="tgl_wafat_keluarga" id="tgl_wafat_keluarga" required><span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-calendar"></i>
-                                        </button>
-                                    </span></div>
-                                </div>
-                            </div>
-                                <!--span-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Umur
-                                            </span>
-                                    <i class="fa"></i><input type class="form-control numbers-only" name="umur_keluarga" id="umur_keluarga" maxlength="3" ></div>
-                                </div>
-                            </div>
-                        </div>
-                                <!--span-->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Hari
-                                            </span>
-                                    <i class="fa"></i><input type class="form-control" name="hari_keluarga" id="hari_keluarga" onkeydown="OtomatisKapital(this)" required> </div>
-                                </div>
-                            </div>
-                                <!--span-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Sebab Wafat
-                                            </span>
-                                    <i class="fa"></i><input type class="form-control" name="sebab_wafat_keluarga" id="sebab_wafat_keluarga" onkeydown="OtomatisKapital(this)" required> </div>
-                                </div>
-                            </div>
-                        </div>
-                                <!--span-->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Status Pernikahan Ibu
-                                            </span>
-                                    <select class="form-control" name="status_perkawinan_ibu_keluarga" id="status_perkawinan_ibu_keluarga" required>
-                                        <option value=""></option>
-                                        <option value="JANDA">JANDA</option>
-                                        <option value="MENIKAH LAGI">MENIKAH LAGI</option>
-                                        <option value="WAFAT">WAFAT</option>
-                                    </select> </div>
-                                </div>
-                            </div>
-                                <!--span-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Pendapatan Ibu
-                                            </span>
-                                    <i class="fa"></i><input type class="form-control" name="pedapatan_ibu_keluarga" id="pedapatan_ibu_keluarga" required></div>
-                                </div>
-                            </div>
-                        </div>
-                                <!--span-->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Sebab Tidak Bekerja
-                                            </span>
-                                    <i class="fa"></i><input type class="form-control" name="sebab_tidak_bekerja_keluarga" id="sebab_tidak_bekerja_keluarga" onkeydown="OtomatisKapital(this)" required></div>
-                                </div>
-                            </div>
-                                <!--span-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Keahlian
-                                            </span>
-                                    <i class="fa"></i><input type class="form-control" name="keahlian_keluarga" id="keahlian_keluarga" onkeydown="OtomatisKapital(this)" required></div>
-                                </div>
-                            </div>
-                        </div>
-                                <!--span-->
-                        <div class="row">
-                            <div class="col-md-6">
-                                 <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Status Rumah
-                                            </span>
-                                        <select class="form-control" name="status_rumah_keluarga" id="status_rumah_keluarga" required>
-                                        <option value=""></option>
-                                        <option value="KONTRAK">KONTRAK</option>
-                                        <option value="MILIK SENDIRI">MILIK SENDIRI</option>
-                                    </select></div>                                   
-                                </div>
-                            </div>
-                                <!--span-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Kondisi Rumah
-                                            </span>
-                                        <select class="form-control" name="kondisi_rumah_keluarga" id="kondisi_rumah_keluarga" required>
-                                        <option value=""></option>
-                                        <option value="PERMANEN">PERMANEN</option>
-                                        <option value="SEDERHANA">SEDERHANA</option>
-                                        <option value="SANGAT SEDERHANA">SANGAT SEDERHANA</option>
-                                    </select></div>
-                                </div>
-                            </div>
-                        </div>
-                                <!--span-->
-                        <div class="row">
-                            <div class="col-md-6">
-                                    <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Jumlah yang diasuh
-                                            </span>
-                                    <i class="fa"></i><input type class="form-control numbers-only" name="jml_asuh" id="jml_asuh" maxlength="3"  required></div>
-                                </div>
-                            </div>
-                                <!--span-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Pekerjaan
-                                            </span>
-                                        <i class="fa"></i><input type class="form-control" name="pekerjaan_keluarga" id="pekerjaan_keluarga" onkeydown="OtomatisKapital(this)" required></div>
-                                </div>
-                            </div>
-                        </div>
-                                <!--span-->
-                        <div class="row">
-                            <div class="col-md-6">
-                                    <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Pendidikan Terakhir
-                                            </span>
-                                            <select class="form-control" name="pendidikan_terakhir" id="pendidikan_terakhir" required>
-                                                <option value=""></option>
-                                                <option value="TK">TK</option>
-                                                <option value="SD">SD</option>
-                                                <option value="SMP/SLTA">SMP/SLTA</option>
-                                                <option value="SMA/SMK">SMA/SMK</option>
-                                                <option value="DIPLOMA">DIPLOMA</option>
-                                                <option value="SARJANA">SARJANA</option>
-                                                <option value="MAGISTER">MAGISTER</option>
-                                                <option value="DOKTOR">DOKTOR</option>
-                                            </select></div>
-                                </div>
-                            </div>
-                                <!--span-->
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Agama
-                                            </span>
-                                                <i class="fa"></i><input type class="form-control" name="agama_keluarga" id="agama_keluarga" onkeydown="OtomatisKapital(this)" required></div>
-                                    </div>
-                                </div>
-                            </div>
-                                <!--span-->
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Nomor KK
-                                            </span>
-                                                <i class="fa"></i><input type class="form-control numbers-only" name="suku_keluarga" id="suku_keluarga" onkeydown="OtomatisKapital(this)" required></div>
-                                    </div>
-                                </div>
-                                <!--span-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Kewarganegaraan
-                                            </span>
-                                                <i class="fa"></i><input type class="form-control" name="kewarganegaraan_keluarga" id="kewarganegaraan_keluarga" onkeydown="OtomatisKapital(this)" required></div>
-                                 </div>
-                            </div>
-                        </div>
-                                <!--span-->
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Ormas
-                                            </span>
-                                                <i class="fa"></i><input type class="form-control" name="ormas_keluarga" id="ormas_keluarga" onkeydown="OtomatisKapital(this)" ></div>
-                                    </div>
-                                </div>
-                                <!--span-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                                Orpol
-                                            </span>
-                                                <i class="fa"></i><input type class="form-control" name="orpol_keluarga" id="orpol_keluarga" onkeydown="OtomatisKapital(this)" ></div>
-                                </div>
-                            </div>
-                        </div>
-                                <!--span-->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                <label class="control-label"></label>
-                                        <div class="input-group">
-                                        <span class="input-group-addon">
-                                        Kedudukan dimasyarakat
-                                        </span>
-                                            <i class="fa"></i><input type class="form-control" name="kedudukandimasyarakat_keluarga" id="kedudukandimasyarakat_keluarga" onkeydown="OtomatisKapital(this)" ></div>
-                                </div>
-                            </div>
-                        </div>
-                            <!--span-->
-                            <h3 class="form-section">Alumni TMI Darussalam</h3>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                            Tahun Lulus
-                                            </span>
-                                                <i class="fa"></i><input type class="form-control datepicker" data-date-format="yyyy" readonly="true" name="tahun_lulus_keluarga" id="tahun_lulus_keluarga" ><span class="input-group-btn">
-                                                                <button class="btn default" type="button">
-                                                                    <i class="fa fa-calendar"></i>
-                                                                </button>
-                                                            </span></div>
-                                </div>
-                            </div>
-                                <!--span-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                            No. Stambuk
-                                            </span>
-                                                <i class="fa"></i><input type class="form-control numbers-only" name="nostambuk_keluarga" id="nostambuk_keluarga" ></div>
-                                </div>
-                            </div>
-                        </div>
-                                <!--span-->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                            Tempat Lahir
-                                            </span>
-                                                <i class="fa"></i><input type class="form-control" name="tempat_lahir_keluarga" id="tempat_lahir_keluarga" onkeydown="OtomatisKapital(this)" ></div>
-                                </div>
-                            </div>
-                                <!--span-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                        Tgl. Lahir
-                                        </span>
-                                            <i class="fa"></i><input type class="form-control datepicker" readonly="true" data-date-format="dd-mm-yyyy" name="tgl_lahir_keluarga" id="tgl_lahir_keluarga" ><span class="input-group-btn">
-                                            <button class="btn default" type="button">
-                                                <i class="fa fa-calendar"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                                <!--span-->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                            Hubungan Keluarga
-                                            </span>
-                                                <i class="fa"></i><input type class="form-control" name="hubungan_keluarga" id="hubungan_keluarga" onkeydown="OtomatisKapital(this)" required></div>
-                                </div>
-                            </div>
-                                <!--span-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label"></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">
-                                            keterangan
-                                            </span>
-                                                <i class="fa"></i><input type class="form-control" name="keterangan_keluarga" id="keterangan_keluarga" onkeydown="OtomatisKapital(this)" ></div>
-                                </div>
-                            </div>
-                        </div>
-                                <!--span-->
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label"></label>
-                                        <div class="input-group">
-                                        <span class="input-group-addon">
-                                        Lampiran
-                                        </span>
-                                        <input type="file" class="form-control" name="ktp_keluarga" id="ktp_keluarga" ></div>
-                                        <span class="help-block">Lampiran KTP / Surat Kematian</span>
-                                        <input type="text" class="hidden" name="hid_ktp_keluarga" id="hid_ktp_keluarga" ></div>
-                                    </div>
-                                </div>
-                            </div>
-                                <!--span-->
-                            <!--end inputbox-->
-                        <div class="modal-footer">
-                            <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn green-jungle" id="btn_keluarga" onclick="TambahKeluarga()">Tambah</button>
-                        </div>
-                    </div>
-                </form>
-                    <!-- END FORM-->
-            </div>
-            <!-- END VALIDATION STATES-->
-        </div>
-    </div>
-    </div>
-                </div><!--end modal-body-->
             </div>
             <!-- /.modal-content -->
         </div>
-        <!-- /.modal-dialog -->
     </div>
 <!-- end of modal keluarga-->
 <!-- modal add PENYAKIT -->
