@@ -72,7 +72,7 @@
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class=" icon-layers font-red"></i>
-                                        <span class="caption-subject font-red sbold uppercase">INPUT DATA USER</span>
+                                        <span class="caption-subject font-red sbold uppercase">INPUT GROUP</span>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
@@ -108,19 +108,9 @@
                                                 <!--span-->
                                                 <!-- table daftar menu -->
                                                     <div class="portlet-body form">
-                                                           <!-- <div class="form-body">                                                         
-                                                                <div id="checkboxlist">
-                                                                <?php  $no =1;
-                                                                        foreach ($komponen_semester as $row) { ?>
-                                                                    <div><input type="checkbox" value="<?php echo $row['id_komponen'].'#'.$row['nama_komponen']; ?>" class="chk"> <?php echo $row['nama_komponen']; ?></div>
-                                                                <?php $no++; } ?>
-                                                                </div>
-                                                            </div> -->
                                                           <table class="table table-striped table-bordered table-hover" id="tb_list">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="text-align:center">Modul ID</th>
-                                                                    <th style="text-align:center">Parent</th>
                                                                     <th style="text-align:center">Nama Modul</th>
                                                                     <th style="text-align:center">Add</th>
                                                                     <th style="text-align:center">Edit</th>
@@ -128,11 +118,28 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                                <?php  $no =1;
+                                                                   foreach ($list_menu as $row) { 
+                                                                    $modul_id   =  'modul_id'.$row['modul_id'];
+                                                                    $add        =  'add'.$row['modul_id'];
+                                                                    $edit       =  'edit'.$row['modul_id'];
+                                                                    $delete     =  'delete'.$row['modul_id'];
+                                                                ?>
                                                                 <tr>
-                                                                <td colspan="6" align="center">
-                                                                    Tidak ada data ditemukan.
-                                                                </td>
-                                                            </tr>
+                                                                    <td>
+                                                                        <div><input type="checkbox" value="<?php echo $row['modul_id']?>" name="<?php echo $modul_id.'[]'?>"> <?php echo $row['nama_modul']; ?></div>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <div><input type="checkbox" value="<?php echo $row['modul_id'].'#'.'add'?>" name="<?php echo $add.'[]'?>"</div>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <div><input type="checkbox" value="<?php echo $row['modul_id'].'#'.'edit'?>" name="<?php echo $edit.'[]'?>"</div>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <div><input type="checkbox" value="<?php echo $row['modul_id'].'#'.'delete'?>" name="<?php echo $delete.'[]'?>"</div>
+                                                                    </td>
+                                                                </tr>
+                                                                <?php $no++; } ?>
                                                             </tbody>
                                                             <tfoot>
                                                                 <tr>

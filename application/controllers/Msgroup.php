@@ -15,6 +15,8 @@ class msgroup extends IO_Controller
 
 	function index()
 	{
+		//get all menu
+		$vdata['list_menu']	= $this->model->get_list_menu();
 
 		$vdata['title'] = 'DATA MASTER GROUP';
 	    $data['content'] = $this->load->view('vmsgroup',$vdata,TRUE);
@@ -87,49 +89,93 @@ class msgroup extends IO_Controller
 
 	function simpan_msgroup($status)
 	{
+		$list_menu			= $this->model->get_list_menu();
 		$group_id 			= $this->input->post('group_id');
-		$nama_lengkap 		= $this->input->post('nama_msgroup');
-		$group_id 			= $this->input->post('id_group');
-		$password 			= $this->input->post('password');
-		$pwd 			= substr(md5($password),0,15);
-		$alamat  			= $this->input->post('alamat');
-	    $userid 	    	= $this->session->userdata('logged_in')['uid'];
+		$group_name 		= $this->input->post('group_name');
 
-		$data_user = array(
-			'group_id' 				=> $group_id,
-			'password' 				=> $pwd,
-			'nama_lengkap' 			=> $nama_lengkap
+		$data_groupu = array(
+			'group_id'		=> $group_id,
+			'group_name'	=> $group_name
+
 		);
 
-		$data_user_grup = array(
-			'group_id' 				=> $group_id,
-			'group_id' 				=> $group_id
-		);
-        
-		if($status=='SAVE')	
-		{// cek apakah add new atau editdata
+		$id = $this->model->simpan_groupu($data_groupu);
+
+		foreach ($list_menu as $row) {
+
+			$modul_id		= $this->input->post('modul_id'.$row['modul_id']);
+			$add			= $this->input->post('add'.$row['modul_id']);
+			$edit			= $this->input->post('edit'.$row['modul_id']);
+			$delete			= $this->input->post('delete'.$row['modul_id']);
+
+			if(isset($modul_id)){
+				$modul_id = $row['modul_id'];
+				if(isset($add)){
+
+					$add=1;
+				}
+				else{
+					$add=0;
+				}
+
+				if(isset($edit)){
+
+					$edit=1;
+				}
+				else{
+					$edit=0;
+				}
+
+				if(isset($delete)){
+
+					$delete=1;
+				}
+				else{
+					$delete=0;
+				}
+
+				$data_group_hak_akses = array(
+					'group_id'		=> $id,
+					'modul_id'		=> $modul_id,
+					'add'			=> $add,
+					'edit'			=> $edit,
+					'delete'		=> $delete
+
+
+				);
+				// var_dump($data_group_hak_akses);
+				// exit();
+				$this->model->simpan_group_hak_akses($data_group_hak_akses);
+			}
 			
-		// save data msgroup
-         	$this->model->simpan_data_msgroup($data_user);
-         	$this->model->simpan_data_user_grup($data_user_grup);
 
 		}
-        else //update data
-		{	
-			if ($password!=""){
-				$this->model->simpan_data_msgroup($data_user);
-			}
-			// save data msgroup
-         	$this->model->update_data_user_grup($group_id,$data_user_grup);
-        }	    
+		
+        
+		// if($status=='SAVE')	
+		// {// cek apakah add new atau editdata
+			
+		// // save data msgroup
+        //  	$this->model->simpan_data_msgroup($data_user);
+        //  	$this->model->simpan_data_user_grup($data_user_grup);
+
+		// }
+        // else //update data
+		// {	
+		// 	if ($password!=""){
+		// 		$this->model->simpan_data_msgroup($data_user);
+		// 	}
+		// 	// save data msgroup
+        //  	$this->model->update_data_user_grup($group_id,$data_user_grup);
+        // }	    
 
 			echo "true";
 	}
 
-	function get_data_msgroup($group_id)
+	function get_data_msgroup($group_name)
 	{
-		$group_id 		= urldecode($group_id);
-		$data 			= $this->model->query_msgroup($group_id);
+		$group_name 		= urldecode($group_name);
+		$data 				= $this->model->query_msgroup($group_name);
     	echo json_encode($data);
     }
     

@@ -26,26 +26,6 @@ function setTable(){
     } );
 }
 
-function Modalcari(){
-	clearformcari();
-	$('#Modal_cari').modal('show');
-}
-
-function SearchAction(){
-    // var id_msgroup 	    = $('#s_kodemsgroup').val();
-	var group_id 		= $('#s_group_id').val();
-	var param 			= { 'group_id': group_id};
-		param 			= JSON.stringify(param);
-
-	$('#hid_param').val(param);
-
-	var table = $('#tb_list').DataTable();
-	table.ajax.reload( null, false );
-	table.draw();
-
-	$('#Modal_cari').modal('toggle');
-}
-
 var validate_add_msgroup = function () {
 
 	var form = $('#add_msgroup');
@@ -107,12 +87,11 @@ function clearvalidate_add_msgroup() {
 	document.getElementById("add_msgroup").reset();
 }
 
-
 function svmsgroup(){
 	if($("#add_msgroup").valid()==true){
-		$group_id = $('#group_id').val();
+		$group_name = $('#group_name').val();
 		$status = $('#save_button').text();
-		var str_url = encodeURI(base_url + "msgroup/get_data_msgroup/" + $group_id);//cek user id sudah ada atau tidak
+		var str_url = encodeURI(base_url + "msgroup/get_data_msgroup/" + $group_name);//cek user id sudah ada atau tidak
        $.ajax({
 		type:"POST",
 		url:str_url,
@@ -120,7 +99,7 @@ function svmsgroup(){
 		success:function(data){	
             $data = $.parseJSON(data);
                 if( $data != null & $status =='SAVE'){
-					bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>User ID " + $group_id+" sudah ada! </div>",
+					bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span> Group " + $group_name+" sudah ada! </div>",
                             function(result){
                                 if(result==true){
                                 }
@@ -232,6 +211,26 @@ function hapus(group_id){
 		}
 	);
 	
+}
+
+function Modalcari() {
+	clearformcari();
+	$('#Modal_cari').modal('show');
+}
+
+function SearchAction() {
+	// var id_msgroup 	    = $('#s_kodemsgroup').val();
+	var group_id = $('#s_group_id').val();
+	var param = { 'group_id': group_id };
+	param = JSON.stringify(param);
+
+	$('#hid_param').val(param);
+
+	var table = $('#tb_list').DataTable();
+	table.ajax.reload(null, false);
+	table.draw();
+
+	$('#Modal_cari').modal('toggle');
 }
 
 function clearformcari(){

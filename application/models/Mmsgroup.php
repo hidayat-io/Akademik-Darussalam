@@ -32,6 +32,12 @@ class Mmsgroup extends CI_Model
 		return $this->db->query($sql)->result();
 	}
 	
+	function get_list_menu(){
+		$data = array();
+		$data = $this->db->query("SELECT * FROM modul ORDER BY parent, modul_id ASC")->result_array();;
+		return $data;
+	}
+
 	function delete_msgroup($group_id){
 		$this->db->where('group_id',$group_id);
 		$this->db->delete('user');
@@ -42,14 +48,15 @@ class Mmsgroup extends CI_Model
 		$this->db->delete('group_daftar_user');
 	}
 
-	function simpan_data_msgroup($data_user){
+	function simpan_groupu($data_groupu){
 
-		$this->db->replace('user',$data_user);
+		$id = $this->db->replace('groupu',$data_groupu);		
+		return $this->db->insert_id();
 	}
 
-	function simpan_data_user_grup($data_user_grup){
+	function simpan_group_hak_akses($data_group_hak_akses){
 
-		$this->db->replace('group_daftar_user',$data_user_grup);
+		$this->db->replace('group_hak_akses',$data_group_hak_akses);
 	}
     
     function update_data_user_grup($group_id,$data_user_grup){
@@ -58,9 +65,9 @@ class Mmsgroup extends CI_Model
 		$this->db->update('group_daftar_user',$data_user_grup);
 	}
 
-    function query_msgroup($group_id){
+    function query_msgroup($group_name){
         $data = array();
-		$data=$this->db->query("SELECT * from user where group_id ='$group_id'")->row_array();
+		$data=$this->db->query("SELECT * from groupu where group_name ='$group_name'")->row_array();
         return $data;
     }
         
