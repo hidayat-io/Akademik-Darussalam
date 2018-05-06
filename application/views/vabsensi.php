@@ -1,5 +1,6 @@
 <link href="<?=base_url()?>assets/global/plugins/icheck/skins/all.css" rel="stylesheet" type="text/css" />
 <link href="<?=base_url()?>assets/css/v_absensi.css" rel="stylesheet" type="text/css">
+<script src="<?php echo base_url(); ?>assets/plugins/moment-with-locales.min.js"></script>
 <script src="<?php echo base_url(); ?>js/jabsensi.js"></script>
 <input type="hidden" name="hid_param" id="hid_param" value='' />
 
@@ -47,21 +48,24 @@
         <div class="modal-content modal-content-form">
             <div class="modal-body-form">
                 <div class="portlet-form">
-                    <form id="form_editing" enctype="multipart/form-data">
+                    <form id="form_absensi" enctype="multipart/form-data">
+						<input type="hidden" name="hid_list_siswa" id="hid_list_siswa" value="" />
+						<input type="hidden" name="hid_id_jadwal" id="hid_id_jadwal" value="" />
+						<input type="hidden" name="hid_id_guru" id="hid_id_guru" value="" />
                         <h4 style="font-size:90%">
                             <strong>Absensi Siswa</strong>
-                            <table border="0" style="float:right" id="tb-title">
-                                <tr>
-                                    <td><strong>Hari : </strong><label id="lbl_hari"></label></td>
+                            <table border="0" style="float:right;margin-right:25px;" id="tb-title">
+                                <tr>                                   
                                     <td><strong>Tanggal : </strong>
                                         <input type="text" class="form-control datepicker input-sm input-small" 
                                             style="display:inline-block" readonly="" name="dtp_tgl_absensi" id="dtp_tgl_absensi"
-                                            value="<?php echo date('d-m-Y')?>">
+                                            value="<?php echo date('d-m-Y')?>" onchange="getDayName(this.value)">
                                     </td>
-                                    <td>
+									<td><strong>Hari : </strong><label id="lbl_hari"></label></td>
+                                    <!-- <td>
                                         <strong>Tahun Ajaran : </strong><label id="lbl_tahun_ajar"></label>
                                     </td>
-                                    <td><strong>Semester : </strong><label id="lbl_tahun_ajar"></label></td>
+                                    <td><strong>Semester : </strong><label id="lbl_tahun_ajar"></label></td> -->
                                 </tr>
                             </table>
                         </h4>
@@ -94,7 +98,7 @@
                 <a href="javascript:;" class="btn btn-sm default" data-dismiss="modal">
                     <i class="glyphicon glyphicon-minus-sign"></i>&nbsp;CLOSE
                 </a>
-				<a href="javascript:;" class="btn btn-sm green-jungle" onclick="savevForm()" id="cmd_save">
+				<a href="javascript:;" class="btn btn-sm green-jungle" onclick="saveForm()" id="cmd_save">
                     <i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;SIMPAN
                 </a>
                 <img id="load_save" style="margin-left:5px;display: none"

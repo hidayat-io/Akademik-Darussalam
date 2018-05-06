@@ -56,6 +56,7 @@ class Mabsensi extends CI_Model {
 							klh.tipe_kelas, 
 							pl.nama_matpal, 
 							gr.nama_lengkap as nama_guru, 
+							gr.id_guru,
 							jp.hari, 
 							jp.jam,
 							absh.tgl_absensi,
@@ -79,7 +80,7 @@ class Mabsensi extends CI_Model {
 							LEFT JOIN trans_absensi_d absd
 								ON absh.id_jadwal = absd.header_id
 									AND absd.noreg_santri = snt.no_registrasi
-						WHERE jp.id_jadwal = $id_jadwal and snt.kategori='TMI'
+						WHERE jp.id_jadwal = $id_jadwal and snt.kategori='TMI' and snt.isnonaktif is null
 							ORDER BY absd.noreg_santri";
 
 		return $this->db->query($sql_absensi);

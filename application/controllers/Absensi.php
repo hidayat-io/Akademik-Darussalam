@@ -87,4 +87,9 @@ class Absensi extends IO_Controller{
 
 		echo json_encode($data);
 	}
+
+	function save_absen(){
+
+		
+	}
 }

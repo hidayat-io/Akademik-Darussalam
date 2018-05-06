@@ -53,6 +53,7 @@ function setTable(){
 function modalEdit(id_jadwal){
 
 	$('#modal_editing').modal('show');
+	$('#hid_id_jadwal').val(id_jadwal);
 	loadDataAbsensiSiswa(id_jadwal);
 }
 
@@ -69,6 +70,7 @@ function loadDataAbsensiSiswa(id_jadwal){
 
 	var json_absensi 	= [];
 	var str_row 		= "";
+	var list_siswa 		= [];
 
 	$.ajax({
 
@@ -83,6 +85,7 @@ function loadDataAbsensiSiswa(id_jadwal){
 
 				$('#lbl_nama_guru').text(json_absensi[0].nama_guru);
 				$('#lbl_nama_kelas').text(json_absensi[0].kode_kelas+' - '+json_absensi[0].nama_kelas);
+				$('#hid_id_guru').val(json_absensi[0].id_guru);
 
 				let seqno = 1;
 
@@ -99,8 +102,11 @@ function loadDataAbsensiSiswa(id_jadwal){
 					str_row += `</tr>`;
 
 					$("#tb_absensi tbody").append(str_row);
+					list_siswa.push(r.no_registrasi);
 					seqno++;
 				}
+
+				$('#hid_list_siswa').val(list_siswa.join(','))
 			}
 		}
 	});
@@ -118,5 +124,20 @@ function clickAbsen(noreg_santri, val_absen){
 
 function saveForm(){
 
-	
+	$("#form_absensi").ajaxSubmit({
+		url: base_url + "absensi/save_absen",
+		type: 'post',
+		success: function () {
+
+			
+		}
+	});
+}
+
+function getDayName(i){
+
+	moment.locale('id');
+	var a = moment(i, 'DD-MM-YYYY');
+
+	$('#lbl_hari').text(a.format('dddd'));	
 }

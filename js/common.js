@@ -50,6 +50,39 @@ function getDateToday(){
     return today;
 }
 
+function getDayName(idate){
+
+	var d = new Date(idate);
+	var n = d.getDay();
+
+	switch (n) {
+		case 0:
+			return `Ahad`;
+			break;
+		case 1:
+			return `Senin`;
+			break;
+		case 2:
+			return `Selasa`;
+			break;
+		case 3:
+			return `Rabu`;
+			break;
+		case 4:
+			return `Kamis`;
+			break;
+		case 5:
+			return `Jum'at`;
+			break;
+		case 5:
+			return `Sabtu`;
+			break;	
+		default:
+			return `-`;
+			break;
+	}
+}
+
 function ioEncode(var_text){
 
     // Create Base64 Object
