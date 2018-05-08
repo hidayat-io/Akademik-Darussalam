@@ -15,9 +15,6 @@ class msgroup extends IO_Controller
 
 	function index()
 	{
-		//get all menu
-		$vdata['list_menu']	= $this->model->get_list_menu();
-
 		$vdata['title'] = 'DATA MASTER GROUP';
 	    $data['content'] = $this->load->view('vmsgroup',$vdata,TRUE);
 	    $this->load->view('main',$data);
@@ -87,9 +84,70 @@ class msgroup extends IO_Controller
 		
 	}
 
+	function load_grid_menu()
+	{
+		$data 				= $this->model->get_list_menu_parent();
+		$iTotalRecords  	= count($data);
+		$iDisplayLength 	= intval($_REQUEST['length']);
+		$iDisplayLength 	= $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
+		$iDisplayStart  	= intval($_REQUEST['start']);
+		$sEcho				= intval($_REQUEST['draw']);
+
+		$records            = array();
+		$records["data"]    = array();
+
+		$end 				= $iDisplayStart + $iDisplayLength;
+		$end 				= $end > $iTotalRecords ? $iTotalRecords : $end;
+		$fdate 				= 'd-m-Y';
+		for($i = $iDisplayStart; $i < $end; $i++) {
+			$data_modul 		= $this->model->get_list_menu($data[$i]->modul_id);
+			$data_nama 		= $data[$i]->modul_id;
+			$menu_lenght = count($data_modul);
+			for($x=0;$x<$menu_lenght;$x++) {
+					$modul_id       =  'modul_id'.$data_modul[$x]->modul_id;
+					$modul_idX       =  $data_modul[$x]->modul_id;
+					$nama_modul       = $data_modul[$x]->nama_modul;
+					$add            =  'add'.$data_modul[$x]->modul_id;
+					$edit           =  'edit'.$data_modul[$x]->modul_id;
+					$delete         =  'delete'.$data_modul[$x]->modul_id;
+					if($data_nama == $modul_idX)
+					{
+						$style ='<strong>';
+						$style_color ='style="color: red;"';
+					}
+					else {
+						$style ='';
+						$style_color ='style="color: black;"';
+					}
+					
+					// var_dump($data_modul[$x]->modul_id,$data[$i]->modul_id);
+					// exit();
+				$records["data"][] = array(
+				
+					
+					'<div align="right"><input type="checkbox" value="'.$modul_id.'" name="'.$modul_id.'[]"></div>',
+					'<div align="center" style="color: red;"><strong>'.$data[$i]->nama_modul.'</div>',
+					'<div align="center" '.$style_color.'>'.$style.''.$nama_modul.'</div>',
+					'<div align="center"><input type="checkbox" value="'.$add.'#add" name="'.$add.'[]"</div>',
+					'<div align="center"><input type="checkbox" value="'.$edit.'#add" name="'.$edit.'[]"</div>',
+					'<div align="center"><input type="checkbox" value="'.$delete.'#add" name="'.$delete.'[]"</div>',
+					
+				);
+			}
+		
+		}
+
+		$records["draw"]            	= $sEcho;
+		$records["recordsTotal"]    	= $iTotalRecords;
+		$records["recordsFiltered"] 	= $iTotalRecords;
+
+		echo json_encode($records);
+		
+	}
+
 	function simpan_msgroup($status)
 	{
-		$list_menu			= $this->model->get_list_menu();
+		$list_menu			= $this->model->get_alllist_menu();
 		$group_id 			= $this->input->post('group_id');
 		$group_name 		= $this->input->post('group_name');
 

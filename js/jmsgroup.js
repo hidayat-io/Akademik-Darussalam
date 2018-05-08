@@ -1,7 +1,8 @@
 // //load
 $(document).ready(function()
 {
-    setTable();
+	setTable();
+	setTableMenu();
 	validate_add_msgroup();
 });
 
@@ -18,6 +19,24 @@ function setTable(){
 		bFilter: false,
 		ajax: {
 			'url': base_url + "msgroup/load_grid",
+			'type': 'GET',
+			'data': function (d) {
+				d.param = $('#hid_param').val();
+			}
+		},
+    } );
+}
+
+function setTableMenu(){
+	$('#tb_list_menu').DataTable({
+		processing: true,
+		serverSide: true,
+		bFilter: false,
+		"paging": false,
+		"ordering": false,
+		"info": false,
+		ajax: {
+			'url': base_url + "msgroup/load_grid_menu",
 			'type': 'GET',
 			'data': function (d) {
 				d.param = $('#hid_param').val();

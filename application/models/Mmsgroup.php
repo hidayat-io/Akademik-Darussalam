@@ -32,9 +32,25 @@ class Mmsgroup extends CI_Model
 		return $this->db->query($sql)->result();
 	}
 	
-	function get_list_menu(){
+	function get_list_menu_parent(){
 		$data = array();
-		$data = $this->db->query("SELECT * FROM modul ORDER BY parent, modul_id ASC")->result_array();;
+		$data = $this->db->query("SELECT * FROM modul where parent =0 ORDER BY modul_id ASC")->result();
+		return $data;
+	}
+
+	function get_list_menu($modul_id){
+		$data = array();
+		$data = $this->db->query("SELECT modul_id, nama_modul FROM modul where parent='$modul_id' or modul_id='$modul_id' ORDER BY parent  ASC")->result();
+		// var_dump($data);
+		// exit();
+		return $data;
+	}
+
+	function get_alllist_menu(){
+		$data = array();
+		$data = $this->db->query("SELECT modul_id, nama_modul FROM modul ORDER BY parent  ASC")->result_array();
+		// var_dump($data);
+		// exit();
 		return $data;
 	}
 

@@ -108,38 +108,23 @@
                                                 <!--span-->
                                                 <!-- table daftar menu -->
                                                     <div class="portlet-body form">
-                                                          <table class="table table-striped table-bordered table-hover" id="tb_list">
+                                                          <table class="table table-striped table-bordered table-hover" id="tb_list_menu">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="text-align:center">Nama Modul</th>
+                                                                    <th style="text-align:center">Modul</th>
+                                                                    <th style="text-align:center">Parent Modul</th>
+                                                                    <th style="text-align:center">Sub Modul</th>
                                                                     <th style="text-align:center">Add</th>
                                                                     <th style="text-align:center">Edit</th>
                                                                     <th style="text-align:center">Delete</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
-                                                                <?php  $no =1;
-                                                                   foreach ($list_menu as $row) { 
-                                                                    $modul_id   =  'modul_id'.$row['modul_id'];
-                                                                    $add        =  'add'.$row['modul_id'];
-                                                                    $edit       =  'edit'.$row['modul_id'];
-                                                                    $delete     =  'delete'.$row['modul_id'];
-                                                                ?>
+                                                             <tbody>
                                                                 <tr>
-                                                                    <td>
-                                                                        <div><input type="checkbox" value="<?php echo $row['modul_id']?>" name="<?php echo $modul_id.'[]'?>"> <?php echo $row['nama_modul']; ?></div>
-                                                                    </td>
-                                                                    <td align="center">
-                                                                        <div><input type="checkbox" value="<?php echo $row['modul_id'].'#'.'add'?>" name="<?php echo $add.'[]'?>"</div>
-                                                                    </td>
-                                                                    <td align="center">
-                                                                        <div><input type="checkbox" value="<?php echo $row['modul_id'].'#'.'edit'?>" name="<?php echo $edit.'[]'?>"</div>
-                                                                    </td>
-                                                                    <td align="center">
-                                                                        <div><input type="checkbox" value="<?php echo $row['modul_id'].'#'.'delete'?>" name="<?php echo $delete.'[]'?>"</div>
-                                                                    </td>
-                                                                </tr>
-                                                                <?php $no++; } ?>
+                                                                <td colspan="3" align="center">
+                                                                    Tidak ada data ditemukan.
+                                                                </td>
+                                                            </tr>
                                                             </tbody>
                                                             <tfoot>
                                                                 <tr>
