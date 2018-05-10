@@ -183,19 +183,10 @@
                                                             <label class="control-label"></label>
                                                             <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                ID
+                                                                Nama Group
                                                             </span>
                                                             <input type="text" class="form-control" name="s_group_id" id="s_group_id" onkeydown="OtomatisKapital(this)" required></div>
                                                     </div>
-                                                <!--span-->
-                                                    <!-- <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            Nama Lengkap
-                                                        </span>
-                                                        <input type="text" class="form-control" name="s_namalengkap" id="s_namalengkap" onkeydown="OtomatisKapital(this)" required></div>
-                                                    </div>      -->
                                             <!--end inputbox-->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>

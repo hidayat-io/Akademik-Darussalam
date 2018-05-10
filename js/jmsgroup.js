@@ -51,6 +51,7 @@ var validate_add_msgroup = function () {
 	var error2 = $('.alert-danger', form);
 	var success2 = $('.alert-success', form);
 
+
 	form.validate({
 		errorElement: 'span', //default input error message container
 		errorClass: 'help-block help-block-error', // default input error message class
@@ -60,11 +61,13 @@ var validate_add_msgroup = function () {
 				equalTo: "#password"
 			}	
 		},
-
 		invalidHandler: function (event, validator) { //display error alert on form submit              
 			success2.hide();
 			error2.show();
-			App.scrollTo(error2, -200);
+			$('#Modal_add_msgroup').animate({
+				scrollTop: $(validator.errorList[0].element).offset().top
+			}, 1000);
+
 		},
 
 		errorPlacement: function (error, element) { // render error placement for each input type
@@ -179,10 +182,6 @@ function edit(group_id){
 	clearvalidate_add_msgroup();
 	var str_url = encodeURI(base_url + "msgroup/get_edit_msgroup/" + group_id);
 	$('#save_button').text('UPDATE');
-	$("#cls_changePWD").removeClass("hidden");
-	$('#spansearchmskaryawan').hide();
-	$('#password').attr('disabled',true);
-	$('#confirmPassword').attr('disabled', true);
 	
 	$.ajax({
 
@@ -192,11 +191,42 @@ function edit(group_id){
 		success:function(data){
 			
 			var data = $.parseJSON(data);
-			$('#group_id').val(data['group_id']);//untuk membaca kategori saat update
-			$('#nama_msgroup').val(data['nama_lengkap']);
-			$('#id_group').val(data['group_id']);
-			$('#group_name').val(data['group_name']);
-			
+			var LengtData = data.length;
+			$('#group_id').val(data[0].group_id);
+			$('#group_name').val(data[0].group_name);
+			for (i = 0; i < LengtData; i++) {
+
+				var modul_id = 'modul_id' + data[i].modul_id;
+				var modul_idX = data[i].modul_id;
+				var nama_modul = data[i].nama_modul;
+				var add = 'add' + data[i].modul_id;
+				var edit = 'edit' + data[i].modul_id;
+				var del = 'delete' + data[i].modul_id;
+
+				$("#" + modul_id).prop("checked", true);
+				if (data[i].add == 1){
+					$("#" + add).prop("checked", true);
+				}
+				else
+				{
+					$("#" + add).prop("checked", false);
+				}
+
+				if (data[i].edit == 1) {
+					$("#" + edit).prop("checked", true);
+				}
+				else {
+					$("#" + edit).prop("checked", false);
+				}
+
+				if (data[i].edit == 1) {
+					$("#" + del).prop("checked", true);
+				}
+				else {
+					$("#" + del).prop("checked", false);
+				}
+				
+			}
 			$('#Modal_add_msgroup').modal('show');
 			
 			
@@ -205,30 +235,49 @@ function edit(group_id){
 	
 }
 
-function hapus(group_id){
-	var str_url = encodeURI(base_url + "msgroup/Delmsgroup/" + group_id);
-	bootbox.confirm("Anda yakin akan menghapus " + group_id+" ?",
-		function(result){
-			if(result==true){
-				
-			$.ajax({
-			type:"POST",
-			url:str_url,
-			dataType:"html",
-			success:function(data){
-					bootbox.alert({
-						message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Hapus Berhasil Berhasil",
-						size: 'small',
-						callback: function () {
+function hapus(group_id,group_name){
+	var str_url = encodeURI(base_url + "msgroup/cek_user/" + group_id);
+	$.ajax({
+		type: "POST",
+		url: str_url,
+		dataType: "html",
+		success: function (data) {
+			var data = $.parseJSON(data);
+			if(data==null){
+				var str_url = encodeURI(base_url + "msgroup/Delmsgroup/" + group_id);
+				bootbox.confirm("Anda yakin akan menghapus " + group_name + " ?",
+					function (result) {
+						if (result == true) {
 
-							window.location = base_url+'msgroup';
+							$.ajax({
+								type: "POST",
+								url: str_url,
+								dataType: "html",
+								success: function (data) {
+									bootbox.alert({
+										message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Hapus Berhasil Berhasil",
+										size: 'small',
+										callback: function () {
+
+											window.location = base_url + 'msgroup';
+										}
+									});
+								}
+							});
 						}
-					});
-				}
-			});
+					}
+				);
+			}else{
+				bootbox.alert({
+				message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Tidak bisa dihapus, karena sudah digunakan di master user",
+				size: 'small'
+				});
 			}
+			
 		}
-	);
+	});
+
+	
 	
 }
 
@@ -238,7 +287,6 @@ function Modalcari() {
 }
 
 function SearchAction() {
-	// var id_msgroup 	    = $('#s_kodemsgroup').val();
 	var group_id = $('#s_group_id').val();
 	var param = { 'group_id': group_id };
 	param = JSON.stringify(param);
