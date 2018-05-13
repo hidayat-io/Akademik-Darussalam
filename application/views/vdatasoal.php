@@ -18,7 +18,7 @@
                   </div>
                 </div>
                 <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
-                    <button class="btn btn-default " type="button" onclick="adddatasoal()">
+                    <button class="btn btn-default <?php echo $class_add;?>" type="button" onclick="adddatasoal()">
                         <i class="fa fa-edit"></i>&nbsp;Tambah Data&nbsp;
                     </button>
                     <!-- <ul class="dropdown-menu" role="menu">

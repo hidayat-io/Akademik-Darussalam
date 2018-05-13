@@ -6,13 +6,39 @@ class Infaq extends IO_Controller
 
 	public function __construct()
 		{
-    $modul = 2;
-		parent::__construct($modul);
+    	$this->modul = 8;
+		parent::__construct($this->modul);
 		$this->load->model('Minfaq');
 	  }
 
 	function index()
 		{
+			//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		$data['class_add']				= $class_add;
 			$data['title'] = 'INFAQ';
 	    	$data['content'] = $this->load->view('vinfaq',$data,TRUE);
 	    	$this->load->view('main',$data);
@@ -128,13 +154,39 @@ class Infaq extends IO_Controller
 		$end = $end > $iTotalRecords ? $iTotalRecords : $end;
 
 		$fdate 	= 'd-M-Y';
+		//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		
 		$tipe 	= array('i'=>'In','o'=>'Out');
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
 
-			$act = '<a class="btn blue btn-xs" title="UBAH DATA" onclick="editdata(\''.$data[$i]->id_infaq.'\')">
+			$act = '<a class="btn blue btn-xs '.$class_edit.'" title="UBAH DATA" onclick="editdata(\''.$data[$i]->id_infaq.'\')">
 						<i class="fa fa-edit"></i>
-					<a class="btn red btn-xs" title="HAPUS DATA" onclick="deleteData(\''.$data[$i]->id_infaq.'|'.$data[$i]->tipe.'|'.$data[$i]->nominal.'|'.$data[$i]->id_donatur.'|'.$data[$i]->saldo.'|'.'\')">
+					<a class="btn red btn-xs '.$class_delete.'" title="HAPUS DATA" onclick="deleteData(\''.$data[$i]->id_infaq.'|'.$data[$i]->tipe.'|'.$data[$i]->nominal.'|'.$data[$i]->id_donatur.'|'.$data[$i]->saldo.'|'.'\')">
 						<i class="fa fa-trash"></i>';
 
 			$records["data"][] = array(

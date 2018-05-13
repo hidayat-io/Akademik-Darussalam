@@ -8,7 +8,7 @@
                     <div class="caption">
                         <i class="fa fa-globe"></i><?php echo $title;?> </div>
                         <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
-                            <button type="button" class="btn btn-default" title="Add New Data" onclick="pnladd()">
+                            <button type="button" class="btn btn-default <?php echo $class_add;?>" title="Add New Data" onclick="pnladd()">
                                 <i class="fa fa-edit"></i>&nbsp;New
                             </button>
                             <button type="button" class="btn btn-default" title="Search Data" onclick="modalSearch();">

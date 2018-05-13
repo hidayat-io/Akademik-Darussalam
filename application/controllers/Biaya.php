@@ -7,8 +7,8 @@ class biaya extends IO_Controller
 {
 
 	public function __construct() {
-			$modul = 17;
-			parent::__construct($modul);
+			$this->modul = 43;
+			parent::__construct($this->modul);
 		 	$this->load->model('mbiaya','model');
 	}
 
@@ -26,7 +26,32 @@ class biaya extends IO_Controller
         $vdata['komponen_bulanan'] = $this->model->get_komponen($tipe='B');
         //get komponen semester
         $vdata['komponen_semester'] = $this->model->get_komponen($tipe='S');
-		       
+		//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		$vdata['class_add']				= $class_add;       
        	$vdata['title'] 	= 'MASTER BIAYA';
        	$vdata['title2'] 	= 'POTONGAN SANTRI';
 	    $data['content'] 	= $this->load->view('vbiaya',$vdata,TRUE);
@@ -58,11 +83,37 @@ class biaya extends IO_Controller
 		$end = $end > $iTotalRecords ? $iTotalRecords : $end;
 		$fdate = 'd-m-Y';
 
+		//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->id.'\',\''.$data[$i]->tipe.'\')">
+			$act = '<a href="#" class="btn btn-icon-only blue '.$class_edit.'" title="UBAH DATA" onclick="edit(\''.$data[$i]->id.'\',\''.$data[$i]->tipe.'\')">
 						<i class="fa fa-edit"></i>
 					</a>
-					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="delete_biaya(\''.$data[$i]->id.'\',\''.$data[$i]->tipe.'\')">
+					<a href="#" class="btn btn-icon-only red '.$class_delete.'" title="HAPUS DATA" onclick="delete_biaya(\''.$data[$i]->id.'\',\''.$data[$i]->tipe.'\')">
 						<i class="fa fa-remove"></i>
 					</a>';
             if ($data[$i]->tipe == 'S')
@@ -207,11 +258,37 @@ class biaya extends IO_Controller
 		$end = $iDisplayStart + $iDisplayLength;
 		$end = $end > $iTotalRecords ? $iTotalRecords : $end;
 
+		//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit_potongan(\''.$data[$i]->id_potongan.'\')">
+			$act = '<a href="#" class="btn btn-icon-only blue '.$class_edit.'" title="UBAH DATA" onclick="edit_potongan(\''.$data[$i]->id_potongan.'\')">
 						<i class="fa fa-edit"></i>
 					</a>
-					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus_potongan(\''.$data[$i]->id_potongan.'\')">
+					<a href="#" class="btn btn-icon-only red '.$class_delete.'" title="HAPUS DATA" onclick="hapus_potongan(\''.$data[$i]->id_potongan.'\')">
 						<i class="fa fa-remove"></i>
 					</a>';
 			

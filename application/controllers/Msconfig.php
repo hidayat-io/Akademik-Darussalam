@@ -8,8 +8,8 @@ class msconfig extends IO_Controller
 
 	public function __construct()
 	{
-			$modul = 34;
-			parent::__construct($modul);
+			$this->modul = 34;
+			parent::__construct($this->modul);
 		 	$this->load->model('mmsconfig','model');
 	}
 
@@ -24,7 +24,32 @@ class msconfig extends IO_Controller
 				$vdata['kode_deskripsikelas'][$b->id]
 				=$b->deskripsi;
 			}
-		
+		//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		$vdata['class_add']				= $class_add;
 		$vdata['title'] = 'MASTER CONFIG';
 		$vdata['title2'] = 'SETTING KURIKULUM & SEMESTER AKTIF';
 	    $data['content'] = $this->load->view('vmsconfig',$vdata,TRUE);
@@ -50,8 +75,34 @@ class msconfig extends IO_Controller
 			$end = $end > $iTotalRecords ? $iTotalRecords : $end;
 			$fdate = 'd-m-Y';
 
+			//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		
 			for($i = $iDisplayStart; $i < $end; $i++) {
-				$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_config.'\')">
+				$act = '<a href="#" class="btn btn-icon-only blue '.$class_edit.'" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_config.'\')">
 							<i class="fa fa-edit"></i>
 						</a>';
 				
@@ -147,8 +198,34 @@ class msconfig extends IO_Controller
 				$end = $end > $iTotalRecords ? $iTotalRecords : $end;
 				$fdate = 'd-m-Y';
 
+				//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		
 				for($i = $iDisplayStart; $i < $end; $i++) {
-					$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit_kurikulum(\''.$data[$i]->param_id.'\')">
+					$act = '<a href="#" class="btn btn-icon-only blue '.$class_edit.'" title="UBAH DATA" onclick="edit_kurikulum(\''.$data[$i]->param_id.'\')">
 								<i class="fa fa-edit"></i>
 							</a>';
 					$data_param						= $data[$i]->param_value;	
@@ -214,8 +291,34 @@ class msconfig extends IO_Controller
 				$end = $end > $iTotalRecords ? $iTotalRecords : $end;
 				$fdate = 'd-m-Y';
 
+				//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		
 				for($i = $iDisplayStart; $i < $end; $i++) {
-					$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit_LimitPengeluaran(\''.$data[$i]->id.'\')">
+					$act = '<a href="#" class="btn btn-icon-only blue '.$class_edit.'" title="UBAH DATA" onclick="edit_LimitPengeluaran(\''.$data[$i]->id.'\')">
 								<i class="fa fa-edit"></i>
 							</a>';
 					

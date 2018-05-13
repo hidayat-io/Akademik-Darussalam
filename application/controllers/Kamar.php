@@ -8,8 +8,8 @@ class kamar extends IO_Controller
 
 	public function __construct()
 	{
-			$modul = 27;
-			parent::__construct($modul);
+			$this->modul = 27;
+			parent::__construct($this->modul);
 		 	$this->load->model('mkamar','model');
 	}
 
@@ -24,7 +24,32 @@ class kamar extends IO_Controller
 				$vdata['kode_gedung'][$b->kode_gedung."#".$b->nama]
 					=$b->kode_gedung." | ".$b->nama;
 			}
-		
+		//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		$vdata['class_add']				= $class_add;
 		$vdata['title'] = 'DATA RUANGAN';
 	    $data['content'] = $this->load->view('vkamar',$vdata,TRUE);
 	    $this->load->view('main',$data);
@@ -69,11 +94,37 @@ class kamar extends IO_Controller
 		$end = $end > $iTotalRecords ? $iTotalRecords : $end;
 		$fdate = 'd-m-Y';
 
+		//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->kode_kamar.'\')">
+			$act = '<a href="#" class="btn btn-icon-only blue '.$class_edit.'" title="UBAH DATA" onclick="edit(\''.$data[$i]->kode_kamar.'\')">
 						<i class="fa fa-edit"></i>
 					</a>
-					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->kode_kamar.'\')">
+					<a href="#" class="btn btn-icon-only red '.$class_delete.'" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->kode_kamar.'\')">
 						<i class="fa fa-remove"></i>
 					</a>';
 			$iskelas 	= array('1'=>'YA','0'=>'TIDAK');

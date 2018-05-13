@@ -8,8 +8,8 @@ class datasoalujian extends IO_Controller
 
 	public function __construct()
 	{
-			$modul = 42;
-			parent::__construct($modul);
+			$this->modul = 42;
+			parent::__construct($this->modul);
 		 	$this->load->model('mdatasoalujian','model');
 	}
 
@@ -41,7 +41,32 @@ class datasoalujian extends IO_Controller
 							$vdata['mat_pal'][$b->id_matpal]
 							=$b->id_matpal." | ".$b->nama_matpal;
                         }
-		
+		//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		$vdata['class_add']				= $class_add;
 		$vdata['title'] = 'DATA SOAL UJIAN';
 	    $data['content'] = $this->load->view('vdatasoalujian',$vdata,TRUE);
 	    $this->load->view('main',$data);
@@ -86,8 +111,33 @@ class datasoalujian extends IO_Controller
 		$end = $end > $iTotalRecords ? $iTotalRecords : $end;
 		$fdate = 'd-m-Y';
 
+		//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			$act = '<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->id.'\')">
+			$act = '<a href="#" class="btn btn-icon-only red '.$class_delete.'" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->id.'\')">
 						<i class="fa fa-remove"></i>
 					</a>
 					<a href="#" class="btn btn-icon-only blue" title="PRINT DATA" onclick="PrintSoal(\''.$data[$i]->id.'\')">

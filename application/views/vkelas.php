@@ -18,12 +18,9 @@
                   </div>
                 </div>
                 <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
-                    <button class="btn btn-default " type="button" onclick="addkelasHD()">
+                    <button class="btn btn-default <?php echo $class_add;?>" type="button" onclick="addkelasHD()">
                         <i class="fa fa-edit"></i>&nbsp;Tambah Data Tingkat Kelas&nbsp;
                     </button>
-                    <!-- <button type="button" class="btn btn-default" title="Search Data" onclick="ModalcariHD()">
-                        <i class="fa fa-search"></i>&nbsp;Search
-                    </button> -->
                     <button type="button" class="btn btn-default" title="Export Data to Excel" onclick="downloadExcelHD()">
                         <i class="fa fa-file-excel-o"></i>&nbsp;Excel
                     </button>
@@ -69,7 +66,7 @@
                   </div>
                 </div>
                 <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
-                    <button class="btn btn-default " type="button" onclick="addkelas()">
+                    <button class="btn btn-default <?php echo $class_add;?>" type="button" onclick="addkelas()">
                         <i class="fa fa-edit"></i>&nbsp;Tambah Data Kelas&nbsp;
                     </button>
                     <button type="button" class="btn btn-default" title="Search Data" onclick="Modalcari()">

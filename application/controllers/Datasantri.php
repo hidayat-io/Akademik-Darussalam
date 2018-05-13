@@ -8,9 +8,9 @@ class Datasantri extends IO_Controller
 
 	public function __construct()
 	{
-			$modul = 3;
-			parent::__construct($modul);
-		 	$this->load->model('mdatasantri','model');
+			$this->modul = 3;
+			parent::__construct($this->modul);
+		 	$this->load->model('mpendaftaran','model');
 	}
 
 	function index()
@@ -64,10 +64,35 @@ class Datasantri extends IO_Controller
 				$vdata['id_donatur'][$b->id_donatur."#".$b->nama_donatur."#".$b->kategori]
 					=$b->id_donatur." | ".$b->nama_donatur." | ".$b->kategori;
 			}
-
 			//get pengeluaran global
 			$pengeluaran_global= $this->model->get_pengeluaran_global();
+		//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= '15';
+		// $modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
 
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		$vdata['class_add']				= $class_add;
 		$vdata['pengeluaran_global']	= $pengeluaran_global['limit'];
 		$vdata['kategori_santri']		= 'TMI';
 		$vdata['page']					= 'SANTRI';
@@ -126,13 +151,40 @@ class Datasantri extends IO_Controller
 				$vdata['id_donatur'][$b->id_donatur."#".$b->nama_donatur."#".$b->kategori]
 					=$b->id_donatur." | ".$b->nama_donatur." | ".$b->kategori;
 			}
+						//get pengeluaran global
 			//get pengeluaran global
 			$pengeluaran_global= $this->model->get_pengeluaran_global();
+		//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= '14';
+		// $modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
 
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		$vdata['class_add']				= $class_add;
 		$vdata['pengeluaran_global']	= $pengeluaran_global['limit'];
 		$vdata['kategori_santri']		= 'AITAM';
 		$vdata['page']					= 'SANTRI';
-		$vdata['title'] 				= 'DATA SANTRI AITAM';
+		$vdata['title'] 				= 'DATA AITAM';
 	    $data['content'] 				= $this->load->view('vdatasantri',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
@@ -152,6 +204,8 @@ class Datasantri extends IO_Controller
 
 	function load_grid($kategori_santri,$page)
 	{
+
+
 		$iparam 		= json_decode($_REQUEST['param']);
 		$string_param 	= $this->build_param($iparam);
 		
@@ -175,15 +229,46 @@ class Datasantri extends IO_Controller
 		$end = $iDisplayStart + $iDisplayLength;
 		$end = $end > $iTotalRecords ? $iTotalRecords : $end;
 		$fdate = 'd-m-Y';
+		
+		//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+			// $modul_id			= $this->modul;
+		if($kategori_santri=='TMI'){
+			$modul_id			= '15';
+		}else {
+			$modul_id			= '14';
+		}
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
 		if ($page == 'DAFTAR')
 		{
 			$act = '<a class="btn green btn-xs" title="LIHAT DATA" onclick="view(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-file-o"></i>
-					<a class="btn blue btn-xs" title="UBAH DATA" onclick="edit(\''.$data[$i]->no_registrasi.'\')">
+					<a class="btn blue btn-xs '.$class_edit.'" title="UBAH DATA" onclick="edit(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-edit"></i>
-					<a class="btn red btn-xs" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->no_registrasi.'\')">
+					<a class="btn red btn-xs '.$class_delete.'" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-trash"></i>';
 		}
 		else {
@@ -197,9 +282,9 @@ class Datasantri extends IO_Controller
 				else {
 					$act = '<a class="btn green btn-xs" title="LIHAT DATA" onclick="view(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-file-o"></i>
-					<a class="btn blue btn-xs" title="UBAH DATA" onclick="edit(\''.$data[$i]->no_registrasi.'\')">
+					<a class="btn blue btn-xs '.$class_edit.'" title="UBAH DATA" onclick="edit(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-edit"></i>
-					<a class="btn red btn-xs" title="NONAKTIF" onclick="keluarkan(\''.$data[$i]->no_registrasi.'\')">
+					<a class="btn red btn-xs '.$class_delete.'" title="NONAKTIF" onclick="keluarkan(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa  fa-arrow-right"></i>';
 				}		
 				
@@ -220,11 +305,11 @@ class Datasantri extends IO_Controller
 				else {
 					$act = '<a class="btn green btn-xs" title="LIHAT DATA" onclick="view(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-file-o"></i>
-					<a class="btn blue btn-xs" title="UBAH DATA" onclick="edit(\''.$data[$i]->no_registrasi.'\')">
+					<a class="btn blue btn-xs '.$class_edit.'" title="UBAH DATA" onclick="edit(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-edit"></i>
-					<a class="btn red btn-xs" title="NONAKTIF" onclick="keluarkan(\''.$data[$i]->no_registrasi.'\')">
+					<a class="btn red btn-xs '.$class_delete.'" title="NONAKTIF" onclick="keluarkan(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-arrow-right"></i>
-					<a class="btn yellow btn-xs" title="Jadikan TMI" onclick="ToTMI(\''.$data[$i]->no_registrasi.'\')">
+					<a class="btn yellow btn-xs '.$class_edit.'" title="Jadikan TMI" onclick="ToTMI(\''.$data[$i]->no_registrasi.'\')">
 						<i class="fa fa-exchange"></i>';
 				}
 
@@ -237,12 +322,12 @@ class Datasantri extends IO_Controller
 				// 	<a class="btn yellow btn-xs" title="Jadikan TMI" onclick="ToTMI(\''.$data[$i]->no_registrasi.'\')">
 				// 		<i class="fa fa-exchange"></i>';
 			}
-		}			
+		}
 					
 			$records["data"][] = array(
 
 		     	$data[$i]->no_registrasi,
-  				io_date_format($data[$i]->thn_masuk,$fdate),
+  				io_date_format($data[$i]->thn_daftar,$fdate),
   				$data[$i]->nama_lengkap,
 		     	$data[$i]->nama_arab,
 		     	// $data[$i]->nama_panggilan,
@@ -267,15 +352,30 @@ class Datasantri extends IO_Controller
 	function exportexcel(){
 		// hasil decode // 
 		$str = base64_decode($this->uri->segment(3));
+		// $kategori_santri = base64_decode($this->uri->segment(4));
+		// $page = base64_decode($this->uri->segment(5));
+		if($str == 'TMI' || $str =='AITAM'){
+			$str = '';
+			$kategori_santri = base64_decode($this->uri->segment(3));
+			$page = base64_decode($this->uri->segment(4));
 
-		// merubah hasil decode dari string ke json //
-		$str = json_decode($str);
+		}else {
+			$str = base64_decode($this->uri->segment(3));
+			$kategori_santri = base64_decode($this->uri->segment(4));
+			$page = base64_decode($this->uri->segment(5));
 
-		// memasukan data json kedalam builparam //
-		// agar json menjadi parameter query //
-		$str = $this->build_param($str);
+			// merubah hasil decode dari string ke json //
+			$str = json_decode($str);
+		
+			// memasukan data json kedalam builparam //
+			// agar json menjadi parameter query //
+			$str = $this->build_param($str);
+		}
+		// var_dump($str,$kategori_santri,$page);
+		// exit();
 
-		$data= $this->model->get_list_data($str);
+
+		$data= $this->model->get_eksport_list_data($str,$kategori_santri,$page);
 
 		//load our new PHPExcel library
 		$this->load->library('excel');

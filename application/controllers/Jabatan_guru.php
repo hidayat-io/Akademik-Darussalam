@@ -8,14 +8,39 @@ class jabatan_guru extends IO_Controller
 
 	public function __construct()
 	{
-			$modul = 37;
-			parent::__construct($modul);
+			$this->modul = 37;
+			parent::__construct($this->modul);
 		 	$this->load->model('mjabatan_guru','model');
 	}
 
 	function index()
 	{
-		
+		//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		$vdata['class_add']				= $class_add;
 		$vdata['title'] = 'DATA JABATAN';
 	    $data['content'] = $this->load->view('vjabatan_guru',$vdata,TRUE);
 	    $this->load->view('main',$data);
@@ -60,11 +85,37 @@ class jabatan_guru extends IO_Controller
 		$end = $end > $iTotalRecords ? $iTotalRecords : $end;
 		$fdate = 'd-m-Y';
 
+		//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_jabatan.'\',\''.$data[$i]->nama_jabatan.'\')">
+			$act = '<a href="#" class="btn btn-icon-only blue '.$class_edit.'" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_jabatan.'\',\''.$data[$i]->nama_jabatan.'\')">
 						<i class="fa fa-edit"></i>
 					</a>
-					<a href="#" class="btn btn-icon-only red" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->id_jabatan.'\',\''.$data[$i]->nama_jabatan.'\')">
+					<a href="#" class="btn btn-icon-only red '.$class_delete.'" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->id_jabatan.'\',\''.$data[$i]->nama_jabatan.'\')">
 						<i class="fa fa-remove"></i>
 					</a>';
 			

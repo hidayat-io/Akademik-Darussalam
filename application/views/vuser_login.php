@@ -16,7 +16,7 @@
                     </div>
                     </div>
                     <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
-                        <button class="btn btn-default " type="button" onclick="adduser_login()">
+                        <button class="btn btn-default <?php echo $class_add;?>" type="button" onclick="adduser_login()">
                             <i class="fa fa-edit"></i>&nbsp;Tambah Data&nbsp;
                         </button>
                         <button type="button" class="btn btn-default" title="Search Data" onclick="Modalcari()">

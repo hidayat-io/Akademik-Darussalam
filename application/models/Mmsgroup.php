@@ -88,7 +88,10 @@ class Mmsgroup extends CI_Model
         $data = array();
 		$data=$this->db->query("select groupu.group_id, groupu.group_name, group_hak_akses.modul_id, group_hak_akses.`add`,group_hak_akses.edit,group_hak_akses.`delete`
 								from groupu
-								inner join group_hak_akses on groupu.group_id = group_hak_akses.group_id where groupu.group_id ='$id_msgroup'")->result_array();
+								left join group_hak_akses on groupu.group_id = group_hak_akses.group_id where groupu.group_id ='$id_msgroup'")->result_array();
+		//         $query = $this->db->last_query();
+		// var_dump($query);
+		// exit();
 		return $data;
 	}
 

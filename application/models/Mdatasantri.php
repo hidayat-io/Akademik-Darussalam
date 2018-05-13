@@ -55,6 +55,51 @@ class Mdatasantri extends CI_Model
 		return $this->db->query($sql)->result();
 	}
 
+	function get_eksport_list_data($param,$kategori_santri,$page)
+	{
+		// var_dump($param,$kategori_santri,$page);
+		// exit();
+
+		if ($page == 'DAFTAR')
+		{
+			if ($kategori_santri == 'TMI')
+			{
+				$sql = "SELECT * FROM ms_santri where no_registrasi not like 'T%' and no_registrasi not like 'A%' and no_registrasi not like 'CA%'";
+			}
+			else
+			{
+				$sql = "SELECT * FROM ms_santri where no_registrasi not like 'T%' and no_registrasi not like 'A%' and no_registrasi not like 'CT%'";
+			}
+		}
+		else {
+				if ($kategori_santri == 'TMI')
+			{
+				$sql = "SELECT * FROM ms_santri where no_registrasi like 'T%' and no_registrasi not like 'A%' and no_registrasi not like 'CA%'";
+			}
+			else
+			{
+				$sql = "SELECT * FROM ms_santri where no_registrasi not like 'T%' and no_registrasi like 'A%' and no_registrasi not like 'CT%'";
+			}
+		}
+		
+		
+				
+
+		if($param!=null){
+
+			$sql .= $param;
+			
+		}
+		
+
+		//$sql.= " ORDER BY ".$cols[$sortby]." ".$sorttype;
+
+		// echo $sql;
+		// exit();
+		
+		return $this->db->query($sql)->result();
+	}
+	
 	function get_sequence_noreg_TMI()
 	{
 

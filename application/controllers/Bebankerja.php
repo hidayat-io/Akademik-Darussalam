@@ -7,8 +7,8 @@ class bebankerja extends IO_Controller
 {
 
 	public function __construct() {
-			$modul = 17;
-			parent::__construct($modul);
+			$this->modul = 17;
+			parent::__construct($this->modul);
 		 	$this->load->model('mbebankerja','model');
 	}
 
@@ -22,7 +22,32 @@ class bebankerja extends IO_Controller
 			// exit();
 		$vdata['thn_ajar_aktif']		= $id_thn_ajar_value->deskripsi;
 		$vdata['semester_aktif']		= $isys_param[1];
+		//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
 
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		$vdata['class_add']				= $class_add;
        	$vdata['title'] = 'BEBAN KERJA';
 	    $data['content'] = $this->load->view('vbebankerja',$vdata,TRUE);
 	    $this->load->view('main',$data);
@@ -84,8 +109,34 @@ class bebankerja extends IO_Controller
 		$end = $end > $iTotalRecords ? $iTotalRecords : $end;
 		$fdate = 'd-m-Y';
 
+		//cek hakAkses
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+		$modul_id			= $this->modul;
+		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
+		$add				= $HakAkses->add;
+		$edit				= $HakAkses->edit;
+		$delete				= $HakAkses->delete;
+
+		if($add==1){
+			$class_add = '';
+		}else{
+			$class_add = 'hidden';
+		}
+
+		if($edit==1){
+			$class_edit = '';
+		}else{
+			$class_edit = 'hidden';
+		}
+
+		if($delete==1){
+			$class_delete = '';
+		}else{
+			$class_delete = 'hidden';
+		}
+		
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			$act = '<a href="#" class="btn btn-icon-only blue" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_guru.'\')">
+			$act = '<a href="#" class="btn btn-icon-only blue '.$class_edit.'" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_guru.'\')">
 						<i class="fa fa-edit"></i>
 					</a>';
 			$limit_beban = $data[$i]->jml_beban;

@@ -18,7 +18,7 @@
                   </div>
                 </div>
                 <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
-                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true" title="Tambah Data">Tambah Data
+                    <button class="btn btn-default dropdown-toggle <?php echo $class_add;?>" data-toggle="dropdown" aria-expanded="true" title="Tambah Data">Tambah Data
                         <i class="fa fa-angle-down"></i>
                     </button>
                     <ul class="dropdown-menu" role="menu">
@@ -80,15 +80,9 @@
                   </div>
                 </div>
                 <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
-                <button class="btn btn-default " type="button" onclick="addpotongan()">
+                <button class="btn btn-default <?php echo $class_add;?>" type="button" onclick="addpotongan()">
                         <i class="fa fa-edit"></i>&nbsp;Tambah Data&nbsp;
                     </button>
-                    <!-- <button type="button" class="btn btn-default" title="Search Data" onclick="Modalcari()">
-                        <i class="fa fa-search"></i>&nbsp;Search
-                    </button>
-                    <button type="button" class="btn btn-default" title="Export Data to Excel" onclick="downloadExcel()">
-                        <i class="fa fa-file-excel-o"></i>&nbsp;Excel
-                    </button> -->
                 </div>
             </div>
             <input type="text" class="hidden" name="hid_param_potongan" id="hid_param_potongan" />

@@ -4603,11 +4603,14 @@ function clearformcari() {
 //#endregion cari
 
 function downloadExcel() {
-
 	var param = $('#hid_param').val();
+	var page = $('#hid_page').val();
+	var kategori_santri = $('#hid_kategori_santri').val();
 	param = ioEncode(param);
+	kategori_santri = ioEncode(kategori_santri);
+	page = ioEncode(page);
 
-	window.location = base_url + 'datasantri/exportexcel/' + param;
+	window.location = base_url + 'pendaftaran/exportexcel/' + param + '/' + kategori_santri + '/' + page;
 }
 
 function idgedungshow() {

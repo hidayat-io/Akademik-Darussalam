@@ -192,42 +192,45 @@ function edit(group_id){
 			
 			var data = $.parseJSON(data);
 			var LengtData = data.length;
-			$('#group_id').val(data[0].group_id);
-			$('#group_name').val(data[0].group_name);
-			for (i = 0; i < LengtData; i++) {
+			// if (LengtData!=0){
+			$('#Modal_add_msgroup').modal('show');	
+				$('#group_id').val(data[0].group_id);
+				$('#group_name').val(data[0].group_name);
+				for (i = 0; i < LengtData; i++) {
 
-				var modul_id = 'modul_id' + data[i].modul_id;
-				var modul_idX = data[i].modul_id;
-				var nama_modul = data[i].nama_modul;
-				var add = 'add' + data[i].modul_id;
-				var edit = 'edit' + data[i].modul_id;
-				var del = 'delete' + data[i].modul_id;
+					var modul_id = 'modul_id' + data[i].modul_id;
+					var modul_idX = data[i].modul_id;
+					var nama_modul = data[i].group_name;
+					var add = 'add' + data[i].modul_id;
+					var edit = 'edit' + data[i].modul_id;
+					var del = 'delete' + data[i].modul_id;
 
-				$("#" + modul_id).prop("checked", true);
-				if (data[i].add == 1){
-					$("#" + add).prop("checked", true);
-				}
-				else
-				{
-					$("#" + add).prop("checked", false);
-				}
+					$("#" + modul_id).prop("checked", true);
+					if (data[i].add == 1) {
+						$("#" + add).prop("checked", true);
+					}
+					else {
+						$("#" + add).prop("checked", false);
+					}
 
-				if (data[i].edit == 1) {
-					$("#" + edit).prop("checked", true);
-				}
-				else {
-					$("#" + edit).prop("checked", false);
-				}
+					if (data[i].edit == 1) {
+						$("#" + edit).prop("checked", true);
+					}
+					else {
+						$("#" + edit).prop("checked", false);
+					}
 
-				if (data[i].edit == 1) {
-					$("#" + del).prop("checked", true);
+					if (data[i].delete == 1) {
+						$("#" + del).prop("checked", true);
+					}
+					else {
+						$("#" + del).prop("checked", false);
+					}
+
 				}
-				else {
-					$("#" + del).prop("checked", false);
-				}
-				
-			}
-			$('#Modal_add_msgroup').modal('show');
+			// }
+			
+			
 			
 			
 		}
