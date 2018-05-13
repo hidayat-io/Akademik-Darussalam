@@ -102,5 +102,18 @@ class Mcommon extends CI_Model {
 		// $data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='UTAMA' order by id desc Limit 2 ");
 		return $data;
 	}
+
+	function get_hak_akses($user_id,$modul_id){
+
+        $data =$this->db->query ("SELECT groupu.group_name,group_hak_akses.add,group_hak_akses.edit,group_hak_akses.delete 
+                                    FROM group_hak_akses
+                                    INNER JOIN groupu ON group_hak_akses.group_id = groupu.group_id
+                                    INNER JOIN group_daftar_user ON groupu.group_id = group_daftar_user.group_id
+									WHERE group_daftar_user.user_id = '$user_id' AND group_hak_akses.modul_id='$modul_id'")->row();
+									
+        $query = $this->db->last_query();
+
+        return $data;
+    }
     
 }

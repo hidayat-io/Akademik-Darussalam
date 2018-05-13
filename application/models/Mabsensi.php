@@ -62,7 +62,8 @@ class Mabsensi extends CI_Model {
 							absh.tgl_absensi,
 							snt.no_registrasi,
 							snt.nama_lengkap,
-							absd.absensi
+							absd.absensi,
+							absh.id_absen_header
 						FROM   ms_kelasdt kld 
 							INNER JOIN ms_kelashd klh
 								on kld.id_kelas = klh.id_kelas
@@ -78,11 +79,35 @@ class Mabsensi extends CI_Model {
 								ON absh.id_jadwal = jp.id_jadwal
 									AND absh.tgl_absensi = '$tgl_absensi'
 							LEFT JOIN trans_absensi_d absd
-								ON absh.id_jadwal = absd.header_id
+								ON absh.id_absen_header = absd.id_absen_header
 									AND absd.noreg_santri = snt.no_registrasi
 						WHERE jp.id_jadwal = $id_jadwal and snt.kategori='TMI' and snt.isnonaktif is null
 							ORDER BY absd.noreg_santri";
 
 		return $this->db->query($sql_absensi);
+	}
+
+	function del_old_absensi($id_absen_header){
+
+		//delete header
+		$this->db->where('id_absen_header',$id_absen_header);
+		$this->db->delete('trans_absensi_h');
+
+		//delete detail
+		$this->db->where('id_absen_header',$id_absen_header);
+		$this->db->delete('trans_absensi_d');
+	}
+
+	function save_header_absen($data){
+
+		$this->db->insert('trans_absensi_h',$data);
+		$id = $this->db->insert_id();
+
+		return $id;
+	}
+
+	function save_detail_absen($data){
+
+		$this->db->insert('trans_absensi_d',$data);
 	}
 }

@@ -1,7 +1,6 @@
 $(document).ready(function(){
 
 	setTable();
-	modalEdit('317');
 
 	$('.datepicker').datepicker({
         orientation: "left",
@@ -50,19 +49,26 @@ function setTable(){
 	});
 }
 
-function modalEdit(id_jadwal){
+function modalEdit(id_jadwal,id_absen_header){
 
+	document.getElementById('form_absensi').reset();
+
+	$('#cmd_save').addClass('hidden');
 	$('#modal_editing').modal('show');
 	$('#hid_id_jadwal').val(id_jadwal);
-	loadDataAbsensiSiswa(id_jadwal);
+	loadDataAbsensiSiswa();
 }
 
-function loadDataAbsensiSiswa(id_jadwal){
+function loadDataAbsensiSiswa(){
 
 	//clear table absensi
 	$("#tb_absensi tbody").empty();
 
 	var tgl_absensi = $('#dtp_tgl_absensi').val();
+	var id_jadwal 	= $('#hid_id_jadwal').val();
+	var hari 		= $('#lbl_hari').text();
+		hari 		= hari.toUpperCase()
+
 	var param = {
 		'id_jadwal' : id_jadwal,
 		'tgl_absensi' : tgl_absensi
@@ -79,13 +85,39 @@ function loadDataAbsensiSiswa(id_jadwal){
 		dataType: "json",
 		data:param,
 		success: function (data) {
-			json_absensi = data;
+
+			json_absensi = data.data;
 
 			if(json_absensi.length > 0){
 
 				$('#lbl_nama_guru').text(json_absensi[0].nama_guru);
 				$('#lbl_nama_kelas').text(json_absensi[0].kode_kelas+' - '+json_absensi[0].nama_kelas);
 				$('#hid_id_guru').val(json_absensi[0].id_guru);
+				$('#hid_id_absen_header').val(json_absensi[0].id_absen_header);
+				
+				//jika hari pada tanggal sama dengan hari pada jadwal
+				if(hari==json_absensi[0].hari){
+
+					if(data.isToday!=1){
+
+						if (data.group == 'Administrator'){
+
+							$('#cmd_save').removeClass('hidden');
+						}
+						else{
+
+							$('#cmd_save').addClass('hidden');
+						}
+					}
+					else if(data.isToday==1){
+
+						$('#cmd_save').removeClass('hidden');
+					}					
+				}
+				else{
+
+					$('#cmd_save').addClass('hidden');
+				}
 
 				let seqno = 1;
 
@@ -95,10 +127,10 @@ function loadDataAbsensiSiswa(id_jadwal){
 					str_row += `<td class="cell-text-center">${seqno}</td>`;
 					str_row += `<td>${r.no_registrasi}</td>`;
 					str_row += `<td>${r.nama_lengkap}</td>`;
-					str_row += `<td class="cell-text-center cur-hand" onclick="clickAbsen('${r.no_registrasi}','h')">${checkValueAbsensi(r.no_registrasi,'h')}</td>`;
-					str_row += `<td class="cell-text-center cur-hand" onclick="clickAbsen('${r.no_registrasi}','i')">${checkValueAbsensi(r.no_registrasi,'i')}</td>`;
-					str_row += `<td class="cell-text-center cur-hand" onclick="clickAbsen('${r.no_registrasi}','s')">${checkValueAbsensi(r.no_registrasi,'s')}</td>`;
-					str_row += `<td class="cell-text-center cur-hand" onclick="clickAbsen('${r.no_registrasi}','a')">${checkValueAbsensi(r.no_registrasi,'a')}</td>`;
+					str_row += `<td class="cell-text-center cur-hand" onclick="clickAbsen('${r.no_registrasi}','h')">${checkValueAbsensi(r.no_registrasi,r.absensi,'h')}</td>`;
+					str_row += `<td class="cell-text-center cur-hand" onclick="clickAbsen('${r.no_registrasi}','i')">${checkValueAbsensi(r.no_registrasi,r.absensi,'i')}</td>`;
+					str_row += `<td class="cell-text-center cur-hand" onclick="clickAbsen('${r.no_registrasi}','s')">${checkValueAbsensi(r.no_registrasi,r.absensi,'s')}</td>`;
+					str_row += `<td class="cell-text-center cur-hand" onclick="clickAbsen('${r.no_registrasi}','a')">${checkValueAbsensi(r.no_registrasi,r.absensi,'a')}</td>`;
 					str_row += `</tr>`;
 
 					$("#tb_absensi tbody").append(str_row);
@@ -112,9 +144,13 @@ function loadDataAbsensiSiswa(id_jadwal){
 	});
 }
 
-function checkValueAbsensi(noreg_santri,val_absen){
+function checkValueAbsensi(noreg_santri,actual_absen,val_absen){
 
-	return `<input type="radio" id="rdo${noreg_santri+val_absen}" name="rdo_${noreg_santri}" value="${val_absen}" class="cur-hand">`;
+	$checked = '';
+
+	if(actual_absen==val_absen) $checked = `checked="checked"`;
+
+	return `<input type="radio" id="rdo${noreg_santri+val_absen}" name="rdo_${noreg_santri}" value="${val_absen}" class="cur-hand" ${$checked}>`;
 }
 
 function clickAbsen(noreg_santri, val_absen){
@@ -124,14 +160,33 @@ function clickAbsen(noreg_santri, val_absen){
 
 function saveForm(){
 
-	$("#form_absensi").ajaxSubmit({
-		url: base_url + "absensi/save_absen",
-		type: 'post',
-		success: function () {
 
-			
-		}
-	});
+	if($('#hid_list_siswa').val()==''){
+
+		var title 		= "<span class='fa fa-exclamation-triangle text-warning'></span>&nbsp;Invalid Data";
+		var str_message = "List Siswa masih kosong.";
+
+		showMessage(title, str_message);
+	}
+	else{
+
+		$("#form_absensi").ajaxSubmit({
+			url: base_url + "absensi/save_absen",
+			type: 'post',
+			success: function (return_val) {
+
+				if (return_val == 1) {
+
+					alert('Simpan data absensi berhasil.');
+					$('#modal_editing').modal('hide');
+				}
+				else {
+
+					alert('ERROR simpan data absensi.');
+				}
+			},
+		});
+	}
 }
 
 function getDayName(i){
@@ -140,4 +195,19 @@ function getDayName(i){
 	var a = moment(i, 'DD-MM-YYYY');
 
 	$('#lbl_hari').text(a.format('dddd'));	
+}
+
+function showMessage(title, str_message) {
+
+	bootbox.alert({
+		size: 'small',
+		title: title,
+		message: str_message,
+		buttons: {
+			ok: {
+				label: 'OK',
+				className: 'btn-warning'
+			}
+		}
+	});
 }

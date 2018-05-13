@@ -4,8 +4,8 @@ class Guru extends IO_Controller{
 
 	public function __construct(){
 
-		$modul = 16;
-		parent::__construct($modul);
+		$this->modul = 16;
+		parent::__construct($this->modul);
 	 	$this->load->model('mguru','model');
 	}
 
