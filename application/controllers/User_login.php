@@ -8,7 +8,7 @@ class user_login extends IO_Controller
 
 	public function __construct()
 	{
-			$modul = 46;
+			$modul = 47;
 			parent::__construct($modul);
 		 	$this->load->model('muser_login','model');
 	}

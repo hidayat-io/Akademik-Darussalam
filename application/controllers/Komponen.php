@@ -6,7 +6,7 @@ class Komponen extends IO_Controller
 
 	public function __construct()
 		{
-    	$modul = 2;
+    	$modul = 32;
 		parent::__construct($modul);
 		$this->load->model('Mkomponen');
 	  }
