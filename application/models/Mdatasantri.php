@@ -335,7 +335,7 @@ class Mdatasantri extends CI_Model
 
 	function query_santri($no_registrasi){
 		$data = array();
-		$data=$this->db->query("SELECT a.kategori, a.no_registrasi, a.no_stambuk, DATE_FORMAT(a.thn_masuk,'%d-%m-%Y') as thn_masuk, a.rayon, a.kamar, a.bagian, 
+		$data=$this->db->query("SELECT a.kategori, a.no_registrasi, a.no_stambuk,DATE_FORMAT(a.thn_daftar,'%d-%m-%Y') AS thn_daftar,  DATE_FORMAT(a.thn_masuk,'%d-%m-%Y') as thn_masuk, a.rayon, a.kamar, a.bagian, 
 		a.kel_sekarang, a.nisn, a.nisnlokal, a.nama_lengkap, a.nama_arab, a.nama_panggilan, a.hobi, 
 		a.uang_jajan_perbulan, a.no_kk, a.nik, a.tempat_lahir, DATE_FORMAT(a.tgl_lahir,'%d-%m-%Y') as tgl_lahir, a.konsulat, 
 		a.nama_sekolah,  DATE_FORMAT(a.thn_lulus,'%d-%m-%Y') as thn_lulus, a.alamat_sekolah, a.suku, a.kewarganegaraan, 

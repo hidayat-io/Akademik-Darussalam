@@ -334,7 +334,7 @@ class Mpendaftaran extends CI_Model
 
 	function query_santri($no_registrasi){
 		$data = array();
-		$data=$this->db->query("SELECT a.kategori, a.no_registrasi, a.no_stambuk, DATE_FORMAT(a.thn_masuk,'%d-%m-%Y') as thn_masuk, a.rayon, a.kamar, a.bagian, 
+		$data=$this->db->query("SELECT a.kategori, a.no_registrasi, a.no_stambuk,DATE_FORMAT(a.thn_daftar,'%d-%m-%Y') AS thn_daftar,  DATE_FORMAT(a.thn_masuk,'%d-%m-%Y') as thn_masuk, a.rayon, a.kamar, a.bagian, 
 		a.kel_sekarang, a.nisn, a.nisnlokal, a.nama_lengkap, a.nama_arab, a.nama_panggilan, a.hobi, 
 		a.uang_jajan_perbulan, a.no_kk, a.nik, a.tempat_lahir, DATE_FORMAT(a.tgl_lahir,'%d-%m-%Y') as tgl_lahir, a.konsulat, 
 		a.nama_sekolah, DATE_FORMAT(a.thn_lulus,'%d-%m-%Y') as thn_lulus, a.alamat_sekolah, a.suku, a.kewarganegaraan, 
@@ -350,6 +350,9 @@ class Mpendaftaran extends CI_Model
 		ms_fisik_santri c ON a.no_registrasi= c.no_registrasi
 		WHERE a.no_registrasi = '$no_registrasi'")->row_array();
 		return $data;
+		// $data = $this->db->last_query();
+		// var_dump($data);
+		// exit();
 	}
 
 	function query_sekolahAitam($no_registrasi){
@@ -480,9 +483,9 @@ class Mpendaftaran extends CI_Model
 	}
 
 	function get_kelas(){
-		$data = $this->db->query ("SELECT ms_kelashd.tingkat, ms_kelasHD.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kelasdt.kapasitas
+		$data = $this->db->query ("SELECT ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kelasdt.kapasitas
 				FROM ms_kelasdt
-				inner join ms_kelasHD on ms_kelasdt.id_kelas = ms_kelasHD.id_kelas ORDER BY ms_kelasdt.kode_kelas");
+				inner join ms_kelashd on ms_kelasdt.id_kelas = ms_kelashd.id_kelas ORDER BY ms_kelasdt.kode_kelas");
 		return $data;
 	}
 
