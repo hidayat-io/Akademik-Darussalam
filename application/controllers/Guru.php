@@ -443,7 +443,7 @@ class Guru extends IO_Controller{
 						if($val!=""){
 
 							$string_param .= " AND ";
-							$string_param .= "status = '".$val."' ";
+							$string_param .= " g.status = '".$val."' ";
 						}
 						break;
 				}
