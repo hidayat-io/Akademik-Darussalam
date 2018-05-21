@@ -93,7 +93,7 @@ class Mdaftarulang extends CI_Model
     #region modal add daftar ulang
     function query_data_santri($no_registrasi){
         // $data = array();
-		$data=$this->db->query("SELECT * from ms_santri where no_registrasi ='$no_registrasi' and no_registrasi NOT LIKE 'CT%' and no_registrasi NOT LIKE 'A%' AND no_registrasi NOT LIKE 'CA%'")->row();
+		$data=$this->db->query("SELECT * from ms_santri where no_registrasi ='$no_registrasi' and no_registrasi NOT LIKE 'CT%' and no_registrasi NOT LIKE 'A%' AND no_registrasi NOT LIKE 'CA%' AND keterangan !=''")->row();
 		return $data;
 	}  
 	
