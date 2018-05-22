@@ -130,7 +130,10 @@ class pembayaran extends IO_Controller
 		}
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			$act = '<a href="#" class="btn btn-icon-only blue '.$class_edit.'" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_pembayaran.'\')">
+			$act = '<a href="#" class="btn btn-icon-only green" title="Lihat/Print" onclick="print(\''.$data[$i]->id_pembayaran.'\')">
+						<i class="fa fa-file-o"></i>
+					</a>
+					<a href="#" class="btn btn-icon-only blue '.$class_edit.'" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_pembayaran.'\')">
 						<i class="fa fa-edit"></i>
 					</a>
 					<a href="#" class="btn btn-icon-only red '.$class_delete.'" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->id_pembayaran.'\')">
@@ -145,7 +148,7 @@ class pembayaran extends IO_Controller
 		     	// $data[$i]->id_pembayaran,
 		     	$data[$i]->tanggal,
 		     	$data[$i]->no_registrasi,
-		     	$data[$i]->no_registrasi,
+		     	$data[$i]->nama_lengkap,
 		     	$tipe_pembayaran,
 		     	$data[$i]->semester,
 				$data[$i]->keterangan,
@@ -162,93 +165,29 @@ class pembayaran extends IO_Controller
 		
 	}
 
-	function exportexcel(){
-		// hasil decode // 
-		$str = base64_decode($this->uri->segment(3));
+	function get_data_pembayaran($no_registrasi,$tipe_pembayaran,$semester_pembayaran)
+	{
+		$no_registrasi 				= urldecode($no_registrasi);
+		$tipe_pembayaran 			= urldecode($tipe_pembayaran);
+		$semester_pembayaran 		= urldecode($semester_pembayaran);
+		$data 						= $this->model->query_get_data_pembayaran($no_registrasi,$tipe_pembayaran,$semester_pembayaran);
+    	echo json_encode($data);
+	}
 
-		// merubah hasil decode dari string ke json //
-		$str = json_decode($str);
+	function get_sisa_potongan($no_registrasi,$id_tagihan)
+	{
+		$no_registrasi 				= urldecode($no_registrasi);
+		$id_tagihan 				= urldecode($id_tagihan);
+		$data_tagihan 						= $this->model->query_get_sisa_potongan($no_registrasi,$id_tagihan);
+    	echo json_encode($data_tagihan);
+	}
 
-		// memasukan data json kedalam builparam //
-		// agar json menjadi parameter query //
-		$str = $this->build_param($str);
-
-		$data= $this->model->get_list_data($str);
-
-		//load our new PHPExcel library
-		$this->load->library('excel');
-		//activate worksheet number 1
-		$this->excel->setActiveSheetIndex(0);
-		//name the worksheet
-		$this->excel->getActiveSheet()->setTitle('Master_pembayaran');
-		$this->excel->getActiveSheet()->setCellValue('A1', "Master pembayaran");
-		$this->excel->getActiveSheet()->mergeCells('A1:I1');
-		$this->excel->getActiveSheet()->getStyle('A1:I1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-		//header
-		$this->excel->getActiveSheet()->setCellValue('A3', "No.");
-		$this->excel->getActiveSheet()->setCellValue('B3', "ID Mata Pelajaran");
-		$this->excel->getActiveSheet()->setCellValue('C3', "Tingkat");
-		$this->excel->getActiveSheet()->setCellValue('D3', "pembayaran");
-		$this->excel->getActiveSheet()->setCellValue('E3', "Jawaban A");
-		$this->excel->getActiveSheet()->setCellValue('F3', "Jawaban B");
-		$this->excel->getActiveSheet()->setCellValue('G3', "Jawaban C");
-		$this->excel->getActiveSheet()->setCellValue('H3', "Jawaban D");
-		$this->excel->getActiveSheet()->setCellValue('I3', "Jawaban");
-
-		$fdate 	= "d-m-Y";
-		$i  	= 4;
-
-		if($data != null){
-
-			foreach($data as $row){
-
-				$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
-				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->id_matpal.'-'.$row->nama_matpal);
-				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->tingkat);
-				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->pembayaran);
-				$this->excel->getActiveSheet()->setCellValue('E'.$i, $row->jwb_a);
-				$this->excel->getActiveSheet()->setCellValue('F'.$i, $row->jwb_b);
-				$this->excel->getActiveSheet()->setCellValue('G'.$i, $row->jwb_c);
-				$this->excel->getActiveSheet()->setCellValue('H'.$i, $row->jwb_d);
-				$this->excel->getActiveSheet()->setCellValue('I'.$i, $row->jwb_benar);
-				
-				$i++;
-			}
-		}
-
-		for($col = 'A'; $col !== 'I'; $col++) {
-
-		    $this->excel->getActiveSheet()
-		        ->getColumnDimension($col)
-		        ->setAutoSize(true);
-		}
-
-		$styleArray = array(
-		  'borders' => array(
-		    'allborders' => array(
-		      'style' => PHPExcel_Style_Border::BORDER_THIN
-		    )
-		  )
-		);
-		$i = $i-1;
-		$cell_to = "I".$i;
-		$this->excel->getActiveSheet()->getStyle('A3:'.$cell_to)->applyFromArray($styleArray);
-		$this->excel->getActiveSheet()->getStyle('A1:I3')->getFont()->setBold(true);
-		$this->excel->getActiveSheet()->getStyle('A3:I3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-		$this->excel->getActiveSheet()->getStyle('A3:I3')->getFill()->getStartColor()->setRGB('2CC30B');
-
-		$filename='Master-pembayaran.xls'; //save our workbook as this file name
-		header('Content-Type: application/vnd.ms-excel'); //mime type
-		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
-		header('Cache-Control: max-age=0');//no cache
-
-		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
-		//if you want to save it as .XLSX Excel 2007 format
-		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
-		//force user to download the Excel file without writing it to server's HD
-		$objWriter->save('php://output');
-
+	function get_status_pembayaran_bulanan($no_registrasi,$id_tagihan)
+	{
+		$no_registrasi 				= urldecode($no_registrasi);
+		$id_tagihan 				= urldecode($id_tagihan);
+		$data_tagihan 						= $this->model->query_status_pembayaran_bulanan($no_registrasi,$id_tagihan);
+    	echo json_encode($data_tagihan);
 	}
 
 	function simpan_pembayaran($status)
@@ -291,9 +230,31 @@ class pembayaran extends IO_Controller
 			}
 			else{
 
+				$data_pembayaranhd = array(
+					'no_registrasi' 		=> $no_registrasi,
+					'tanggal' 				=> $tgl_bayar,
+					'tipe_pembayaran'		=> $tipe_pembayaran,
+					'semester' 		    	=> $semester,
+					'keterangan' 		    => $keterangan,
+					'userid' 				=> $userid
+				);
+
+				$id = $this->model->simpan_pembayaranhd($data_pembayaranhd);
+				$input = $this->input->post();
+				if(isset($input['byr'])){			
+
+					foreach($input['byr'] as $id_tagihan){
+						$idetail = explode('#',$id_tagihan);
+					
+						$data_pembayarandt = array(
+							'id_pembayaranhd' 		=> $id,
+							'id_tagihan' 			=> $idetail[0],
+							'nominal' 				=> $idetail[1]
+						);
+						$this->model->simpan_pembayarandt($data_pembayarandt);
+					}
+				}
 			}
-		// save data pembayaran
-         	// $this->model->simpan_data_pembayaran($data_pembayaran);
 
 		}
         else //update data
@@ -305,23 +266,31 @@ class pembayaran extends IO_Controller
 			echo "true";
 	}
 
-	function get_data_pembayaran($no_registrasi,$tipe_pembayaran,$semester_pembayaran)
+	function Delpembayaran($id_pembayaran)
 	{
-		$no_registrasi 				= urldecode($no_registrasi);
-		$tipe_pembayaran 			= urldecode($tipe_pembayaran);
-		$semester_pembayaran 		= urldecode($semester_pembayaran);
-		$data 						= $this->model->query_get_data_pembayaran($no_registrasi,$tipe_pembayaran,$semester_pembayaran);
-    	echo json_encode($data);
+		$id_pembayaran = urldecode($id_pembayaran);
+		$this->model->delete_pembayaranhd($id_pembayaran);
+		$this->model->delete_pembayarandt($id_pembayaran);
 	}
 
-	function get_sisa_potongan($no_registrasi,$id_tagihan)
+	function PrintPembayaran($id_pembayaran)
 	{
-		$no_registrasi 				= urldecode($no_registrasi);
-		$id_tagihan 				= urldecode($id_tagihan);
-		$data_tagihan 						= $this->model->query_get_sisa_potongan($no_registrasi,$id_tagihan);
-    	echo json_encode($data_tagihan);
+
+		
+
+		
+		$this->load->library("pdf");
+		$data['dataheader'] = $this->model->get_print_pembayaran_header($id_pembayaran);
+		$data['databody'] 	= $this->model->get_print_pembayaran($id_pembayaran);
+
+		$this->pdf->set_paper("A4", "potrait");
+		$this->pdf->filename = "Pembayaran.pdf";
+		$this->pdf->load_view('vPrintPembayaran',$data);
+		
 	}
 
+
+	
 	function get_data_pembayaran_byid($id_pembayaran)
 	{
 		$id_pembayaran = urldecode($id_pembayaran);
@@ -329,11 +298,7 @@ class pembayaran extends IO_Controller
     	echo json_encode($data);
 	}
 
-	function Delpembayaran($kode_pembayaran)
-	{
-		$kode_pembayaran = urldecode($kode_pembayaran);
-		$this->model->delete_pembayaran($kode_pembayaran);
-	}
+
 
 
 }

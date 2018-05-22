@@ -21,7 +21,9 @@ class Mpembayaran extends CI_Model
 		
         $cols = array('id_pembayaran','no_registrasi','tanggal','tipe_pembayaran','semester','keterangan');
 
-		$sql = "SELECT trans_pembayaranhd.id_pembayaran,trans_pembayaranhd.no_registrasi,trans_pembayaranhd.tanggal,trans_pembayaranhd.tipe_pembayaran,trans_pembayaranhd.semester,trans_pembayaranhd.keterangan FROM trans_pembayaranhd";
+		$sql = "SELECT trans_pembayaranhd.id_pembayaran,trans_pembayaranhd.no_registrasi,ms_santri.nama_lengkap,trans_pembayaranhd.tanggal,trans_pembayaranhd.tipe_pembayaran,trans_pembayaranhd.semester,trans_pembayaranhd.keterangan 
+				FROM trans_pembayaranhd
+				INNER JOIN ms_santri ON trans_pembayaranhd.no_registrasi= ms_santri.no_registrasi";
                     
 
             if($param!=null){
@@ -42,8 +44,12 @@ class Mpembayaran extends CI_Model
 		$data=$this->db->query("SELECT trans_tagihan.id_tagihan,trans_tagihan.id_thn_ajar,trans_tagihan.no_registrasi,ms_santri.nama_lengkap,trans_tagihan.ket_bulan,trans_tagihan.total_tagihan
 								FROM trans_tagihan 
 								INNER JOIN ms_santri ON trans_tagihan.no_registrasi= ms_santri.no_registrasi
-								WHERE trans_tagihan.no_registrasi = '$no_registrasi' AND trans_tagihan.tipe_tagihan = '$tipe_pembayaran' AND trans_tagihan.ket_semester ='$semester' ORDER BY trans_tagihan.id_tagihan, trans_tagihan.ket_bulan")->result_array();
+								WHERE trans_tagihan.no_registrasi = '$no_registrasi' AND trans_tagihan.tipe_tagihan = '$tipe_pembayaran' AND trans_tagihan.ket_semester ='$semester' 
+								order by trans_tagihan.ket_bulan ASC")->result_array();
 		return $data;
+		// $data = $this->db->last_query();
+		// var_dump($data);
+		// exit();
 	}
 
     function query_get_sisa_potongan($no_registrasi,$id_tagihan){
@@ -54,11 +60,21 @@ class Mpembayaran extends CI_Model
 								WHERE trans_pembayaranhd.no_registrasi='$no_registrasi' and trans_pembayarandt.id_tagihan='$id_tagihan'")->row_array();
 		return $data;
 		// $data = $this->db->last_query();
-		// echo $data;
 		// var_dump($data);
 		// exit();
         
-        // return $this->db->get()->result();
+	}
+
+    function query_status_pembayaran_bulanan($no_registrasi,$id_tagihan){
+        $data = array();
+		$data=$this->db->query("SELECT trans_pembayaranhd.tanggal
+								FROM trans_pembayaranhd 
+								INNER JOIN trans_pembayarandt ON trans_pembayaranhd.id_pembayaran = trans_pembayarandt.id_pembayaranhd
+								WHERE trans_pembayaranhd.no_registrasi='$no_registrasi' and trans_pembayarandt.id_tagihan='$id_tagihan'")->row_array();
+		return $data;
+        // $data = $this->db->last_query();
+		// var_dump($data);
+		// exit();
 	}
 
 	function simpan_pembayaranhd($data_pembayaranhd){
@@ -72,15 +88,40 @@ class Mpembayaran extends CI_Model
 		$this->db->insert('trans_pembayarandt',$data_pembayarandt);	
 	}
 	
+	function delete_pembayaranhd($id_pembayaran){
+		$this->db->where('id_pembayaran',$id_pembayaran);
+		$this->db->delete('trans_pembayaranhd');
+	}
+
+	function delete_pembayarandt($id_pembayaran){
+		$this->db->where('id_pembayaranhd',$id_pembayaran);
+		$this->db->delete('trans_pembayarandt');
+	}
+
+	function get_print_pembayaran_header($id_pembayaran)
+	{
+		$data = array();
+		$data=$this->db->query("SELECT trans_pembayaranhd.`id_pembayaran`,trans_pembayaranhd.`no_registrasi`,ms_santri.`nama_lengkap`,trans_pembayaranhd.`tanggal`,trans_pembayaranhd.`tipe_pembayaran`,trans_pembayaranhd.`semester`,trans_pembayaranhd.`keterangan`
+								FROM trans_pembayaranhd
+								inner join ms_santri on trans_pembayaranhd.`no_registrasi`= ms_santri.`no_registrasi`
+								WHERE trans_pembayaranhd.`id_pembayaran` = '$id_pembayaran'")->row_array();
+		return $data;
+	}
+
+	function get_print_pembayaran($id_pembayaran)
+	{
+		$data = array();
+		$data=$this->db->query("SELECT trans_pembayarandt.`id_pembayaranhd`,trans_pembayarandt.`id_tagihan`,trans_tagihan.`ket_bulan`,trans_tagihan.`tipe_tagihan`,trans_tagihan.`ket_semester`,trans_pembayarandt.`nominal`
+								FROM trans_pembayarandt
+								INNER JOIN trans_tagihan ON trans_pembayarandt.`id_tagihan` = trans_tagihan.`id_tagihan`
+								where trans_pembayarandt.id_pembayaranhd = '$id_pembayaran'")->result_array();
+		return $data;
+	}
 	
 
 
 
 
-	function delete_pembayaran($kode_pembayaran){
-		$this->db->where('id_pembayaran',$kode_pembayaran);
-		$this->db->delete('ms_bankpembayaran');
-	}
 
     function update_data_pembayaran($kode_pembayaran,$data_pembayaran){
         

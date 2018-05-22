@@ -205,7 +205,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="portlet-body">
-                                                    <input type="text" class="" name="id_tagihan" id="id_tagihan">
+                                                    <input type="text" class="hidden" name="id_tagihan" id="id_tagihan">
                                                         <!--span-->
                                                             <div class="form-group">
                                                                 <label class="control-label"></label>
@@ -233,25 +233,49 @@
                                                                 <span class="input-group-addon">
                                                                     Jumlah Bayar   
                                                                 </span>
-                                                                <input type="text" class="form-control" name="jumlah_bayar" id="jumlah_bayar"  required></div>
+                                                                <input type="text" class="form-control" name="jumlah_bayar" id="jumlah_bayar"   required></div>
                                                             </div>   
                                                         <!--span-->
                                                     </div>
                                                 </div>
                                             <!-- End Detail pembayaran semester -->
                                             <!-- Detail pembayaran bulanan -->
-                                            <div id="data_pembayaran_bulanan" class="portlet box green-jungle">
-                                                        <div class="portlet-title">
-                                                            <div class="caption">
-                                                                <i class="fa fa-child"></i>Tagihan Bulanan
-                                                            </div>
-                                                        </div>
-                                                        <div class="portlet-body">
-                                                            <!--span-->
-                                                            
-                                                            <!--span-->
+                                                <div id="data_pembayaran_bulanan" class="portlet box green-jungle">
+                                                    <div class="portlet-title">
+                                                        <div class="caption">
+                                                            <i class="fa fa-child"></i>Tagihan Bulanan
                                                         </div>
                                                     </div>
+                                                    <div class="portlet-body">
+                                                        <!--span-->
+                                                        <input type="text" id="hid_jumlah_item_semester" value="0" class="hidden"/>
+                                                            <div class="portlet-body table-both-scroll">
+                                                            <div class="table-responsive">
+                                                            <table id="tb_list_semester" class="table table-striped table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Bulan</th>
+                                                                        <th>Status</th>
+                                                                        <th>Bayar</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td colspan="3" align="center">
+                                                                        Belum Ada Data.
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                    <!--<tfoot>
+                                                                        <tr>
+                                                                        </tr>
+                                                                    </tfoot>-->
+                                                            </table>
+                                                        </div>
+                                                        </div>
+                                                        <!--span-->
+                                                    </div>
+                                                </div>
                                             <!-- End Detail pembayaran bulanan -->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>

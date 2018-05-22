@@ -187,6 +187,12 @@ function idregisshow() {
 									var total_pembayaran = data_tagihan['total_pembayaran'];
 									var sisa_pembayaran = total_tagihan - total_pembayaran;
 									$('#sisa_tagihan').val(sisa_pembayaran);
+									if (sisa_pembayaran ==0){
+										$('#jumlah_bayar').attr('readonly', true);
+									}
+									else{
+										$('#jumlah_bayar').attr('readonly', false);
+									}
 									// for (i = 0; i < ilength; i++) {
 									// }
 
@@ -205,7 +211,63 @@ function idregisshow() {
 					}else{ //jika bayar bulanan
 						
 						$('#data_pembayaran_bulanan').show();
-						bootbox.alert("onprosess");
+						
+						//show semester
+						$('#tb_list_semester tbody').html('');
+						
+						$.each(data, function (index, value) {
+							//get status bayar
+							var tagihan_bulanan = value['id_tagihan'];
+							var bulan = value['ket_bulan'];
+							var str_url = encodeURI(base_url + "pembayaran/get_status_pembayaran_bulanan/" + no_registrasi + "/" + tagihan_bulanan);
+							$.ajax({
+
+								type: "POST",
+								url: str_url,
+								dataType: "html",
+								success: function (data_tagihan_bulanan) {
+
+									var data_tagihan_bulanan = $.parseJSON(data_tagihan_bulanan);
+									if (data_tagihan_bulanan != null) {
+										var ilength = data_tagihan_bulanan.length;
+										var tanggal = data_tagihan_bulanan['tanggal'];
+										
+									}
+									else {
+										var tanggal ='';
+
+									}
+									var row_count = $('#tb_list_semester tr.tb-detail').length;
+									if (tanggal == '') {
+										var status = "BELUM BAYAR";
+										// var strradiobutton = "<input type='checkbox' id='byr" + value['id_tagihan'] +"' value=" + value['id_tagihan'] + " class='chksemester'>" + value['total_tagihan'];
+										var strradiobutton = "<input type='checkbox' name='byr[]' value=" + value['id_tagihan'] + "#" + value['total_tagihan'] +" class='chksemester'>" + value['total_tagihan'];
+									} else {
+										var strradiobutton = '';
+										var status = "LUNAS TGL: " + tanggal;
+									}
+
+
+
+									var row_count = $('#tb_list_semester tr.tb-detail').length;
+									var content_data = '<tr class="tb-detail" id="row' + value['id_tagihan'] + '">';
+									content_data += "<td>" + bulan + "</td>";
+									content_data += "<td>" + status + "</td>";
+									content_data += "<td>" + strradiobutton + "</td>";
+									content_data += "</tr>";
+
+									if (row_count < 1) {
+
+										$('#tb_list_semester tbody').html(content_data);
+									}
+									else {
+
+										$('#tb_list_semester tbody').append(content_data);
+									}
+								}
+							});
+						
+					});
 					}
 					
 				}
@@ -263,7 +325,6 @@ function svpembayaran() {
 		$('#tipe_pembayaran_bulanan').attr('disabled', false);
 		$('#semester_satu').attr('disabled', false);
 		$('#semester_dua').attr('disabled', false);
-
 		var iform = $('#add_pembayaran')[0];
 		var data = new FormData(iform);
 		if ($status == 'UPDATE') {
@@ -271,6 +332,27 @@ function svpembayaran() {
 		}
 		else {
 			msg = "Simpan Data Berhasil"
+		}
+
+		if(tipe_pembayaran =='B'){
+			var chksemesterArray = [];
+
+			$(".chksemester:checked").each(function () {
+				chksemesterArray.push($(this).val());
+			});
+
+			if (chksemesterArray.length == 0) {
+				bootbox.alert("Tidak ada pembayaran");
+				return false;
+			}
+	
+		}
+		else{
+
+			if ($('#jumlah_bayar').val() > $('#sisa_tagihan').val()){
+				bootbox.alert("Jumlah Bayar melebihi sisa tagihan");
+				return false;
+			}
 		}
 		$.ajax({
 
@@ -294,7 +376,39 @@ function svpembayaran() {
 		});
 	}
 }
+
+function hapus(id_pembayaran) {
+	var str_url = encodeURI(base_url + "pembayaran/Delpembayaran/" + id_pembayaran);
+	bootbox.confirm("Anda yakin akan menghapus ?",
+		function (result) {
+			if (result == true) {
+
+				$.ajax({
+					type: "POST",
+					url: str_url,
+					dataType: "html",
+					success: function (data) {
+						bootbox.alert({
+							message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Hapus Berhasil ",
+							size: 'small',
+							callback: function () {
+
+								window.location = base_url + 'pembayaran';
+							}
+						});
+					}
+				});
+			}
+		}
+	);
+}
+
 //#endregion pembayran
+
+function print(id_pembayaran) {
+	window.open(base_url + "pembayaran/PrintPembayaran/" + id_pembayaran, '_blank');
+}
+
 function Modalcari(){
 	clearformcari();
 	$('#Modal_cari').modal('show');
@@ -327,6 +441,7 @@ function kosong(){
 	$('#jawaban_d').val('');
 	$('#jawab_benar').val('');
 }
+
 
 
 
@@ -377,33 +492,6 @@ function edit(id_pembayaran){
 			
 		}
 	});
-	
-}
-
-function hapus(kode_pembayaran){
-	var str_url  	= encodeURI(base_url+"pembayaran/Delpembayaran/"+kode_pembayaran);
-	bootbox.confirm("Anda yakin akan menghapus ini ?",
-		function(result){
-			if(result==true){
-				
-			$.ajax({
-			type:"POST",
-			url:str_url,
-			dataType:"html",
-			success:function(data){
-					bootbox.alert({
-						message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;Hapus Berhasil Berhasil",
-						size: 'small',
-						callback: function () {
-
-							window.location = base_url+'pembayaran';
-						}
-					});
-				}
-			});
-			}
-		}
-	);
 	
 }
 
