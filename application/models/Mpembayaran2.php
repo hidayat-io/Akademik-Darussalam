@@ -40,13 +40,16 @@ class Mpembayaran extends CI_Model
 		return $this->db->query($sql)->result();
 	}
 	
-	function query_get_data_pembayaran($no_registrasi,$tipe_pembayaran,$semester,$id_thn_ajar){
+	function query_get_data_tagihan($no_registrasi,$tipe_pembayaran,$semester,$id_thn_ajar){
         $data = array();
-		$data=$this->db->query("SELECT trans_tagihan.id_tagihan,trans_tagihan.id_thn_ajar,trans_tagihan.no_registrasi,ms_santri.nama_lengkap,trans_tagihan.ket_bulan,trans_tagihan.total_tagihan
+		$data=$this->db->query("SELECT trans_tagihan.*, ms_santri.nama_lengkap 
 								FROM trans_tagihan 
-								INNER JOIN ms_santri ON trans_tagihan.no_registrasi= ms_santri.no_registrasi
-								WHERE trans_tagihan.no_registrasi = '$no_registrasi' AND trans_tagihan.id_thn_ajar = '$id_thn_ajar' AND trans_tagihan.tipe_tagihan = '$tipe_pembayaran' AND trans_tagihan.ket_semester ='$semester' 
-								ORDER BY trans_tagihan.id_tagihan, trans_tagihan.ket_bulan ASC")->result_array();
+								INNER JOIN ms_santri ON trans_tagihan.no_registrasi = ms_santri.no_registrasi 
+								WHERE trans_tagihan.no_registrasi = 'T39180002' 
+								AND trans_tagihan.id_thn_ajar = '3' 
+								AND trans_tagihan.tipe_tagihan = 'B' 
+								AND trans_tagihan.ket_semester ='SEMESTER1'
+								ORDER BY trans_tagihan.ket_bulan ASC")->result_array();
 		// $data = $this->db->last_query();
 		// var_dump($data);
 		// exit();
@@ -59,19 +62,20 @@ class Mpembayaran extends CI_Model
 								FROM trans_pembayaranhd 
 								INNER JOIN trans_pembayarandt ON trans_pembayaranhd.id_pembayaran = trans_pembayarandt.id_pembayaranhd
 								WHERE trans_pembayaranhd.no_registrasi='$no_registrasi' and trans_pembayarandt.id_tagihan='$id_tagihan'")->row_array();
+		return $data;
 		// $data = $this->db->last_query();
 		// var_dump($data);
 		// exit();
-		return $data;
         
 	}
 
-    function query_status_pembayaran_bulanan($no_registrasi,$id_tagihan){
+    function query_status_pembayaran_bulanan($no_registrasi,$id_thn_ajar,$id_tagihan){
         $data = array();
-		$data=$this->db->query("SELECT trans_pembayaranhd.tanggal,trans_pembayaranhd.id_pembayaran,trans_pembayarandt.id_tagihan
+		$data=$this->db->query("SELECT trans_pembayaranhd.tanggal,trans_pembayaranhd.id_pembayaran,trans_pembayarandt.id_tagihan,trans_pembayarandt.nominal
 								FROM trans_pembayaranhd 
 								INNER JOIN trans_pembayarandt ON trans_pembayaranhd.id_pembayaran = trans_pembayarandt.id_pembayaranhd 
-								WHERE trans_pembayaranhd.no_registrasi='$no_registrasi' and trans_pembayarandt.id_tagihan='$id_tagihan'")->row_array();
+								WHERE trans_pembayaranhd.no_registrasi='$no_registrasi' and trans_pembayaranhd.id_thn_ajar ='$id_thn_ajar' 
+								and trans_pembayarandt.id_tagihan='$id_tagihan'")->row_array();
         // $data = $this->db->last_query();
 		// var_dump($data);
 		// exit();
@@ -125,43 +129,43 @@ class Mpembayaran extends CI_Model
 		$data=$this->db->query("SELECT trans_pembayarandt.`id_pembayaranhd`,trans_pembayarandt.`id_tagihan`,trans_tagihan.`ket_bulan`,trans_tagihan.`tipe_tagihan`,trans_tagihan.`ket_semester`,trans_pembayarandt.`nominal`
 								FROM trans_pembayarandt
 								INNER JOIN trans_tagihan ON trans_pembayarandt.`id_tagihan` = trans_tagihan.`id_tagihan`
-								where trans_pembayarandt.id_pembayaranhd = '$id_pembayaran' order by trans_pembayarandt.`id_tagihan` ASC")->result_array();
+								where trans_pembayarandt.id_pembayaranhd = '$id_pembayaran'")->result_array();
 		return $data;
 	}
 	
-    function query_get_pembayaran($id_pembayaran,$no_registrasi,$tipe_pembayaran,$semester){
-        $data = array();
+    // function query_get_pembayaran($id_pembayaran,$no_registrasi,$tipe_pembayaran,$semester){
+    //     $data = array();
 
-		$data=$this->db->query("SELECT trans_tagihan.id_tagihan,trans_tagihan.id_thn_ajar,trans_tagihan.no_registrasi,ms_santri.nama_lengkap,trans_tagihan.ket_bulan,trans_tagihan.tipe_tagihan as tipe_pembayaran,trans_tagihan.ket_semester,trans_tagihan.total_tagihan
-								FROM trans_tagihan 
-								INNER JOIN ms_santri ON trans_tagihan.no_registrasi= ms_santri.no_registrasi
-								WHERE trans_tagihan.no_registrasi = '$no_registrasi' AND trans_tagihan.tipe_tagihan = '$tipe_pembayaran' AND trans_tagihan.ket_semester ='$semester' 
-								order by trans_tagihan.ket_bulan ASC")->result_array();
+	// 	$data=$this->db->query("SELECT trans_tagihan.id_tagihan,trans_tagihan.id_thn_ajar,trans_tagihan.no_registrasi,ms_santri.nama_lengkap,trans_tagihan.ket_bulan,trans_tagihan.tipe_tagihan as tipe_pembayaran,trans_tagihan.ket_semester,trans_tagihan.total_tagihan
+	// 							FROM trans_tagihan 
+	// 							INNER JOIN ms_santri ON trans_tagihan.no_registrasi= ms_santri.no_registrasi
+	// 							WHERE trans_tagihan.no_registrasi = '$no_registrasi' AND trans_tagihan.tipe_tagihan = '$tipe_pembayaran' AND trans_tagihan.ket_semester ='$semester' 
+	// 							order by trans_tagihan.ket_bulan ASC")->result_array();
+	// 	// $data = $this->db->last_query();
+	// 	// var_dump($data);
+	// 	// exit();
+	// 	return $data;
+	// }
+    function query_get_pembayaran($id_pembayaran){
+        $data = array();
+		$data=$this->db->query("SELECT trans_pembayaranhd.id_pembayaran,trans_pembayaranhd.no_registrasi,trans_pembayaranhd.id_thn_ajar,ms_santri.nama_lengkap,DATE_FORMAT(trans_pembayaranhd.tanggal,'%d-%m-%Y') AS tanggal,
+										trans_pembayaranhd.tipe_pembayaran,trans_pembayaranhd.semester,trans_pembayaranhd.keterangan,trans_pembayarandt.nominal, trans_tagihan.total_tagihan,trans_tagihan.id_tagihan,trans_tagihan.ket_bulan
+								FROM trans_pembayaranhd 
+								INNER JOIN trans_pembayarandt on trans_pembayaranhd.id_pembayaran = trans_pembayarandt.id_pembayaranhd
+								INNER JOIN trans_tagihan on trans_pembayaranhd.no_registrasi = trans_tagihan.no_registrasi 
+														AND trans_pembayaranhd.id_thn_ajar = trans_tagihan.id_thn_ajar 
+														AND trans_pembayaranhd.tipe_pembayaran = trans_tagihan.tipe_tagihan 
+														AND trans_pembayaranhd.semester = trans_tagihan.ket_semester
+								INNER JOIN ms_santri on trans_pembayaranhd.no_registrasi = ms_santri.no_registrasi
+								WHERE trans_pembayaranhd.`id_pembayaran`= '$id_pembayaran'")->result_array();
 		// $data = $this->db->last_query();
 		// var_dump($data);
 		// exit();
 		return $data;
-	}
-    // function query_get_pembayaran($id_pembayaran){
-    //     $data = array();
-	// 	$data=$this->db->query("SELECT trans_pembayaranhd.id_pembayaran,trans_pembayaranhd.no_registrasi,trans_pembayaranhd.id_thn_ajar,ms_santri.nama_lengkap,DATE_FORMAT(trans_pembayaranhd.tanggal,'%d-%m-%Y') AS tanggal,
-	// 									trans_pembayaranhd.tipe_pembayaran,trans_pembayaranhd.semester,trans_pembayaranhd.keterangan,trans_pembayarandt.nominal, trans_tagihan.total_tagihan,trans_tagihan.id_tagihan,trans_tagihan.ket_bulan
-	// 							FROM trans_pembayaranhd 
-	// 							INNER JOIN trans_pembayarandt on trans_pembayaranhd.id_pembayaran = trans_pembayarandt.id_pembayaranhd
-	// 							INNER JOIN trans_tagihan on trans_pembayaranhd.no_registrasi = trans_tagihan.no_registrasi 
-	// 													AND trans_pembayaranhd.id_thn_ajar = trans_tagihan.id_thn_ajar 
-	// 													AND trans_pembayaranhd.tipe_pembayaran = trans_tagihan.tipe_tagihan 
-	// 													AND trans_pembayaranhd.semester = trans_tagihan.ket_semester
-	// 							INNER JOIN ms_santri on trans_pembayaranhd.no_registrasi = ms_santri.no_registrasi
-	// 							WHERE trans_pembayaranhd.`id_pembayaran`= '$id_pembayaran'")->result_array();
-	// 	$data = $this->db->last_query();
-	// 	var_dump($data);
-	// 	exit();
-	// 	return $data;
 		
         
         // return $this->db->get()->result();
-	// }
+	}
 
 
 

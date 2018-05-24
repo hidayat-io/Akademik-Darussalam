@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <title>PEMBAYARAN<?php echo $dataheader['id_pembayaran'].'#'.$dataheader['no_registrasi'];?></title>
 </head>
-<?php
-                                    if($dataheader['tipe_pembayaran'] == 'S' ){
-                                        $tipe_pembayaran = 'SEMESTER';
-                                        $status          = '';
-                                        $item            = 'ket_semester';
-                                    }
-                                    else{
-                                        $tipe_pembayaran = 'BULANAN';
-                                        $status          = 'BULAN KE-';
-                                        $item            = 'ket_bulan';
-                                    }
-                                ?>
+  <?php
+      if($dataheader['tipe_pembayaran'] == 'S' ){
+          $tipe_pembayaran = 'SEMESTER';
+          $status          = '';
+          $item            = 'ket_semester';
+      }
+      else{
+          $tipe_pembayaran = 'BULANAN';
+          $status          = 'BULAN KE-';
+          $item            = 'ket_bulan';
+      }
+  ?>
 <body>
 <table width="100%" border="0" align="center">
   <tbody>

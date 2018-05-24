@@ -146,7 +146,7 @@ function idregisshow() {
 		var id_thn_ajar 			= $('#id_thn_ajar').val();
 		var tipe_pembayaran 		= $('input[name=tipe_pembayaran]:checked').val();
 		var semester_pembayaran 	= $('input[name=semester]:checked').val();
-		var str_url = encodeURI(base_url + "pembayaran/get_data_pembayaran/" + no_registrasi + "/" + tipe_pembayaran + "/" + semester_pembayaran + "/" + id_thn_ajar);
+		var str_url = encodeURI(base_url + "pembayaran/get_data_tagihan/" + no_registrasi + "/" + tipe_pembayaran + "/" + semester_pembayaran + "/" + id_thn_ajar);
 		$.ajax({
 
 			type: "POST",
@@ -168,9 +168,8 @@ function idregisshow() {
 					$('#semester_satu').attr('disabled', true);
 					$('#semester_dua').attr('disabled', true);
 					$('#nama').val(data[0].nama_lengkap);
-
-					//jika bayar semester
-					if(tipe_pembayaran =='S'){
+					
+					if(tipe_pembayaran =='S'){//jika bayar semester
 						
 						$('#data_pembayaran_semester').show();
 						$('#total_tagihan').val(data[0].total_tagihan);
@@ -198,11 +197,6 @@ function idregisshow() {
 									else{
 										$('#jumlah_bayar').attr('readonly', false);
 									}
-									// for (i = 0; i < ilength; i++) {
-									// }
-
-
-
 								}
 								else {
 									$('#sisa_tagihan').val(data[0].total_tagihan);
@@ -218,46 +212,34 @@ function idregisshow() {
 						$('#data_pembayaran_bulanan').show();
 						
 						//show semester
-						$('#tb_list_semester tbody').html('');
+						$('#tb_list_semester tbody').html(''); 
 						
-						$.each(data, function (index, value) {
-							//get status bayar
-							var tagihan_bulanan = value['id_tagihan'];
-							var bulan = value['ket_bulan'];
-							var str_url = encodeURI(base_url + "pembayaran/get_status_pembayaran_bulanan/" + no_registrasi + "/" + tagihan_bulanan);
+						
+						for (i = 0; i <= ilength; i++) {						
+						// $.each(data, function (index, value) {
+							var i = i-1;
+							var str_url = encodeURI(base_url + "pembayaran/get_status_pembayaran_bulanan/" + no_registrasi + "/" + id_thn_ajar + "/" + data[i].id_tagihan);
 							$.ajax({
 
 								type: "POST",
 								url: str_url,
 								dataType: "html",
-								success: function (data_tagihan_bulanan) {
+								success: function (data_status_pembayaran_bulanan) {
 
-									var data_tagihan_bulanan = $.parseJSON(data_tagihan_bulanan);
-									if (data_tagihan_bulanan != null) {
-										var ilength = data_tagihan_bulanan.length;
-										var tanggal = data_tagihan_bulanan['tanggal'];
-										
-									}
-									else {
-										var tanggal ='';
-
-									}
-									// var row_count = $('#tb_list_semester tr.tb-detail').length;
-									if (tanggal == '') {
-										var strradiobutton = '-';
+									var data_status_pembayaran_bulanan = $.parseJSON(data_status_pembayaran_bulanan);
+									if (data_status_pembayaran_bulanan != null) {
+										var tgl = data_status_pembayaran_bulanan['tanggal'];
+										var status = "LUNAS Tangal " + tgl;
+										var strradiobutton ='-';
+									}else{
+										var tgl = '';
 										var status = "BELUM BAYAR";
-										// var strradiobutton = "<input type='checkbox' id='byr" + value['id_tagihan'] +"' value=" + value['id_tagihan'] + " class='chksemester'>" + value['total_tagihan'];
-										var strradiobutton = "<input type='checkbox' name='byr[]' id=" + value['id_tagihan'] +" value=" + value['id_tagihan'] + "#" + value['total_tagihan'] +" class='chksemester'>" + value['total_tagihan'];
-									} else {
-										var strradiobutton = '';
-										var status = "LUNAS TGL: " + tanggal;
+										var strradiobutton = "<input type='checkbox' name='byr[]' id=" + data[i].id_tagihan + " value=" + data[i].id_tagihan + "#" + data[i].nominal + " class='chksemester'>" + data[i].total_tagihan;
 									}
-
-
 
 									var row_count = $('#tb_list_semester tr.tb-detail').length;
-									var content_data = '<tr class="tb-detail" id="row' + bulan +'#'+ value['id_tagihan'] + '">';
-									content_data += "<td>" + bulan + "</td>";
+									var content_data = '<tr class="tb-detail" id="row' + data[i].ket_bulan + '#' + data[i].id_tagihan + '">';
+									content_data += "<td>" + data[i].ket_bulan + "</td>";
 									content_data += "<td>" + status + "</td>";
 									content_data += "<td>" + strradiobutton + "</td>";
 									content_data += "</tr>";
@@ -272,8 +254,47 @@ function idregisshow() {
 									}
 								}
 							});
+
+							
+						// });
+						}
+
+						// $.each(data, function (index, value) {
+						// 	//get status bayar
+						// 	var tagihan_bulanan = value['id_tagihan'];
+						// 	var bulan = value['ket_bulan'];
+						// 	var str_url = encodeURI(base_url + "pembayaran/get_status_pembayaran_bulanan/" + no_registrasi + "/" + tagihan_bulanan);
+						// 	$.ajax({
+
+						// 		type: "POST",
+						// 		url: str_url,
+						// 		dataType: "html",
+						// 		success: function (data_tagihan_bulanan) {
+
+						// 			var data_tagihan_bulanan = $.parseJSON(data_tagihan_bulanan);
+						// 			if (data_tagihan_bulanan != null) {
+						// 				var ilength = data_tagihan_bulanan.length;
+						// 				var tanggal = data_tagihan_bulanan['tanggal'];
+										
+						// 			}
+						// 			else {
+						// 				var tanggal ='';
+
+						// 			}
+						// 			// var row_count = $('#tb_list_semester tr.tb-detail').length;
+						// 			if (tanggal == '') {
+						// 				var status = "BELUM BAYAR";
+						// 				// var strradiobutton = "<input type='checkbox' id='byr" + value['id_tagihan'] +"' value=" + value['id_tagihan'] + " class='chksemester'>" + value['total_tagihan'];
+						// 				var strradiobutton = "<input type='checkbox' name='byr[]' id=" + value['id_tagihan'] +" value=" + value['id_tagihan'] + "#" + value['total_tagihan'] +" class='chksemester'>" + value['total_tagihan'];
+						// 			} else {
+						// 				var strradiobutton = '';
+						// 				var status = "LUNAS TGL: " + tanggal;
+						// 			}
+
+						// 		}
+						// 	});
 						
-						});
+						// });
 					}
 					
 				}
@@ -293,7 +314,6 @@ function idregisshow() {
 		});
 
 	}
-
 }
 
 function idregishide() {	
@@ -417,8 +437,8 @@ function edit(id_pembayaran,no_registrasi,tipe_pembayaran,semester) {
 	idregishide()
 	$('#spansearchregis').hide();
 	$('#spansearchcloseregis').hide();
-	var str_url = encodeURI(base_url + "pembayaran/get_data_pembayaran_byid/" + id_pembayaran + "/" + no_registrasi + "/" + tipe_pembayaran + "/" + semester);
-	// var str_url = encodeURI(base_url + "pembayaran/get_data_pembayaran_byid/" + id_pembayaran);
+	// var str_url = encodeURI(base_url + "pembayaran/get_data_pembayaran_byid/" + id_pembayaran + "/" + no_registrasi + "/" + tipe_pembayaran + "/" + semester);
+	var str_url = encodeURI(base_url + "pembayaran/get_data_pembayaran_byid/" + id_pembayaran);
 	$('#save_button').text('UPDATE');
 	var button = document.getElementById("save_button");
 	button.disabled = false;

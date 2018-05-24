@@ -34,6 +34,8 @@
                 <table class="table table-striped table-bordered table-hover" id="tb_list">
                     <thead>
                         <tr>
+                            <th style="text-align:center">ID Pembayaran</th>
+                            <th style="text-align:center">Tahun Ajar</th>
                             <th style="text-align:center">Tanggal</th>
                             <th style="text-align:center">No Registrasi</th>
                             <th style="text-align:center">Nama</th>
@@ -45,7 +47,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                        <td colspan="6" align="center">
+                        <td colspan="7" align="center">
                             Tidak ada data ditemukan.
                         </td>
                     </tr>
@@ -90,7 +92,17 @@
                                         <form action="#" id="add_pembayaran">
                                             <!--inputbox-->
                                                 <!--span-->
-                                                    <input type="text" class="" name="kode_pembayaran" id="kode_pembayaran">
+                                                    <div class="form-group">
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                ID Pembayaran
+                                                            </span>
+                                                            <input type="text" class="form-control" name="kode_pembayaran" id="kode_pembayaran" readonly>
+                                                            <input type="text" class="hidden" name="id_thn_ajar" id="id_thn_ajar" value ="<?php echo $id_thn_ajar;?>"readonly>
+                                                        </div>                                                            
+                                                    </div> 
+                                                <!--span-->
                                                 <!--span-->
                                                     <div class="form-group">
                                                         <label class="control-label"></label>
@@ -118,7 +130,8 @@
                                                         <span class="input-group-addon">
                                                             Tanggal
                                                         </span>
-                                                        <input type="text" class="form-control" name="tgl_bayar" id="tgl_bayar" value="<?php echo date('d-m-Y');?>" readonly ></div>
+                                                        <!-- <input type="text" class="form-control" name="tgl_bayar" id="tgl_bayar" value="<?php echo date('d-m-Y');?>" readonly ></div> -->
+                                                        <input type class="form-control datepicker"  data-date-format="dd-mm-yyyy" name="tgl_bayar" id="tgl_bayar" value="<?php echo date('d-m-Y');?>"  required>
                                                     </div>   
                                                  <!--span-->                                                     
                                                 <!--span-->

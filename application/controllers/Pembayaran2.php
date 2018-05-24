@@ -134,18 +134,12 @@ class pembayaran extends IO_Controller
 			$act = '<a href="#" class="btn btn-icon-only green" title="Lihat/Print" onclick="print(\''.$data[$i]->id_pembayaran.'\')">
 						<i class="fa fa-file-o"></i>
 					</a>
+					<a href="#" class="btn btn-icon-only blue '.$class_edit.'" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_pembayaran.'\',\''.$data[$i]->no_registrasi.'\',\''.$data[$i]->tipe_pembayaran.'\',\''.$data[$i]->semester.'\')">
+						<i class="fa fa-edit"></i>
+					</a>
 					<a href="#" class="btn btn-icon-only red '.$class_delete.'" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->id_pembayaran.'\')">
 						<i class="fa fa-remove"></i>
 					</a>';
-			// $act = '<a href="#" class="btn btn-icon-only green" title="Lihat/Print" onclick="print(\''.$data[$i]->id_pembayaran.'\')">
-			// 			<i class="fa fa-file-o"></i>
-			// 		</a>
-			// 		<a href="#" class="btn btn-icon-only blue '.$class_edit.'" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_pembayaran.'\',\''.$data[$i]->no_registrasi.'\',\''.$data[$i]->tipe_pembayaran.'\',\''.$data[$i]->semester.'\')">
-			// 			<i class="fa fa-edit"></i>
-			// 		</a>
-			// 		<a href="#" class="btn btn-icon-only red '.$class_delete.'" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->id_pembayaran.'\')">
-			// 			<i class="fa fa-remove"></i>
-			// 		</a>';
 			// $act = '<a href="#" class="btn btn-icon-only green" title="Lihat/Print" onclick="print(\''.$data[$i]->id_pembayaran.'\')">
 			// 			<i class="fa fa-file-o"></i>
 			// 		</a>
@@ -154,7 +148,7 @@ class pembayaran extends IO_Controller
 			// 		</a>
 			// 		<a href="#" class="btn btn-icon-only red '.$class_delete.'" title="HAPUS DATA" onclick="hapus(\''.$data[$i]->id_pembayaran.'\')">
 			// 			<i class="fa fa-remove"></i>
-					// </a>';
+			// 		</a>';
 			if($data[$i]->tipe_pembayaran =='S'){
 				$tipe_pembayaran = 'SEMESTER';
 			}else{
@@ -182,13 +176,13 @@ class pembayaran extends IO_Controller
 		
 	}
 
-	function get_data_pembayaran($no_registrasi,$tipe_pembayaran,$semester_pembayaran,$id_thn_ajar)
+	function get_data_tagihan($no_registrasi,$tipe_pembayaran,$semester_pembayaran,$id_thn_ajar)
 	{
 		$no_registrasi 				= urldecode($no_registrasi);
 		$id_thn_ajar 				= urldecode($id_thn_ajar);
 		$tipe_pembayaran 			= urldecode($tipe_pembayaran);
 		$semester_pembayaran 		= urldecode($semester_pembayaran);
-		$data 						= $this->model->query_get_data_pembayaran($no_registrasi,$tipe_pembayaran,$semester_pembayaran,$id_thn_ajar);
+		$data 						= $this->model->query_get_data_tagihan($no_registrasi,$tipe_pembayaran,$semester_pembayaran,$id_thn_ajar);
     	echo json_encode($data);
 	}
 
@@ -200,11 +194,12 @@ class pembayaran extends IO_Controller
     	echo json_encode($data_tagihan);
 	}
 
-	function get_status_pembayaran_bulanan($no_registrasi,$id_tagihan)
+	function get_status_pembayaran_bulanan($no_registrasi,$id_thn_ajar,$id_tagihan)
 	{
 		$no_registrasi 				= urldecode($no_registrasi);
+		$id_thn_ajar 				= urldecode($id_thn_ajar);
 		$id_tagihan 				= urldecode($id_tagihan);
-		$data_tagihan 				= $this->model->query_status_pembayaran_bulanan($no_registrasi,$id_tagihan);
+		$data_tagihan 				= $this->model->query_status_pembayaran_bulanan($no_registrasi,$id_thn_ajar,$id_tagihan);
     	echo json_encode($data_tagihan);
 	}
 
@@ -356,21 +351,21 @@ class pembayaran extends IO_Controller
 		
 	}
 	
-	function get_data_pembayaran_byid($id_pembayaran,$no_registrasi,$tipe_pembayaran,$semester)
-	{
-		$id_pembayaran = urldecode($id_pembayaran);
-		$no_registrasi = urldecode($no_registrasi);
-		$tipe_pembayaran = urldecode($tipe_pembayaran);
-		$semester = urldecode($semester);
-		$data = $this->model->query_get_pembayaran($id_pembayaran,$no_registrasi,$tipe_pembayaran,$semester);
-    	echo json_encode($data);
-	}
-	// function get_data_pembayaran_byid($id_pembayaran)
+	// function get_data_pembayaran_byid($id_pembayaran,$no_registrasi,$tipe_pembayaran,$semester)
 	// {
 	// 	$id_pembayaran = urldecode($id_pembayaran);
-	// 	$data = $this->model->query_get_pembayaran($id_pembayaran);
+	// 	$no_registrasi = urldecode($no_registrasi);
+	// 	$tipe_pembayaran = urldecode($tipe_pembayaran);
+	// 	$semester = urldecode($semester);
+	// 	$data = $this->model->query_get_pembayaran($id_pembayaran,$no_registrasi,$tipe_pembayaran,$semester);
     // 	echo json_encode($data);
 	// }
+	function get_data_pembayaran_byid($id_pembayaran)
+	{
+		$id_pembayaran = urldecode($id_pembayaran);
+		$data = $this->model->query_get_pembayaran($id_pembayaran);
+    	echo json_encode($data);
+	}
 
 
 
