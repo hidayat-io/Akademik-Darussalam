@@ -10,7 +10,7 @@
         <div class="portlet box green-jungle">
         <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-database"></i><?php echo $title_table ?>
+                    <i class="fa fa-database"></i><?php echo $title ?>
                 </div>
                 <div class="tools">
                   <div class="btn-group pull-right">
@@ -18,19 +18,15 @@
                   </div>
                 </div>
                 <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">
-                    <button class="btn btn-default " type="button" onclick="addpembayaran()">
+                    <button class="btn btn-default  <?php echo $class_add;?>" type="button" onclick="addpembayaran()">
                         <i class="fa fa-edit"></i>&nbsp;Tambah Data&nbsp;
                     </button>
-                    <!-- <ul class="dropdown-menu" role="menu">
-                      <li><a href="#" onclick="addSantri('TMI')"> TMI </a></li>
-                      <li><a href="#" onclick="addSantri('AITAM')"> AITAM </a></li>
-                    </ul> -->
                     <button type="button" class="btn btn-default" title="Search Data" onclick="Modalcari()">
                         <i class="fa fa-search"></i>&nbsp;Search
                     </button>
-                    <button type="button" class="btn btn-default" title="Export Data to Excel" onclick="downloadExcel()">
+                    <!-- <button type="button" class="btn btn-default" title="Export Data to Excel" onclick="downloadExcel()">
                         <i class="fa fa-file-excel-o"></i>&nbsp;Excel
-                    </button>
+                    </button> -->
                 </div>
             </div>
             <input type="hidden" name="hid_param" id="hid_param" />
@@ -38,15 +34,20 @@
                 <table class="table table-striped table-bordered table-hover" id="tb_list">
                     <thead>
                         <tr>
-                            <th style="text-align:center">Mata Pelajaran</th>
-                            <th style="text-align:center">Tingkat</th>
-                            <th style="text-align:center">Soal</th>
+                            <th style="text-align:center">ID Pembayaran</th>
+                            <th style="text-align:center">Tahun Ajar</th>
+                            <th style="text-align:center">Tanggal</th>
+                            <th style="text-align:center">No Registrasi</th>
+                            <th style="text-align:center">Nama</th>
+                            <th style="text-align:center">Tipe Pembayaran</th>
+                            <th style="text-align:center">Semester</th>
+                            <th style="text-align:center">Keterangan</th>
                             <th style="text-align:center" width="10%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                        <td colspan="5" align="center">
+                        <td colspan="7" align="center">
                             Tidak ada data ditemukan.
                         </td>
                     </tr>
@@ -78,7 +79,11 @@
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class=" icon-layers font-red"></i>
-                                        <span class="caption-subject font-red sbold uppercase">INPUT DATA SOAL</span>
+                                        <span class="caption-subject font-red sbold uppercase">INPUT DATA PEMBAYARAN
+                                            <h3>
+                                            Kurikulum : <b><?php echo $thn_ajar_aktif;?></b>
+                                            </h3>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
@@ -87,133 +92,204 @@
                                         <form action="#" id="add_pembayaran">
                                             <!--inputbox-->
                                                 <!--span-->
-                                                    <input type="text" class="hidden" name="kode_pembayaran" id="kode_pembayaran">
+                                                    <div class="form-group">
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                ID Pembayaran
+                                                            </span>
+                                                            <input type="text" class="form-control" name="kode_pembayaran" id="kode_pembayaran" readonly>
+                                                            <input type="text" class="hidden" name="id_thn_ajar" id="id_thn_ajar" value ="<?php echo $id_thn_ajar;?>"readonly>
+                                                        </div>                                                            
+                                                    </div> 
+                                                <!--span-->
                                                 <!--span-->
                                                     <div class="form-group">
                                                         <label class="control-label"></label>
                                                         <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                No Registrasi
+                                                            </span>
+                                                            <input type="text" class="form-control" name="no_registrasi" id="no_registrasi" placeholder="Masukan No Registrasi Santri TMI" onkeydown="OtomatisKapital(this)" maxlength="10" required>
+                                                        </div>                                                            
+                                                    </div> 
+                                                <!--span-->
+                                                    <div class="form-group">
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            Nama Santri
+                                                        </span>
+                                                        <input type="text" class="form-control" name="nama" id="nama" readonly required></div>
+                                                    </div>   
+                                                <!--span-->                                                     
+                                                <!--span-->
+                                                    <div class="form-group">
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            Tanggal
+                                                        </span>
+                                                        <!-- <input type="text" class="form-control" name="tgl_bayar" id="tgl_bayar" value="<?php echo date('d-m-Y');?>" readonly ></div> -->
+                                                        <input type class="form-control datepicker"  data-date-format="dd-mm-yyyy" name="tgl_bayar" id="tgl_bayar" value="<?php echo date('d-m-Y');?>"  required>
+                                                    </div>   
+                                                 <!--span-->                                                     
+                                                <!--span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                            <label class="control-label"></label>
+                                                            <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                Tipe Pembayaran
+                                                            </span>
+                                                            </div>
+                                                            <div class="mt-radio-list">
+                                                                <label class="mt-radio mt-radio">   
+                                                                <input type="radio" class="chk" name="tipe_pembayaran" id="tipe_pembayaran_semester" value="S" checked="true" >SEMESTER                                                             
+                                                                    <span></span>
+                                                                </label>
+                                                                <label class="mt-radio mt-radio">   
+                                                                <input type="radio" class="chk" name="tipe_pembayaran" id="tipe_pembayaran_bulanan" value="B" >BULANAN                                                            
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>                                                        
+                                                        </div>
+                                                    </div>
+                                                <!--span-->                                                     
+                                                <!--span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                                <label class="control-label"></label>
+                                                                <div class="input-group">
                                                                 <span class="input-group-addon">
-                                                                    Mata Pelajaran
+                                                                    Semester
                                                                 </span>
-                                                                <div class="input-icon right">
-                                                                <i class="fa"></i>
-                                                                <?php
-                                                                    $att_item = 'id="id_matpal" class="form-control  select" style="width:100%"   required';
-                                                                    echo form_dropdown('id_matpal', $mat_pal, null, $att_item);
-                                                                ?>
                                                                 </div>
+                                                                <div class="mt-radio-list">
+                                                                    <label class="mt-radio mt-radio">   
+                                                                    <input type="radio" class="chk" name="semester" id="semester_satu" value="SEMESTER1" checked="true"  >1                                                             
+                                                                        <span></span>
+                                                                    </label>
+                                                                    <label class="mt-radio mt-radio">   
+                                                                    <input type="radio" class="chk" name="semester" id="semester_dua" value="SEMESTER2" >2                                                            
+                                                                        <span></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                      <!--span-->
+                                                <!--span-->
+                                                <!--span-->
                                                     <div class="form-group">
                                                         <label class="control-label"></label>
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                Tingkat
-                                                            </span>
-                                                            <div class="input-icon right">
-                                                                <i class="fa"></i>
-                                                                <select class="form-control" name="tingkat" id="tingkat" required >
-                                                                    <option value=""></option>
-                                                                    <option value="1">1</option>
-                                                                    <option value="2">2</option>
-                                                                    <option value="3">3</option>
-                                                                    <option value="4">4</option>
-                                                                    <option value="5">5</option>
-                                                                    <option value="6">6</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>    
-                                                      <!--span-->
+                                                        <span class="input-group-addon">
+                                                            Keterangan   
+                                                        </span>
+                                                        <input type="text" class="form-control" name="keterangan" id="keterangan" ></div>
+                                                    </div>   
+                                                <!--span-->
                                                     <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                Soal
-                                                            </span>
-                                                            <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                            <input type="text" class="form-control" name="soal" id="soal"  maxlength="200" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                      <!--span-->
-                                                      <!--span-->
-                                                    <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                            Jawaban a
-                                                            </span>
-                                                            <div class="input-icon right">
-                                                                <i class="fa"></i>
-                                                            <input type="text" class="form-control" name="jawaban_a" id="jawaban_a" maxlength="50" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                      <!--span-->
-                                                      <!--span-->
-                                                    <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                            Jawaban b
-                                                            </span>
-                                                            <div class="input-icon right">
-                                                                <i class="fa"></i>
-                                                            <input type="text" class="form-control" name="jawaban_b" id="jawaban_b" maxlength="50" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                      <!--span-->
-                                                      <!--span-->
-                                                    <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                            Jawaban c
-                                                            </span>
-                                                            <div class="input-icon right">
-                                                                <i class="fa"></i>
-                                                            <input type="text" class="form-control" name="jawaban_c" id="jawaban_c" maxlength="50" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                      <!--span-->
-                                                      <!--span-->
-                                                    <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                            Jawaban d
-                                                            </span>
-                                                            <div class="input-icon right">
-                                                                <i class="fa"></i>
-                                                            <input type="text" class="form-control" name="jawaban_d" id="jawaban_d" maxlength="50" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                      <!--span-->
-                                                    <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                Jawaban benar
-                                                            </span>
-                                                            <div class="input-icon right">
-                                                                <i class="fa"></i>
-                                                                <select class="form-control" name="jawab_benar" id="jawab_benar" required >
-                                                                    <option value=""></option>
-                                                                    <option value="a">a</option>
-                                                                    <option value="b">b</option>
-                                                                    <option value="c">c</option>
-                                                                    <option value="d">d</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>     
+                                                        <span class="input-group-btn"
+                                                            style="cursor: pointer;"
+                                                                title="Cek Tagihan"
+                                                                id="spansearchregis"
+                                                            onclick="idregisshow()">
+                                                            <button class="btn green" type="button" style="width:100%;">CEK TAGIHAN
+                                                                <i class="fa fa-check-square"></i>
+                                                            </button>
+                                                        </span>
+                                                        <span class="input-group-btn"
+                                                            style="cursor: pointer;"
+                                                                title="Batal"
+                                                                id="spansearchcloseregis"
+                                                            onclick="idregishide()">
+                                                            <button class="btn red" type="button" style="width:100%;">BATAL
+                                                                <i class="fa fa-remove"></i>
+                                                            </button>
+                                                        </span>  
+                                                    </div>  
+                                                <!--span-->                                                 
                                             <!--end inputbox-->
+                                            <!-- Detail pembayaran semester -->
+                                                <div id="data_pembayaran_semester" class="portlet box green-jungle">
+                                                    <div class="portlet-title">
+                                                        <div class="caption">
+                                                            <i class="fa fa-child"></i>Tagihan Semester
+                                                        </div>
+                                                    </div>
+                                                    <div class="portlet-body">
+                                                    <input type="text" class="hidden" name="id_tagihan" id="id_tagihan">
+                                                        <!--span-->
+                                                            <div class="form-group">
+                                                                <label class="control-label"></label>
+                                                                <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Total Tagihan
+                                                                </span>
+                                                                <input type="text" class="form-control" name="total_tagihan" id="total_tagihan" readonly required></div>
+                                                            </div>   
+                                                        <!--span-->
+                                                        <!--span-->
+                                                            <div class="form-group">
+                                                                <label class="control-label"></label>
+                                                                <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Sisa Tagihan
+                                                                </span>
+                                                                <input type="text" class="form-control" name="sisa_tagihan" id="sisa_tagihan" readonly required></div>
+                                                            </div>   
+                                                        <!--span-->
+                                                        <!--span-->
+                                                            <div class="form-group">
+                                                                <label class="control-label"></label>
+                                                                <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Jumlah Bayar   
+                                                                </span>
+                                                                <input type="text" class="form-control" name="jumlah_bayar" id="jumlah_bayar"   required></div>
+                                                            </div>   
+                                                        <!--span-->
+                                                    </div>
+                                                </div>
+                                            <!-- End Detail pembayaran semester -->
+                                            <!-- Detail pembayaran bulanan -->
+                                                <div id="data_pembayaran_bulanan" class="portlet box green-jungle">
+                                                    <div class="portlet-title">
+                                                        <div class="caption">
+                                                            <i class="fa fa-child"></i>Tagihan Bulanan
+                                                        </div>
+                                                    </div>
+                                                    <div class="portlet-body">
+                                                        <!--span-->
+                                                        <input type="text" id="hid_jumlah_item_semester" value="0" class="hidden"/>
+                                                            <div class="portlet-body table-both-scroll">
+                                                            <div class="table-responsive">
+                                                            <table id="tb_list_semester" class="table table-striped table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Bulan</th>
+                                                                        <th>Status</th>
+                                                                        <th>Bayar</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td colspan="3" align="center">
+                                                                        Belum Ada Data.
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                    <!--<tfoot>
+                                                                        <tr>
+                                                                        </tr>
+                                                                    </tfoot>-->
+                                                            </table>
+                                                        </div>
+                                                        </div>
+                                                        <!--span-->
+                                                    </div>
+                                                </div>
+                                            <!-- End Detail pembayaran bulanan -->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
                                                 <button type="button" class="btn green-jungle" id="save_button" onclick="svpembayaran()">Save</button>
