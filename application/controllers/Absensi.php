@@ -4,8 +4,8 @@ class Absensi extends IO_Controller{
 
 	public function __construct(){
 
-    	$modul = 2;
-		parent::__construct($modul);
+    	$this->modul = 23;
+		parent::__construct($this->modul);
 		$this->load->model('Mabsensi','model');
 	}
 
@@ -79,11 +79,73 @@ class Absensi extends IO_Controller{
 
 	function get_data_absensi(){
 		
-		$tgl_absensi = $this->input->get('tgl_absensi');
-		$id_jadwal = $this->input->get('id_jadwal');
+		$login_user 		= $this->session->userdata('logged_in')['uid'];
+		$input_tgl_absensi 	= $this->input->get('tgl_absensi');
+		$tgl_absensi 		= io_return_date('d-m-Y',$input_tgl_absensi);
+		$id_jadwal 			= $this->input->get('id_jadwal');
+		$tgl_server 		= date('Y/m/d');
+		$group 				= $this->mcommon->get_hak_akses($login_user,$this->modul);
 
-		$data = $this->model->mget_data_absensi('')->result();
+		$data = $this->model->mget_data_absensi($id_jadwal,$tgl_absensi)->result();
 
-		echo json_encode($data);
+		$isToday 	= 0;
+		$date1 		= new DateTime($tgl_absensi);
+		$date2 		= new DateTime($tgl_server);
+
+		$interval 	= $date1->diff($date2);
+		$interval 	= $interval->d;
+
+		if($interval == 0){
+			$isToday = 1;
+		}
+
+		$ar_data = array(
+			'data' 		=> $data,
+			'isToday' 	=> $isToday,
+			'group' 	=> $group->group_name
+		);
+
+		echo json_encode($ar_data);
+	}
+
+	function save_absen(){
+
+		$login_user = $this->session->userdata('logged_in')['uid'];
+		$id_jadwal 	= $this->input->post('hid_id_jadwal');
+		$tgl_absen 	= $this->input->post('dtp_tgl_absensi');
+		$tgl_absen 	= io_return_date('d-m-Y',$this->input->post('dtp_tgl_absensi'));
+		$id_absen_h = $this->input->post('hid_id_absen_header');
+		$id_guru 	= $this->input->post('hid_id_guru');
+		$list_siswa = $this->input->post('hid_list_siswa');
+		$list_siswa = explode(",",$list_siswa);
+
+		//delete old absensi header & detail
+		$this->model->del_old_absensi($id_absen_h);
+
+		//save header absen
+		$header_absen = array(
+
+			'id_jadwal'		=> $id_jadwal,
+			'tgl_absensi'	=> $tgl_absen,
+			'id_guru'		=> $id_guru,
+			'upd_by'		=> $login_user
+		);
+
+		$id_absen_h = $this->model->save_header_absen($header_absen);
+
+		//loop through list siswa and save absensi detail
+		foreach ($list_siswa as $id_siswa) {
+			
+			$detail_absen = array(
+
+				'id_absen_header' 	=> $id_absen_h,
+				'noreg_santri'		=> $id_siswa,
+				'absensi'			=> $this->input->post('rdo_'.$id_siswa)
+			);
+
+			$this->model->save_detail_absen($detail_absen);
+		}
+
+		echo 1; // 1 mean success
 	}
 }

@@ -20,7 +20,7 @@ function io_return_date($format,$value){
 	$value 	= date_parse_from_format($format,$value);
 	$idate 	= $value['year'].'/'.$value['month'].'/'.$value['day'];
 
-	return $idate;
+	return $idate; //it will return on format yyyy/mm/dd
 }
 
 function io_random_string($length=10){
