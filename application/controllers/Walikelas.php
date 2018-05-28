@@ -48,7 +48,7 @@ class walikelas extends IO_Controller
 			$class_delete = 'hidden';
 		}
 		$vdata['class_add']				= $class_add;
-       	$vdata['title'] = 'BEBAN KERJA';
+       	$vdata['title'] = 'WALI KELAS';
 	    $data['content'] = $this->load->view('vwalikelas',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
@@ -139,24 +139,26 @@ class walikelas extends IO_Controller
 			$act = '<a href="#" class="btn btn-icon-only blue '.$class_edit.'" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_guru.'\')">
 						<i class="fa fa-edit"></i>
 					</a>';
-			$limit_beban = $data[$i]->jml_beban;
-					if($limit_beban == null)
-					{
-						$limit_beban = '';
-					}
-					else {
-						$limit_beban = $data[$i]->jml_beban;
-					}
-			//get jml beban dari trans_jadwalpelajaran
+			// $limit_beban = $data[$i]->jml_beban;
+			// 		if($limit_beban == null)
+			// 		{
+			// 			$limit_beban = '';
+			// 		}
+			// 		else {
+			// 			$limit_beban = $data[$i]->jml_beban;
+			// 		}
+			// //get jml beban dari trans_jadwalpelajaran
 			$id_guru	= $data[$i]->id_guru;
-			$jml_beban 	= $this->jumlah_beban($id_guru,$thn_ajar_aktif,$semester_aktif);
+			$nama_guru 	= $this->model->get_nama_guru($id_guru);
+
+			$id_thn_ajar_value				= $this->model->get_kurikulum($thn_ajar_aktif);
 
 			$records["data"][] = array(
-				$data[$i]->no_reg,
-				$data[$i]->nama_lengkap,
-				$data[$i]->materi_diampu,
-				$limit_beban,
-				$jml_beban,
+				$data[$i]->id,
+				$id_thn_ajar_value->deskripsi,
+				$data[$i]->kode_kelas,
+				$data[$i]->id_guru,
+				$nama_guru,
                 $act
 		   );
 		

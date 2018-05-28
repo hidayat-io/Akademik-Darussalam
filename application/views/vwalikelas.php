@@ -35,11 +35,11 @@
                 <table class="table table-striped table-bordered table-hover" id="tb_list">
                     <thead>
                         <tr>
-                            <th style="text-align:center">NO REGISTRASI</th>
-                            <th style="text-align:center">NAMA LENGKAP</th>
-                            <th style="text-align:center">MATERI YANG DIAMPU</th>
-                            <th style="text-align:center">Limit Beban</th>
-                            <th style="text-align:center">Jumlah Beban</th>
+                            <th style="text-align:center">ID</th>
+                            <th style="text-align:center">Tahun Ajar</th>
+                            <th style="text-align:center">Kode_kelas</th>
+                            <th style="text-align:center">ID Guru</th>
+                            <th style="text-align:center">Nama Guru</th>
                             <th style="text-align:center">Action</th>
                         </tr>
                     </thead>

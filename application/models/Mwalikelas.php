@@ -14,26 +14,21 @@ class Mwalikelas extends CI_Model
 		return $this->db->get('ms_tahun_ajaran')->row();
 	}
 
-	function get_jumlah_beban($id_guru,$thn_ajar_aktif,$semester_aktif) {
+	function get_nama_guru($id_guru) {
 		$data = array();
 		$data=$this->db->query("SELECT * 
-								FROM trans_jadwal_pelajaran
-								where id_guru ='$id_guru' 
-								and id_thn_ajar ='$thn_ajar_aktif' 
-								and semester ='$semester_aktif'")->result_array();
-								// echo $this->db->last_query();
-								// exit();
+								FROM ms_guru
+								where id_guru ='$id_guru'")->row_array();
 		return $data;
 	}
 
-    function get_list_data($param,$sortby=0,$sorttype='desc',$thn_ajar_aktif,$semester_aktif){
+    function get_list_data($param,$sortby=2,$sorttype='desc',$thn_ajar_aktif){
 		
-        $cols = array('no_reg','nama_lengkap','materi_diampu');
+        $cols = array('id','id_thn_ajar','kode_kelas','nama_lengkap');
 
-		$sql = "SELECT ms_guru.id_guru, ms_guru.no_reg, ms_guru.nama_lengkap, ms_guru.materi_diampu, ms_bebanguru.jml_beban, ms_bebanguru.id_thn_ajar, ms_bebanguru.semester
-				FROM ms_guru 
-				LEFT JOIN ms_bebanguru ON ms_guru.id_guru =  ms_bebanguru.id_guru AND ms_bebanguru.id_thn_ajar = '$thn_ajar_aktif' AND ms_bebanguru.semester = '$semester_aktif'
-				WHERE ms_guru.is_pengajar=1";
+		$sql = "SELECT trans_walikelas.id,trans_walikelas.id_thn_ajar, ms_kelasdt.kode_kelas,trans_walikelas.id_guru
+				FROM ms_kelasdt 
+				LEFT JOIN trans_walikelas ON ms_kelasdt.kode_kelas = trans_walikelas.kode_kelas AND trans_walikelas.id_thn_ajar ='$thn_ajar_aktif'";
 
 					// echo "$sql";
 					// exit();
