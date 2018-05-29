@@ -2,7 +2,8 @@
 $(document).ready(function()
 {
 	// addSantri("TMI");
-    setTable();
+	setTable();
+	pilihItemmsguru()
     $(".select2").select2();
 	$('.datepicker').datepicker(
 	{
@@ -25,10 +26,15 @@ $(document).ready(function()
 
 });
 
+function OtomatisKapital(a) {
+	setTimeout(function () {
+		a.value = a.value.toUpperCase();
+	}, 1);
+}
 
 function setTable(){
 	 $('#tb_list').DataTable( {
-		"order": [[ 0, "desc" ]],
+		"order": [[ 1, "ASC" ]],
         "processing": true,
 		"serverSide": true,
 		"bFilter":false,
@@ -44,9 +50,9 @@ function setTable(){
 			 { width: 30, targets: 1 },
 			 { width: 30, targets: 2 },
 			 { width: 10, targets: 3 },
-			 { width: 10, targets: 4 },
+			//  { width: 10, targets: 4 },
 			 {
-				 targets: [5],         //action
+				 targets: [4],         //action
 				 orderable: false,
 				 width: 10
 			 }
@@ -117,9 +123,33 @@ function addwalikelas(){
 	$('#Modal_add_walikelas').modal('show');
 }
 
-function edit(id_guru){
+function idmsgurushow() {
+	$('#hiddenidmsguru').show();
+	$('#spansearchmsguru').hide();
+	$('#spansearchclosemsguru').show();
+}
+
+function idmsguruhide() {
+	$('#hiddenidmsguru').hide();
+	$('#spansearchmsguru').show();
+	$('#spansearchclosemsguru').hide();
+}
+
+function pilihItemmsguru() {
+
+	$item = $('#hide_id_msguru').val();
+	$item = $item.split('#');
+
+	$('#id_guru').val($item[0]);
+	$('#nama_lengkap').val($item[1]);
+	$('#hiddenidmsguru').hide();
+	$('#spansearchmsguru').show();
+	$('#spansearchclosemsguru').hide();
+}
+
+function edit(id,kode_kelas){
 	clearvalidate_add_walikelas();
-	var str_url = encodeURI(base_url + "walikelas/get_data_walikelas_byID/" + id_guru);
+	var str_url = encodeURI(base_url + "walikelas/get_data_walikelas_byID/" + kode_kelas);
 	$.ajax({
 		
 		type:"POST",
@@ -128,13 +158,12 @@ function edit(id_guru){
 		success:function(data){
 			
 			var data = $.parseJSON(data);
+			$('#id').val(data['id']);
+			$('#kode_kelas').val(data['kode_kelas']);
 			$('#id_guru').val(data['id_guru']);
-			$('#no_reg').val(data['no_reg']);
 			$('#nama_lengkap').val(data['nama_lengkap']);
-			$('#materi_diampu').val(data['materi_diampu']);
-			$('#jml_beban').val(data['jml_beban']);
 			
-			if (data['jml_beban'] == null)
+			if (data['id'] == null)
 			{
 				$('#save_button').text('SAVE');
 			}else{
@@ -190,8 +219,8 @@ function Modalcari() {
 }
 
 function SearchAction() {
-	var nama_lengkap = $('#s_namalengkap').val();
-	var param = { 'nama_lengkap': nama_lengkap };
+	var kode_kelas = $('#s_kode_kelas').val();
+	var param = { 'kode_kelas': kode_kelas };
 	param = JSON.stringify(param);
 
 	$('#hid_param').val(param);
@@ -204,7 +233,7 @@ function SearchAction() {
 }
 
 function clearformcari(){
-	$('#s_namalengkap').val('');
+	$('#s_kode_kelas').val('');
 }
 
 //#endregion modal cari

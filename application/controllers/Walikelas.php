@@ -13,6 +13,16 @@ class walikelas extends IO_Controller
 	}
 
 	function index() {
+		// get ID guru
+        $select_guru = $this->model->get_msguru()->result();
+
+        $vdata['msguru'][NULL] = '-';
+        foreach ($select_guru as $b) {
+
+            $vdata['msguru'][$b->no_reg."#".$b->nama_lengkap]
+                =$b->no_reg." | ".$b->nama_lengkap;
+		}
+		
 		//get kurikulum aktif
 		$sys_param						= $this->kurikulum_aktif();
 		$isys_param 					= explode('#',$sys_param);
@@ -60,22 +70,15 @@ class walikelas extends IO_Controller
 		return $sys_param_value;
 	}
 
-	function jumlah_beban($id_guru,$thn_ajar_aktif,$semester_aktif) {
-		$data_guru			= $this->model->get_jumlah_beban($id_guru,$thn_ajar_aktif,$semester_aktif);
-		$jml_data			= count($data_guru);
-		// var_dump($jml_data);
-		// exit();
-		
-		return $jml_data;
-	}
-
 	function build_param($param) {        
 		// merubah hasil json menjadi parameter Query //
+		// var_dump($string_param );
+		// exit();
 		$string_param = NULL;
 
 		if($param!=null){
 
-			if(isset($param->nama_lengkap)) $string_param .= " nama_lengkap LIKE '%".$param->nama_lengkap."%' ";
+			if(isset($param->kode_kelas)) $string_param .= " ms_kelasdt.kode_kelas LIKE '%".$param->kode_kelas."%' ";
 		}
 
 		return $string_param;
@@ -85,17 +88,17 @@ class walikelas extends IO_Controller
 		$sys_param			= $this->kurikulum_aktif();
 		$isys_param 		= explode('#',$sys_param);
 		$thn_ajar_aktif		= $isys_param[0];
-		$semester_aktif		= $isys_param[1];
 
 		$iparam 		= json_decode($_REQUEST['param']);
 		$string_param 	= $this->build_param($iparam);
-		
+		// var_dump($string_param );
+		// exit();
 		//sorting
 		$sort_by 		= $_REQUEST['order'][0]['column'];
 		$sort_type 		= $_REQUEST['order'][0]['dir'];
 
 
-		$data 				= $this->model->get_list_data($string_param,$sort_by,$sort_type,$thn_ajar_aktif,$semester_aktif);
+		$data 				= $this->model->get_list_data($string_param,$sort_by,$sort_type,$thn_ajar_aktif);
 		$iTotalRecords  	= count($data);
 		$iDisplayLength 	= intval($_REQUEST['length']);
 		$iDisplayLength 	= $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
@@ -136,29 +139,17 @@ class walikelas extends IO_Controller
 		}
 		
 		for($i = $iDisplayStart; $i < $end; $i++) {
-			$act = '<a href="#" class="btn btn-icon-only blue '.$class_edit.'" title="UBAH DATA" onclick="edit(\''.$data[$i]->id_guru.'\')">
+			$act = '<a href="#" class="btn btn-icon-only blue '.$class_edit.'" title="UBAH DATA" onclick="edit(\''.$data[$i]->id.'\',\''.$data[$i]->kode_kelas.'\')">
 						<i class="fa fa-edit"></i>
 					</a>';
-			// $limit_beban = $data[$i]->jml_beban;
-			// 		if($limit_beban == null)
-			// 		{
-			// 			$limit_beban = '';
-			// 		}
-			// 		else {
-			// 			$limit_beban = $data[$i]->jml_beban;
-			// 		}
-			// //get jml beban dari trans_jadwalpelajaran
-			$id_guru	= $data[$i]->id_guru;
-			$nama_guru 	= $this->model->get_nama_guru($id_guru);
-
 			$id_thn_ajar_value				= $this->model->get_kurikulum($thn_ajar_aktif);
 
 			$records["data"][] = array(
-				$data[$i]->id,
+				// $data[$i]->id,
 				$id_thn_ajar_value->deskripsi,
 				$data[$i]->kode_kelas,
 				$data[$i]->id_guru,
-				$nama_guru,
+				$data[$i]->nama_lengkap,
                 $act
 		   );
 		
@@ -172,15 +163,14 @@ class walikelas extends IO_Controller
 		
 	}
 
-	function get_data_walikelas_byID($id_guru) {
+	function get_data_walikelas_byID($kode_kelas) {
 		//get thn ajar dan semester aktif
 		$sys_param			= $this->kurikulum_aktif();
 		$isys_param 		= explode('#',$sys_param);
 		$thn_ajar_aktif		= $isys_param[0];
-		$semester_aktif		= $isys_param[1];
 
-		$data 				= $this->model->query_get_walikelas($id_guru,$thn_ajar_aktif,$semester_aktif);
-		// var_dump($id_guru);
+		$data 				= $this->model->query_get_walikelas($thn_ajar_aktif,$kode_kelas);
+		// var_dump($data);
 		// exit();
 		echo json_encode($data);
 		
@@ -194,18 +184,18 @@ class walikelas extends IO_Controller
 		$thn_ajar_aktif		= $isys_param[0];
 		$semester_aktif		= $isys_param[1];
 
+		$id 				= $this->input->post('id');
+		$kode_kelas 		= $this->input->post('kode_kelas');
 		$id_guru 			= $this->input->post('id_guru');
-		$jml_beban 			= $this->input->post('jml_beban');
 		$id_thn_ajar		= $thn_ajar_aktif;
-		$semester			= $semester_aktif;
 		$userid 			= $this->session->userdata('logged_in')['uid'];
 
 		$data = array(
-			'id_guru' 			=> $id_guru,
-			'jml_beban' 		=> $jml_beban,
-			'id_thn_ajar' 		=> $id_thn_ajar,
-			'semester' 			=> $semester,
-			'userid' 			=> $userid
+			'id' 			=> $id,
+			'id_thn_ajar' 	=> $id_thn_ajar,
+			'kode_kelas' 	=> $kode_kelas,
+			'id_guru' 		=> $id_guru,
+			'userid' 		=> $userid
 		);
 		
 		if($status=='SAVE')	
@@ -218,7 +208,7 @@ class walikelas extends IO_Controller
 		else //update data
 		{		
 			// save data walikelas
-			$this->model->update_data($id_guru,$thn_ajar_aktif,$semester,$data);
+			$this->model->update_data($id,$thn_ajar_aktif,$kode_kelas,$data);
 		}	    
 
 			echo "true";
@@ -229,6 +219,7 @@ class walikelas extends IO_Controller
 		$isys_param 		= explode('#',$sys_param);
 		$thn_ajar_aktif		= $isys_param[0];
 		$semester_aktif		= $isys_param[1];
+		
 
 		// $sort_by 		= '';
 		// $sort_type 		= '';
@@ -241,7 +232,9 @@ class walikelas extends IO_Controller
 		// memasukan data json kedalam builparam //
 		// agar json menjadi parameter query //
 		$str = $this->build_param($str);
-		$data = $this->model->get_list_data($str);
+		// var_dump($str);
+		// exit();
+		$data = $this->model->get_eksport_list_data($str,$thn_ajar_aktif);
 		// echo "$this->model->get_list_data($str,$thn_ajar_aktif,$semester_aktif)";
 		// var_dump ($data);
 		// exit();
@@ -251,18 +244,17 @@ class walikelas extends IO_Controller
 		//activate worksheet number 1
 		$this->excel->setActiveSheetIndex(0);
 		//name the worksheet
-		$this->excel->getActiveSheet()->setTitle('Master_Soal');
-		$this->excel->getActiveSheet()->setCellValue('A1', "Master Beban Guru");
-		$this->excel->getActiveSheet()->mergeCells('A1:F1');
-		$this->excel->getActiveSheet()->getStyle('A1:F1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setTitle('LIST WALIKELAS');
+		$this->excel->getActiveSheet()->setCellValue('A1', "LIST WALIKELAS");
+		$this->excel->getActiveSheet()->mergeCells('A1:E1');
+		$this->excel->getActiveSheet()->getStyle('A1:E1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 		//header
 		$this->excel->getActiveSheet()->setCellValue('A3', "No.");
-		$this->excel->getActiveSheet()->setCellValue('B3', "No Registrasi");
-		$this->excel->getActiveSheet()->setCellValue('C3', "Nama Lengkap");
-		$this->excel->getActiveSheet()->setCellValue('D3', "Materi Yang Diampu");
-		$this->excel->getActiveSheet()->setCellValue('E3', "Limit Beban");
-		$this->excel->getActiveSheet()->setCellValue('F3', "Jumlah beban");
+		$this->excel->getActiveSheet()->setCellValue('B3', "Tahun Ajar");
+		$this->excel->getActiveSheet()->setCellValue('C3', "Kode Kelas");
+		$this->excel->getActiveSheet()->setCellValue('D3', "ID Guru");
+		$this->excel->getActiveSheet()->setCellValue('E3', "Nama Guru");
 
 		$fdate 	= "d-m-Y";
 		$i  	= 4;
@@ -270,30 +262,23 @@ class walikelas extends IO_Controller
 		if($data != null){
 
 			foreach($data as $row){
-				$limit_beban = $row->jml_beban;
-					if($limit_beban == null)
-					{
-						$limit_beban = '';
-					}
-					else {
-						$limit_beban = $row->jml_beban;
-					}
-				//get jml beban dari trans_jadwalpelajaran
-				$id_guru	= $row->id_guru;
-				$jml_beban 	= $this->jumlah_beban($id_guru,$thn_ajar_aktif,$semester_aktif);
-
+				$id_thn_ajar = $row->id_thn_ajar;
+				$id_thn_ajar_value				= $this->model->get_kurikulum($id_thn_ajar);
+				// $deskripsix = $id_thn_ajar_value->deskripsi;
+				// var_dump($deskripsi);
+				// exit();
+				
 				$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
-				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->no_reg);
-				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->nama_lengkap);
-				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->materi_diampu);
-				$this->excel->getActiveSheet()->setCellValue('E'.$i, $limit_beban);
-				$this->excel->getActiveSheet()->setCellValue('F'.$i, $jml_beban);
+				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->id_thn_ajar);
+				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->kode_kelas);
+				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->id_guru);
+				$this->excel->getActiveSheet()->setCellValue('E'.$i, $row->nama_lengkap);
 				
 				$i++;
 			}
 		}
 
-		for($col = 'A'; $col !== 'F'; $col++) {
+		for($col = 'A'; $col !== 'E'; $col++) {
 
 		    $this->excel->getActiveSheet()
 		        ->getColumnDimension($col)
@@ -308,13 +293,13 @@ class walikelas extends IO_Controller
 		  )
 		);
 		$i = $i-1;
-		$cell_to = "F".$i;
+		$cell_to = "E".$i;
 		$this->excel->getActiveSheet()->getStyle('A3:'.$cell_to)->applyFromArray($styleArray);
-		$this->excel->getActiveSheet()->getStyle('A1:F3')->getFont()->setBold(true);
-		$this->excel->getActiveSheet()->getStyle('A3:F3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-		$this->excel->getActiveSheet()->getStyle('A3:F3')->getFill()->getStartColor()->setRGB('2CC30B');
+		$this->excel->getActiveSheet()->getStyle('A1:E3')->getFont()->setBold(true);
+		$this->excel->getActiveSheet()->getStyle('A3:E3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+		$this->excel->getActiveSheet()->getStyle('A3:E3')->getFill()->getStartColor()->setRGB('2CC30B');
 
-		$filename='Master-Soal.xls'; //save our workbook as this file name
+		$filename='ListWaliKelas.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
 		header('Cache-Control: max-age=0');//no cache
