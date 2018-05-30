@@ -56,6 +56,9 @@ function modalEdit(id_jadwal,id_absen_header){
 	$('#cmd_save').addClass('hidden');
 	$('#modal_editing').modal('show');
 	$('#hid_id_jadwal').val(id_jadwal);
+
+	$('#dtp_tgl_absensi').trigger("change");
+	
 	loadDataAbsensiSiswa();
 }
 
