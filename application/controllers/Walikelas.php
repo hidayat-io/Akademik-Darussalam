@@ -262,14 +262,9 @@ class walikelas extends IO_Controller
 		if($data != null){
 
 			foreach($data as $row){
-				$id_thn_ajar = $row->id_thn_ajar;
-				$id_thn_ajar_value				= $this->model->get_kurikulum($id_thn_ajar);
-				// $deskripsix = $id_thn_ajar_value->deskripsi;
-				// var_dump($deskripsi);
-				// exit();
 				
 				$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
-				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->id_thn_ajar);
+				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->deskripsi);
 				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->kode_kelas);
 				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->id_guru);
 				$this->excel->getActiveSheet()->setCellValue('E'.$i, $row->nama_lengkap);

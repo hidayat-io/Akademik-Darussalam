@@ -56,16 +56,20 @@ function modalEdit(id_jadwal,id_absen_header){
 	$('#cmd_save').addClass('hidden');
 	$('#modal_editing').modal('show');
 	$('#hid_id_jadwal').val(id_jadwal);
-	loadDataAbsensiSiswa();
+	loadDataAbsensiSiswa(id_jadwal);
 }
 
-function loadDataAbsensiSiswa(){
+function loadDataAbsensiSiswa(id_jadwal=0){
 
 	//clear table absensi
 	$("#tb_absensi tbody").empty();
 
+	if(id_jadwal==0){
+
+		id_jadwal = $('#hid_id_jadwal').val();
+	}
+
 	var tgl_absensi = $('#dtp_tgl_absensi').val();
-	var id_jadwal 	= $('#hid_id_jadwal').val();
 	var hari 		= $('#lbl_hari').text();
 		hari 		= hari.toUpperCase()
 

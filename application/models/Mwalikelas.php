@@ -49,9 +49,10 @@ class Mwalikelas extends CI_Model
 		
         $cols = array('trans_walikelas.id_thn_ajar','ms_kelasdt.kode_kelas', 'trans_walikelas.id_guru','ms_guru.nama_lengkap');
 
-		$sql = "select trans_walikelas.id, trans_walikelas.id_thn_ajar,ms_kelasdt.kode_kelas, trans_walikelas.id_guru, ms_guru.nama_lengkap
+		$sql = "select trans_walikelas.id, trans_walikelas.id_thn_ajar,ms_tahun_ajaran.deskripsi,ms_kelasdt.kode_kelas, trans_walikelas.id_guru, ms_guru.nama_lengkap
 				from trans_walikelas
 				right join ms_kelasdt on trans_walikelas.kode_kelas = ms_kelasdt.kode_kelas and trans_walikelas.id_thn_ajar = '$thn_ajar_aktif'
+				LEFT OUTER JOIN ms_tahun_ajaran ON trans_walikelas.id_thn_ajar = ms_tahun_ajaran.id
 				left join ms_guru on trans_walikelas.id_guru = ms_guru.no_reg";
 
 					
