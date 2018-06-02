@@ -234,8 +234,11 @@ var handleValidation = function() {
                     required: true
                 },
                 txt_no_ktp: {
-                    required: true,                    
-                },                
+                    required: true
+				},
+				opt_status: {
+					required: true
+				}
             },
 
             invalidHandler: function (event, validator) { //display error alert on form submit              
@@ -1472,4 +1475,16 @@ function refreshNoNIG(){
     var nig             = no_parameter+kode_matkul+no_reg;
 
     $('#txt_no_nig').val(nig);
+}
+
+function validateStatusGuru(val){
+
+	let id_guru  = $('#hid_id_data').val();
+
+	if(id_guru!=""){
+
+		$.get(base_url+'guru/get_noreg',{'id_guru':id_guru},function(result){
+			
+		});
+	}
 }

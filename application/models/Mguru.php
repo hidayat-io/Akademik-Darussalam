@@ -124,4 +124,10 @@ class Mguru extends CI_Model {
 		$this->db->set('is_delete','1');
 		$this->db->update('ms_guru');
 	}
+
+	function mget_noreg($idguru){
+
+		$data = $this->db->get_where('trans_noreg_guru',array('id_guru'=>$idguru));
+		return $data->row();
+	}
 }
