@@ -321,7 +321,8 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Status</span>
-                                                    <select name="opt_status" id="opt_status" class="form-control input-medium">
+                                                    <select name="opt_status" id="opt_status" class="form-control input-medium"
+														onchange="validateStatusGuru(this.value)">
                                                         <option value="">- Belum Dipilih -</option>
                                                         <option value="Pengabdian">Pengabdian</option>
                                                         <option value="Tetap">Tetap</option>

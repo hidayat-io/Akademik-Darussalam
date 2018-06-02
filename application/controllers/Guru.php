@@ -610,4 +610,16 @@ class Guru extends IO_Controller{
 		//force user to download the Excel file without writing it to server's HD
 		$objWriter->save('php://output');
 	}
+
+	public function get_noreg($id_guru){
+
+		$data = $this->model->mget_noreg($id_guru);
+
+		echo json_encode($data);
+	}
+
+	public function generate_new_noreg($status){
+
+		//$last_no
+	}
 }
