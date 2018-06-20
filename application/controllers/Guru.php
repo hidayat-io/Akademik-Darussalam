@@ -156,14 +156,23 @@ class Guru extends IO_Controller{
 			"gapok"					=> $input['txt_gapok'],
 			"userid"				=> $this->session->userdata('logged_in')['uid'],
 			"recdate" 				=> date('Y-m-d H:i:s'),
-			"status_aktif"			=> '1'
+			"status_aktif"			=> '1',
+			"no_reg"				=> $input['txt_noreg']
 		);
 
+		//No Registrasi
+		if(trim($input['txt_noreg'])==''){
+
+			$no_reg = $this->generate_new_noreg($input['opt_status']);
+
+			$data['no_reg'] = $no_reg;			
+		}
+		else{
+
+			$no_reg = $input['txt_noreg'];
+		}
+
 		if($id==""){
-
-			$no_reg = $this->model->mget_new_no();
-
-			$data['no_reg'] = $no_reg;
 
 			$id = $this->model->msimpan_data($data);
 
@@ -179,6 +188,9 @@ class Guru extends IO_Controller{
 
 			$this->model->mupdate_data($id,$data);
 		}
+
+		//update trans_noreg_guru
+		$this->model->mupdate_noreg($id,$input['opt_status'],$no_reg);
 
 		//save history data gapok
 		if(floatval($input['hid_old_gapok']) != floatval($input['txt_gapok'])){
@@ -611,15 +623,33 @@ class Guru extends IO_Controller{
 		$objWriter->save('php://output');
 	}
 
-	public function get_noreg($id_guru){
+	function get_noreg(){
 
+		$id_guru = $this->input->get('id_guru');
+		
 		$data = $this->model->mget_noreg($id_guru);
 
 		echo json_encode($data);
 	}
 
-	public function generate_new_noreg($status){
+	private function generate_new_noreg($status){
 
-		//$last_no
+		$last_no = $this->model->mget_last_noreg($status);
+
+		if($last_no!=null){
+
+			$seq = substr($last_no,-4);
+			$seq = intval($seq);
+
+			$newseq = $seq+1;
+			$newseq = str_pad($newseq,4,'0',STR_PAD_LEFT);
+			$new_no = strtoupper(substr($status,0,1)).$newseq;
+		}
+		else{
+
+			$new_no = strtoupper(substr($status,0,1)).'0001';
+		}
+
+		return $new_no;
 	}
 }

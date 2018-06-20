@@ -1479,12 +1479,19 @@ function refreshNoNIG(){
 
 function validateStatusGuru(val){
 
-	let id_guru  = $('#hid_id_data').val();
+    let id_guru     = $('#hid_id_data').val();
+    let status_guru = $('#opt_status').val();
 
 	if(id_guru!=""){
 
 		$.get(base_url+'guru/get_noreg',{'id_guru':id_guru},function(result){
-			
+            
+            result = JSON.parse(result);
+
+            if(result!=null){
+
+
+            }            
 		});
 	}
 }

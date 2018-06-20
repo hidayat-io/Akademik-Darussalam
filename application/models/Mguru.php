@@ -130,4 +130,31 @@ class Mguru extends CI_Model {
 		$data = $this->db->get_where('trans_noreg_guru',array('id_guru'=>$idguru));
 		return $data->row();
 	}
+
+	function mget_last_noreg($status){
+
+		$this->db->where('nama_field','no_reg_guru');
+		$this->db->where('remark',strtolower($status));
+
+		return $this->db->get('sequence')->row();
+	}
+
+	function mupdate_noreg($id,$status,$no_reg){
+
+		if($status=='Pengabdian'){
+
+			$no_tetap 	= "`no_reg_tetap`";
+			$no_abdi 	= "'".$no_reg."'";
+		}
+		elseif($status=='Tetap'){
+
+			$no_tetap 	= "'".$no_reg."'";
+			$no_abdi 	= "`no_reg_pengabdian`";
+		}
+
+		$sql = "INSERT INTO `trans_noreg_guru` VALUES(".$id.",".$no_tetap.",".$no_abdi.") 
+					ON DUPLICATE KEY UPDATE no_reg_tetap=".$no_tetap.",no_reg_pengabdian=".$no_abdi;
+		
+		$this->db->query($sql);
+	}
 }
