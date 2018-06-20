@@ -120,6 +120,7 @@ class Guru extends IO_Controller{
 		$pend_terakhir 			= isset($input['opt_ijazah_terakhir'])?$input['opt_ijazah_terakhir']:null;
 		$start_ajar 			= $input['dtp_ajar_mulai']==''?null:io_return_date('d-m-Y',$input['dtp_ajar_mulai']);
 		$end_ajar 				= $input['dtp_ajar_akhir']==''?null:io_return_date('d-m-Y',$input['dtp_ajar_akhir']);
+		$mapel 					= isset($input['opt_mapel'])?$input['opt_mapel']:'';
 
 		$data = array(
 
@@ -152,7 +153,7 @@ class Guru extends IO_Controller{
 			"sertifikasi"			=> $input['txt_sertifikasi'],
 			"no_sk"					=> $input['txt_sk_angkat'],
 			"tgl_sk"				=> $tgl_sk,
-			"materi_diampu"  		=> $input['opt_mapel'],
+			"materi_diampu"  		=> $mapel,
 			"gapok"					=> $input['txt_gapok'],
 			"userid"				=> $this->session->userdata('logged_in')['uid'],
 			"recdate" 				=> date('Y-m-d H:i:s'),
@@ -178,7 +179,6 @@ class Guru extends IO_Controller{
 
 			//update NIG according to inserted ID
 			$no_stat 	= $input['hid_no_statistik'];
-			$mapel 		= $input['opt_mapel'];
 			$fixid 		= str_pad($id, 3, "0", STR_PAD_LEFT);
 			$nig 		= $no_stat.$mapel.$fixid;
 
@@ -638,7 +638,7 @@ class Guru extends IO_Controller{
 
 		if($last_no!=null){
 
-			$seq = substr($last_no,-4);
+			$seq = substr($last_no->nomor_terakhir,-4);
 			$seq = intval($seq);
 
 			$newseq = $seq+1;
@@ -649,6 +649,10 @@ class Guru extends IO_Controller{
 
 			$new_no = strtoupper(substr($status,0,1)).'0001';
 		}
+
+		//update sequence
+		$param = array('nama_field'=>'no_reg_guru','remark'=>strtolower($status));
+		$this->model->mupdate_sequence($param,$new_no);
 
 		return $new_no;
 	}

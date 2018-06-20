@@ -1490,8 +1490,10 @@ function validateStatusGuru(val){
 
             if(result!=null){
 
+                let noreg = status_guru=='Pengabdian'?result.no_reg_pengabdian:result.no_reg_tetap;
 
-            }            
+                $('#txt_noreg').val(noreg);
+            }
 		});
 	}
 }

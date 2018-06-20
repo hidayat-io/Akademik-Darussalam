@@ -31,22 +31,22 @@ class Mguru extends CI_Model {
 		$this->db->update('ms_guru',$data);
 	}
 
-	function mget_new_no(){
+	// function mget_new_no(){
 
-		$this->db->select('nomor_terakhir');
-		$this->db->from('sequence');
-		$this->db->where('nama_field','no_reg_guru');
+	// 	$this->db->select('nomor_terakhir');
+	// 	$this->db->from('sequence');
+	// 	$this->db->where('nama_field','no_reg_guru');
 
-		$no = $this->db->get()->row()->nomor_terakhir;
+	// 	$no = $this->db->get()->row()->nomor_terakhir;
 
-		$ino = (int)$no;
-		$ino = $ino+=1;
+	// 	$ino = (int)$no;
+	// 	$ino = $ino+=1;
 
-		$this->db->where('nama_field','no_reg_guru');
-		$this->db->update('sequence',array('nomor_terakhir'=>$ino));
+	// 	$this->db->where('nama_field','no_reg_guru');
+	// 	$this->db->update('sequence',array('nomor_terakhir'=>$ino));
 
-		return $no;
-	}
+	// 	return $no;
+	// }
 
 	function mdelete_detail($table,$id){
 
@@ -156,5 +156,11 @@ class Mguru extends CI_Model {
 					ON DUPLICATE KEY UPDATE no_reg_tetap=".$no_tetap.",no_reg_pengabdian=".$no_abdi;
 		
 		$this->db->query($sql);
+	}
+
+	function mupdate_sequence($param,$new_no){
+
+		$this->db->where($param);
+		$this->db->update('sequence',array('nomor_terakhir'=>$new_no));
 	}
 }
