@@ -11,7 +11,7 @@ class nilai extends IO_Controller
 			parent::__construct($this->modul);
 		 	$this->load->model('mnilai','model');
 	}
-
+#region LoadPage
 	function index() {
 		// get ID guru
         $select_guru = $this->model->get_msguru()->result();
@@ -169,7 +169,8 @@ class nilai extends IO_Controller
 		echo json_encode($records);
 		
 	}
-
+#endregion LoadPage
+#region Modal ListSantri
 	function build_param_listsantri($param_listsantri) {        
 		// merubah hasil json menjadi parameter Query //
 		// var_dump($string_param );
@@ -235,145 +236,98 @@ class nilai extends IO_Controller
 		
 	}
 
-	function get_data_nilai_by_noregistrasi($no_registrasi) {
-		$no_registrasi = urldecode($no_registrasi);
-		$data = $this->model->query_get_data_nilai_by_noregistrasi($no_registrasi);
+	function get_data_nilai_by_noregistrasi($no_registrasi,$id_thn_ajar,$semester,$kode_kelas,$id_guru,$id_mapel) {
+		$no_registrasi 		= urldecode($no_registrasi);
+		$id_thn_ajar 		= urldecode($id_thn_ajar);
+		$semester 			= urldecode($semester);
+		$kode_kelas 		= urldecode($kode_kelas);
+		$id_guru 			= urldecode($id_guru);
+		$id_mapel 			= urldecode($id_mapel);
+		$data = $this->model->query_get_data_nilai_by_noregistrasi($no_registrasi,$id_thn_ajar,$semester,$kode_kelas,$id_guru,$id_mapel);
     	echo json_encode($data);
 		
 
 	}
-
-	function simpan_nilai($status) {
-		//get thn ajar dan semester aktif
-		$sys_param			= $this->kurikulum_aktif();
-		$isys_param 		= explode('#',$sys_param);
-		$thn_ajar_aktif		= $isys_param[0];
-		$semester_aktif		= $isys_param[1];
-
-		$id 				= $this->input->post('id');
-		$kode_kelas 		= $this->input->post('kode_kelas');
-		$id_guru 			= $this->input->post('id_guru');
-		$id_thn_ajar		= $thn_ajar_aktif;
-		$userid 			= $this->session->userdata('logged_in')['uid'];
-
-		$data = array(
-			'id' 			=> $id,
-			'id_thn_ajar' 	=> $id_thn_ajar,
-			'kode_kelas' 	=> $kode_kelas,
-			'id_guru' 		=> $id_guru,
-			'userid' 		=> $userid
-		);
+#endregion  Modal ListSantri
+#region Modal AddNilai
+    function simpan_nilai($status)
+	{
+		$id_trans_nilai 	    	= $this->input->post('id_trans_nilai');
+		$id_thn_ajar				= $this->input->post('id_thn_ajar_nilai_santri');
+		$semester					= $this->input->post('semester_nilai_santri');
+		$kode_kelas					= $this->input->post('kode_kelas_nilai_santri');
+			$kode_kelas					= explode('#',$kode_kelas);;
+			$kode_kelas					= $kode_kelas[0];
+		$id_guru					= $this->input->post('id_guru_nilai_santri');
+			$id_guru					= explode('#',$id_guru);;
+			$id_guru					= $id_guru[0];
+		$id_mapel					= $this->input->post('id_mapel_nilai_santri');
+			$id_mapel					= explode('#',$id_mapel);;
+			$id_mapel					= $id_mapel[0];
+		$no_registrasi				= $this->input->post('no_registrasi');
+	    $userid 	        		= $this->session->userdata('logged_in')['uid'];
 		
+		$hid_table_item_Penilaian	= $this->input->post('hid_table_item_Penilaian');
+        
 		if($status=='SAVE')	
 		{// cek apakah add new atau editdata
 			
-		// save data nilai
-			$this->model->simpan_data($data);
+		// save data trans nilai hd
+			$trans_nilai_hd = array(
 
+								'id_thn_ajar'		=> $id_thn_ajar,
+								'semester'			=> $semester,
+								'kode_kelas'		=> $kode_kelas,
+								'id_guru'			=> $id_guru,
+								'id_mapel'			=> $id_mapel,
+								'no_registrasi'		=> $no_registrasi,
+								'userid' 			=> $userid
+								
+							);
+			$id = $this->model->query_simpan_trans_nilai_hd($trans_nilai_hd);
+							
+		//save data trans nilai dt		
+			$item_Penilaian  = explode(';',$hid_table_item_Penilaian);
+			foreach ($item_Penilaian as $i) {
+					$idetail = explode('#',$i);
+					if(count($idetail)>1){
+							$trans_nilai_dt = array(
+								
+								'id_hd'					=> $id,
+								'kategori'				=> $idetail[0],
+								'nama_penilaian'		=> $idetail[1],
+								'nilai'					=> $idetail[2]
+								
+							);
+							
+							$this->model->query_simpan_trans_nilai_dt($trans_nilai_dt);
+							}
+			}
 		}
-		else //update data
+        else //update data
 		{		
-			// save data nilai
-			$this->model->update_data($id,$thn_ajar_aktif,$kode_kelas,$data);
-		}	    
+			// $this->model->delete_item_nilai($semester);	
+			 //save bulan		
+			$item_Penilaian  = explode(';',$hid_table_item_Penilaian);
+			foreach ($item_Penilaian as $i) {
+					$idetail = explode('#',$i);
+					if(count($idetail)>1){
+							$trans_nilai_dt = array(
+
+								'semester'			=> $semester,
+								'bulan'				=> $idetail[0],
+								// 'recdate'			=> $recdate,
+								// 'userid' 			=> $userid
+								
+							);
+							// $this->model->simpan_item_bulan($detail_bulan);
+
+					}
+			}
+        }	    
 
 			echo "true";
 	}
-
-	function exportexcel(){
-		$sys_param			= $this->kurikulum_aktif();
-		$isys_param 		= explode('#',$sys_param);
-		$thn_ajar_aktif		= $isys_param[0];
-		$semester_aktif		= $isys_param[1];
-		
-
-		// $sort_by 		= '';
-		// $sort_type 		= '';
-		// hasil decode // 
-		$str = base64_decode($this->uri->segment(3));
-
-		// merubah hasil decode dari string ke json //
-		$str = json_decode($str);
-
-		// memasukan data json kedalam builparam //
-		// agar json menjadi parameter query //
-		$str = $this->build_param($str);
-		// var_dump($str);
-		// exit();
-		$data = $this->model->get_eksport_list_data($str,$thn_ajar_aktif);
-		// echo "$this->model->get_list_data($str,$thn_ajar_aktif,$semester_aktif)";
-		// var_dump ($data);
-		// exit();
-		
-		//load our new PHPExcel library
-		$this->load->library('excel');
-		//activate worksheet number 1
-		$this->excel->setActiveSheetIndex(0);
-		//name the worksheet
-		$this->excel->getActiveSheet()->setTitle('LIST nilai');
-		$this->excel->getActiveSheet()->setCellValue('A1', "LIST nilai");
-		$this->excel->getActiveSheet()->mergeCells('A1:E1');
-		$this->excel->getActiveSheet()->getStyle('A1:E1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-		//header
-		$this->excel->getActiveSheet()->setCellValue('A3', "No.");
-		$this->excel->getActiveSheet()->setCellValue('B3', "Tahun Ajar");
-		$this->excel->getActiveSheet()->setCellValue('C3', "Kode Kelas");
-		$this->excel->getActiveSheet()->setCellValue('D3', "ID Guru");
-		$this->excel->getActiveSheet()->setCellValue('E3', "Nama Guru");
-
-		$fdate 	= "d-m-Y";
-		$i  	= 4;
-
-		if($data != null){
-
-			foreach($data as $row){
-				
-				$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
-				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->deskripsi);
-				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->kode_kelas);
-				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->id_guru);
-				$this->excel->getActiveSheet()->setCellValue('E'.$i, $row->nama_lengkap);
-				
-				$i++;
-			}
-		}
-
-		for($col = 'A'; $col !== 'E'; $col++) {
-
-		    $this->excel->getActiveSheet()
-		        ->getColumnDimension($col)
-		        ->setAutoSize(true);
-		}
-
-		$styleArray = array(
-		  'borders' => array(
-		    'allborders' => array(
-		      'style' => PHPExcel_Style_Border::BORDER_THIN
-		    )
-		  )
-		);
-		$i = $i-1;
-		$cell_to = "E".$i;
-		$this->excel->getActiveSheet()->getStyle('A3:'.$cell_to)->applyFromArray($styleArray);
-		$this->excel->getActiveSheet()->getStyle('A1:E3')->getFont()->setBold(true);
-		$this->excel->getActiveSheet()->getStyle('A3:E3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-		$this->excel->getActiveSheet()->getStyle('A3:E3')->getFill()->getStartColor()->setRGB('2CC30B');
-
-		$filename='Listnilai.xls'; //save our workbook as this file name
-		header('Content-Type: application/vnd.ms-excel'); //mime type
-		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
-		header('Cache-Control: max-age=0');//no cache
-
-		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
-		//if you want to save it as .XLSX Excel 2007 format
-		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
-		//force user to download the Excel file without writing it to server's HD
-		$objWriter->save('php://output');
-
-	}
-
-
-
+#end region Modal AddNilai
 
 }

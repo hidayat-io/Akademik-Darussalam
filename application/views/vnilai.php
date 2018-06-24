@@ -18,9 +18,9 @@
                     <button type="button" class="btn btn-default" title="Search Data" onclick="Modalcari()">
                         <i class="fa fa-search"></i>&nbsp;Search
                     </button>
-                    <button type="button" class="btn btn-default" title="Export Data to Excel" onclick="downloadExcel()">
+                    <!-- <button type="button" class="btn btn-default" title="Export Data to Excel" onclick="downloadExcel()">
                         <i class="fa fa-file-excel-o"></i>&nbsp;Excel
-                    </button>
+                    </button> -->
                 </div>
             </div>
             <input type="text" class="hidden" name="hid_param" id="hid_param" />
@@ -45,7 +45,7 @@
                             <!-- <th style="text-align:center">ID Mata Pelajaran</th> -->
                             <th style="text-align:center">Mata Pelajaran</th>
                             <th style="text-align:center">Kategori Kelas</th>
-                            <th style="text-align:center">Action</th>
+                            <th style="text-align:center" width="5%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -344,7 +344,7 @@
                                         <form action="#" id="add_nilai_santri">
                                             <!--inputbox-->
                                                 <!--span-->
-                                                    <input type="text" class="hidden" name="id_nilai_santri" id="id_nilai_santri">
+                                                    <input type="text" class="hidden" name="id_trans_nilai" id="id_trans_nilai">
                                                     <input type="text" class="hidden" name="id_thn_ajar_nilai_santri" id="id_thn_ajar_nilai_santri">
                                             <div class="row">
                                                 <!--span-->
@@ -511,8 +511,8 @@
                                                                         <thead>
                                                                             <tr>
                                                                                 <th style="text-align:center">NO</th>
-                                                                                <th style="text-align:center">NAMA PENILAIAN</th>
                                                                                 <th style="text-align:center">KATEGORI</th>
+                                                                                <th style="text-align:center">NAMA PENILAIAN</th>
                                                                                 <th style="text-align:center">NILAI</th>
                                                                                 <th style="text-align:center" width="10%">Action</th>
                                                                             </tr>
@@ -538,7 +538,7 @@
                                             <!-- END List Table Santri -->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn green-jungle" id="save_button" onclick="svnilaiX ()">Save</button>
+                                                <button type="button" class="btn green-jungle" id="save_button" onclick="svnilai ()">Save</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
