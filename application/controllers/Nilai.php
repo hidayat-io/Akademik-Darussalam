@@ -91,8 +91,7 @@ class nilai extends IO_Controller
 
 		$iparam 		= json_decode($_REQUEST['param']);
 		$string_param 	= $this->build_param($iparam);
-		// var_dump($string_param );
-		// exit();
+		
 		//sorting
 		$sort_by 		= $_REQUEST['order'][0]['column'];
 		$sort_type 		= $_REQUEST['order'][0]['dir'];
@@ -306,24 +305,27 @@ class nilai extends IO_Controller
 		}
         else //update data
 		{		
-			// $this->model->delete_item_nilai($semester);	
-			 //save bulan		
+							
+			//save data trans nilai dt	
+			$this->model->query_delete_trans_nilai_dt($id_trans_nilai);		
 			$item_Penilaian  = explode(';',$hid_table_item_Penilaian);
 			foreach ($item_Penilaian as $i) {
 					$idetail = explode('#',$i);
 					if(count($idetail)>1){
 							$trans_nilai_dt = array(
-
-								'semester'			=> $semester,
-								'bulan'				=> $idetail[0],
-								// 'recdate'			=> $recdate,
-								// 'userid' 			=> $userid
+								
+								'id_hd'					=> $id_trans_nilai,
+								'kategori'				=> $idetail[0],
+								'nama_penilaian'		=> $idetail[1],
+								'nilai'					=> $idetail[2]
 								
 							);
-							// $this->model->simpan_item_bulan($detail_bulan);
+							
+							$this->model->query_simpan_trans_nilai_dt($trans_nilai_dt);
+							}
+			}	
+			
 
-					}
-			}
         }	    
 
 			echo "true";

@@ -36,7 +36,7 @@ function OtomatisKapital(a) {
 //#region loadpage
 	function setTable(){
 		$('#tb_list').DataTable( {
-			"order": [[ 1, "ASC" ]],
+			"order": [[ 2, "ASC" ]],
 			"bPaginate": false,
 			"searching": false,
 			"processing": true,
@@ -235,8 +235,11 @@ function OtomatisKapital(a) {
 
 				if (data[0].id != null) {
 					//create html lst data
+					var status_btn = 'UPDATE';
+					$('#id_trans_nilai').val(data[0].id);
 					$.each(data, function (index, value) {
-						var IdPenilaan = value['kategori'] + '_' + value['nama_penilaian'];
+						// var IdPenilaan = value['kategori'] + '_' + value['nama_penilaian'];
+						var IdPenilaan = makeid();
 						var row_count = $('#tb_list_Penilaian tr.tb-detail').length;
 						var content_data = '<tr class="tb-detail" id="row' + IdPenilaan + '">';
 						content_data += "<td>" + (row_count + 1) + "</td>";
@@ -247,22 +250,26 @@ function OtomatisKapital(a) {
 						content_data += '<td><button type="button" class="btn btn-danger btn-xs" ';
 						content_data += ' onclick="hapusItemPenilaian(\'' + IdPenilaan + '\')"><i class="fa fa-fw fa-trash"></i></button></td>';
 						content_data += "</tr>";
-
+						
 						if (row_count < 1) {
-
+							
 							$('#tb_list_Penilaian tbody').html(content_data);
 						}
 						else {
-
+							
 							$('#tb_list_Penilaian tbody').append(content_data);
 						}
-
+						
 						$("#hid_jumlah_item_Penilaian").val(row_count + 1);
 						urutkanNomorPenilaian();
 					});
 					
 				}
-				$('#save_button').text('UPDATE');
+				else{
+					var status_btn = 'SAVE';
+					
+				}
+				$('#save_button').text(status_btn);
 				// $('#Modal_add_nilai_santri').modal('show');
 
 			}
@@ -339,9 +346,11 @@ function OtomatisKapital(a) {
 			var nama_penilaian = $('#nama_penilaian').val()
 			var nilai = $('#nilai').val()
 			var hid_jumlah_item = $('hid_jumlah_item_Penilaian').val()
-			var IdPenilaan = kategori + '_' + nama_penilaian;
+			// var IdPenilaan = kategori + '_' + nama_penilaian;
+			var IdPEN = kategori + '_' + nama_penilaian;
+			var IdPenilaan = makeid();
 
-			if (cekItemPenilaian(IdPenilaan) == true) {
+			if (cekItemPenilaian(IdPEN) == true) {
 
 				var row_count = $('#tb_list_Penilaian tr.tb-detail').length;
 				var content_data = '<tr class="tb-detail" id="row' + IdPenilaan + '">';
@@ -391,7 +400,7 @@ function OtomatisKapital(a) {
 		}
 	}
 
-	function cekItemPenilaian(i_Penilaian) {
+	function cekItemPenilaian(i_IdPEN) {
 		var oTable = document.getElementById('tb_list_Penilaian');
 		var rowLength = oTable.rows.length;
 		var itemcount = $("#hid_jumlah_item_Penilaian").val();
@@ -404,9 +413,11 @@ function OtomatisKapital(a) {
 		else {
 
 			for (i = 1; i <= rowLength; i++) {
-				var Penilaian = oTable.rows.item(i).cells[1].innerHTML;
+				var KAT = oTable.rows.item(i).cells[2].innerHTML;
+				var NP = oTable.rows.item(i).cells[3].innerHTML;
+				var Penilaian = KAT + '_' + NP;
 				// print(kode_kategori);
-				if (Penilaian == i_Penilaian) {
+				if (Penilaian == i_IdPEN) {
 
 					return false;
 				}
@@ -501,9 +512,6 @@ function OtomatisKapital(a) {
 		}
 	}
 //#endregion Add Nilai
-
-
-
 //#region modal cari
 function Modalcari() {
 	clearformcari();
