@@ -1568,7 +1568,7 @@ function view(no_registrasi) {
 	$.ajax({
 
 		type: "POST",
-		url: base_url + "pendaftaran/get_data_sekolahAitam/" + no_registrasi,
+		url: base_url + "datasantri/get_data_sekolahAitam/" + no_registrasi,
 		dataType: "html",
 		success: function (data) {
 
@@ -2035,7 +2035,7 @@ function edit(no_registrasi) {
 	$.ajax({
 
 		type: "POST",
-		url: base_url + "pendaftaran/get_data_sekolahAitam/" + no_registrasi,
+		url: base_url + "datasantri/get_data_sekolahAitam/" + no_registrasi,
 		dataType: "html",
 		success: function (data) {
 
@@ -2937,7 +2937,7 @@ function TambahsekolahAitam() {
 		var data = new FormData(iform);
 
 		$.ajax({
-			url: base_url + 'pendaftaran/upload_lamp_sekolahAitam',
+			url: base_url + 'datasantri/upload_lamp_sekolahAitam',
 			type: 'post',
 			enctype: 'multipart/form-data',
 			contentType: false,
@@ -3665,7 +3665,7 @@ function TambahKeluarga() {
 			var data = new FormData(iform);
 
 			$.ajax({
-				url: base_url + 'pendaftaran/upload_lamp_keluarga',
+				url: base_url + 'datasantri/upload_lamp_keluarga',
 				type: 'post',
 				enctype: 'multipart/form-data',
 				contentType: false,
@@ -4093,7 +4093,7 @@ function TambahPenyakit(){
 					var data = new FormData(iform);
 
 					$.ajax({
-						url: base_url+'pendaftaran/upload_lamp_penyakit',
+						url: base_url+'datasantri/upload_lamp_penyakit',
 						type: 'post',
 						enctype: 'multipart/form-data',
 						contentType: false,
@@ -4610,7 +4610,7 @@ function downloadExcel() {
 	kategori_santri = ioEncode(kategori_santri);
 	page = ioEncode(page);
 
-	window.location = base_url + 'pendaftaran/exportexcel/' + param + '/' + kategori_santri + '/' + page;
+	window.location = base_url + 'datasantri/exportexcel/' + param + '/' + kategori_santri + '/' + page;
 }
 
 function idgedungshow() {
