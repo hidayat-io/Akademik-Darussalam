@@ -10,7 +10,7 @@ class Datasantri extends IO_Controller
 	{
 			$this->modul = 3;
 			parent::__construct($this->modul);
-		 	$this->load->model('mpendaftaran','model');
+		 	$this->load->model('mdatasantri','model');
 	}
 
 	function index()
@@ -785,18 +785,135 @@ class Datasantri extends IO_Controller
 
 		$fdate 	= "d-m-Y";
 		$i  	= 5;
-
+		$tdk_ada = '-';
 		if($data != null){
 
 			foreach($data as $row){
+				// get info ayah kandung
+				$no_registrasi_santri 	= $row->no_registrasi;
+				$ayah_kandung			= $this->model->get_eksport_list_data_keluarga($no_registrasi_santri,'ayah');
+					if ($ayah_kandung!=null)
+					{
+						$ayah_nama = $ayah_kandung->nama;
+						if($ayah_kandung->status !='WAFAT'){
+							$ayah_status_hidup = '1';
+						}
+						else{
+							$ayah_status_hidup = '0';
+						}
+						
+						$ayah_nik = $ayah_kandung->nik;
+						$ayah_pend_terakhir = $ayah_kandung->pend_terakhir;
+						$ayah_pekerjaan = $ayah_kandung->pekerjaan;
+					}else{
+						$ayah_nama = $tdk_ada;
+						$ayah_status_hidup = $tdk_ada;					
+						$ayah_nik = $tdk_ada;
+						$ayah_pend_terakhir = $tdk_ada;
+						$ayah_pekerjaan = $tdk_ada;
+					}
+				$ibu_kandung			= $this->model->get_eksport_list_data_keluarga($no_registrasi_santri,'ibu');
+					if ($ibu_kandung!=null)
+					{
+						$ibu_nama = $ayah_kandung->nama;
+						if($ibu_kandung->status !='WAFAT'){
+							$ibu_status_hidup = '1';
+						}
+						else{
+							$ibu_status_hidup = '0';
+						}
+						
+						$ibu_nik = $ibu_kandung->nik;
+						$ibu_pend_terakhir = $ibu_kandung->pend_terakhir;
+						$ibu_pekerjaan = $ibu_kandung->pekerjaan;
+					}else{
+						$ibu_nama = $tdk_ada;
+						$ibu_status_hidup = $tdk_ada;					
+						$ibu_nik = $tdk_ada;
+						$ibu_pend_terakhir = $tdk_ada;
+						$ibu_pekerjaan = $tdk_ada;
+					}
 
-				$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
-				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->no_registrasi);
-				$this->excel->getActiveSheet()->setCellValue('C'.$i, io_date_format($row->thn_masuk,$fdate));
-				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->nama_lengkap);
-				$this->excel->getActiveSheet()->setCellValue('E'.$i, $row->nama_arab);
-				$this->excel->getActiveSheet()->setCellValue('F'.$i, $row->tempat_lahir);
-				$this->excel->getActiveSheet()->setCellValue('G'.$i, io_date_format($row->tgl_lahir,$fdate));
+				// $this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
+				// $this->excel->getActiveSheet()->setCellValue('B'.$i, $row->no_registrasi);
+				// $this->excel->getActiveSheet()->setCellValue('C'.$i, io_date_format($row->thn_masuk,$fdate));
+				// $this->excel->getActiveSheet()->setCellValue('D'.$i, $row->nama_lengkap);
+				// $this->excel->getActiveSheet()->setCellValue('E'.$i, $row->nama_arab);
+				// $this->excel->getActiveSheet()->setCellValue('F'.$i, $row->tempat_lahir);
+				// $this->excel->getActiveSheet()->setCellValue('G'.$i, io_date_format($row->tgl_lahir,$fdate));
+				$this->excel->getActiveSheet()->setCellValue('A'.$i, $row->nomor_statistik);
+				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->NPSN);
+				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->nisnlokal);
+				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->nisn);
+				$this->excel->getActiveSheet()->setCellValue('E'.$i, $row->nik);
+				$this->excel->getActiveSheet()->setCellValue('F'.$i, $row->nama_lengkap);
+				$this->excel->getActiveSheet()->setCellValue('G'.$i, $row->tempat_lahir);
+				$this->excel->getActiveSheet()->setCellValue('H'.$i, $row->tgllahir_day);
+				$this->excel->getActiveSheet()->setCellValue('I'.$i, $row->tgllahir_month);
+				$this->excel->getActiveSheet()->setCellValue('J'.$i, $row->tgllahir_year);
+				$this->excel->getActiveSheet()->setCellValue('K'.$i, $row->jenis_kelamin);
+				$this->excel->getActiveSheet()->setCellValue('L'.$i, $row->agama);
+				$this->excel->getActiveSheet()->setCellValue('M'.$i, $row->no_tlp);
+				$this->excel->getActiveSheet()->setCellValue('N'.$i, $row->no_hp);
+				$this->excel->getActiveSheet()->setCellValue('O'.$i, $row->hobi);
+				$this->excel->getActiveSheet()->setCellValue('P'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('Q'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('R'.$i, $row->thnmasuk_day);
+				$this->excel->getActiveSheet()->setCellValue('S'.$i, $row->thnmasuk_month);
+				$this->excel->getActiveSheet()->setCellValue('T'.$i, $row->thnmasuk_year);
+				$this->excel->getActiveSheet()->setCellValue('U'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('V'.$i, $row->tingkat);
+				$this->excel->getActiveSheet()->setCellValue('W'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('X'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('Y'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('Z'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AA'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AB'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AC'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AD'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AE'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AF'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AG'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AH'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AI'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AJ'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AK'.$i, $row->nama_sekolah);
+				$this->excel->getActiveSheet()->setCellValue('AL'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AM'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AN'.$i, $row->thn_lulus);
+				$this->excel->getActiveSheet()->setCellValue('AO'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AP'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AQ'.$i, $row->jalan);
+				$this->excel->getActiveSheet()->setCellValue('AR'.$i, $row->kecamatan);
+				$this->excel->getActiveSheet()->setCellValue('AS'.$i, $row->kabupaten);
+				$this->excel->getActiveSheet()->setCellValue('AT'.$i, $row->provinsi);
+				$this->excel->getActiveSheet()->setCellValue('AU'.$i, $row->no_kk);
+				$this->excel->getActiveSheet()->setCellValue('AV'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AW'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AX'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AY'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AZ'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('BA'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('BB'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('BC'.$i, $row->bidang_prestasi);
+				$this->excel->getActiveSheet()->setCellValue('BD'.$i, $row->tingkat_prestasi);
+				$this->excel->getActiveSheet()->setCellValue('BE'.$i, $row->peringkat_yg_diraih);
+				$this->excel->getActiveSheet()->setCellValue('BF'.$i, $row->thn_meraih);
+				$this->excel->getActiveSheet()->setCellValue('BG'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('BH'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('BI'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('BJ'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('BK'.$i, $tdk_ada);				
+				$this->excel->getActiveSheet()->setCellValue('BL'.$i, $ayah_nama);
+				$this->excel->getActiveSheet()->setCellValue('BM'.$i, $ayah_status_hidup);
+				$this->excel->getActiveSheet()->setCellValue('BN'.$i, $ayah_nik);
+				$this->excel->getActiveSheet()->setCellValue('BO'.$i, $ayah_pend_terakhir);
+				$this->excel->getActiveSheet()->setCellValue('BP'.$i, $ayah_pekerjaan);
+				$this->excel->getActiveSheet()->setCellValue('BQ'.$i, $ibu_nama);
+				$this->excel->getActiveSheet()->setCellValue('BR'.$i, $ibu_status_hidup);
+				$this->excel->getActiveSheet()->setCellValue('BS'.$i, $ibu_nik);
+				$this->excel->getActiveSheet()->setCellValue('BT'.$i, $ibu_pend_terakhir);
+				$this->excel->getActiveSheet()->setCellValue('BU'.$i, $ibu_pekerjaan);
 				
 				$i++;
 			}
