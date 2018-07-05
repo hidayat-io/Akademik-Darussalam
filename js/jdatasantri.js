@@ -567,6 +567,8 @@ function kosong() {
 	$('#alamat_sekolah_tmi').val('');
 	$('#suku').val('');
 	$('#kewarganegaraan').val('');
+	$('#jeniskelamin_santri').val('');
+	$('#agama_santri').val('');
 	$('#jalan').val('');
 	$('#no_rumah').val('');
 	$('#dusun').val('');
@@ -669,6 +671,8 @@ function mati() {
 	$('#alamat_sekolah_tmi').attr('disabled', true);
 	$('#suku').attr('disabled', true);
 	$('#kewarganegaraan').attr('disabled', true);
+	$('#jeniskelamin_santri').attr('disabled', true);
+	$('#agama_santri').attr('disabled', true);
 	$('#jalan').attr('disabled', true);
 	$('#no_rumah').attr('disabled', true);
 	$('#dusun').attr('disabled', true);
@@ -778,6 +782,8 @@ function filter_tmi() {
 	$('#alamat_sekolah_tmi').attr('disabled', false);
 	$('#suku').attr('disabled', false);
 	$('#kewarganegaraan').attr('disabled', false);
+	$('#jeniskelamin_santri').attr('disabled', false);
+	$('#agama_santri').attr('disabled', false);
 	$('#jalan').attr('disabled', false);
 	$('#no_rumah').attr('disabled', false);
 	$('#dusun').attr('disabled', false);
@@ -906,6 +912,8 @@ function filter_aitam() {
 	$('#alamat_sekolah_tmi').attr('disabled', true);
 	$('#suku').attr('disabled', false);
 	$('#kewarganegaraan').attr('disabled', false);
+	$('#jeniskelamin_santri').attr('disabled', false);
+	$('#agama_santri').attr('disabled', false);
 	$('#jalan').attr('disabled', false);
 	$('#no_rumah').attr('disabled', false);
 	$('#dusun').attr('disabled', false);
@@ -1400,6 +1408,8 @@ function view(no_registrasi) {
 			$('#alamat_sekolah_tmi').val(data['alamat_sekolah']);
 			$('#suku').val(data['suku']);
 			$('#kewarganegaraan').val(data['kewarganegaraan']);
+			$('#jeniskelamin_santri').val(data['jenis_kelamin']);
+			$('#agama_santri').val(data['agama']);
 			$('#jalan').val(data['jalan']);
 			$('#no_rumah').val(data['no_rumah']);
 			$('#dusun').val(data['dusun']);
@@ -1880,6 +1890,8 @@ function edit(no_registrasi) {
 			$('#alamat_sekolah_tmi').val(data['alamat_sekolah']);
 			$('#suku').val(data['suku']);
 			$('#kewarganegaraan').val(data['kewarganegaraan']);
+			$('#jeniskelamin_santri').val(data['jenis_kelamin']);
+			$('#agama_santri').val(data['agama']);
 			$('#jalan').val(data['jalan']);
 			$('#no_rumah').val(data['no_rumah']);
 			$('#dusun').val(data['dusun']);
@@ -2451,6 +2463,8 @@ function ToTMI(no_registrasi) {
 			$('#alamat_sekolah_tmi').val(data['alamat_sekolah']);
 			$('#suku').val(data['suku']);
 			$('#kewarganegaraan').val(data['kewarganegaraan']);
+			$('#jeniskelamin_santri').val(data['jenis_kelamin']);
+			$('#agama_santri').val(data['agama']);
 			$('#jalan').val(data['jalan']);
 			$('#no_rumah').val(data['no_rumah']);
 			$('#dusun').val(data['dusun']);

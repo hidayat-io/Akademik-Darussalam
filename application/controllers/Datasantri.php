@@ -789,6 +789,9 @@ class Datasantri extends IO_Controller
 		if($data != null){
 
 			foreach($data as $row){
+				//set agama untuk kemenag
+				$agama = explode('#',$row->agama);
+				$agama = $agama['0'];
 				// get info ayah kandung
 				$no_registrasi_santri 	= $row->no_registrasi;
 				$ayah_kandung			= $this->model->get_eksport_list_data_keluarga($no_registrasi_santri,'ayah');
@@ -815,7 +818,7 @@ class Datasantri extends IO_Controller
 				$ibu_kandung			= $this->model->get_eksport_list_data_keluarga($no_registrasi_santri,'ibu');
 					if ($ibu_kandung!=null)
 					{
-						$ibu_nama = $ayah_kandung->nama;
+						$ibu_nama = $ibu_kandung->nama;
 						if($ibu_kandung->status !='WAFAT'){
 							$ibu_status_hidup = '1';
 						}
@@ -832,6 +835,21 @@ class Datasantri extends IO_Controller
 						$ibu_nik = $tdk_ada;
 						$ibu_pend_terakhir = $tdk_ada;
 						$ibu_pekerjaan = $tdk_ada;
+					}
+				$wali			= $this->model->get_eksport_list_data_keluarga($no_registrasi_santri,'wali');
+					if ($wali!=null)
+					{
+						$wali_nama = $wali->nama;						
+						$wali_hubungan = $wali->hub_kel;
+						$wali_nik = $wali->nik;
+						$wali_pendidikan = $wali->pend_terakhir;
+						$wali_pekerjaan = $wali->pekerjaan;
+					}else{
+						$wali_nama = $tdk_ada;					
+						$wali_hubungan = $tdk_ada;
+						$wali_nik = $tdk_ada;
+						$wali_pendidikan = $tdk_ada;
+						$wali_pekerjaan = $tdk_ada;
 					}
 
 				// $this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
@@ -852,7 +870,7 @@ class Datasantri extends IO_Controller
 				$this->excel->getActiveSheet()->setCellValue('I'.$i, $row->tgllahir_month);
 				$this->excel->getActiveSheet()->setCellValue('J'.$i, $row->tgllahir_year);
 				$this->excel->getActiveSheet()->setCellValue('K'.$i, $row->jenis_kelamin);
-				$this->excel->getActiveSheet()->setCellValue('L'.$i, $row->agama);
+				$this->excel->getActiveSheet()->setCellValue('L'.$i, $agama);
 				$this->excel->getActiveSheet()->setCellValue('M'.$i, $row->no_tlp);
 				$this->excel->getActiveSheet()->setCellValue('N'.$i, $row->no_hp);
 				$this->excel->getActiveSheet()->setCellValue('O'.$i, $row->hobi);
@@ -914,6 +932,12 @@ class Datasantri extends IO_Controller
 				$this->excel->getActiveSheet()->setCellValue('BS'.$i, $ibu_nik);
 				$this->excel->getActiveSheet()->setCellValue('BT'.$i, $ibu_pend_terakhir);
 				$this->excel->getActiveSheet()->setCellValue('BU'.$i, $ibu_pekerjaan);
+				$this->excel->getActiveSheet()->setCellValue('BV'.$i, $wali_nama);
+				$this->excel->getActiveSheet()->setCellValue('BW'.$i, $wali_hubungan);
+				$this->excel->getActiveSheet()->setCellValue('BX'.$i, $wali_nik);
+				$this->excel->getActiveSheet()->setCellValue('BY'.$i, $wali_pendidikan);
+				$this->excel->getActiveSheet()->setCellValue('BZ'.$i, $wali_pekerjaan);
+				$this->excel->getActiveSheet()->setCellValue('CA'.$i, $tdk_ada);
 				
 				$i++;
 			}
@@ -1050,6 +1074,8 @@ class Datasantri extends IO_Controller
 		$alamat_sekolah_tmi  	= $this->input->post('alamat_sekolah_tmi');
 		$suku  					= $this->input->post('suku');
 		$kewarganegaraan  		= $this->input->post('kewarganegaraan');
+		$jeniskelamin_santri  	= $this->input->post('jeniskelamin_santri');
+		$agama_santri  			= $this->input->post('agama_santri');
 		$jalan  				= $this->input->post('jalan');
 		$no_rumah  				= $this->input->post('no_rumah');
 		$dusun  				= $this->input->post('dusun');
@@ -1131,6 +1157,8 @@ class Datasantri extends IO_Controller
 			'alamat_sekolah' 		=> $alamat_sekolah_tmi,
 			'suku' 					=> $suku,
 			'kewarganegaraan' 		=> $kewarganegaraan,
+			'jenis_kelamin' 		=> $jeniskelamin_santri,
+			'agama' 				=> $agama_santri,
 			'jalan' 				=> $jalan,
 			'no_rumah' 				=> $no_rumah,
 			'dusun' 				=> $dusun,
