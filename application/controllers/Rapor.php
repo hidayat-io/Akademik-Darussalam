@@ -71,7 +71,6 @@ class rapor extends IO_Controller
 		}
 		$vdata['class_add']				= $class_add;
 		$vdata['title'] = 'RAPOR';
-		$vdata['title2'] = 'SETTING KURIKULUM & SEMESTER AKTIF';
 	    $data['content'] = $this->load->view('vrapor',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
@@ -81,6 +80,29 @@ class rapor extends IO_Controller
 		$sys_param_value	= $sys_param->param_value;
 		
 		return $sys_param_value;
+	}
+
+	function print_rapor($action,$hide_Kurikulum,$semester,$id_kelas=0,$no_registrasi=0){
+		// var_dump($action,$hide_Kurikulum,$semester,$id_kelas,$no_registrasi);
+		// exit();
+
+		//GET TAHUN AJAR
+		$kurikulum = $this->model->get_kurikulum($hide_Kurikulum);
+		$data['tahun_ajar'] = $kurikulum->deskripsi;
+		
+		$this->load->library("pdf");
+
+		$data['data_bid_studi'] = $this->model->get_bid_studi();
+		$data['data_matpal'] = $this->model->get_matpal();
+		// var_dump($data);
+		// exit();
+		// $data['databody'] 	= $this->model->get_print_soal($id);
+		$data['action']  = $action;
+		// $this->load->view('vPrintrapor',$data);
+		$this->pdf->load_view('vPrintrapor',$data);
+		$this->pdf->set_paper("A4", "potrait");
+		$this->pdf->render();
+		$this->pdf->stream("name-file.pdf",array("Attachment"=>0));
 	}
 }
 

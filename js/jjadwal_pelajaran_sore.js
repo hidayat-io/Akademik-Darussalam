@@ -209,9 +209,11 @@ function refresh_table()
 												+'</select></td>'; //Guru
 							content_data 	+= '<td><select class="form-control" name="'+jam+'" id="hari" >'
 												+'<option value="">-Pilih Jam-</option>'
-												+'<option value="SUBUH">SUBUH</option>'
-												+'<option value="SORE">SORE</option>'
-												+'<option value="MAHGRIB">MAHGRIB</option>'
+												+ '<option value="BSUBUH">B.SUBUH</option>'
+												+ '<option value="BSORE">B.SORE</option>'
+												+ '<option value="BASHAR">B.ASHAR</option>'
+												+ '<option value="BMAHGRIB">B.MAHGRIB</option>'
+												+ '<option value="BISYA">B.ISYA</option>'
 												+'</select></td>'; //JAM
 							content_data 	+= "</tr>";
 										
@@ -424,9 +426,11 @@ function edit(kode_kelas,tingkat, tipe_kelas,nama,santri,id_thn_ajar,deskripsi,s
 													+'</select></td>'; //Guru
                                 content_data 	+= '<td><select class="form-control" name="'+jam+'" id="'+jam+'" >'
                                                     +'<option value="">-Pilih Jam-</option>'
-                                                    +'<option value="SUBUH">SUBUH</option>'
-                                                    +'<option value="SORE">SORE</option>'
-                                                    +'<option value="MAHGRIB">MAHGRIB</option>'
+                                                    +'<option value="BSUBUH">B.SUBUH</option>'
+                                                    +'<option value="BSORE">B.SORE</option>'
+                                                    +'<option value="BASHAR">B.ASHAR</option>'
+                                                    +'<option value="BMAHGRIB">.MAHGRIB</option>'
+                                                    +'<option value="BISYA">B.ISYA</option>'
                                                     +'</select></td>'; //JAM
 								content_data 	+= "</tr>";
 								
