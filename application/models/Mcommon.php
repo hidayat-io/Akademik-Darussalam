@@ -22,6 +22,15 @@ class Mcommon extends CI_Model {
         return $this->db->get('ms_santri')->result();
     }
 
+    function query_list_aitam(){
+
+        $this->db->order_by('nama_lengkap');
+        $this->db->like('no_registrasi','A');
+        $this->db->not_like('no_registrasi','T');
+
+        return $this->db->get('ms_santri')->result();
+    }
+
     function mget_list_jabatan_guru(){
 
     	$this->db->order_by('nama_jabatan');
@@ -114,5 +123,6 @@ class Mcommon extends CI_Model {
 		// exit();
         return $data;
     }
+
     
 }
