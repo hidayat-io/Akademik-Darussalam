@@ -28,7 +28,7 @@ class Mrpp extends CI_Model
                 INNER JOIN ms_tahun_ajaran b ON b.id = a.id_thn_ajar
                 INNER JOIN ms_kelasdt c ON c.kode_kelas=a.kode_kelas
 				INNER JOIN ms_guru d ON d.id_guru=a.id_guru
-				INNER JOIN ms_kelasHD e ON c.id_kelas=e.id_kelas";
+				INNER JOIN ms_kelashd e ON c.id_kelas=e.id_kelas";
 				
                     
 

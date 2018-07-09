@@ -547,6 +547,8 @@ class Pendaftaran extends IO_Controller
 		$alamat_sekolah_tmi  	= $this->input->post('alamat_sekolah_tmi');
 		$suku  					= $this->input->post('suku');
 		$kewarganegaraan  		= $this->input->post('kewarganegaraan');
+		$jeniskelamin_santri  	= $this->input->post('jeniskelamin_santri');
+		$agama_santri  			= $this->input->post('agama_santri');
 		$jalan  				= $this->input->post('jalan');
 		$no_rumah  				= $this->input->post('no_rumah');
 		$dusun  				= $this->input->post('dusun');
@@ -628,6 +630,8 @@ class Pendaftaran extends IO_Controller
 			'alamat_sekolah' 		=> $alamat_sekolah_tmi,
 			'suku' 					=> $suku,
 			'kewarganegaraan' 		=> $kewarganegaraan,
+			'jenis_kelamin' 		=> $jeniskelamin_santri,
+			'agama' 				=> $agama_santri,
 			'jalan' 				=> $jalan,
 			'no_rumah' 				=> $no_rumah,
 			'dusun' 				=> $dusun,

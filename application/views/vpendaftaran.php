@@ -631,6 +631,53 @@
                                                             </div>
                                                         </div>
                                                         <!--end inputbox-->
+                                                            <!--inputbbox-->
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <!-- <div class="form-group">
+                                                                <label class="control-label col-md-3"></label>
+                                                                    <div class="col-md-9"> -->
+                                                                        <div class="input-group">
+                                                                        <span class="input-group-addon">
+                                                                        Jenis Kelamin
+                                                                        </span>
+                                                                        <div class="input-icon right">
+                                                                        <i class="fa"></i><select class="form-control" name="jeniskelamin_santri" id="jeniskelamin_santri" required>
+                                                                                <option value=""></option>
+                                                                                <option value="L">LAKI-LAKI</option>
+                                                                                <option value="P">PEREMPUAN</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- </div>
+                                                                </div> -->
+                                                            </div>
+                                                            <!--span-->
+                                                            <div class="col-md-6">
+                                                                <!-- <div class="form-group">
+                                                                <label class="control-label col-md-3"></label>
+                                                                    <div class="col-md-9"> -->
+                                                                        <div class="input-group">
+                                                                        <span class="input-group-addon">
+                                                                        Agama
+                                                                        </span>
+                                                                        <div class="input-icon right">
+                                                                        <i class="fa"></i><select class="form-control" name="agama_santri" id="agama_santri" required>
+                                                                                <option value=""></option>
+                                                                                <option value="1#ISLAM">ISLAM</option>
+                                                                                <option value="2#KRISTEN">KRISTEN</option>
+                                                                                <option value="3#KATOLIK">KATOLIK</option>
+                                                                                <option value="4#HINDU">HINDU</option>
+                                                                                <option value="5#BUDHA">BUDHA</option>
+                                                                                <option value="6#KONGHUCU">KONGHUCU</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- </div>
+                                                                </div> -->
+                                                            </div>
+                                                        </div>
+                                                        <!--end inputbox-->
                                                         <h3 class="form-section">Alamat</h3>
                                                         <!--inputbbox-->
                                                         <div class="row">
@@ -2502,7 +2549,17 @@
                                                                 <span class="input-group-addon">
                                                                     Agama
                                                                 </span>
-                                                                <i class="fa"></i><input type class="form-control" name="agama_keluarga" id="agama_keluarga" onkeydown="OtomatisKapital(this)" required>
+                                                                <div class="input-icon right">
+                                                                <i class="fa"></i><select class="form-control" name="agama_keluarga" id="agama_keluarga" required>
+                                                                        <option value=""></option>
+                                                                        <option value="1#ISLAM">ISLAM</option>
+                                                                        <option value="2#KRISTEN">KRISTEN</option>
+                                                                        <option value="3#KATOLIK">KATOLIK</option>
+                                                                        <option value="4#HINDU">HINDU</option>
+                                                                        <option value="5#BUDHA">BUDHA</option>
+                                                                        <option value="6#KONGHUCU">KONGHUCU</option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>

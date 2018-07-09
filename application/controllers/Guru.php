@@ -4,8 +4,8 @@ class Guru extends IO_Controller{
 
 	public function __construct(){
 
-		$modul = 16;
-		parent::__construct($modul);
+		$this->modul = 16;
+		parent::__construct($this->modul);
 	 	$this->load->model('mguru','model');
 	}
 
@@ -443,7 +443,7 @@ class Guru extends IO_Controller{
 						if($val!=""){
 
 							$string_param .= " AND ";
-							$string_param .= "status = '".$val."' ";
+							$string_param .= " g.status = '".$val."' ";
 						}
 						break;
 				}

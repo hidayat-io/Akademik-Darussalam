@@ -10,7 +10,7 @@ class Datasantri extends IO_Controller
 	{
 			$this->modul = 3;
 			parent::__construct($this->modul);
-		 	$this->load->model('mpendaftaran','model');
+		 	$this->load->model('mdatasantri','model');
 	}
 
 	function index()
@@ -382,40 +382,568 @@ class Datasantri extends IO_Controller
 		//activate worksheet number 1
 		$this->excel->setActiveSheetIndex(0);
 		//name the worksheet
-		$this->excel->getActiveSheet()->setTitle('Calon_Siswa');
-		$this->excel->getActiveSheet()->setCellValue('A1', "LIST CALON SISWA");
-		$this->excel->getActiveSheet()->mergeCells('A1:G1');
-		$this->excel->getActiveSheet()->getStyle('A1:G1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setTitle('List Santri TMI');
+		$this->excel->getActiveSheet()->setCellValue('A1', "LIST SANTRI TMI ");
+		$this->excel->getActiveSheet()->mergeCells('A1:CA1');
+		$this->excel->getActiveSheet()->getStyle('A1:CA1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-		//header
-		$this->excel->getActiveSheet()->setCellValue('A3', "No.");
-		$this->excel->getActiveSheet()->setCellValue('B3', "No Register");
-		$this->excel->getActiveSheet()->setCellValue('C3', "Tahun Masuk");
-		$this->excel->getActiveSheet()->setCellValue('D3', "Nama Santri");
-		$this->excel->getActiveSheet()->setCellValue('E3', "Nama Arab");
-		$this->excel->getActiveSheet()->setCellValue('F3', "Tempat Lahir");
-		$this->excel->getActiveSheet()->setCellValue('G3', "Tanggal Lahir");
+		//header 1
+		$this->excel->getActiveSheet()->setCellValue('A2', "Identitas Lembaga.");
+		$this->excel->getActiveSheet()->mergeCells('A2:B2');
+		$this->excel->getActiveSheet()->getStyle('A2:B2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('C2', "Informasi Pribadi Santri");
+		$this->excel->getActiveSheet()->mergeCells('C2:N2');
+		$this->excel->getActiveSheet()->getStyle('C2:N2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('O2', "Tambahan Data Pribadi Santri");
+		$this->excel->getActiveSheet()->mergeCells('O2:Q2');
+		$this->excel->getActiveSheet()->getStyle('O2:Q2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('R2', "Data Registrasi Santri");
+		$this->excel->getActiveSheet()->mergeCells('R2:U2');
+		$this->excel->getActiveSheet()->getStyle('R2:U2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('V2', "Data Aktifitas Belajar Santri");
+		$this->excel->getActiveSheet()->mergeCells('V2:X2');
+		$this->excel->getActiveSheet()->getStyle('V2:X2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('Z2', "Informasi Kategori Kebutuhan Khusus yang diperlukan Santri");
+		$this->excel->getActiveSheet()->mergeCells('Z2:AH2');
+		$this->excel->getActiveSheet()->getStyle('Z2:AH2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('AI2', "Data Sekolah/Lembaga Pendidikan Jenjang Sebelumnya");
+		$this->excel->getActiveSheet()->mergeCells('AI2:AO2');
+		$this->excel->getActiveSheet()->getStyle('AI2:AO2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('AP2', "Informasi Alamat Tempat Tinggal/Domisili Santri");
+		$this->excel->getActiveSheet()->mergeCells('AP2:AT2');
+		$this->excel->getActiveSheet()->getStyle('AP2:AT2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('AU2', "Kartu Keluarga (KK)");
+		$this->excel->getActiveSheet()->mergeCells('AU2:AV2');
+		$this->excel->getActiveSheet()->getStyle('AU2:AV2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('AW2', "Nomor KKS/KPS");
+		$this->excel->getActiveSheet()->mergeCells('AW2:AW4');
+		$this->excel->getActiveSheet()->getStyle('AW2:AW4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AW2:AW4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('AX2', "Nomor Kartu PKH");
+		$this->excel->getActiveSheet()->mergeCells('AX2:AX4');
+		$this->excel->getActiveSheet()->getStyle('AX2:AX4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AX2:AX4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('AY2', "Informasi Program Indonesia Pintar (PIP)");
+		$this->excel->getActiveSheet()->mergeCells('AY2:BB2');
+		$this->excel->getActiveSheet()->getStyle('AY2:BB2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BC2', "Prestasi Tertinggi Yang Pernah Diraih Santri");
+		$this->excel->getActiveSheet()->mergeCells('BC2:BF2');
+		$this->excel->getActiveSheet()->getStyle('BC2:BF2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BG2', "Beasiswa Yang Diterima (Selain PIP)");
+		$this->excel->getActiveSheet()->mergeCells('BG2:BK2');
+		$this->excel->getActiveSheet()->getStyle('BG2:BK2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BL2', "Identitas Orangtua/Wali Santri");
+		$this->excel->getActiveSheet()->mergeCells('BL2:CA2');
+		$this->excel->getActiveSheet()->getStyle('BL2:CA2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('A3', "Nomor Statistik");
+		$this->excel->getActiveSheet()->mergeCells('A3:A4');
+		$this->excel->getActiveSheet()->getStyle('A3:A4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('A3:A4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('B3', "NPSN");
+		$this->excel->getActiveSheet()->mergeCells('B3:B4');
+		$this->excel->getActiveSheet()->getStyle('A3:B4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('A3:B4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('C3', "NIS Lokal");
+		$this->excel->getActiveSheet()->mergeCells('C3:C4');
+		$this->excel->getActiveSheet()->getStyle('C3:C4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('C3:C4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('D3', "NIS Nasional (NISN)");
+		$this->excel->getActiveSheet()->mergeCells('D3:D4');
+		$this->excel->getActiveSheet()->getStyle('D3:D4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('D3:D4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('E3', "NIK/No. Passport");
+		$this->excel->getActiveSheet()->mergeCells('E3:E4');
+		$this->excel->getActiveSheet()->getStyle('E3:E4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('E3:E4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('F3', "Nama Lengkap Santri");
+		$this->excel->getActiveSheet()->mergeCells('F3:F4');
+		$this->excel->getActiveSheet()->getStyle('F3:F4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('F3:F4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('G3', "Tempat Lahir");
+		$this->excel->getActiveSheet()->mergeCells('G3:G4');
+		$this->excel->getActiveSheet()->getStyle('G3:G4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('G3:G4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('H3', "Tanggal Lahir");
+		$this->excel->getActiveSheet()->mergeCells('H3:J3');
+		$this->excel->getActiveSheet()->getStyle('H3:J3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('H4', "Tgl");
+		$this->excel->getActiveSheet()->getStyle('H4:H4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('I4', "Bln");
+		$this->excel->getActiveSheet()->getStyle('I4:I4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('J4', "Thn");
+		$this->excel->getActiveSheet()->getStyle('J4:J4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('K3', "Jenis Kelamin");
+		$this->excel->getActiveSheet()->mergeCells('K3:K4');
+		$this->excel->getActiveSheet()->getStyle('K3:K4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('K3:K4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('K3:K4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('L3', "Agama");
+		$this->excel->getActiveSheet()->mergeCells('L3:L4');
+		$this->excel->getActiveSheet()->getStyle('L3:L4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('L3:L4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('M3', "No. Telepon");
+		$this->excel->getActiveSheet()->mergeCells('M3:M4');
+		$this->excel->getActiveSheet()->getStyle('M3:M4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('M3:M4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('N3', "No. HP");
+		$this->excel->getActiveSheet()->mergeCells('N3:N4');
+		$this->excel->getActiveSheet()->getStyle('N3:N4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('N3:N4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('O3', "Hobi");
+		$this->excel->getActiveSheet()->mergeCells('O3:O4');
+		$this->excel->getActiveSheet()->getStyle('O3:O4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('O3:O4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('P3', "Cita-Cita");
+		$this->excel->getActiveSheet()->mergeCells('P3:P4');
+		$this->excel->getActiveSheet()->getStyle('P3:P4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('P3:P4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('P3:P4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('Q3', "Jumlah Saudara");
+		$this->excel->getActiveSheet()->mergeCells('Q3:Q4');
+		$this->excel->getActiveSheet()->getStyle('Q3:Q4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('Q3:Q4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('Q3:Q4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('R3', "Tanggal Masuk");
+		$this->excel->getActiveSheet()->mergeCells('R3:T3');
+		$this->excel->getActiveSheet()->getStyle('R3:T3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('R4', "Tgl");
+		$this->excel->getActiveSheet()->getStyle('R4:R4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('S4', "Bln");
+		$this->excel->getActiveSheet()->getStyle('S4:S4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('T4', "Thn");
+		$this->excel->getActiveSheet()->getStyle('T4:T4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('U3', "Status Asal Santri");
+		$this->excel->getActiveSheet()->mergeCells('U3:U4');
+		$this->excel->getActiveSheet()->getStyle('U3:U4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('U3:U4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('U3:U4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('V3', "Tingkat/ Kelas");
+		$this->excel->getActiveSheet()->mergeCells('V3:V4');
+		$this->excel->getActiveSheet()->getStyle('V3:V4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('V3:V4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('V3:V4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('W3', "Jurusan/ Peminatan");
+		$this->excel->getActiveSheet()->mergeCells('W3:W4');
+		$this->excel->getActiveSheet()->getStyle('W3:W4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('W3:W4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('W3:W4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('X3', "Kode Rombel");
+		$this->excel->getActiveSheet()->mergeCells('X3:X4');
+		$this->excel->getActiveSheet()->getStyle('X3:X4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('X3:X4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('X3:X4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('Y3', "Nomor Absen");
+		$this->excel->getActiveSheet()->mergeCells('Y3:Y4');
+		$this->excel->getActiveSheet()->getStyle('Y3:Y4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('Y3:Y4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('Y3:Y4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('Z3', "Tuna Rungu");
+		$this->excel->getActiveSheet()->mergeCells('Z3:Z4');
+		$this->excel->getActiveSheet()->getStyle('Z3:Z4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('Z3:Z4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('Z3:Z4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('AA3', "Tuna Netra");
+		$this->excel->getActiveSheet()->mergeCells('AA3:AA4');
+		$this->excel->getActiveSheet()->getStyle('AA3:AA4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AA3:AA4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AA3:AA4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('AB3', "Tuna Daksa");
+		$this->excel->getActiveSheet()->mergeCells('AB3:AB4');
+		$this->excel->getActiveSheet()->getStyle('AB3:AB4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AB3:AB4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AB3:AB4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('AC3', "Tuna Grahita");
+		$this->excel->getActiveSheet()->mergeCells('AC3:AC4');
+		$this->excel->getActiveSheet()->getStyle('AC3:AC4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AC3:AC4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AC3:AC4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('AD3', "Tuna Laras");
+		$this->excel->getActiveSheet()->mergeCells('AD3:AD4');
+		$this->excel->getActiveSheet()->getStyle('AD3:AD4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AD3:AD4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AD3:AD4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('AE3', "Lamban Belajar");
+		$this->excel->getActiveSheet()->mergeCells('AE3:AE4');
+		$this->excel->getActiveSheet()->getStyle('AE3:AE4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AE3:AE4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AE3:AE4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('AF3', "Sulit Belajar");
+		$this->excel->getActiveSheet()->mergeCells('AF3:AF4');
+		$this->excel->getActiveSheet()->getStyle('AF3:AF4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AF3:AF4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AF3:AF4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('AG3', "Gangguan Komunikasi");
+		$this->excel->getActiveSheet()->mergeCells('AG3:AG4');
+		$this->excel->getActiveSheet()->getStyle('AG3:AG4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AG3:AG4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AG3:AG4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('AH3', "Bakat Luar Biasa");
+		$this->excel->getActiveSheet()->mergeCells('AH3:AH4');
+		$this->excel->getActiveSheet()->getStyle('AH3:AH4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AH3:AH4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AH3:AH4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('AI3', "Jenis Pendidikan");
+		$this->excel->getActiveSheet()->mergeCells('AI3:AI4');
+		$this->excel->getActiveSheet()->getStyle('AI3:AI4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AI3:AI4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('AJ3', "NPSN Lembaga");
+		$this->excel->getActiveSheet()->mergeCells('AJ3:AJ4');
+		$this->excel->getActiveSheet()->getStyle('AJ3:AJ4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AJ3:AJ4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('AK3', "Nama Lembaga");
+		$this->excel->getActiveSheet()->mergeCells('AK3:AK4');
+		$this->excel->getActiveSheet()->getStyle('AK3:AK4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AK3:AK4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('AL3', "Kabupaten/Kota Lokasi Lembaga");
+		$this->excel->getActiveSheet()->mergeCells('AL3:AL4');
+		$this->excel->getActiveSheet()->getStyle('AL3:AL4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AL3:AL4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AL3:AL4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('AM3', "Provinsi Lokasi Lembaga");
+		$this->excel->getActiveSheet()->mergeCells('AM3:AM4');
+		$this->excel->getActiveSheet()->getStyle('AM3:AM4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AM3:AM4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AM3:AM4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('AN3', "Tahun Lulus");
+		$this->excel->getActiveSheet()->mergeCells('AN3:AN4');
+		$this->excel->getActiveSheet()->getStyle('AN3:AN4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AN3:AN4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('AO3', "Status Ijazah");
+		$this->excel->getActiveSheet()->mergeCells('AO3:AO4');
+		$this->excel->getActiveSheet()->getStyle('AO3:AO4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AO3:AO4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AO3:AO4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('AP3', "Jenis Tempat Tinggal");
+		$this->excel->getActiveSheet()->mergeCells('AP3:AP4');
+		$this->excel->getActiveSheet()->getStyle('AP3:AP4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AP3:AP4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AP3:AP4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('AQ3', "Alamat");
+		$this->excel->getActiveSheet()->mergeCells('AQ3:AQ4');
+		$this->excel->getActiveSheet()->getStyle('AQ3:AQ4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AQ3:AQ4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('AR3', "Kecamatan");
+		$this->excel->getActiveSheet()->mergeCells('AR3:AR4');
+		$this->excel->getActiveSheet()->getStyle('AR3:AR4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AR3:AR4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('AS3', "Kab./Kota");
+		$this->excel->getActiveSheet()->mergeCells('AS3:AS4');
+		$this->excel->getActiveSheet()->getStyle('AS3:AS4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AS3:AS4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('AT3', "Provinsi");
+		$this->excel->getActiveSheet()->mergeCells('AT3:AT4');
+		$this->excel->getActiveSheet()->getStyle('AT3:AT4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AT3:AT4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('AU3', "Nomor Kartu Keluarga (KK)");
+		$this->excel->getActiveSheet()->mergeCells('AU3:AU4');
+		$this->excel->getActiveSheet()->getStyle('AU3:AU4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AU3:AU4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AU3:AU4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('AV3', "Status Kepala Keluarga dalam KK");
+		$this->excel->getActiveSheet()->mergeCells('AV3:AV4');
+		$this->excel->getActiveSheet()->getStyle('AV3:AV4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AV3:AV4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AV3:AV4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('AY3', "Nomor Kartu Indonesia Pintar (KIP)");
+		$this->excel->getActiveSheet()->mergeCells('AY3:AY4');
+		$this->excel->getActiveSheet()->getStyle('AY3:AY4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AY3:AY4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AY3:AY4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('AZ3', "Status Penerima PIP");
+		$this->excel->getActiveSheet()->mergeCells('AZ3:AZ4');
+		$this->excel->getActiveSheet()->getStyle('AZ3:AZ4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AZ3:AZ4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('AZ3:AZ4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('BA3', "Alasan Menerima PIP");
+		$this->excel->getActiveSheet()->mergeCells('BA3:BA4');
+		$this->excel->getActiveSheet()->getStyle('BA3:BA4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BA3:BA4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BA3:BA4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('BB3', "Periode Menerima PIP");
+		$this->excel->getActiveSheet()->mergeCells('BB3:BB4');
+		$this->excel->getActiveSheet()->getStyle('BB3:BB4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BB3:BB4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BB3:BB4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('BC3', "Bidang Prestasi");
+		$this->excel->getActiveSheet()->mergeCells('BC3:BC4');
+		$this->excel->getActiveSheet()->getStyle('BC3:BC4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BC3:BC4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BD3', "Tingkat Prestasi");
+		$this->excel->getActiveSheet()->mergeCells('BD3:BD4');
+		$this->excel->getActiveSheet()->getStyle('BD3:BD4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BD3:BD4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BD3:BD4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('BE3', "Peringkat Yang Diraih");
+		$this->excel->getActiveSheet()->mergeCells('BE3:BE4');
+		$this->excel->getActiveSheet()->getStyle('BE3:BE4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BE3:BE4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BE3:BE4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('BF3', "Tahun Meraih Prestasi");
+		$this->excel->getActiveSheet()->mergeCells('BF3:BF4');
+		$this->excel->getActiveSheet()->getStyle('BF3:BF4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BF3:BF4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BF3:BF4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('BG3', "Status Beasiswa");
+		$this->excel->getActiveSheet()->mergeCells('BG3:BG4');
+		$this->excel->getActiveSheet()->getStyle('BG3:BG4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BG3:BG4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BH3', "Sumber Beasiswa");
+		$this->excel->getActiveSheet()->mergeCells('BH3:BH4');
+		$this->excel->getActiveSheet()->getStyle('BH3:BH4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BH3:BH4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BI3', "Jenis Beasiswa");
+		$this->excel->getActiveSheet()->mergeCells('BI3:BI4');
+		$this->excel->getActiveSheet()->getStyle('BI3:BI4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BI3:BI4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BJ3', "Jangka Waktu (Bulan)");
+		$this->excel->getActiveSheet()->mergeCells('BJ3:BJ4');
+		$this->excel->getActiveSheet()->getStyle('BJ3:BJ4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BJ3:BJ4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BJ3:BJ4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('BK3', "Besar Uang Diterima (Rp)");
+		$this->excel->getActiveSheet()->mergeCells('BK3:BK4');
+		$this->excel->getActiveSheet()->getStyle('BK3:BK4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BK3:BK4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BK3:BK4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('BL3', "Ayah Kandung");
+		$this->excel->getActiveSheet()->mergeCells('BL3:BP3');
+		$this->excel->getActiveSheet()->getStyle('BL3:BP3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BL3:BP3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BL4', "Nama Lengkap");
+		$this->excel->getActiveSheet()->mergeCells('BL4:BL4');
+		$this->excel->getActiveSheet()->getStyle('BL4:BL4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BL4:BL4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BM4', "Status Hidup");
+		$this->excel->getActiveSheet()->mergeCells('BM4:BM4');
+		$this->excel->getActiveSheet()->getStyle('BM4:BM4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BM4:BM4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BN4', "NIK/Nomor KTP");
+		$this->excel->getActiveSheet()->mergeCells('BN4:BN4');
+		$this->excel->getActiveSheet()->getStyle('BN4:BN4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BN4:BN4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BN4:BN4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('BO4', "Pendidikan");
+		$this->excel->getActiveSheet()->mergeCells('BO4:BO4');
+		$this->excel->getActiveSheet()->getStyle('BO4:BO4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BO4:BO4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BP4', "Pekerjaan");
+		$this->excel->getActiveSheet()->mergeCells('BP4:BP4');
+		$this->excel->getActiveSheet()->getStyle('BP4:BP4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BP4:BP4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BQ3', "Ibu Kandung");
+		$this->excel->getActiveSheet()->mergeCells('BQ3:BU3');
+		$this->excel->getActiveSheet()->getStyle('BQ3:BU3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BQ3:BU3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BQ4', "Nama Lengkap");
+		$this->excel->getActiveSheet()->mergeCells('BQ4:BQ4');
+		$this->excel->getActiveSheet()->getStyle('BQ4:BQ4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BQ4:BQ4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BR4', "Status Hidup");
+		$this->excel->getActiveSheet()->mergeCells('BR4:BR4');
+		$this->excel->getActiveSheet()->getStyle('BR4:BR4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BR4:BR4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BS4', "NIK/Nomor KTP");
+		$this->excel->getActiveSheet()->mergeCells('BS4:BS4');
+		$this->excel->getActiveSheet()->getStyle('BS4:BS4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BS4:BS4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BS4:BS4')->getAlignment()->setWrapText(true);
+		$this->excel->getActiveSheet()->setCellValue('BT4', "Pendidikan");
+		$this->excel->getActiveSheet()->mergeCells('BT4:BT4');
+		$this->excel->getActiveSheet()->getStyle('BT4:BT4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BT4:BT4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BU4', "Pekerjaan");
+		$this->excel->getActiveSheet()->mergeCells('BU4:BU4');
+		$this->excel->getActiveSheet()->getStyle('BU4:BU4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BU4:BU4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BV4', "Nama Lengkap");
+		$this->excel->getActiveSheet()->mergeCells('BV4:BV4');
+		$this->excel->getActiveSheet()->getStyle('BV4:BV4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BV4:BV4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BW4', "Hubungan");
+		$this->excel->getActiveSheet()->mergeCells('BW4:BW4');
+		$this->excel->getActiveSheet()->getStyle('BW4:BW4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BW4:BW4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BX4', "NIK/Nomor KTP");
+		$this->excel->getActiveSheet()->mergeCells('BX4:BX4');
+		$this->excel->getActiveSheet()->getStyle('BX4:BX4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BX4:BX4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BY4', "Pendidikan");
+		$this->excel->getActiveSheet()->mergeCells('BY4:BY4');
+		$this->excel->getActiveSheet()->getStyle('BY4:BY4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BY4:BY4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('BZ4', "Pekerjaan");
+		$this->excel->getActiveSheet()->mergeCells('BZ4:BZ4');
+		$this->excel->getActiveSheet()->getStyle('BZ4:BZ4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('BZ4:BZ4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('CA3', "Rata-Rata Penghasilan Orangtua/Wali per Bulan");
+		$this->excel->getActiveSheet()->mergeCells('CA3:CA4');
+		$this->excel->getActiveSheet()->getStyle('CA3:CA4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('CA3:CA4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->excel->getActiveSheet()->getStyle('CA3:CA4')->getAlignment()->setWrapText(true);
+
+		// header 2
 
 		$fdate 	= "d-m-Y";
-		$i  	= 4;
-
+		$i  	= 5;
+		$tdk_ada = '-';
 		if($data != null){
 
 			foreach($data as $row){
+				//set agama untuk kemenag
+				$agama = explode('#',$row->agama);
+				$agama = $agama['0'];
+				// get info ayah kandung
+				$no_registrasi_santri 	= $row->no_registrasi;
+				$ayah_kandung			= $this->model->get_eksport_list_data_keluarga($no_registrasi_santri,'ayah');
+					if ($ayah_kandung!=null)
+					{
+						$ayah_nama = $ayah_kandung->nama;
+						if($ayah_kandung->status !='WAFAT'){
+							$ayah_status_hidup = '1';
+						}
+						else{
+							$ayah_status_hidup = '0';
+						}
+						
+						$ayah_nik = $ayah_kandung->nik;
+						$ayah_pend_terakhir = $ayah_kandung->pend_terakhir;
+						$ayah_pekerjaan = $ayah_kandung->pekerjaan;
+					}else{
+						$ayah_nama = $tdk_ada;
+						$ayah_status_hidup = $tdk_ada;					
+						$ayah_nik = $tdk_ada;
+						$ayah_pend_terakhir = $tdk_ada;
+						$ayah_pekerjaan = $tdk_ada;
+					}
+				$ibu_kandung			= $this->model->get_eksport_list_data_keluarga($no_registrasi_santri,'ibu');
+					if ($ibu_kandung!=null)
+					{
+						$ibu_nama = $ibu_kandung->nama;
+						if($ibu_kandung->status !='WAFAT'){
+							$ibu_status_hidup = '1';
+						}
+						else{
+							$ibu_status_hidup = '0';
+						}
+						
+						$ibu_nik = $ibu_kandung->nik;
+						$ibu_pend_terakhir = $ibu_kandung->pend_terakhir;
+						$ibu_pekerjaan = $ibu_kandung->pekerjaan;
+					}else{
+						$ibu_nama = $tdk_ada;
+						$ibu_status_hidup = $tdk_ada;					
+						$ibu_nik = $tdk_ada;
+						$ibu_pend_terakhir = $tdk_ada;
+						$ibu_pekerjaan = $tdk_ada;
+					}
+				$wali			= $this->model->get_eksport_list_data_keluarga($no_registrasi_santri,'wali');
+					if ($wali!=null)
+					{
+						$wali_nama = $wali->nama;						
+						$wali_hubungan = $wali->hub_kel;
+						$wali_nik = $wali->nik;
+						$wali_pendidikan = $wali->pend_terakhir;
+						$wali_pekerjaan = $wali->pekerjaan;
+					}else{
+						$wali_nama = $tdk_ada;					
+						$wali_hubungan = $tdk_ada;
+						$wali_nik = $tdk_ada;
+						$wali_pendidikan = $tdk_ada;
+						$wali_pekerjaan = $tdk_ada;
+					}
 
-				$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
-				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->no_registrasi);
-				$this->excel->getActiveSheet()->setCellValue('C'.$i, io_date_format($row->thn_masuk,$fdate));
-				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->nama_lengkap);
-				$this->excel->getActiveSheet()->setCellValue('E'.$i, $row->nama_arab);
-				$this->excel->getActiveSheet()->setCellValue('F'.$i, $row->tempat_lahir);
-				$this->excel->getActiveSheet()->setCellValue('G'.$i, io_date_format($row->tgl_lahir,$fdate));
+				// $this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
+				// $this->excel->getActiveSheet()->setCellValue('B'.$i, $row->no_registrasi);
+				// $this->excel->getActiveSheet()->setCellValue('C'.$i, io_date_format($row->thn_masuk,$fdate));
+				// $this->excel->getActiveSheet()->setCellValue('D'.$i, $row->nama_lengkap);
+				// $this->excel->getActiveSheet()->setCellValue('E'.$i, $row->nama_arab);
+				// $this->excel->getActiveSheet()->setCellValue('F'.$i, $row->tempat_lahir);
+				// $this->excel->getActiveSheet()->setCellValue('G'.$i, io_date_format($row->tgl_lahir,$fdate));
+				$this->excel->getActiveSheet()->setCellValue('A'.$i, $row->nomor_statistik);
+				$this->excel->getActiveSheet()->setCellValue('B'.$i, $row->NPSN);
+				$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->nisnlokal);
+				$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->nisn);
+				$this->excel->getActiveSheet()->setCellValue('E'.$i, $row->nik);
+				$this->excel->getActiveSheet()->setCellValue('F'.$i, $row->nama_lengkap);
+				$this->excel->getActiveSheet()->setCellValue('G'.$i, $row->tempat_lahir);
+				$this->excel->getActiveSheet()->setCellValue('H'.$i, $row->tgllahir_day);
+				$this->excel->getActiveSheet()->setCellValue('I'.$i, $row->tgllahir_month);
+				$this->excel->getActiveSheet()->setCellValue('J'.$i, $row->tgllahir_year);
+				$this->excel->getActiveSheet()->setCellValue('K'.$i, $row->jenis_kelamin);
+				$this->excel->getActiveSheet()->setCellValue('L'.$i, $agama);
+				$this->excel->getActiveSheet()->setCellValue('M'.$i, $row->no_tlp);
+				$this->excel->getActiveSheet()->setCellValue('N'.$i, $row->no_hp);
+				$this->excel->getActiveSheet()->setCellValue('O'.$i, $row->hobi);
+				$this->excel->getActiveSheet()->setCellValue('P'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('Q'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('R'.$i, $row->thnmasuk_day);
+				$this->excel->getActiveSheet()->setCellValue('S'.$i, $row->thnmasuk_month);
+				$this->excel->getActiveSheet()->setCellValue('T'.$i, $row->thnmasuk_year);
+				$this->excel->getActiveSheet()->setCellValue('U'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('V'.$i, $row->tingkat);
+				$this->excel->getActiveSheet()->setCellValue('W'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('X'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('Y'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('Z'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AA'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AB'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AC'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AD'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AE'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AF'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AG'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AH'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AI'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AJ'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AK'.$i, $row->nama_sekolah);
+				$this->excel->getActiveSheet()->setCellValue('AL'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AM'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AN'.$i, $row->thn_lulus);
+				$this->excel->getActiveSheet()->setCellValue('AO'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AP'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AQ'.$i, $row->jalan);
+				$this->excel->getActiveSheet()->setCellValue('AR'.$i, $row->kecamatan);
+				$this->excel->getActiveSheet()->setCellValue('AS'.$i, $row->kabupaten);
+				$this->excel->getActiveSheet()->setCellValue('AT'.$i, $row->provinsi);
+				$this->excel->getActiveSheet()->setCellValue('AU'.$i, $row->no_kk);
+				$this->excel->getActiveSheet()->setCellValue('AV'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AW'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AX'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AY'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('AZ'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('BA'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('BB'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('BC'.$i, $row->bidang_prestasi);
+				$this->excel->getActiveSheet()->setCellValue('BD'.$i, $row->tingkat_prestasi);
+				$this->excel->getActiveSheet()->setCellValue('BE'.$i, $row->peringkat_yg_diraih);
+				$this->excel->getActiveSheet()->setCellValue('BF'.$i, $row->thn_meraih);
+				$this->excel->getActiveSheet()->setCellValue('BG'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('BH'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('BI'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('BJ'.$i, $tdk_ada);
+				$this->excel->getActiveSheet()->setCellValue('BK'.$i, $tdk_ada);				
+				$this->excel->getActiveSheet()->setCellValue('BL'.$i, $ayah_nama);
+				$this->excel->getActiveSheet()->setCellValue('BM'.$i, $ayah_status_hidup);
+				$this->excel->getActiveSheet()->setCellValue('BN'.$i, $ayah_nik);
+				$this->excel->getActiveSheet()->setCellValue('BO'.$i, $ayah_pend_terakhir);
+				$this->excel->getActiveSheet()->setCellValue('BP'.$i, $ayah_pekerjaan);
+				$this->excel->getActiveSheet()->setCellValue('BQ'.$i, $ibu_nama);
+				$this->excel->getActiveSheet()->setCellValue('BR'.$i, $ibu_status_hidup);
+				$this->excel->getActiveSheet()->setCellValue('BS'.$i, $ibu_nik);
+				$this->excel->getActiveSheet()->setCellValue('BT'.$i, $ibu_pend_terakhir);
+				$this->excel->getActiveSheet()->setCellValue('BU'.$i, $ibu_pekerjaan);
+				$this->excel->getActiveSheet()->setCellValue('BV'.$i, $wali_nama);
+				$this->excel->getActiveSheet()->setCellValue('BW'.$i, $wali_hubungan);
+				$this->excel->getActiveSheet()->setCellValue('BX'.$i, $wali_nik);
+				$this->excel->getActiveSheet()->setCellValue('BY'.$i, $wali_pendidikan);
+				$this->excel->getActiveSheet()->setCellValue('BZ'.$i, $wali_pekerjaan);
+				$this->excel->getActiveSheet()->setCellValue('CA'.$i, $tdk_ada);
 				
 				$i++;
 			}
 		}
 
-		for($col = 'A'; $col !== 'G'; $col++) {
+		for($col = 'A'; $col !== 'CA'; $col++) {
 
 		    $this->excel->getActiveSheet()
 		        ->getColumnDimension($col)
@@ -430,13 +958,13 @@ class Datasantri extends IO_Controller
 		  )
 		);
 		$i = $i-1;
-		$cell_to = "G".$i;
-		$this->excel->getActiveSheet()->getStyle('A3:'.$cell_to)->applyFromArray($styleArray);
-		$this->excel->getActiveSheet()->getStyle('A1:G3')->getFont()->setBold(true);
-		$this->excel->getActiveSheet()->getStyle('A3:G3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-		$this->excel->getActiveSheet()->getStyle('A3:G3')->getFill()->getStartColor()->setRGB('2CC30B');
+		$cell_to = "CA".$i;
+		$this->excel->getActiveSheet()->getStyle('A2:'.$cell_to)->applyFromArray($styleArray);
+		$this->excel->getActiveSheet()->getStyle('A2:CA4')->getFont()->setBold(true);
+		$this->excel->getActiveSheet()->getStyle('A2:CA4')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+		$this->excel->getActiveSheet()->getStyle('A2:CA4')->getFill()->getStartColor()->setRGB('2CC30B');
 
-		$filename='Calon-Siswa.xls'; //save our workbook as this file name
+		$filename='LIST-SANTRI.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
 		header('Cache-Control: max-age=0');//no cache
@@ -546,6 +1074,8 @@ class Datasantri extends IO_Controller
 		$alamat_sekolah_tmi  	= $this->input->post('alamat_sekolah_tmi');
 		$suku  					= $this->input->post('suku');
 		$kewarganegaraan  		= $this->input->post('kewarganegaraan');
+		$jeniskelamin_santri  	= $this->input->post('jeniskelamin_santri');
+		$agama_santri  			= $this->input->post('agama_santri');
 		$jalan  				= $this->input->post('jalan');
 		$no_rumah  				= $this->input->post('no_rumah');
 		$dusun  				= $this->input->post('dusun');
@@ -627,6 +1157,8 @@ class Datasantri extends IO_Controller
 			'alamat_sekolah' 		=> $alamat_sekolah_tmi,
 			'suku' 					=> $suku,
 			'kewarganegaraan' 		=> $kewarganegaraan,
+			'jenis_kelamin' 		=> $jeniskelamin_santri,
+			'agama' 				=> $agama_santri,
 			'jalan' 				=> $jalan,
 			'no_rumah' 				=> $no_rumah,
 			'dusun' 				=> $dusun,

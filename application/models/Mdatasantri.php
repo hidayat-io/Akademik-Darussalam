@@ -65,20 +65,60 @@ class Mdatasantri extends CI_Model
 			if ($kategori_santri == 'TMI')
 			{
 				$sql = "SELECT * FROM ms_santri where no_registrasi not like 'T%' and no_registrasi not like 'A%' and no_registrasi not like 'CA%'";
+				// $sql = "SELECT ms_config.nomor_statistik, RIGHT(ms_config.NPSN,8) AS NPSN,  ms_santri.no_registrasi, ms_santri.nisnlokal, ms_santri.nisn, ms_santri.nik, ms_santri.nama_lengkap, 
+				// 				ms_santri.tempat_lahir, DATE_FORMAT(ms_santri.tgl_lahir,'%d') AS tgllahir_day, DATE_FORMAT(ms_santri.tgl_lahir,'%m') AS tgllahir_month, DATE_FORMAT(ms_santri.tgl_lahir,'%y') AS tgllahir_year, ms_santri.jenis_kelamin,
+				// 				ms_santri.agama, ms_santri.no_tlp, ms_santri.no_hp, ms_santri.hobi, DATE_FORMAT(ms_santri.thn_masuk,'%d') AS thnmasuk_day, DATE_FORMAT(ms_santri.thn_masuk,'%m') AS thnmasuk_month, DATE_FORMAT(ms_santri.thn_masuk,'%y') AS thnmasuk_year,
+				// 				ms_kelashd.tingkat, ms_santri.nama_sekolah, ms_santri.thn_lulus, ms_santri.jalan, ms_santri.kecamatan, ms_santri.kabupaten, ms_santri.provinsi, ms_santri.no_kk, ms_kecakapan_santri.bid_studi AS bidang_prestasi,
+				// 				ms_kecakapan_santri.olahraga AS tingkat_prestasi, ms_kecakapan_santri.kesenian AS peringkat_yg_diraih, ms_kecakapan_santri.keterampilan AS thn_meraih
+				// 		FROM ms_santri  JOIN ms_config 
+				// 		INNER JOIN ms_kelasdt ON ms_santri.kel_sekarang = ms_kelasdt.kode_kelas
+				// 		INNER JOIN ms_kelashd ON ms_kelasdt.id_kelas = ms_kelashd.id_kelas
+				// 		LEFT OUTER JOIN ms_kecakapan_santri ON ms_santri.no_registrasi = ms_kecakapan_santri.no_registrasi
+				// 		where ms_santri.no_registrasi not like 'T%' and ms_santri.no_registrasi not like 'A%' and ms_santri.no_registrasi not like 'CA%'";
 			}
 			else
 			{
 				$sql = "SELECT * FROM ms_santri where no_registrasi not like 'T%' and no_registrasi not like 'A%' and no_registrasi not like 'CT%'";
+				// $sql = "SELECT ms_config.nomor_statistik, RIGHT(ms_config.NPSN,8) AS NPSN,  ms_santri.no_registrasi, ms_santri.nisnlokal, ms_santri.nisn, ms_santri.nik, ms_santri.nama_lengkap, 
+				// 				ms_santri.tempat_lahir, DATE_FORMAT(ms_santri.tgl_lahir,'%d') AS tgllahir_day, DATE_FORMAT(ms_santri.tgl_lahir,'%m') AS tgllahir_month, DATE_FORMAT(ms_santri.tgl_lahir,'%y') AS tgllahir_year, ms_santri.jenis_kelamin,
+				// 				ms_santri.agama, ms_santri.no_tlp, ms_santri.no_hp, ms_santri.hobi, DATE_FORMAT(ms_santri.thn_masuk,'%d') AS thnmasuk_day, DATE_FORMAT(ms_santri.thn_masuk,'%m') AS thnmasuk_month, DATE_FORMAT(ms_santri.thn_masuk,'%y') AS thnmasuk_year,
+				// 				ms_kelashd.tingkat, ms_santri.nama_sekolah, ms_santri.thn_lulus, ms_santri.jalan, ms_santri.kecamatan, ms_santri.kabupaten, ms_santri.provinsi, ms_santri.no_kk, ms_kecakapan_santri.bid_studi AS bidang_prestasi,
+				// 				ms_kecakapan_santri.olahraga AS tingkat_prestasi, ms_kecakapan_santri.kesenian AS peringkat_yg_diraih, ms_kecakapan_santri.keterampilan AS thn_meraih
+				// 		FROM ms_santri  JOIN ms_config 
+				// 		INNER JOIN ms_kelasdt ON ms_santri.kel_sekarang = ms_kelasdt.kode_kelas
+				// 		INNER JOIN ms_kelashd ON ms_kelasdt.id_kelas = ms_kelashd.id_kelas
+				// 		LEFT OUTER JOIN ms_kecakapan_santri ON ms_santri.no_registrasi = ms_kecakapan_santri.no_registrasi
+				// 		where ms_santri.no_registrasi not like 'T%' and ms_santri.no_registrasi not like 'A%' and ms_santri.no_registrasi not like 'CT%'";
 			}
 		}
 		else {
 				if ($kategori_santri == 'TMI')
 			{
-				$sql = "SELECT * FROM ms_santri where no_registrasi like 'T%' and no_registrasi not like 'A%' and no_registrasi not like 'CA%'";
+				// $sql = "SELECT * FROM ms_santri where no_registrasi like 'T%' and no_registrasi not like 'A%' and no_registrasi not like 'CA%'";
+				$sql = "SELECT ms_config.nomor_statistik, RIGHT(ms_config.NPSN,8) AS NPSN,  ms_santri.no_registrasi, ms_santri.nisnlokal, ms_santri.nisn, ms_santri.nik, ms_santri.nama_lengkap, 
+								ms_santri.tempat_lahir, DATE_FORMAT(ms_santri.tgl_lahir,'%d') AS tgllahir_day, DATE_FORMAT(ms_santri.tgl_lahir,'%m') AS tgllahir_month, DATE_FORMAT(ms_santri.tgl_lahir,'%y') AS tgllahir_year, ms_santri.jenis_kelamin,
+								ms_santri.agama, ms_santri.no_tlp, ms_santri.no_hp, ms_santri.hobi, DATE_FORMAT(ms_santri.thn_masuk,'%d') AS thnmasuk_day, DATE_FORMAT(ms_santri.thn_masuk,'%m') AS thnmasuk_month, DATE_FORMAT(ms_santri.thn_masuk,'%y') AS thnmasuk_year,
+								ms_kelashd.tingkat, ms_santri.nama_sekolah, ms_santri.thn_lulus, ms_santri.jalan, ms_santri.kecamatan, ms_santri.kabupaten, ms_santri.provinsi, ms_santri.no_kk, ms_kecakapan_santri.bid_studi AS bidang_prestasi,
+								ms_kecakapan_santri.olahraga AS tingkat_prestasi, ms_kecakapan_santri.kesenian AS peringkat_yg_diraih, ms_kecakapan_santri.keterampilan AS thn_meraih
+						FROM ms_santri  JOIN ms_config 
+						INNER JOIN ms_kelasdt ON ms_santri.kel_sekarang = ms_kelasdt.kode_kelas
+						INNER JOIN ms_kelashd ON ms_kelasdt.id_kelas = ms_kelashd.id_kelas
+						LEFT OUTER JOIN ms_kecakapan_santri ON ms_santri.no_registrasi = ms_kecakapan_santri.no_registrasi
+						where ms_santri.no_registrasi like 'T%' and ms_santri.no_registrasi not like 'A%' and ms_santri.no_registrasi not like 'CA%'";
 			}
 			else
 			{
-				$sql = "SELECT * FROM ms_santri where no_registrasi not like 'T%' and no_registrasi like 'A%' and no_registrasi not like 'CT%'";
+				// $sql = "SELECT * FROM ms_santri where no_registrasi not like 'T%' and no_registrasi like 'A%' and no_registrasi not like 'CT%'";
+				$sql = "SELECT ms_config.nomor_statistik, RIGHT(ms_config.NPSN,8) AS NPSN,  ms_santri.no_registrasi, ms_santri.nisnlokal, ms_santri.nisn, ms_santri.nik, ms_santri.nama_lengkap, 
+								ms_santri.tempat_lahir, DATE_FORMAT(ms_santri.tgl_lahir,'%d') AS tgllahir_day, DATE_FORMAT(ms_santri.tgl_lahir,'%m') AS tgllahir_month, DATE_FORMAT(ms_santri.tgl_lahir,'%y') AS tgllahir_year, ms_santri.jenis_kelamin,
+								ms_santri.agama, ms_santri.no_tlp, ms_santri.no_hp, ms_santri.hobi, DATE_FORMAT(ms_santri.thn_masuk,'%d') AS thnmasuk_day, DATE_FORMAT(ms_santri.thn_masuk,'%m') AS thnmasuk_month, DATE_FORMAT(ms_santri.thn_masuk,'%y') AS thnmasuk_year,
+								ms_kelashd.tingkat, ms_santri.nama_sekolah, ms_santri.thn_lulus, ms_santri.jalan, ms_santri.kecamatan, ms_santri.kabupaten, ms_santri.provinsi, ms_santri.no_kk, ms_kecakapan_santri.bid_studi AS bidang_prestasi,
+								ms_kecakapan_santri.olahraga AS tingkat_prestasi, ms_kecakapan_santri.kesenian AS peringkat_yg_diraih, ms_kecakapan_santri.keterampilan AS thn_meraih
+						FROM ms_santri  JOIN ms_config 
+						INNER JOIN ms_kelasdt ON ms_santri.kel_sekarang = ms_kelasdt.kode_kelas
+						INNER JOIN ms_kelashd ON ms_kelasdt.id_kelas = ms_kelashd.id_kelas
+						LEFT OUTER JOIN ms_kecakapan_santri ON ms_santri.no_registrasi = ms_kecakapan_santri.no_registrasi
+						where ms_santri.no_registrasi not like 'T%' and ms_santri.no_registrasi like 'A%' and ms_santri.no_registrasi not like 'CT%'";
 			}
 		}
 		
@@ -98,6 +138,13 @@ class Mdatasantri extends CI_Model
 		// exit();
 		
 		return $this->db->query($sql)->result();
+	}
+
+	function get_eksport_list_data_keluarga($no_registrasi,$kategori)
+	{		
+		$this->db->where('no_registrasi',$no_registrasi);
+		$this->db->where('kategori',$kategori);
+		return $this->db->get('ms_keluarga')->row();
 	}
 	
 	function get_sequence_noreg_TMI()
@@ -338,7 +385,7 @@ class Mdatasantri extends CI_Model
 		$data=$this->db->query("SELECT a.kategori, a.no_registrasi, a.no_stambuk,DATE_FORMAT(a.thn_daftar,'%d-%m-%Y') AS thn_daftar,  DATE_FORMAT(a.thn_masuk,'%d-%m-%Y') as thn_masuk, a.rayon, a.kamar, a.bagian, 
 		a.kel_sekarang, a.nisn, a.nisnlokal, a.nama_lengkap, a.nama_arab, a.nama_panggilan, a.hobi, 
 		a.uang_jajan_perbulan, a.no_kk, a.nik, a.tempat_lahir, DATE_FORMAT(a.tgl_lahir,'%d-%m-%Y') as tgl_lahir, a.konsulat, 
-		a.nama_sekolah,  DATE_FORMAT(a.thn_lulus,'%d-%m-%Y') as thn_lulus, a.alamat_sekolah, a.suku, a.kewarganegaraan, 
+		a.nama_sekolah,  DATE_FORMAT(a.thn_lulus,'%d-%m-%Y') as thn_lulus, a.alamat_sekolah, a.suku, a.kewarganegaraan,a.jenis_kelamin,a.agama, 
 		a.jalan, a.no_rumah, a.dusun, a.desa, a.kecamatan, a.kabupaten, a.provinsi, a.kd_pos, a.no_tlp, 
 		a.no_hp, a.email, a.fb, a.dibesarkan_di, a.lamp_ijazah, a.lamp_photo, a.lamp_akta_kelahiran, a.lamp_kk, a.lamp_skhun,a.lamp_nisn,
 		 a.lamp_transkip_nilai, a.lamp_skkb, a.lamp_surat_kesehatan, b.pembiaya, b.biaya_perbulan_min, 

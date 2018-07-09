@@ -1,0 +1,77 @@
+function svpembayaran() {
+	
+	if ($("#add_pembayaran").valid() == true) {
+		$status = $('#save_button').text();
+		var tipe_pembayaran = $('input[name=tipe_pembayaran]:checked').val();
+		$('#tipe_pembayaran_semester').attr('disabled', false);
+		$('#tipe_pembayaran_bulanan').attr('disabled', false);
+		$('#semester_satu').attr('disabled', false);
+		$('#semester_dua').attr('disabled', false);
+		var iform = $('#add_pembayaran')[0];
+		var data = new FormData(iform);
+		if ($status == 'UPDATE') {
+			msg = "Update Data Berhasil"
+		}
+		else {
+			msg = "Simpan Data Berhasil"
+		}
+
+			if(tipe_pembayaran =='B'){
+				var chksemesterArray = [];
+
+				$(".chksemester:checked").each(function () {
+					chksemesterArray.push($(this).val());
+				});
+
+				if (chksemesterArray.length == 0) {
+					bootbox.alert("Tidak ada pembayaran");
+				}else{
+					
+					$.ajax({
+
+						type: "POST",
+						url: base_url + "pembayaran/simpan_pembayaran/" + $status,
+						enctype: 'multipart/form-data',
+						contentType: false,
+						processData: false,
+						data: data,
+						success: function (data) {
+
+							bootbox.alert({
+								message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;" + msg + "!!",
+								size: 'small',
+								callback: function () {
+
+									window.location = base_url + 'pembayaran';
+								}
+							});
+						}
+					});
+				}
+			}else{
+
+				
+				$.ajax({
+		
+					type: "POST",
+					url: base_url + "pembayaran/simpan_pembayaran/" + $status,
+					enctype: 'multipart/form-data',
+					contentType: false,
+					processData: false,
+					data: data,
+					success: function (data) {
+		
+						bootbox.alert({
+							message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;" + msg + "!!",
+							size: 'small',
+							callback: function () {
+		
+								window.location = base_url + 'pembayaran';
+							}
+						});
+					}
+				});
+		}
+		
+	}
+}

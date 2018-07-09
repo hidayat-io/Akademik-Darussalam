@@ -179,7 +179,7 @@
                                                 <label class="control-label"></label>
                                                 <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    Tingkat
+                                                    Bulan
                                                 </span>
                                                 <select class="form-control" name="bulan" id="bulan" required>
                                                     <option value=""></option>
