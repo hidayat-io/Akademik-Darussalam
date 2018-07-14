@@ -69,7 +69,13 @@ class Mguru extends CI_Model {
 	function mdelete_jabatan($id){
 
 		$this->db->where('id_guru',$id);
-		$this->db->delete('ms_guru_struktural');
+		$this->db->delete('trans_guru_struktural');
+	}
+
+	function mdelete_bidang_keahlian($id){
+
+		$this->db->where('id_guru',$id);
+		$this->db->delete('trans_guru_bidang_keahlian');
 	}
 
 	function mget_bio_guru($id_guru){
@@ -115,7 +121,13 @@ class Mguru extends CI_Model {
 	function mget_guru_structure($id_guru){
 
 		$this->db->where('id_guru',$id_guru);
-		return $this->db->get('ms_guru_struktural')->result_array();
+		return $this->db->get('trans_guru_struktural')->result_array();
+	}
+
+	function mget_guru_mapel($id_guru){
+
+		$this->db->where('id_guru',$id_guru);
+		return $this->db->get('trans_guru_bidang_keahlian')->result_array();
 	}
 
 	function mdelete_data_guru($id_guru){

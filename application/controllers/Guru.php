@@ -11,7 +11,8 @@ class Guru extends IO_Controller{
 
 	function index(){			
 
-		$vdata['title'] = 'DATA GURU & KARYAWAN';
+		$title = $this->mcommon->mget_judul_modul($this->modul);
+		$vdata['title'] = strtoupper($title);
 
 		//data master jabatan
 		$mguru = $this->mcommon->mget_list_jabatan_guru()->result();
@@ -27,7 +28,6 @@ class Guru extends IO_Controller{
 
 			$vdata['opt_jabatan'] = array();
 		}
-		
 
 		//data master mata pelajaran
 		$mpelajaran = $this->mcommon->mget_list_mata_pelajaran()->result();
@@ -43,6 +43,35 @@ class Guru extends IO_Controller{
 
 			$vdata['opt_mapel'] = array();
 		}
+
+		//data master pendidikan
+		$mpendidikan = $this->mcommon->mget_list_pendidikan()->result();
+
+		if($mpendidikan!=null){
+
+			foreach ($mpendidikan as $p) {
+			
+				$vdata['opt_ijazah_terakhir'][$p->id_pendidikan] = $p->pendidikan;
+			}
+		}
+		else{
+
+			$vdata['opt_ijazah_terakhir'] = array();
+		}
+
+		//selectbox tugas utama
+		$vdata['opt_tugas_utama']['1#Pendidik'] 			= 'Pendidik';
+		$vdata['opt_tugas_utama']['2#Tenaga Kependidikan'] 	= 'Tenaga Kependidikan';
+
+		//selectbox Status Pegawai
+		$vdata['opt_status_pegawai']['1#PNS'] 		= 'PNS';
+		$vdata['opt_status_pegawai']['1#Bukan PNS'] = 'Bukan PNS';
+
+		//selectbox Status Penugasan
+		$vdata['opt_status_penugasan']['1#Tetap'] = 'Tetap';
+		$vdata['opt_status_penugasan']['2#Tidak Tetap'] = 'Tidak Tetap';
+		$vdata['opt_status_penugasan']['3#Diperbantukan'] = 'Diperbantukan';
+		$vdata['opt_status_penugasan']['4#Dipekerjakan'] = 'Dipekerjakan';
 
 		//default config data lembaga
 		$dconfig = $this->mcommon->mget_config_lembaga()->row();
@@ -120,7 +149,7 @@ class Guru extends IO_Controller{
 		$pend_terakhir 			= isset($input['opt_ijazah_terakhir'])?$input['opt_ijazah_terakhir']:null;
 		$start_ajar 			= $input['dtp_ajar_mulai']==''?null:io_return_date('d-m-Y',$input['dtp_ajar_mulai']);
 		$end_ajar 				= $input['dtp_ajar_akhir']==''?null:io_return_date('d-m-Y',$input['dtp_ajar_akhir']);
-		$mapel 					= isset($input['opt_mapel'])?$input['opt_mapel']:'';
+		// $mapel 					= isset($input['opt_mapel'])?$input['opt_mapel']:'';
 
 		$data = array(
 
@@ -154,11 +183,13 @@ class Guru extends IO_Controller{
 			"no_sk"					=> $input['txt_sk_angkat'],
 			"tgl_sk"				=> $tgl_sk,
 			"materi_diampu"  		=> $mapel,
-			"gapok"					=> $input['txt_gapok'],
 			"userid"				=> $this->session->userdata('logged_in')['uid'],
 			"recdate" 				=> date('Y-m-d H:i:s'),
 			"status_aktif"			=> '1',
-			"no_reg"				=> $input['txt_noreg']
+			"no_reg"				=> $input['txt_noreg'],
+			"tugas_utama"			=> $input['opt_tugas_utama'],
+			"status_penugasan"		=> $input['opt_status_penugasan'],
+			"status_pegawai"		=> $input['opt_status_pegawai']
 		);
 
 		//No Registrasi
@@ -176,35 +207,43 @@ class Guru extends IO_Controller{
 		if($id==""){
 
 			$id = $this->model->msimpan_data($data);
-
-			//update NIG according to inserted ID
-			$no_stat 	= $input['hid_no_statistik'];
-			$fixid 		= str_pad($id, 3, "0", STR_PAD_LEFT);
-			$nig 		= $no_stat.$mapel.$fixid;
-
-			$this->model->mupdate_data($id,array("nig"=>$nig));
 		}
 		else{
 
 			$this->model->mupdate_data($id,$data);
 		}
 
+		//update NIG
+		if($input['opt_status']=='Tetap'){
+
+			$no_stat 	= $input['hid_no_statistik'];
+			$fixid 		= substr($no_reg,-3);
+			$thn_masuk 	= substr($start_ajar,0,4);
+			$nig 		= $no_stat.'-'.$thn_masuk.'-'.$fixid;
+		}
+		else{
+
+			$nig 		= '';
+		}
+
+		$this->model->mupdate_data($id,array("nig"=>$nig));
+
 		//update trans_noreg_guru
 		$this->model->mupdate_noreg($id,$input['opt_status'],$no_reg);
 
 		//save history data gapok
-		if(floatval($input['hid_old_gapok']) != floatval($input['txt_gapok'])){
+		// if(floatval($input['hid_old_gapok']) != floatval($input['txt_gapok'])){
 
-			$gapok = array(
+		// 	$gapok = array(
 
-				'id_guru'	=> $id,
-				'nominal'	=> floatval($input['txt_gapok']),
-				'userid' 	=> $this->session->userdata('logged_in')['uid'],
-				'recdate'	=> date('Y-m-d H:i:s')
-			);
+		// 		'id_guru'	=> $id,
+		// 		'nominal'	=> floatval($input['txt_gapok']),
+		// 		'userid' 	=> $this->session->userdata('logged_in')['uid'],
+		// 		'recdate'	=> date('Y-m-d H:i:s')
+		// 	);
 
-			$this->model->minsert_detail('ms_guru_gapok',$gapok);
-		}
+		// 	$this->model->minsert_detail('ms_guru_gapok',$gapok);
+		// }
 
 		//save data anak
 		$ar_anak = json_decode($input['hid_anak']);
@@ -311,7 +350,24 @@ class Guru extends IO_Controller{
 					'id_guru'		=> $id
 				);
 
-				$this->model->minsert_detail('ms_guru_struktural',$jabatan);
+				$this->model->minsert_detail('trans_guru_struktural',$jabatan);
+			}
+		}
+
+		//save bidang keahlian
+		$this->model->mdelete_bidang_keahlian($id);
+
+		if(isset($input['opt_mapel'])){
+
+			foreach($input['opt_mapel'] as $mpl){
+
+				$mata_pelajaran = array(
+
+					'id_guru' 	=> $id,
+					'id_matpal' => $mpl
+				);
+
+				$this->model->minsert_detail('trans_guru_bidang_keahlian',$mata_pelajaran);
 			}
 		}
 
@@ -472,6 +528,7 @@ class Guru extends IO_Controller{
 		$family 	= $this->model->mget_guru_familiy($id_guru);
 		$edu 		= $this->model->mget_guru_edu($id_guru);
 		$structure 	= $this->model->mget_guru_structure($id_guru);
+		$mapel 		= $this->model->mget_guru_mapel($id_guru);
 
 		$data_guru = array(
 
@@ -479,7 +536,8 @@ class Guru extends IO_Controller{
 			'sk'		=> $sk,
 			'fam'		=> $family,
 			'edu'		=> $edu,
-			'struct'	=> $structure
+			'struct'	=> $structure,
+			'mapel'		=> $mapel
 		);
 
 		echo json_encode($data_guru);
@@ -531,14 +589,14 @@ class Guru extends IO_Controller{
 		$this->excel->getActiveSheet()->setCellValue('V3', "Gelar Akademik");
 		$this->excel->getActiveSheet()->setCellValue('W3', "Status");
 		$this->excel->getActiveSheet()->setCellValue('X3', "Pendidikan Terakhir");
-		$this->excel->getActiveSheet()->setCellValue('Y3', "Mulai Mengajar");
-		$this->excel->getActiveSheet()->setCellValue('Z3', "Selesai Mengajar");
+		$this->excel->getActiveSheet()->setCellValue('Y3', "Tgl.Masuk");
+		$this->excel->getActiveSheet()->setCellValue('Z3', "Tgl.Selesai");
 		$this->excel->getActiveSheet()->setCellValue('AA3', "ID Alumni");
 		$this->excel->getActiveSheet()->setCellValue('AB3', "No.SK");
 		$this->excel->getActiveSheet()->setCellValue('AC3', "Tgl.SK");
-		$this->excel->getActiveSheet()->setCellValue('AD3', "Gapok");
-		$this->excel->getActiveSheet()->setCellValue('AE3', "Masa Abdi");
-		$this->excel->getActiveSheet()->setCellValue('AF3', "Materi Diampu");
+		// $this->excel->getActiveSheet()->setCellValue('AD3', "Gapok");
+		$this->excel->getActiveSheet()->setCellValue('AD3', "Masa Abdi");
+		$this->excel->getActiveSheet()->setCellValue('AE3', "Materi Diampu");
 
 
 		$fdate 	= "d-m-Y";
@@ -582,15 +640,15 @@ class Guru extends IO_Controller{
 				$this->excel->getActiveSheet()->setCellValue('AA'.$i, $row->id_alumni);
 				$this->excel->getActiveSheet()->setCellValue('AB'.$i, $row->no_sk);
 				$this->excel->getActiveSheet()->setCellValue('AC'.$i, $tgl_sk);
-				$this->excel->getActiveSheet()->setCellValue('AD'.$i, $row->gapok);
-				$this->excel->getActiveSheet()->setCellValue('AE'.$i, $row->masa_abdi);
-				$this->excel->getActiveSheet()->setCellValue('AF'.$i, $row->materi_diampu.' - '.$row->nama_matpal);
+				// $this->excel->getActiveSheet()->setCellValue('AD'.$i, $row->gapok);
+				$this->excel->getActiveSheet()->setCellValue('AD'.$i, $row->masa_abdi);
+				$this->excel->getActiveSheet()->setCellValue('AE'.$i, $row->materi_diampu.' - '.$row->nama_matpal);
 				
 				$i++;
 			}
 		}
 
-		for($col = 'A'; $col !== 'AF'; $col++) {
+		for($col = 'A'; $col !== 'AE'; $col++) {
 
 		    $this->excel->getActiveSheet()
 		        ->getColumnDimension($col)
@@ -605,11 +663,11 @@ class Guru extends IO_Controller{
 		  )
 		);
 		$i = $i-1;
-		$cell_to = "AF".$i;
+		$cell_to = "AE".$i;
 		$this->excel->getActiveSheet()->getStyle('A3:'.$cell_to)->applyFromArray($styleArray);
-		$this->excel->getActiveSheet()->getStyle('A1:AF3')->getFont()->setBold(true);
-		$this->excel->getActiveSheet()->getStyle('A3:AF3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-		$this->excel->getActiveSheet()->getStyle('A3:AF3')->getFill()->getStartColor()->setRGB('2CC30B');
+		$this->excel->getActiveSheet()->getStyle('A1:AE3')->getFont()->setBold(true);
+		$this->excel->getActiveSheet()->getStyle('A3:AE3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+		$this->excel->getActiveSheet()->getStyle('A3:AE3')->getFill()->getStartColor()->setRGB('2CC30B');
 
 		$filename='Master-Data-Guru.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
@@ -638,16 +696,16 @@ class Guru extends IO_Controller{
 
 		if($last_no!=null){
 
-			$seq = substr($last_no->nomor_terakhir,-4);
+			$seq = substr($last_no->nomor_terakhir,-3);
 			$seq = intval($seq);
 
 			$newseq = $seq+1;
-			$newseq = str_pad($newseq,4,'0',STR_PAD_LEFT);
+			$newseq = str_pad($newseq,3,'0',STR_PAD_LEFT);
 			$new_no = strtoupper(substr($status,0,1)).$newseq;
 		}
 		else{
 
-			$new_no = strtoupper(substr($status,0,1)).'0001';
+			$new_no = strtoupper(substr($status,0,1)).'001';
 		}
 
 		//update sequence

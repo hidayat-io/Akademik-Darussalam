@@ -7,10 +7,26 @@ $(document).ready(function(){
     validationFormpnonformal();
     validationFormSKAngkat();
 
+    $('[data-toggle="tooltip"]').tooltip(); 
+
     $('.datepicker').datepicker({
     
         autoclose: true,
         format: 'dd-mm-yyyy'
+    });
+
+    $('.datepicker').keypress(function(event) {
+
+        var charCode = (event.which) ? event.which : event.keyCode;
+
+        if(charCode==8 || charCode==127){
+
+            $(this).val('');
+        }
+        else{
+
+            return false;
+        }       
     });
     
     $(".select2-multiple").select2();
@@ -29,10 +45,6 @@ $(document).ready(function(){
 
     $("#form_editing").validate();
 
-    $('#opt_mapel').change(function(){
-
-        refreshNoNIG();
-    });
 
     $('input:file').change(function(e){
 
@@ -238,7 +250,10 @@ var handleValidation = function() {
 				},
 				opt_status: {
 					required: true
-				}
+                },
+                dtp_ajar_mulai: {
+                    required: true
+                }
             },
 
             invalidHandler: function (event, validator) { //display error alert on form submit              
@@ -277,10 +292,12 @@ var handleValidation = function() {
 
 function clearFormEditing(){
 
+    $('.alert-danger').hide();
+    
     document.getElementById("form_editing").reset();
 
     $("#opt_jabatan").select2().val([]).trigger("change");
-    $("#opt_ijazah_terakhir").empty();
+    // $("#opt_ijazah_terakhir").empty();
 
     //clear all table
     $('#tb_data_sk_tugas tbody').html('');
@@ -668,7 +685,7 @@ function simpanDataPformal(){
 
         $('#hid_pformal_edu').val(JSON.stringify(json_pformal));
 
-        redrawSelectPendidikanTerakhir();
+        // redrawSelectPendidikanTerakhir();
     }
 }
 
@@ -703,7 +720,7 @@ function delDetailPformal(id_data){
 
                 $('#hid_pformal_edu').val(JSON.stringify(json_data));
 
-                redrawSelectPendidikanTerakhir();
+                // redrawSelectPendidikanTerakhir();
             }
         }
     );
@@ -720,19 +737,19 @@ function clearFormPformal(){
     document.getElementById("form_data_pformal").reset();
 }
 
-function redrawSelectPendidikanTerakhir(){
+// function redrawSelectPendidikanTerakhir(){
 
-    var json_pformal    = $('#hid_pformal_edu').val();
-        json_pformal    = JSON.parse(json_pformal);
+//     var json_pformal    = $('#hid_pformal_edu').val();
+//         json_pformal    = JSON.parse(json_pformal);
 
-    $("#opt_ijazah_terakhir").empty();
+//     $("#opt_ijazah_terakhir").empty();
 
-    for(var k=0;k<json_pformal.length;++k) {
+//     for(var k=0;k<json_pformal.length;++k) {
 
-        $("#opt_ijazah_terakhir").append($("<option></option>")
-            .attr("value", json_pformal[k]["id"]).text(json_pformal[k]["nama"]));
-    }
-}
+//         $("#opt_ijazah_terakhir").append($("<option></option>")
+//             .attr("value", json_pformal[k]["id"]).text(json_pformal[k]["nama"]));
+//     }
+// }
 //END FORM DATA PENDIDIKAN FORMAL
 
 //FORM DATA PENDIDIKAN NON FORMAL
@@ -1210,6 +1227,9 @@ function modalEdit(id_guru){
             $('#dtp_tgl_sk').val(data.biodata.isk);
             $('#txt_sertifikasi').val(data.biodata.sertifikasi);
             $('#opt_mapel').val(data.biodata.materi_diampu);
+            $('#opt_status_pegawai').val(data.biodata.status_pegawai);
+            $('#opt_tugas_utama').val(data.biodata.tugas_utama);
+            $('#opt_status_penugasan').val(data.biodata.status_penugasan);
 
             if(data.biodata.file_sk!=null){
 
@@ -1394,7 +1414,7 @@ function modalEdit(id_guru){
 
                 $('#hid_'+itype+'_edu').val(JSON.stringify(json_pformal));
 
-                redrawSelectPendidikanTerakhir();
+                // redrawSelectPendidikanTerakhir();
             });
             //end data pendidikan
 
@@ -1407,6 +1427,16 @@ function modalEdit(id_guru){
             });
             $("#opt_jabatan").select2().val(arr_structure).trigger("change");
             //end data struktural
+
+            //data bidang keahlian
+            var arr_mapel   = [];
+            
+            $.each(data.mapel,function(){
+
+                arr_mapel.push(this.id_matpal);
+            });
+            $("#opt_mapel").select2().val(arr_mapel).trigger("change");
+            //end data bidang keahlian
 
             $('#modal_editing').modal('show');
             $('.nav-tabs a[href="#data_guru"]').tab('show');
@@ -1464,18 +1494,6 @@ function downloadExcel(){
     window.open(base_url+'guru/excel_master_guru/'+str_encoded,'_blank');
 }
 
-function refreshNoNIG(){
-
-    var no_parameter    = $('#hid_no_statistik').val();
-    var kode_matkul     = $('#opt_mapel').val();
-    var no_reg          = $('#txt_noreg').val();
-        no_reg          = "000"+no_reg;
-        no_reg          = no_reg.slice(-3);
-
-    var nig             = no_parameter+kode_matkul+no_reg;
-
-    $('#txt_no_nig').val(nig);
-}
 
 function validateStatusGuru(val){
 
@@ -1494,6 +1512,15 @@ function validateStatusGuru(val){
 
                 $('#txt_noreg').val(noreg);
             }
+            else{
+
+                $('#txt_noreg').val('');
+            }
 		});
-	}
+    }
+    
+    if(status_guru=='Pengabdian'){
+
+        $('#txt_no_nig').val('');
+    }
 }
