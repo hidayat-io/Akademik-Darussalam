@@ -4,7 +4,7 @@ class Tabungan extends IO_Controller {
 
 	public function __construct(){
 
-    	$this->modul = 9;
+    	$this->modul = 51;
 		parent::__construct($this->modul);
 		$this->load->model('tabungan_model');
 	}
