@@ -143,6 +143,55 @@
             </div>
             <!-- END EXAMPLE TABLE PORTLET-->
         </div>
+        <!-- table generate Rapor -->
+        <div class="col-md-12">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet box green-jungle">
+            <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-database"></i>GENERATE REPORT
+                    </div>
+            </div>
+                <div class="portlet-body">
+                                    <div class="form-body">                                
+                                        <!-- BEGIN FORM-->
+                                        <form action="#" id="FormGenerateRapor">
+                                        <div class="m-grid">
+                                            <div class="m-grid-row">
+                                                <div class="m-grid-col m-grid-col-top m-grid-col-center m-grid-col-md-4"></div>
+                                                <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-4">
+                                                    <input type="text" class="hidden" name="id_thn_ajar_GR" id="id_thn_ajar_GR" value="<?php echo $id_thn_ajar_gen; ?>"/>
+                                                            <div class="form-group">
+                                                                <label class="control-label"></label>
+                                                                <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Tahun Ajar
+                                                                </span>
+                                                                <input type="text" class="form-control input-medium" name="thn_ajar_GR" id="thn_ajar_GR" readonly="true" value="<?php echo $thn_ajargen; ?>"></div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label"></label>
+                                                                <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    Semester
+                                                                </span>
+                                                                <input type="text" class="form-control input-medium" name="semester_GR" id="semester_GR"  readonly="true" value="<?php echo $smstgen; ?>" ></div>
+                                                            </div>
+                                                                <button type="button" class="btn blue btn-circle btn-lg" id="generate_rapor" onclick="genRAPOR()">Generate Rapor</button>
+                                                    <!-- <div class="modal-footer"> -->
+                                                    <!-- </div> -->
+                                                </div>
+                                                <div class="m-grid-col m-grid-col-bottom m-grid-col-center m-grid-col-md-4"></div>
+                                            </div>
+                                        </div>  
+                                         
+                                        </form>
+                                        <!-- END FORM-->
+                                    </div>
+                                </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
     </div>
 <!-- page end -->
 <!-- modal add msconfig -->

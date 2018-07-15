@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<?php for ($x = 3; $x <= 10; $x++) {
-    echo "The number is: $x <br>";
-} ?>
 <html lang="en">
     <!-- BEGIN HEAD -->
 
@@ -129,5 +126,4 @@
         </div>          
 
 </body>
-
 </html>

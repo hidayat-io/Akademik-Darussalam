@@ -501,7 +501,8 @@ function OtomatisKapital(a) {
 						size: 'small',
 						callback: function () {
 
-							window.location = base_url + 'nilai';
+							// window.location = base_url + 'nilai';
+							$('#Modal_add_nilai_santri').modal('hide');
 						}
 					});
 				}

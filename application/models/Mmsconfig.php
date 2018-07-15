@@ -99,12 +99,46 @@ class Mmsconfig extends CI_Model
             $this->db->where('id',$id);
             $this->db->update('ms_limit_pengeluaran',$data_LimitPengeluaran);
         }
-
+        
         function update_data_LimitPengeluaran_santri($limit_lama,$data_LimitPengeluaran_santri){
             $this->db->where('uang_jajan_perbulan',$limit_lama);
             // $this->db->and('uang_jajan_perbulan',$limit_lama);
             $this->db->update('ms_santri',$data_LimitPengeluaran_santri);
         }
-    #endregion Limit Pengeluaran
-    
-}
+        #endregion Limit Pengeluaran
+        
+        #region generate kurikulum
+        function query_cek_generate($id_thn_ajar,$semester){
+            $data = array();
+            $data=$this->db->query("SELECT * from trans_rapor where id_thn_ajar='$id_thn_ajar' and semester ='$semester'")->result_array();
+            return $data;
+        }
+
+        function query_del_rapor_data($id_thn_ajar,$semester){
+            $this->db->where('id_thn_ajar',$id_thn_ajar);
+            $this->db->where('semester',$semester);
+            $this->db->delete('trans_rapor');
+        }
+
+        function query_get_all_id($id_thn_ajar,$semester){
+            $data = array();
+            $data=$this->db->query("SELECT id from trans_nilai_hd where id_thn_ajar='$id_thn_ajar' and semester ='$semester'")->result_array();
+            return $data;
+        }
+        
+        function query_gen_all_nilai($id_nilai){
+            $data = array();
+            $data=$this->db->query("SELECT trans_nilai_hd.id, trans_nilai_hd.id_thn_ajar, trans_nilai_hd.semester, trans_nilai_hd.no_registrasi, trans_nilai_hd.kode_kelas, trans_nilai_hd.id_guru, trans_nilai_hd.id_mapel,trans_nilai_dt.nilai, sum(trans_nilai_dt.nilai) as total_nilai, count(trans_nilai_hd.id) as total_record 
+                                    from trans_nilai_hd
+                                    inner join trans_nilai_dt on trans_nilai_hd.id = trans_nilai_dt.id_hd
+                                    where trans_nilai_hd.id= '$id_nilai'")->row_array();
+            return $data;
+        }
+
+        function simpan_nilai_to_rapor($data_nilai){
+            // var_dump($data_nilai);
+            $this->db->insert('trans_rapor',$data_nilai);
+        }
+        #end generate kurikulum
+        
+    }
