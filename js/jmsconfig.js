@@ -383,7 +383,7 @@ $(document).ready(function()
 			success: function (data) {
 
 				var data_cek_generate = $.parseJSON(data);
-				if (data_cek_generate == null){
+				if (data_cek_generate == ''){
 					var msg ="PROSES RAPOR?"
 				}else{
 					var msg = "SUDAH PERNAH DI PROSES, PROSES ULANG RAPOR ?"
@@ -408,12 +408,12 @@ $(document).ready(function()
 											dataType: "html",
 											success: function (data) {
 
-												var data_get_all_nilai = $.parseJSON(data);
-												var lengthDataNilai = data_get_all_nilai.length;
+												var data_get_all_id = $.parseJSON(data);
+												var lengthget_all_id = data_get_all_id.length;
 												//get all data nilai_hd
-												for (i = 0; i < lengthDataNilai; i++) {
+												for (i = 0; i < lengthget_all_id; i++) {
 
-													var id_nilai = data_get_all_nilai[i].id;
+													var id_nilai = data_get_all_id[i].id;
 													var str_url = encodeURI(base_url + "msconfig/gen_all_nilai/" + id_nilai);
 													$.ajax({
 
@@ -449,20 +449,38 @@ $(document).ready(function()
 																dataType: "json",
 																// data: json_data
 																data: json_data,
-																success: function (data) {
-																	if (i == (lengthDataNilai-1)){
+																complete: function (data) {
+	
+																			
+																	
 
-																		$('#generate_rapor').text('GENERATED');
-																	}	
 
 																}
 															});
+														},
 
-														}
+														complete: function (data) {
+															var elem = document.getElementById("myBar");
+															var width = 10;
+															var id = setInterval(frame, 10);
+															function frame() {
+																if(width >= 100) {
+																clearInterval(id);
+																} else {
+																	width++;
+																	elem.style.width = width + '%';
+																	elem.innerHTML = width * 1 + '%';
+																	if(width == 100) {
+																		$('#generate_rapor').text('GENERATED');
+																	}
+
+																}
+															}
+														}	
 													});
 
 												}
-												
+												// $('#generate_rapor').text('GENERATED');
 
 											}
 										});

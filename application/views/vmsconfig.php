@@ -1,5 +1,20 @@
 <!-- بسم الله الرحمن الرحیم -->
 <style type="text/css">.thumb-image{float:left;width:200px;position:relative;padding:5px;}</style>
+<style type="text/css">#myBar {
+    width:0%;
+    height: 30px;
+    background-color: #4B77BE;
+    text-align: center; /* To center it horizontally (if you want) */
+    line-height: 30px; /* To center it vertically */
+    color: white; 
+}</style>
+<style type="text/css">
+            .control{width:200px}
+            #execute{border:1px solid #000;width:100%;background:none;cursor:pointer}
+            #progressbar{border:none !important;height:3px !important;text-align:center !important}
+            .ui-progressbar-value{margin-right:auto !important;margin-left:auto !important}
+            .ui-widget-header{background:red !important}
+        </style>
 <script src="<?php echo base_url(); ?>assets/plugins/maskMoney/jquery.maskMoney.js"></script>
 <script src="<?php echo base_url(); ?>js/jmsconfig.js"></script>
 <!-- page -->
@@ -177,7 +192,24 @@
                                                                 </span>
                                                                 <input type="text" class="form-control input-medium" name="semester_GR" id="semester_GR"  readonly="true" value="<?php echo $smstgen; ?>" ></div>
                                                             </div>
-                                                                <button type="button" class="btn blue btn-circle btn-lg" id="generate_rapor" onclick="genRAPOR()">Generate Rapor</button>
+                                                            <div class="form-group">
+                                                               <div id="myProgress">
+                                                                    <div id="myBar">0%</div>
+                                                                </div>
+                                                                <!-- <div class="progress progress-striped active" id="myProgress">
+                                                                    <div class="progress-bar progress-bar-info progress-lg" role="progressbar"  id="myBar">0%
+                                                                    </div>
+                                                                </div> -->
+                                                            </div>
+                                                                <button type="button" class="btn blue btn-circle btn-lg " id="generate_rapor" onclick="genRAPOR()">
+                                                                    Generate Rapor
+                                                                    <!-- <div id="myProgress">
+                                                                        <div id="myBar">0%</div>
+                                                                    </div> -->
+                                                                </button>
+                                                                 <div id="progressbar"></div>
+                                                                  <div id="message"></div>
+                                                                
                                                     <!-- <div class="modal-footer"> -->
                                                     <!-- </div> -->
                                                 </div>

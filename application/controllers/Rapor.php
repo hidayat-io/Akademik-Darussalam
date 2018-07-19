@@ -10,7 +10,8 @@ class rapor extends IO_Controller
 	{
 			$this->modul = 34;
 			parent::__construct($this->modul);
-		 	$this->load->model('mrapor','model');
+			 $this->load->model('mrapor','model');
+			 $this->load->library("pdf");
 	}
 
 	function index()
@@ -83,26 +84,36 @@ class rapor extends IO_Controller
 	}
 
 	function print_rapor($action,$hide_Kurikulum,$semester,$id_kelas=0,$no_registrasi=0){
-		// var_dump($action,$hide_Kurikulum,$semester,$id_kelas,$no_registrasi);
-		// exit();
-
 		//GET TAHUN AJAR
 		$kurikulum = $this->model->get_kurikulum($hide_Kurikulum);
 		$data['tahun_ajar'] = $kurikulum->deskripsi;
-		
-		$this->load->library("pdf");
-
-		$data['data_bid_studi'] = $this->model->get_bid_studi();
-		$data['data_matpal'] = $this->model->get_matpal();
-		// var_dump($data);
+		$thnajar = $kurikulum->deskripsi;
+		$data['semester'] = $semester;
+		// var_dump($action);
 		// exit();
-		// $data['databody'] 	= $this->model->get_print_soal($id);
+		
+		if ($action =='perkelas'){
+			$data['data_bid_studi'] = $this->model->get_data_byidkelas($hide_Kurikulum,$semester,$id_kelas);
+			// $data['data_bid_studi'] = 'ini perkelas';
+		}elseif ($action =='pernoregister'){
+			// $data['data_bid_studi'] = 'ini pernoregister' ;
+			$data['data_bid_studi'] = $this->model->get_data_byidnoregistrasi($hide_Kurikulum,$semester,$no_registrasi);
+			
+		}
+			// $data['data_bid_studi'] = $this->model->get_bid_studi();
+			// $data['data_matpal'] = $this->model->get_matpal();
 		$data['action']  = $action;
+		// $filenameattc = "RAPOR TAHUN AJAR";
+		$filenameattc = "RAPOR TAHUN AJAR $thnajar SEMESTER $semester";
+		// var_dump($filenameattc);
+		// exit();
+		// $this->load->view('vPrintrapor');
 		// $this->load->view('vPrintrapor',$data);
+		// $this->pdf->load_view('vPrintrapor');
 		$this->pdf->load_view('vPrintrapor',$data);
 		$this->pdf->set_paper("A4", "potrait");
 		$this->pdf->render();
-		$this->pdf->stream("name-file.pdf",array("Attachment"=>0));
+		$this->pdf->stream("'$filenameattc'.pdf",array("Attachment"=>0));
 	}
 }
 

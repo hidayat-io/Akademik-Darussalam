@@ -431,7 +431,7 @@ class msconfig extends IO_Controller
 				
 			//update data
 				$this->model->simpan_nilai_to_rapor($data_nilai);   
-				echo json_encode($no_registrasi);
+				echo json_encode($data_nilai);
 		}
 
 	#end region generate report

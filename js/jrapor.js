@@ -94,13 +94,16 @@ function rbtn_rapor_action(){
 function print_rapor() {
 	var id_thn_ajar 		= $('#hide_Kurikulum').val();
 	var semester 			= $('#semester').val();
-	var id_kelas 			= $('#id_kelas').val();
-	var no_registrasi 		= $('#no_registrasi').val();
+
 
 	if (document.getElementById('r_perkelas').checked) {
 		var action = 'perkelas';
+		var id_kelas = $('#id_kelas').val();
+		var no_registrasi = '0';
 	} else if (document.getElementById('r_pernoregister').checked) {
 		var action = 'pernoregister';
+		var id_kelas = '0';
+		var no_registrasi = $('#no_registrasi').val();
 
 	}
 	
