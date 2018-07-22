@@ -314,42 +314,187 @@ $(document).ready(function()
 
 	}
 
-function svLimitPengeluaran() {
-	if ($("#add_LimitPengeluaran").valid() == true) {
-		$status = $('#save_button_pengeluaran').text();
-		var iform = $('#add_LimitPengeluaran')[0];
-		var data = new FormData(iform);
-		if ($status == 'UPDATE') {
-			msg = "Update Limt Pengeluaran Berhasil"
-		}
-		else {
-			msg = "Simpan Data Berhasil"
-		}
-		$.ajax({
-
-			type: "POST",
-			url: base_url + "msconfig/simpan_LimitPengeluaran/",
-			enctype: 'multipart/form-data',
-			// dataType:"JSON",
-			contentType: false,
-			processData: false,
-			data: data,
-			success: function (data) {
-
-				bootbox.alert({
-					message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;" + msg + "!!",
-					size: 'small',
-					callback: function () {
-
-						window.location = base_url + 'msconfig';
-					}
-				});
+	function svLimitPengeluaran() {
+		if ($("#add_LimitPengeluaran").valid() == true) {
+			$status = $('#save_button_pengeluaran').text();
+			var iform = $('#add_LimitPengeluaran')[0];
+			var data = new FormData(iform);
+			if ($status == 'UPDATE') {
+				msg = "Update Limt Pengeluaran Berhasil"
 			}
-		});
-	}
+			else {
+				msg = "Simpan Data Berhasil"
+			}
+			$.ajax({
 
-}
+				type: "POST",
+				url: base_url + "msconfig/simpan_LimitPengeluaran/",
+				enctype: 'multipart/form-data',
+				// dataType:"JSON",
+				contentType: false,
+				processData: false,
+				data: data,
+				success: function (data) {
+
+					bootbox.alert({
+						message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;" + msg + "!!",
+						size: 'small',
+						callback: function () {
+
+							window.location = base_url + 'msconfig';
+						}
+					});
+				}
+			});
+		}
+
+	}
 
 
 //#endregion
 
+//#region Generate Rapor
+	function genRAPOR() {
+
+					// setTimeout(function () {
+			// 	// $this.button('reset');
+				// $('#generate_rapor').text('GENERATED');
+			// }, 2000);
+
+		// 		$('#generate_rapor').on('click', function () {
+		// 	var $this = $(this);
+		// 	$this.button('loading');
+		// 	setTimeout(function () {
+		// 		// $this.button('reset');
+		// 		$this.text('GENERATED SUCCES');
+		// 	}, 2000);
+		// });
+
+		var id_thn_ajar 	= $('#id_thn_ajar_GR').val();
+		var semester		= $('#semester_GR').val();
+		//pernah generate??
+		$('#generate_rapor').button('loading');
+		var str_url = encodeURI(base_url + "msconfig/cek_generate/" + id_thn_ajar + "/" + semester);
+		$.ajax({
+
+			type: "POST",
+			url: str_url,
+			dataType: "html",
+			success: function (data) {
+
+				var data_cek_generate = $.parseJSON(data);
+				if (data_cek_generate == ''){
+					var msg ="PROSES RAPOR?"
+				}else{
+					var msg = "SUDAH PERNAH DI PROSES, PROSES ULANG RAPOR ?"
+
+				}
+					bootbox.confirm(""+msg+"",
+						function (result) {
+							if (result == true) {
+								var str_url = encodeURI(base_url + "msconfig/del_rapor_data/" + id_thn_ajar + "/" + semester);
+								$.ajax({
+									type: "POST",
+									url: str_url,
+									dataType: "html",
+									success: function (data) {
+
+										//get Total Matapelajaran yang akan di generate
+										var str_url = encodeURI(base_url + "msconfig/get_all_id/" + id_thn_ajar + "/" + semester);
+										$.ajax({
+
+											type: "POST",
+											url: str_url,
+											dataType: "html",
+											success: function (data) {
+
+												var data_get_all_id = $.parseJSON(data);
+												var lengthget_all_id = data_get_all_id.length;
+												//get all data nilai_hd
+												for (i = 0; i < lengthget_all_id; i++) {
+
+													var id_nilai = data_get_all_id[i].id;
+													var str_url = encodeURI(base_url + "msconfig/gen_all_nilai/" + id_nilai);
+													$.ajax({
+
+														type: "POST",
+														url: str_url,
+														dataType: "html",
+														success: function (data) {
+
+															var data_gen_all_nilai = $.parseJSON(data);
+															var id_thn_ajar = data_gen_all_nilai.id_thn_ajar;
+															var semester = data_gen_all_nilai.semester;
+															var kode_kelas = data_gen_all_nilai.kode_kelas;
+															var id_mapel = data_gen_all_nilai.id_mapel;
+															var no_registrasi = data_gen_all_nilai.no_registrasi;
+															var nilai = data_gen_all_nilai.total_nilai / data_gen_all_nilai.total_record;
+
+															var json_data = {
+
+																"id_thn_ajar": id_thn_ajar,
+																"semester": semester,
+																"kode_kelas": kode_kelas,
+																"id_mapel": id_mapel,
+																"no_registrasi": no_registrasi,
+																"nilai": nilai
+															};
+
+															//save to data rapor
+															var str_url = encodeURI(base_url + "msconfig/save_nilai_rapor/");
+															$.ajax({
+
+																type: "POST",
+																url: str_url,
+																dataType: "json",
+																// data: json_data
+																data: json_data,
+																complete: function (data) {
+	
+																			
+																	
+
+
+																}
+															});
+														},
+
+														complete: function (data) {
+															var elem = document.getElementById("myBar");
+															var width = 10;
+															var id = setInterval(frame, 10);
+															function frame() {
+																if(width >= 100) {
+																clearInterval(id);
+																} else {
+																	width++;
+																	elem.style.width = width + '%';
+																	elem.innerHTML = width * 1 + '%';
+																	if(width == 100) {
+																		$('#generate_rapor').text('GENERATED');
+																	}
+
+																}
+															}
+														}	
+													});
+
+												}
+												// $('#generate_rapor').text('GENERATED');
+
+											}
+										});
+									}
+								});
+							}else{
+								$('#generate_rapor').button('reset');
+								$('#generate_rapor').button('Generate Rapor');
+							}
+						}
+					);
+			}
+		});
+
+		
+	}
+//#endregion Generate Rapor
