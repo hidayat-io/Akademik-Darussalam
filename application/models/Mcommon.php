@@ -101,6 +101,12 @@ class Mcommon extends CI_Model {
         return $this->db->get('ms_donatur')->result();
     }
 
+    function mget_list_pendidikan(){
+
+        $this->db->order_by('id_pendidikan');
+        return $this->db->get('ms_pendidikan');
+    }
+
     function get_kurikulum_aktif() {
 		$this->db->select('param_value');
 		return $this->db->get('sys_param')->row();
@@ -124,4 +130,10 @@ class Mcommon extends CI_Model {
     }
 
     
+    function mget_judul_modul($modul_id){
+
+        $this->db->select('nama_modul');
+        $this->db->where('modul_id',$modul_id);
+        return $this->db->get('modul')->row()->nama_modul;
+    }
 }
