@@ -6,7 +6,7 @@ class Tabungan_aitam extends IO_Controller
 
 	public function __construct()
 		{
-    $modul = 51;
+    $modul = 52;
 		parent::__construct($modul);
 		 $this->load->model('Mtabungan_aitam');
 	  }
