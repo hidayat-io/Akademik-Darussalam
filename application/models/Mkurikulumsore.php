@@ -23,7 +23,7 @@ class Mkurikulumsore extends CI_Model
 
 	function get_headertable_kurikulumsore(){
 		$data = array();
-		$data = $this->db->query ("SELECT tingkat, tipe_kelas FROM ms_kelashd ORDER BY tingkat")->result_array();
+		$data = $this->db->query ("SELECT tingkat, tipe_kelas FROM ms_kelashd  ORDER BY tingkat, tipe_kelas DESC")->result_array();
 		return $data;
 	}
 
@@ -32,7 +32,7 @@ class Mkurikulumsore extends CI_Model
 		$data = $this->db->query ("SELECT a.id_bidang, a.nama_bidang, b.id_matpal, b.nama_matpal, b.status
 									FROM ms_bidang_study a 
 									INNER JOIN ms_mata_pelajaran b ON a.id_bidang = b.id_bidang 
-									WHERE b.status = 1 and a.kategori = 'SORE' OR a.kategori = 'KITAB'")->result_array();
+									WHERE b.status = 1 and a.kategori = 'SORE' OR a.kategori = 'KITAB' order by a.id_bidang, b.id_matpal asc")->result_array();
 		return $data;
 	}
 
