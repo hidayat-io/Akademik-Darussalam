@@ -98,30 +98,50 @@ function clearvalidate_form_lskurikulum() {
 function export_skurikulum() {
 
 	if ($("#form_lskurikulum").valid() == true) {
-
+				
 		var id_thn_ajar = $('#id_thn_ajar').val();
-		
-		
 		if ($('#r_utama').prop("checked") == true) {
 			var kategori = "UTAMA";
-		}else{
+		} else {
 			var kategori = "SORE";
 		}
-	
+
 		if ($('#chk_bytingkat').prop("checked") == true) {
 			var tingkat = $('#id_kelas').val();
-		}else{
+		} else {
 			var tingkat = 0;
 		}
-	
-		if ($('#chk_pertingkat').prop("checked") == false) {
-			window.location = base_url + 'lskurikulum/cprint_skurikulum_nontingkat/' + id_thn_ajar +'/' +kategori+'/'+tingkat;
 
-		}else{
+		//cek ada data atau tidak di trasn kurikulum
+		var str_url = encodeURI(base_url + "lskurikulum/cek_trans_kurikulum/" + id_thn_ajar + "/" + kategori);
+		$.ajax({
+			type:"POST",
+			url:str_url,
+			dataType:"html",
+			success: function (data) {
+				var data = $.parseJSON(data);
+				if(data ==''){
+					bootbox.alert("Data tidak ada, silahkan cek modul kurikulum");
+				}else{
 
-			// window.location = base_url + 'lskurikulum/cprint_skurikulum_pertingkat/' + id_thn_ajar + '/' + kategori + '/' + tingkat;
-			alert('ON PROSES !');
-		}
+					
+
+					if ($('#chk_pertingkat').prop("checked") == false) {
+						window.location = base_url + 'lskurikulum/cprint_skurikulum_nontingkat/' + id_thn_ajar + '/' + kategori + '/' + tingkat;
+
+					} else {
+
+						// window.location = base_url + 'lskurikulum/cprint_skurikulum_pertingkat/' + id_thn_ajar + '/' + kategori + '/' + tingkat;
+						alert('ON PROSES !');
+					}
+				}
+				
+			}
+			
+
+		})
+		
+
 	}
     
 
