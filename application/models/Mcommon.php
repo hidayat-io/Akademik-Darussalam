@@ -123,5 +123,10 @@ class Mcommon extends CI_Model {
         return $data;
     }
 
+    function mget_list_guru(){
+        $this->db->order_by('nama_lengkap');
+        return $this->db->get('ms_guru')->result();
+    }
+
     
 }
