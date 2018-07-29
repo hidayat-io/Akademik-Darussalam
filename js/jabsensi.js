@@ -40,7 +40,7 @@ function setTable(){
 				"<'row'<'col-sm-5'l><'col-sm-7'pi>>",
 		columnDefs: [
 			{
-				targets: [8],         //action
+				targets: [4],         //action
 				orderable: false,
 				width: 20,
 				className: "dt-center"
@@ -49,27 +49,27 @@ function setTable(){
 	});
 }
 
-function modalEdit(id_jadwal,id_absen_header){
+function modalEdit(id_kelasdt){
 
 	document.getElementById('form_absensi').reset();
 
 	$('#cmd_save').addClass('hidden');
 	$('#modal_editing').modal('show');
-	$('#hid_id_jadwal').val(id_jadwal);
+	$('#hid_id_kelasdt').val(id_kelasdt);
 
 	$('#dtp_tgl_absensi').trigger("change");
 	
-	loadDataAbsensiSiswa();
+	// loadDataAbsensiSiswa();
 }
 
-function loadDataAbsensiSiswa(id_jadwal=0){
+function loadDataAbsensiSiswa(id_kelasdt=0){
 
 	//clear table absensi
 	$("#tb_absensi tbody").empty();
 
-	if(id_jadwal==0){
+	if(id_kelasdt==0){
 
-		id_jadwal = $('#hid_id_jadwal').val();
+		id_kelasdt = $('#hid_id_kelasdt').val();
 	}
 
 	var tgl_absensi = $('#dtp_tgl_absensi').val();
@@ -77,7 +77,7 @@ function loadDataAbsensiSiswa(id_jadwal=0){
 		hari 		= hari.toUpperCase()
 
 	var param = {
-		'id_jadwal' : id_jadwal,
+		'id_kelasdt' : id_kelasdt,
 		'tgl_absensi' : tgl_absensi
 	};
 
@@ -97,7 +97,6 @@ function loadDataAbsensiSiswa(id_jadwal=0){
 
 			if(json_absensi.length > 0){
 
-				$('#lbl_nama_guru').text(json_absensi[0].nama_guru);
 				$('#lbl_nama_kelas').text(json_absensi[0].kode_kelas+' - '+json_absensi[0].nama_kelas);
 				$('#hid_id_guru').val(json_absensi[0].id_guru);
 				$('#hid_id_absen_header').val(json_absensi[0].id_absen_header);

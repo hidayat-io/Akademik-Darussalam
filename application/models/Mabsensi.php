@@ -5,9 +5,43 @@ class Mabsensi extends CI_Model {
 	public function __construct(){
 
         parent::__construct();
-    }
+	}
 	
 	function get_grid_kelas($param,$sortby=0,$sorttype='desc'){
+
+		$cols = array('khd.tingkat','khd.tipe_kelas','kdt.kode_kelas','kdt.nama');
+
+		$sql = "SELECT kdt.id_mskelasdt,
+						khd.tingkat,
+						khd.tipe_kelas,
+						kdt.kode_kelas,
+						kdt.nama						
+				FROM   ms_kelashd khd
+						INNER JOIN ms_kelasdt kdt
+								ON khd.id_kelas = kdt.id_kelas
+						INNER JOIN trans_kurikulum kur
+								ON khd.tingkat = kur.tingkat
+								AND khd.tipe_kelas = kur.tipe_kelas";
+
+		if($param!=""){
+
+			$sql .= " WHERE ".$param;
+		}
+
+		$sql .= "GROUP  BY
+						kdt.id_mskelasdt, 
+						kdt.kode_kelas,
+						kdt.nama,
+						khd.tingkat,
+						khd.tipe_kelas
+				ORDER  BY khd.tingkat,
+						Field(khd.tipe_kelas, 'REGULER', 'INTENSIF'),
+						kdt.nama";
+
+		return $this->db->query($sql)->result();
+	}
+	
+	function get_grid_kelas_old($param,$sortby=0,$sorttype='desc'){
 
         $cols = array('kld.kode_kelas','kld.nama','klh.tingkat','klh.tipe_kelas','jp.hari','jp.jam','pl.nama_matpal','gr.nama_lengkap');
 
@@ -43,7 +77,6 @@ class Mabsensi extends CI_Model {
 						pl.nama_matpal, 
 						gr.nama_lengkap";
 
-		
         return $this->db->query($sql)->result();
 	}
 

@@ -8,18 +8,10 @@
             <div class="portlet box green-jungle">
                 <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-database"></i>PRINT RAPOR
+                            <i class="fa fa-calendar"></i>REPORT ABSENSI
                         </div>
                 </div>
                 <div class="portlet-body">
-                    <div class="clearfix">
-                        <div class="btn-group" >
-                            <label class="btn blue active" onclick="rbtn_rapor_action()">
-                                <input type="radio" class="toggle" name="rbtn_rapor" id="r_perkelas" checked > PERKELAS</label>
-                            <label class="btn blue" onclick="rbtn_rapor_action()">
-                                <input type="radio" class="toggle" name="rbtn_rapor" id="r_pernoregister"> PER NO REGISTER </label>
-                        </div>                                                            
-                    </div>
                     <div class="form-body">                                
                         <!-- BEGIN FORM-->
                         <form action="#" id="form_rapor">
@@ -91,7 +83,7 @@
                             <!--end inputbox-->
                             <div class="modal-footer">
                                 <div class="m-grid-col-center">
-                                    <button type="button" class="btn btn-lg red" id="print_button" onclick="print_rapor()" style="width: 100%;"><i class="glyphicon glyphicon-print"></i> PRINT <?php echo $title ?></button>
+                                    <button type="button" class="btn btn-lg red" id="print_button" onclick="print_rapor()" style="width: 100%;"><i class="fa fa-download"></i> DOWNLOAD <?php echo $title ?></button>
                                 </div>
                             </div>
                         </form>

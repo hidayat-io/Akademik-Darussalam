@@ -149,7 +149,8 @@ class Guru extends IO_Controller{
 		$pend_terakhir 			= isset($input['opt_ijazah_terakhir'])?$input['opt_ijazah_terakhir']:null;
 		$start_ajar 			= $input['dtp_ajar_mulai']==''?null:io_return_date('d-m-Y',$input['dtp_ajar_mulai']);
 		$end_ajar 				= $input['dtp_ajar_akhir']==''?null:io_return_date('d-m-Y',$input['dtp_ajar_akhir']);
-		// $mapel 					= isset($input['opt_mapel'])?$input['opt_mapel']:'';
+		$mapel 					= isset($input['opt_mapel'])?$input['opt_mapel']:'';
+		$ispengajar 			= $input['opt_tugas_utama']=="1#Pendidik"?1:0;
 
 		$data = array(
 
@@ -186,6 +187,7 @@ class Guru extends IO_Controller{
 			"userid"				=> $this->session->userdata('logged_in')['uid'],
 			"recdate" 				=> date('Y-m-d H:i:s'),
 			"status_aktif"			=> '1',
+			"is_pengajar"			=> $ispengajar,
 			"no_reg"				=> $input['txt_noreg'],
 			"tugas_utama"			=> $input['opt_tugas_utama'],
 			"status_penugasan"		=> $input['opt_status_penugasan'],
