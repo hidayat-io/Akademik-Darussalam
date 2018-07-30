@@ -1,5 +1,5 @@
 <?php
-//ok
+
 class Mlskurikulum extends CI_Model 
 {
 
@@ -46,17 +46,6 @@ class Mlskurikulum extends CI_Model
                                 from trans_kurikulum a
                                 inner join ms_mata_pelajaran b on a.id_mapel = b.id_matpal
                                 inner join ms_bidang_study c on b.id_bidang = c.id_bidang where a.id_thn_ajar = '$id_thn_ajar' and  a.kategori = '$kategori' order by b.id_bidang, a.id_mapel ASC")->result();
-		return $data;
-				
-    }
-
-    function mprint_kurikulum_utama_pertingkat_row($id_thn_ajar,$kategori) {
-		$data = array();
-		$data = $this->db->query ("SELECT DISTINCT b.nama_matpal, a.id_mapel
-                                from trans_kurikulum a
-                                inner join ms_mata_pelajaran b on a.id_mapel = b.id_matpal
-                                where a.id_thn_ajar = '$id_thn_ajar' order by b.id_bidang, a.id_mapel ASC")->result();
-                                // where a.id_thn_ajar = '$id_thn_ajar' and  a.kategori = '$kategori' order by b.id_bidang, a.id_mapel ASC")->result();
 		return $data;
 				
     }

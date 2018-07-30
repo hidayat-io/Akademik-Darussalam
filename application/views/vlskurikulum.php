@@ -1,5 +1,4 @@
 <!-- بسم الله الرحمن الرحیم -->
-<!-- ok -->
 <style type="text/css">.thumb-image{float:left;width:200px;position:relative;padding:5px;}</style>
 <script src="<?php echo base_url(); ?>js/jlskurikulum.js"></script>
 <!-- page -->
@@ -67,7 +66,7 @@
                                 <div class="m-grid-col-center">
                                     <button type="button" class="btn btn-lg green-jungle" id="export_button_sku" onclick="export_skurikulum()" style="width: 100%;"><i class="glyphicon glyphicon-share"></i> EXPORT KURIKULUM</button>
                                 </div>
-                            </div>
+                            /div>
                         </form>
                         <!-- END FORM-->
                     </div>
