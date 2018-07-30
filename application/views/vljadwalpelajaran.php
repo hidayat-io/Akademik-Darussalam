@@ -1,6 +1,6 @@
 <!-- بسم الله الرحمن الرحیم -->
 <style type="text/css">.thumb-image{float:left;width:200px;position:relative;padding:5px;}</style>
-<script src="<?php echo base_url(); ?>js/jlskurikulum.js"></script>
+<script src="<?php echo base_url(); ?>js/jljadwalpelajaran.js"></script>
 <!-- page -->
     <div class="row">
         <!-- <div class="col-md-100%"> -->
@@ -8,31 +8,13 @@
             <div class="portlet box green-jungle">
                 <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-database"></i>LAPORAN STRUKTUR KURIKULUM PER KURIKULUM
+                            <i class="fa fa-database"></i>LAPORAN JADWAL PELAJARAN
                         </div>
                 </div>
                 <div class="portlet-body">
-                    <div class="clearfix">
-                        <div class="btn-group" >
-                            <label class="btn blue active" onclick="rbtn_tipe_kurikulum_action()">
-                                <input type="radio" class="toggle" name="rbtn_kuriulum" id="r_utama" checked > KURIKULUM UTAMA</label>
-                            <label class="btn blue" onclick="rbtn_rapor_action()">
-                                <input type="radio" class="toggle" name="rbtn_kuriulum" id="r_pagisore"> KURIKULUM PAGI SORE </label>
-                        </div>                                                            
-                        <div class="btn-group" >
-                           <label class="btn blue">
-                                <input type="checkbox" class="toggle" id="chk_pertingkat"> PER-TINGKAT 
-                            </label>
-                        </div>                                                            
-                        <div class="btn-group" >
-                           <label class="btn blue">
-                                <input type="checkbox" class="toggle" id="chk_bytingkat" > BY-TINGKAT 
-                            </label>
-                        </div>                                                            
-                    </div>
                     <div class="form-body">                                
                         <!-- BEGIN FORM-->
-                        <form action="#" id="form_lskurikulum">
+                        <form action="#" id="form_ljadwalpelajaran">
                                 <!--span-->
                                 
                                         <div class="form-group">
@@ -51,14 +33,26 @@
                                             <label class="control-label"></label>
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    Kelas
+                                                    Semester
                                                 </span>
-                                                <div class="input-icon right">
-                                                    <?php
-                                                        $att_item = ' type="text" class="form-control select2"  style="width: 100%;" id="id_kelas" required';
-                                                        echo form_dropdown('select_kelas', $kode_kelas, null, $att_item);
-                                                    ?>
-                                                </div>
+                                                <select class="form-control" style="width: 100%;"  name="semester" id="semester" required>
+                                                    <option value=""></option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                </select>
+                                            </div>
+                                        </div>    
+                                        <div class="form-group">
+                                            <label class="control-label"></label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    Santri
+                                                </span>
+                                                <select class="form-control" style="width: 100%;"  name="santri" id="santri" onchange="kosong_table()" required>
+                                                    <option value=""></option>
+                                                    <option value="PUTRI">PUTRI</option>
+                                                    <option value="PUTRA">PUTRA</option>
+                                                </select>
                                             </div>
                                         </div>    
                                 <!--span-->

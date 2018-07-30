@@ -102,7 +102,7 @@
                                                         <label class="control-label"></label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon">
-                                                            ID Guru
+                                                            NO Registrasi Guru
                                                             </span>
                                                             <div class="input-icon right">
                                                                 <i class="fa"></i>
@@ -112,7 +112,8 @@
                                                                         echo form_dropdown('hide_id_msguru', $msguru, null, $att_item);
                                                                     ?>
                                                                 </div>
-                                                                <input type="text" class="form-control" name="id_guru" id="id_guru" style="width: 15%;" readonly="true">
+                                                                <input type="text" class="form-control" name="no_reg" id="no_reg" style="width: 15%;" readonly="true">
+                                                                <input type="text" class="hidden" name="id_guru" id="id_guru" style="width: 15%;" readonly="true">
                                                                 <span class="input-group-btn"
                                                                             style="cursor: pointer;"
                                                                             title="Cari msguru"

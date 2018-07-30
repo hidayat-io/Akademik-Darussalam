@@ -31,7 +31,7 @@ class jadwal_pelajaran_sore extends IO_Controller
                         foreach ($select_kelas as $b) {
             
 							$vdata['kode_kelas'][$b->kode_kelas."#".$b->nama."#".$b->tingkat."#".$b->tipe_kelas]
-							=$b->nama." | ".$b->tingkat." | ".$b->tipe_kelas;
+							=$b->kode_kelas." | ".$b->nama." | ".$b->tingkat." | ".$b->tipe_kelas;
 						}
 						
 		//json data guru

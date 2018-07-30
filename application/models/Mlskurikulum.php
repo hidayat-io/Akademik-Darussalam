@@ -45,6 +45,17 @@ class Mlskurikulum extends CI_Model
 				
     }
 
+    function mprint_kurikulum_utama_pertingkat_row($id_thn_ajar,$kategori) {
+		$data = array();
+		$data = $this->db->query ("SELECT DISTINCT b.nama_matpal, a.id_mapel
+                                from trans_kurikulum a
+                                inner join ms_mata_pelajaran b on a.id_mapel = b.id_matpal
+                                where a.id_thn_ajar = '$id_thn_ajar' order by b.id_bidang, a.id_mapel ASC")->result();
+                                // where a.id_thn_ajar = '$id_thn_ajar' and  a.kategori = '$kategori' order by b.id_bidang, a.id_mapel ASC")->result();
+		return $data;
+				
+    }
+
     function mget_datasm($id_thn_ajar,$dt_tingkat,$dt_tipe_kelas,$dt_id_mapel){
       $data = array();
       $data = $this->db->query("SELECT sm_1,sm_2 FROM trans_kurikulum WHERE id_thn_ajar = '$id_thn_ajar' AND tingkat= '$dt_tingkat' AND tipe_kelas='$dt_tipe_kelas' AND id_mapel='$dt_id_mapel'")->result();

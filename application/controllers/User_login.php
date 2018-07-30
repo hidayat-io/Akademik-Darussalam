@@ -21,8 +21,8 @@ class user_login extends IO_Controller
         $vdata['mskaryawan'][NULL] = '-';
         foreach ($select_karyawan as $b) {
 
-            $vdata['mskaryawan'][$b->no_reg."#".$b->nama_lengkap]
-                =$b->no_reg." | ".$b->nama_lengkap;
+            $vdata['mskaryawan'][$b->id_guru."#".$b->nama_lengkap]
+                =$b->id_guru." | ".$b->nama_lengkap;
         }
 
          // get ID group

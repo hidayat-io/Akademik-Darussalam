@@ -24,10 +24,10 @@ class Mwalikelas extends CI_Model
 		
         $cols = array('trans_walikelas.id_thn_ajar','ms_kelasdt.kode_kelas', 'trans_walikelas.id_guru','ms_guru.nama_lengkap');
 
-		$sql = "select trans_walikelas.id, trans_walikelas.id_thn_ajar,ms_kelasdt.kode_kelas, trans_walikelas.id_guru, ms_guru.nama_lengkap
+		$sql = "select trans_walikelas.id, trans_walikelas.id_thn_ajar,ms_kelasdt.kode_kelas, trans_walikelas.id_guru, ms_guru.no_reg, ms_guru.nama_lengkap
 				from trans_walikelas
 				right join ms_kelasdt on trans_walikelas.kode_kelas = ms_kelasdt.kode_kelas and trans_walikelas.id_thn_ajar = '$thn_ajar_aktif'
-				left join ms_guru on trans_walikelas.id_guru = ms_guru.no_reg";
+				left join ms_guru on trans_walikelas.id_guru = ms_guru.id_guru";
 
 					
 
@@ -74,10 +74,10 @@ class Mwalikelas extends CI_Model
 	function query_get_walikelas($thn_ajar_aktif,$kode_kelas){
 		
         $data = array();
-		$data=$this->db->query("select trans_walikelas.id, trans_walikelas.id_thn_ajar,ms_kelasdt.kode_kelas, trans_walikelas.id_guru, ms_guru.nama_lengkap
+		$data=$this->db->query("select trans_walikelas.id, trans_walikelas.id_thn_ajar,ms_kelasdt.kode_kelas, trans_walikelas.id_guru, ms_guru.no_reg, ms_guru.nama_lengkap
 								from trans_walikelas
 								right join ms_kelasdt on trans_walikelas.kode_kelas = ms_kelasdt.kode_kelas and trans_walikelas.id_thn_ajar = '$thn_ajar_aktif'
-								left join ms_guru on trans_walikelas.id_guru = ms_guru.no_reg
+								left join ms_guru on trans_walikelas.id_guru = ms_guru.id_guru
 								where ms_kelasdt.kode_kelas = '$kode_kelas'")->row_array();
 		// $data = $this->db->last_query();
 		// var_dump($data);

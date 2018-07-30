@@ -119,7 +119,7 @@ function export_skurikulum() {
 
 		}else{
 
-			// window.location = base_url + 'lskurikulum/cprint_skurikulum_pertingkat/' + id_thn_ajar + '/' + kategori + '/' + tingkat;
+			// window.location = base_url + 'lskurikulum/cexport_kurikulum_pertingkat/' + id_thn_ajar + '/' + kategori + '/' + tingkat;
 			alert('ON PROSES !');
 		}
 	}
