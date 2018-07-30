@@ -90,6 +90,14 @@ class lskurikulum extends IO_Controller
 		return $kurikulum;
 	}
 
+	function cek_trans_kurikulum($id_thn_ajar,$kategori){
+		$id_thn_ajar	= urldecode($id_thn_ajar);
+		$kategori		= urldecode($kategori);
+		$data			= $this->model->mcek_trans_kurikulum($id_thn_ajar,$kategori);
+		// var_dump($data);
+		// exit();
+		echo json_encode($data);
+	}
 
 	function cprint_skurikulum_nontingkat($id_thn_ajar,$kategori,$tingkat){
        	//GET TAHUN AJAR
@@ -106,8 +114,8 @@ class lskurikulum extends IO_Controller
 		//activate worksheet number 1
 		$this->excel->setActiveSheetIndex(0);
 		//name the worksheet
-		$this->excel->getActiveSheet()->setTitle('STRUKTUR '.$tingkat.' '.$thnajar);
-		$this->excel->getActiveSheet()->setCellValue('A1', "STRUKTUR KURIKULUM DAN ALOKASI WAKTU DI TMI PELAJARAN".$tingkat." ".$thnajar);
+		$this->excel->getActiveSheet()->setTitle('STRUKTUR '.$kategori.' '.$thnajar);
+		$this->excel->getActiveSheet()->setCellValue('A1', "STRUKTUR KURIKULUM DAN ALOKASI WAKTU DI TMI PELAJARAN ".$kategori." ".$thnajar);
 		$this->excel->getActiveSheet()->mergeCells('A1:G1');
 		$this->excel->getActiveSheet()->getStyle('A1:G1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 

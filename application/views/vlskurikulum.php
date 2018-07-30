@@ -14,9 +14,9 @@
                 <div class="portlet-body">
                     <div class="clearfix">
                         <div class="btn-group" >
-                            <label class="btn blue active" onclick="rbtn_tipe_kurikulum_action()">
+                            <label class="btn blue active" >
                                 <input type="radio" class="toggle" name="rbtn_kuriulum" id="r_utama" checked > KURIKULUM UTAMA</label>
-                            <label class="btn blue" onclick="rbtn_rapor_action()">
+                            <label class="btn blue">
                                 <input type="radio" class="toggle" name="rbtn_kuriulum" id="r_pagisore"> KURIKULUM PAGI SORE </label>
                         </div>                                                            
                         <div class="btn-group" >
