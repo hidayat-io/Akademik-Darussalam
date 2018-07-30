@@ -1,6 +1,6 @@
 <?php
 // <!-- بسم الله الرحمن الرحیم -->
-
+//ok
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class lskurikulum extends IO_Controller

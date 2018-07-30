@@ -1,4 +1,5 @@
 <!-- بسم الله الرحمن الرحیم -->
+<!-- ok -->
 <style type="text/css">.thumb-image{float:left;width:200px;position:relative;padding:5px;}</style>
 <script src="<?php echo base_url(); ?>js/jlskurikulum.js"></script>
 <!-- page -->

@@ -1,5 +1,5 @@
 <?php
-
+//ok
 class Mlskurikulum extends CI_Model 
 {
 
