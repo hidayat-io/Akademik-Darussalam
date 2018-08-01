@@ -1,135 +1,69 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<style type="text/css">
+<?php
+
+class Mlsuratpermohonan extends CI_Model 
+{
+
+	public function __construct()
+	{
+
+		// Call the CI_Model constructor
+		parent::__construct();
+	}
+  function get_thn_ajar(){
+		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran order by id desc Limit 3 ");
+		// $data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='UTAMA' order by id desc Limit 2 ");
+		return $data;
+    }
+    
+  function get_kurikulum($id) {
+		$this->db->where('id',$id);
+		return $this->db->get('ms_tahun_ajaran')->row();
+	}
+
+	#region PRINT lsuratpermohonan
+  function query_get_data_santri_aitam($no_registrasi) {
 		
-		@page { margin: 25px; }
+		$data_santri = array();
+        $data_santri=$this->db->query("SELECT ms_santri.nama_lengkap, ms_santri.tempat_lahir, DATE_FORMAT(ms_santri.tgl_lahir,'%d-%m-%Y') as tgllahir, ms_santri.jalan, ms_santri.no_rumah, ms_santri.dusun, ms_santri.kecamatan, 
+																				ms_santri.kabupaten, ms_santri.provinsi, ms_santri.kd_pos, ms_santri.no_tlp, ms_santri.no_hp, ms_santri.lamp_photo,ms_santri_sekolah.kelas, ms_keluarga.kategori, ms_keluarga.nama
+																				FROM ms_santri
+																				INNER JOIN ms_santri_sekolah ON ms_santri.no_registrasi = ms_santri_sekolah.no_registrasi
+																				LEFT JOIN ms_keluarga ON ms_santri.no_registrasi = ms_keluarga.no_registrasi AND ms_keluarga.kategori='WALI' 
+																				WHERE ms_santri.no_registrasi='$no_registrasi'")->row_array();
 
-		body{
+				$data_ayah=$this->db->query("SELECT ms_keluarga.kategori, ms_keluarga.nama,ms_keluarga.status
+																				FROM  ms_keluarga 
+																				WHERE ms_keluarga.no_registrasi='$no_registrasi' AND ms_keluarga.kategori='AYAH' ")->row_array();
 
-			font-family: Helvetica;
-			margin: 0px 10px;
-		}
+				$data_ibu=$this->db->query("SELECT ms_keluarga.kategori, ms_keluarga.nama, ms_keluarga.status
+																				FROM  ms_keluarga 
+																				WHERE ms_keluarga.no_registrasi='$no_registrasi' AND ms_keluarga.kategori='IBU' ")->row_array();
 
-        .thumb-image{
-            float:right;
-            width:150px;
-            position:relative;
-            padding:5px;
-            }
+				if ($data_santri['nama'] != null)
+				{
+					$wali = $data_santri['nama'];
 
-		table{		
-			
-			font-size: 11px;
-			border-collapse:collapse;			
-		}
+				}elseif ($data_ayah['nama'] != null)
+				{
+					$wali = $data_ayah['nama'];
 
-		td, th{
-	    
-		}
+				}elseif ($data_ibu['nama'] != null)
+				{
+					$wali = $data_ibu['nama'];
 
-		.main-title, .main-title-small{
+				}else{
+					$wali = '-';
+				}
 
-			font-family: Times New Roman; 
-			color: red;
-			font-weight: bold;
-			font-size: 32px;
-		}
-
-		.main-title-small{
-
-			font-size: 24px;
-		}
-
-		.title-2{
-
-			font-size: 20px;
-			font-weight: bold;
-		}
-
-		.title-3{
-
-            font-size: 12px;
-            font-weight: bold;			
-		}
-
-		table .tb-kepada1 td, th{
-
-			font-size: 12px;	
-            border-collapse:collapse;
-            margin-top:10px;
-            font-weight: bold;
-            padding: 5px;	
-		}
-		table .tb-kepada2 td{
-
-			font-size: 12px;	
-            border-collapse:collapse;
-            margin-top:10px;
-            font-weight: bold;	
-		}
-
-		table .body_tengah tr{
-
-			padding: 80px;
-            font-size: 100px;
-		}
-
-		.tb-item td{
-
-			padding: 2px;
-		}
-
-		.tb-item th{
-
-			font-size: 12px;
-		}        
-
-		/*cell border css*/
-		.border-full{
-			
-			border-top: 1px solid black;
-			border-right: 1px solid black;
-			border-bottom: 1px solid black;
-			border-left: 1px solid black;
-		}
-
-		.border-rl{
-			
-			border-right: 1px solid black;			
-			border-left: 1px solid black;
-		}
-
-		.border-rbl{
-			
-			border-right: 1px solid black;
-			border-bottom: 1px solid black;
-			border-left: 1px solid black;
-		}
-		
-		.grid-container {
-		  display: grid;
-		  grid-template-columns: auto auto auto;
-		  background-color: #FFFFFF;
-		  padding: 1px;
-		}
-		.grid-item {
-		  border: 1px solid rgba(0, 0, 0, 0.8);
-		  padding: 2px;
-		  font-size: 30px;
-		  text-align: left;
-		}
-        p{ 
-            text-indent: 30px;
-            text-align: justify;
-            text-justify: inter-word;
-            }
-
-	</style>
-	<title>SURAT PERMOHONAN KAFALAH <?PHP echo $data_santri[0]['no_registrasi'];?> - <?php echo $data_santri[0]['nama_lengkap']; ?></title>
-</head>
-    <body>
-            <table width="100%">
+				if ($data_ibu['status'] != 'WAFAT'){
+					$status = 'YATIM';
+				}elseif ($data_ibu['status'] == ''){
+					$status = 'YATIM';
+				}else{
+					$status = 'YATIM PIATU';
+				}
+				$output ='
+					<table width="100%">
                 <tr>
                     <td align="center" valign="middle">
                         <span class="title-2" style="font-size:15px"> 
@@ -152,7 +86,7 @@
                         </span>
                     </td>
                     <td rowspan="3" align="center" valign="middle">
-                        <img src="<?php echo base_url();?>assets/images/fileupload/santri/1gonO4EeLr2w5DVlRld3.jpg" class="thumb-image" border="1">
+                        <img src="'.base_url().'assets/images/fileupload/santri/'.$data_santri['lamp_photo'].'" class="thumb-image" border="1">
                     </td>
                 </tr>
                 <tr>                       
@@ -171,12 +105,12 @@
                             Yatim Piatu Darul-Aitam<br>
                             DI- TEMPAT<br>
                             <i>Bismillahirrahmaanirrahim,</i><br>
-                            <i>Assalammua'alaikum Warahmatulohi Wabarokaatuh</i>
+                            <i>Assalammua?alaikum Warahmatulohi Wabarokaatuh</i>
                         </span>
                     </td>
                 </tr>
             </table>
-            <table style="font-size: 13px" border="0" width="100%" cellpadding="2">
+            <table style="font-size: 13px" border="0" width="100%" cellpadding="1">
                 <tr>
                     <td colspan="3" align="left" >
                         Saya yang bertanda tangan dibawah ini :
@@ -190,7 +124,7 @@
                         :
                     </td>                       
                     <td width="100%" align="left" >
-                        
+                        '.$data_santri['nama_lengkap'].'
                     </td>
                     <tr>
                     <td align="left" >
@@ -200,7 +134,7 @@
                         :
                     </td>                       
                     <td align="left" >
-                        
+                        '.$data_santri['tgllahir'].'
                     </td>                       
                 </tr>                   
                 <tr>
@@ -211,7 +145,7 @@
                         :
                     </td>                       
                     <td align="left" >
-                        
+                        '.$data_santri['kelas'].'
                     </td>                       
                 </tr>                   
                 <tr>
@@ -222,7 +156,7 @@
                         :
                     </td>                       
                     <td align="left" >
-                        
+                        '.$status.'
                     </td>                       
                 </tr>                   
                 <tr>
@@ -233,7 +167,7 @@
                         :
                     </td>                       
                     <td align="left" >
-                        
+                        '.$wali.'
                     </td>                       
                 </tr>                   
                 <tr>
@@ -243,8 +177,8 @@
                     <td align="left" >
                         :
                     </td>                       
-                    <td align="left" >
-                        
+										<td align="left" >
+                        '.$data_santri['jalan'].' '.$data_santri['no_rumah'].' '.$data_santri['dusun'].' '.$data_santri['kecamatan'].' '.$data_santri['kabupaten'].' '.$data_santri['provinsi'].'<br> Kode pos: '.$data_santri['kd_pos'].' Telp/HP: '.$data_santri['no_tlp'].'/ '.$data_santri['no_hp'].'
                     </td>                       
                 </tr>                          
                 </tr>                   
@@ -258,7 +192,7 @@
                             Memohon kepada Bapak Pimpinan Pondok Pesantren Yatim Piatu Darul-Aitam agar diajukan untuk mendapatkan kafalah (Beasiswa Pendidikan) kepada Donatur/Muhsinin dimanapun
                             mereka berada, selanjutnya demi keberhasilan saya nanti mendapatkan kafalah saya berjanji denan setulus hati:
                             <ol type="A" style="margin:0;">
-                                <li>Bersungguh-sungguh dalam menjalani pendidikan dan menuntut ilmu pengetahuan dengan niat ibadah lillahi ta'ala</li>
+                                <li>Bersungguh-sungguh dalam menjalani pendidikan dan menuntut ilmu pengetahuan dengan niat ibadah lillahi ta&#39ala</li>
                                 <li>Mentaati dan mematuhi kebijakan Bapak Pimpinan beserta segenap pembantunya dengan melaksanakan disiplin dan sunnah pondok antara lain: </li>
                                 <li>Bermukim di asrama untuk mengikuti seluruh kegiatan Pondok dan tidak sering bepergian selama berlangsungnya proses pendidikan dan pelajaran.</li>
                                 <li>Memperbaiki, memelihara dan meningkatkan kepribadian sebagai seorang muslim/muslimah dengan al-akhlakul karimah sehingga mencerminkan uswah hasanah.</li>
@@ -270,14 +204,14 @@
                 </tr>
                 <tr> 
                     <td colspan="2" valign="top">
-                        Demikianlah surat permohonan ini saya buat semoga Allah SWT senantiasa berkenan melimpahkan taufiq, hidayah, ridho dan 'inayah-Nya lepada kita sekalian, Aamiin
+                        Demikianlah surat permohonan ini saya buat semoga Allah SWT senantiasa berkenan melimpahkan taufiq, hidayah, ridho dan &#39inayah-Nya lepada kita sekalian, Aamiin
                         <br>
-                        <i>Wassalamu'alaikum Warahmatulohi Wabarokaatuh</i>
+                        <i>Wassalamualaikum Warahmatulohi Wabarokaatuh</i>
                     </td>
                 </tr>
                 <tr> 
                     <td width="90%" align="right" >
-                        Darul-Aitam, tgl
+                        Darul-Aitam, tgl '.date("d M Y").'
                     </td>
                     <td width="10%" align="right" >
                     </td>
@@ -298,14 +232,14 @@
                 </tr>                
                 <tr>
                     <td align="center" valign="bottom">
-                        (wali)<br>
+                        ('.$wali.')<br>
                         Nama Lengkap dan jelas
                     </td>
                     <td>
                     
                     </td>
                     <td align="center" valign="bottom">
-                         (pemohon)<br>
+                         ('.$data_santri['nama_lengkap'].')<br>
                         Nama Lengkap dan jelas
                     </td>
                 </tr>
@@ -315,13 +249,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3" align="center" valign="bottom">(KH. Asep Sholahudin Mut'thie, BA)
+                    <td colspan="3" align="center" valign="bottom">(KH. Asep Sholahudin Mut&#39thie, BA)
                     </td>
                 </tr>                
             </table>
                 <br>
-            <span style="margin-left: 40px" class="title-3">
-            
-            </span>																
-    </body>
-</html>
+				';
+		return $output;
+    }
+}

@@ -8,12 +8,18 @@ $(document).ready(function(){
 		dropdownParent: $('#m_add')
 	});
 
+
+
+        
+
+
 	$('.datepicker').datepicker({
         rtl: App.isRTL(),
         orientation: "left",
         autoclose: true,
         format: 'dd-mm-yyyy'
     });
+
 
 	$('.numbers-only').keypress(function(event) {
 
@@ -289,8 +295,14 @@ function displaySaldo(){
 		success:function(data){
 
 			var data = $.parseJSON(data);
+			
+			if (data!=null){
 
-			$('input[name="txtsaldotabungan"]').val(data['saldo']);
+				$('input[name="txtsaldotabungan"]').val(data['saldo']);
+			}
+			else{
+				$('input[name="txtsaldotabungan"]').val('0');
+			}
 		}
 	});
 }

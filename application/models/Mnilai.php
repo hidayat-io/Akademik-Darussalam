@@ -20,11 +20,19 @@ class Mnilai extends CI_Model
 			return $this->db->get('ms_tahun_ajaran')->row();
 		}
 
-		function get_list_data($param,$sortby=0,$sorttype='asc',$thn_ajar_aktif){
-			// var_dump($sortby);
-			// 			exit();
+		function get_list_data($param,$sortby=0,$sorttype='asc',$thn_ajar_aktif,$user_id){
+			//cek admin atau bukan
+			$group=	$this->db->query("SELECT a.user_id, a.nama_lengkap, b.group_id
+										FROM USER a 
+										INNER JOIN group_daftar_user b ON a.user_id = b.user_id
+										where a.user_id = '$user_id'")->row_array();
+			// $group = $this->db->last_query($group);							
+			$groupid = $group['group_id'];
+			// var_dump($groupid);
+			// exit();
+			
 					
-			$cols = array('trans_jadwal_pelajaran.id_thn_ajar', 'trans_jadwal_pelajaran.semester','ms_kelashd.tingkat', 'ms_kelashd.tipe_kelas',  'trans_jadwal_pelajaran.santri',  'trans_jadwal_pelajaran.kode_kelas',  'trans_jadwal_pelajaran.nama',  'trans_jadwal_pelajaran.nama_lengkap',  'trans_jadwal_pelajaran.nama_matpal',  'trans_jadwal_pelajaran.kategori');
+			$cols = array('trans_jadwal_pelajaran.id_thn_ajar', 'trans_jadwal_pelajaran.semester','ms_kelashd.tingkat', 'ms_kelashd.tipe_kelas',  'trans_jadwal_pelajaran.santri',  'trans_jadwal_pelajaran.kode_kelas',  'ms_kelasdt.nama',  'ms_guru.nama_lengkap',  'ms_mata_pelajaran.nama_matpal',  'trans_jadwal_pelajaran.kategori');
 
 			$sql = "SELECT trans_jadwal_pelajaran.id_thn_ajar,ms_tahun_ajaran.deskripsi, trans_jadwal_pelajaran.semester,  ms_kelashd.tingkat, ms_kelashd.tipe_kelas, trans_jadwal_pelajaran.santri, trans_jadwal_pelajaran.kode_kelas,  ms_kelasdt.nama,
 					trans_jadwal_pelajaran.id_guru,ms_guru.nama_lengkap, trans_jadwal_pelajaran.id_mapel,ms_mata_pelajaran.nama_matpal, trans_jadwal_pelajaran.kategori
@@ -40,7 +48,15 @@ class Mnilai extends CI_Model
 				if($param!=null){
 
 					$sql .= " where ".$param;
+					$tipe = ' AND ';
 					
+				}else{
+					$tipe = ' WHERE ';
+				}
+
+				if ($groupid != 1){
+					$sql .= $tipe." trans_jadwal_pelajaran.id_guru = ".$user_id;
+
 				}
 			
 			

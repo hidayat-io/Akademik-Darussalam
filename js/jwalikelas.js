@@ -141,7 +141,8 @@ function pilihItemmsguru() {
 	$item = $item.split('#');
 
 	$('#id_guru').val($item[0]);
-	$('#nama_lengkap').val($item[1]);
+	$('#no_reg').val($item[1]);
+	$('#nama_lengkap').val($item[2]);
 	$('#hiddenidmsguru').hide();
 	$('#spansearchmsguru').show();
 	$('#spansearchclosemsguru').hide();
@@ -161,6 +162,7 @@ function edit(id,kode_kelas){
 			$('#id').val(data['id']);
 			$('#kode_kelas').val(data['kode_kelas']);
 			$('#id_guru').val(data['id_guru']);
+			$('#no_reg').val(data['no_reg']);
 			$('#nama_lengkap').val(data['nama_lengkap']);
 			
 			if (data['id'] == null)
