@@ -39,85 +39,35 @@ class Mabsensi extends CI_Model {
 						kdt.nama";
 
 		return $this->db->query($sql)->result();
-	}
-	
-	function get_grid_kelas_old($param,$sortby=0,$sorttype='desc'){
+	}	
 
-        $cols = array('kld.kode_kelas','kld.nama','klh.tingkat','klh.tipe_kelas','jp.hari','jp.jam','pl.nama_matpal','gr.nama_lengkap');
+	function mget_data_absensi($id_kelasdt,$tgl_absensi){
 
-        $sql = "SELECT jp.id_jadwal,
-					kld.nama, 
-					kld.kode_kelas, 
-					klh.tingkat, 
-					klh.tipe_kelas, 
-					pl.nama_matpal, 
-					gr.nama_lengkap, 
-				jp.hari, 
-					jp.jam 
-				FROM   ms_kelasdt kld 
-					INNER JOIN ms_kelashd klh
-						on kld.id_kelas = klh.id_kelas
-					INNER JOIN trans_jadwal_pelajaran jp 
-							ON kld.kode_kelas = jp.kode_kelas 
-					INNER JOIN ms_guru gr 
-							ON jp.id_guru = gr.id_guru 
-					INNER JOIN ms_mata_pelajaran pl 
-							ON jp.id_mapel = pl.id_matpal ";
-
-		if($param!=null){
-
-			$sql .= " WHERE ".$param;
-		}
-
-		$sql.= " ORDER BY ".$cols[$sortby]." ".$sorttype." ,
-						klh.tingkat, 
-						kld.kode_kelas, 
-						Field(jp.hari, 'SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'AHAD'), 
-						jp.jam, 
-						pl.nama_matpal, 
-						gr.nama_lengkap";
-
-        return $this->db->query($sql)->result();
-	}
-
-	function mget_data_absensi($id_jadwal,$tgl_absensi){
-
-		$sql_absensi = "SELECT jp.id_jadwal,
-							kld.nama as nama_kelas, 
-							kld.kode_kelas, 
-							klh.tingkat, 
-							klh.tipe_kelas, 
-							pl.nama_matpal, 
-							gr.nama_lengkap as nama_guru, 
-							gr.id_guru,
-							jp.hari, 
-							jp.jam,
-							absh.tgl_absensi,
-							snt.no_registrasi,
-							snt.nama_lengkap,
-							absd.absensi,
-							absh.id_absen_header
-						FROM   ms_kelasdt kld 
-							INNER JOIN ms_kelashd klh
-								on kld.id_kelas = klh.id_kelas
-							INNER JOIN trans_jadwal_pelajaran jp 
-									ON kld.kode_kelas = jp.kode_kelas 
-							INNER JOIN ms_guru gr 
-									ON jp.id_guru = gr.id_guru 
-							INNER JOIN ms_mata_pelajaran pl 
-									ON jp.id_mapel = pl.id_matpal
-							INNER JOIN ms_santri snt
-								ON jp.kode_kelas = snt.kel_sekarang
-							LEFT OUTER JOIN trans_absensi_h absh
-								ON absh.id_jadwal = jp.id_jadwal
-									AND absh.tgl_absensi = '$tgl_absensi'
-							LEFT JOIN trans_absensi_d absd
-								ON absh.id_absen_header = absd.id_absen_header
-									AND absd.noreg_santri = snt.no_registrasi
-						WHERE jp.id_jadwal = $id_jadwal and snt.kategori='TMI' and snt.isnonaktif is null
-							ORDER BY absd.noreg_santri";
+		$sql_absensi = "SELECT snt.nama_lengkap, 
+								snt.no_registrasi, 
+								abd.noreg_santri, 
+								snt.kel_sekarang as kode_kelas, 
+								abh.id_mskelasdt, 
+								abd.absensi, 
+								kld.nama AS nama_kelas, 
+								abh.id_absen_header, 
+								abh.tgl_absensi 
+						FROM   ms_santri snt 
+								INNER JOIN ms_kelasdt kld 
+										ON kld.kode_kelas = snt.kel_sekarang 
+								LEFT OUTER JOIN trans_absensi_h abh 
+											ON abh.id_mskelasdt = kld.id_mskelasdt 
+												AND abh.tgl_absensi = '".$tgl_absensi."' 
+								LEFT OUTER JOIN trans_absensi_d abd 
+											ON abd.id_absen_header = abh.id_absen_header 
+												AND abd.noreg_santri = snt.no_registrasi 
+						WHERE  snt.isnonaktif IS NULL 
+								AND snt.kategori = 'TMI' 
+								AND kld.id_mskelasdt = '".$id_kelasdt."'
+ 						ORDER  BY snt.nama_lengkap";
 
 		return $this->db->query($sql_absensi);
+		
 	}
 
 	function del_old_absensi($id_absen_header){

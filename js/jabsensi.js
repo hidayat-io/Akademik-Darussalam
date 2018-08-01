@@ -98,31 +98,23 @@ function loadDataAbsensiSiswa(id_kelasdt=0){
 			if(json_absensi.length > 0){
 
 				$('#lbl_nama_kelas').text(json_absensi[0].kode_kelas+' - '+json_absensi[0].nama_kelas);
-				$('#hid_id_guru').val(json_absensi[0].id_guru);
 				$('#hid_id_absen_header').val(json_absensi[0].id_absen_header);
 				
 				//jika hari pada tanggal sama dengan hari pada jadwal
-				if(hari==json_absensi[0].hari){
+				if(data.isToday!=1){
 
-					if(data.isToday!=1){
-
-						if (data.group == 'Administrator'){
-
-							$('#cmd_save').removeClass('hidden');
-						}
-						else{
-
-							$('#cmd_save').addClass('hidden');
-						}
-					}
-					else if(data.isToday==1){
+					if (data.group == 'Administrator'){
 
 						$('#cmd_save').removeClass('hidden');
-					}					
-				}
-				else{
+					}
+					else{
 
-					$('#cmd_save').addClass('hidden');
+						$('#cmd_save').addClass('hidden');
+					}
+				}
+				else if(data.isToday==1){
+
+					$('#cmd_save').removeClass('hidden');
 				}
 
 				let seqno = 1;

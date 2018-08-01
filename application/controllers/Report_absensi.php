@@ -27,8 +27,7 @@ class Report_absensi extends IO_Controller
 
 		//get Tahun Ajaran Data
 		$select_thnajar= $this->model->get_thn_ajar()->result();
-            
-		$vdata['kode_deskripsi'][NULL] = '';
+        
 		foreach ($select_thnajar as $b) {
 			$vdata['kode_deskripsi'][$b->id]
 			=$b->deskripsi;

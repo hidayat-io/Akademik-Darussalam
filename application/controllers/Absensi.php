@@ -85,11 +85,11 @@ class Absensi extends IO_Controller{
 		$login_user 		= $this->session->userdata('logged_in')['uid'];
 		$input_tgl_absensi 	= $this->input->get('tgl_absensi');
 		$tgl_absensi 		= io_return_date('d-m-Y',$input_tgl_absensi);
-		$id_jadwal 			= $this->input->get('id_jadwal');
+		$id_kelasdt			= $this->input->get('id_kelasdt');
 		$tgl_server 		= date('Y/m/d');
 		$group 				= $this->mcommon->get_hak_akses($login_user,$this->modul);
 
-		$data = $this->model->mget_data_absensi($id_jadwal,$tgl_absensi)->result();
+		$data = $this->model->mget_data_absensi($id_kelasdt,$tgl_absensi)->result();
 
 		$isToday 	= 0;
 		$date1 		= new DateTime($tgl_absensi);
@@ -114,11 +114,10 @@ class Absensi extends IO_Controller{
 	function save_absen(){
 
 		$login_user = $this->session->userdata('logged_in')['uid'];
-		$id_jadwal 	= $this->input->post('hid_id_kelasdt');
+		$id_kelasdt	= $this->input->post('hid_id_kelasdt');
 		$tgl_absen 	= $this->input->post('dtp_tgl_absensi');
 		$tgl_absen 	= io_return_date('d-m-Y',$this->input->post('dtp_tgl_absensi'));
 		$id_absen_h = $this->input->post('hid_id_absen_header');
-		$id_guru 	= $this->input->post('hid_id_guru');
 		$list_siswa = $this->input->post('hid_list_siswa');
 		$list_siswa = explode(",",$list_siswa);
 
@@ -128,9 +127,8 @@ class Absensi extends IO_Controller{
 		//save header absen
 		$header_absen = array(
 
-			'id_jadwal'		=> $id_jadwal,
+			'id_mskelasdt'	=> $id_kelasdt,
 			'tgl_absensi'	=> $tgl_absen,
-			'id_guru'		=> $id_guru,
 			'upd_by'		=> $login_user
 		);
 
