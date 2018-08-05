@@ -24,7 +24,7 @@ class Mrapor extends CI_Model
   function get_data_byidkelas($hide_Kurikulum,$semester,$id_kelas) {
 		
 		$data_santri = array();
-		$data_santri=$this->db->query("SELECT trans_daftar_ulang.id_thn_ajar,ms_tahun_ajaran.deskripsi, ms_santri.kel_sekarang, ms_kelasdt.nama, trans_daftar_ulang.no_registrasi,ms_santri.nama_lengkap,ms_santri.no_stambuk, trans_walikelas.id_guru, ms_guru.nama_lengkap as nama_lengkap_guru
+		$data_santri=$this->db->query("SELECT trans_daftar_ulang.id_thn_ajar,ms_tahun_ajaran.deskripsi, ms_santri.kel_sekarang, ms_kelasdt.nama, trans_daftar_ulang.no_registrasi,ms_santri.nama_lengkap,ms_santri.no_stambuk,ms_santri.konsulat, trans_walikelas.id_guru, ms_guru.nama_lengkap as nama_lengkap_guru
 																		from trans_daftar_ulang
 																		inner join ms_tahun_ajaran on trans_daftar_ulang.id_thn_ajar = ms_tahun_ajaran.id
 																		inner join ms_santri on trans_daftar_ulang.no_registrasi  = ms_santri.no_registrasi and ms_santri.kel_sekarang = '$id_kelas'
@@ -61,7 +61,7 @@ class Mrapor extends CI_Model
 																	<tr>
 																		<td align="left">NO Stambuk	: '.$row_data_santri['no_stambuk'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Kelas	: '.$row_data_santri['kel_sekarang'].' - '.$row_data_santri['nama'].'</td>
 																		<td align="left"></td>
-																		<td align="left">Konsulat:</td>
+																		<td align="left">Konsulat: '.$row_data_santri['konsulat'].'</td>
 																	</tr>
 																</table>
 													<table width="100%" class="tb-item">
@@ -132,7 +132,7 @@ class Mrapor extends CI_Model
   function get_data_byidnoregistrasi($hide_Kurikulum,$semester,$no_registrasi) {
 		
 		$data_santri = array();
-		$data_santri=$this->db->query("SELECT trans_daftar_ulang.id_thn_ajar,ms_tahun_ajaran.deskripsi, ms_santri.kel_sekarang, ms_kelasdt.nama, trans_daftar_ulang.no_registrasi,ms_santri.nama_lengkap,ms_santri.no_stambuk, trans_walikelas.id_guru, ms_guru.nama_lengkap as nama_lengkap_guru
+		$data_santri=$this->db->query("SELECT trans_daftar_ulang.id_thn_ajar,ms_tahun_ajaran.deskripsi, ms_santri.kel_sekarang, ms_kelasdt.nama, trans_daftar_ulang.no_registrasi,ms_santri.nama_lengkap,ms_santri.no_stambuk,ms_santri.konsulat, trans_walikelas.id_guru, ms_guru.nama_lengkap as nama_lengkap_guru
 																		from trans_daftar_ulang
 																		inner join ms_tahun_ajaran on trans_daftar_ulang.id_thn_ajar = ms_tahun_ajaran.id
 																		inner join ms_santri on trans_daftar_ulang.no_registrasi  = ms_santri.no_registrasi
@@ -169,7 +169,7 @@ class Mrapor extends CI_Model
 																	<tr>
 																		<td align="left">NO Stambuk	: '.$row_data_santri['no_stambuk'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Kelas	: '.$row_data_santri['kel_sekarang'].' - '.$row_data_santri['nama'].'</td>
 																		<td align="left"></td>
-																		<td align="left">Konsulat:</td>
+																		<td align="left">Konsulat: '.$row_data_santri['konsulat'].'</td>
 																	</tr>
 																</table>
 													<table width="100%" class="tb-item">

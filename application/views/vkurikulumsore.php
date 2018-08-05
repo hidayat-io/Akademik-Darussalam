@@ -137,7 +137,8 @@
                                                     <tr>
                                                         <td><?php echo $no ?></td>
                                                         <td colspan="<?php $no?>"><?php echo $rowbody['nama_bidang']; ?></td>
-                                                        <td><?php echo $rowbody['id_matpal']; ?></td>
+                                                        <td><?php echo $rowbody['nama_matpal']; ?></td>
+                                                            <!-- <td><?php //echo $rowbody['id_matpal']; ?></td> -->
                                                         <?php  ;
                                                         foreach ($headertablekurikulumsore as $rowheadersore) { 
                                                         $sm1 = 'SM1_'.$rowbody['id_matpal'].'_'.$rowheadersore['tingkat'].'_'.$rowheadersore['tipe_kelas'];

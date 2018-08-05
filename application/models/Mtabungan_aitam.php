@@ -57,7 +57,7 @@ public function __construct(){
 		return $r;
 	}
 
-		function query_data_noregsrch($noreg){
+	function query_data_noregsrch($noreg){
 
 
 		$sql="SELECT id,a.no_registrasi,nama_lengkap,tgl_tabungan,tipe,nominal,keterangan,saldo
