@@ -1,50 +1,50 @@
-<?php
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+
 // <!-- بسم الله الرحمن الرحیم -->
 
-defined('BASEPATH') OR exit('No direct script access allowed');
-
-class rapor extends IO_Controller
+class Report_absensi extends IO_Controller
 {
 
 	public function __construct()
 	{
-			$this->modul = 34;
-			parent::__construct($this->modul);
-			 $this->load->model('mrapor','model');
-			 $this->load->library("pdf");
+		$this->modul = 54;
+		parent::__construct($this->modul);
+		$this->load->model('mrapor','model');
+		$this->load->library("pdf");
 	}
 
 	function index()
 	{
 		//get kurikulum aktif
-			$sys_param						= $this->kurikulum_aktif();
-			$isys_param 					= explode('#',$sys_param);
-			$id_thn_ajar					= $isys_param[0];
-			$id_thn_ajar_value				= $this->model->get_kurikulum($id_thn_ajar);
-			$idthnajaraktif					= $id_thn_ajar_value->id;
-			$vdata['id_thn_ajar']			= $id_thn_ajar_value->id;
-			$vdata['deskripsi']				= $id_thn_ajar_value->deskripsi;
-			$vdata['semester_aktif']		= $isys_param[1];
+		$sys_param						= $this->kurikulum_aktif();
+		$isys_param 					= explode('#',$sys_param);
+		$id_thn_ajar					= $isys_param[0];
+		$id_thn_ajar_value				= $this->model->get_kurikulum($id_thn_ajar);
+		$idthnajaraktif					= $id_thn_ajar_value->id;
+		$vdata['id_thn_ajar']			= $id_thn_ajar_value->id;
+		$vdata['deskripsi']				= $id_thn_ajar_value->deskripsi;
+		$vdata['semester_aktif']		= $isys_param[1];
 
-		 //get Tahun Ajaran Data
-			$select_thnajar= $this->model->get_thn_ajar()->result();
-            
-                        $vdata['kode_deskripsi'][NULL] = '';
-                        foreach ($select_thnajar as $b) {
-                            $vdata['kode_deskripsi'][$b->id]
-                            =$b->deskripsi;
-                        }
+		//get Tahun Ajaran Data
+		$select_thnajar= $this->model->get_thn_ajar()->result();
+        
+		foreach ($select_thnajar as $b) {
+			$vdata['kode_deskripsi'][$b->id]
+			=$b->deskripsi;
+		}
+
         //get Kelas
-			$select_kelas= $this->mcommon->mget_list_kelas()->result();
+		$select_kelas= $this->mcommon->mget_list_kelas()->result();
             
-                        $vdata['kode_kelas'][NULL] = '';
-                        foreach ($select_kelas as $b) {
-            
-							$vdata['kode_kelas'][$b->kode_kelas]
-							=$b->kode_kelas." | ".$b->nama;
-							// $vdata['kode_kelas'][$b->kode_kelas."#".$b->nama."#".$b->tingkat."#".$b->tipe_kelas]
-							// =$b->nama." | ".$b->tingkat." | ".$b->tipe_kelas;
-                        }
+		$vdata['kode_kelas'][NULL] = '';
+		foreach ($select_kelas as $b) {
+
+			$vdata['kode_kelas'][$b->kode_kelas]
+			=$b->kode_kelas." | ".$b->nama;
+			// $vdata['kode_kelas'][$b->kode_kelas."#".$b->nama."#".$b->tingkat."#".$b->tipe_kelas]
+			// =$b->nama." | ".$b->tingkat." | ".$b->tipe_kelas;
+		}
+
 		//cek hakAkses
 		$user_id			= $this->session->userdata('logged_in')['uid'];
 		$modul_id			= $this->modul;
@@ -71,8 +71,8 @@ class rapor extends IO_Controller
 			$class_delete = 'hidden';
 		}
 		$vdata['class_add']				= $class_add;
-		$vdata['title'] = 'RAPOR';
-	    $data['content'] = $this->load->view('vrapor',$vdata,TRUE);
+		$vdata['title'] = 'REPORT ABSENSI';
+	    $data['content'] = $this->load->view('vReport_absensi',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
 

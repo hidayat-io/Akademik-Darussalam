@@ -30,7 +30,7 @@
             <!-- END CONTAINER -->
             <!-- BEGIN FOOTER -->
             <div class="page-footer">
-                <div class="page-footer-inner"> 2017 &copy; TMI Darussalam</div>
+                <div class="page-footer-inner"> <?=date('Y');?> &copy; TMI Darussalam</div>
                 <div class="scroll-to-top">
                     <i class="icon-arrow-up"></i>
                 </div>

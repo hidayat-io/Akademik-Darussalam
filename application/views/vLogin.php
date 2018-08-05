@@ -72,7 +72,7 @@
         </div>
         <!-- END LOGIN -->
         
-        <div class="copyright"> 2017 &copy; TMI Darussalam  </div>
+        <div class="copyright"> <?=date('Y');?> &copy; TMI Darussalam  </div>
         
         <?php include "include/js.php"; ?>
         <script src="<?php echo base_url(); ?>js/login-4.js" type="text/javascript"></script>
