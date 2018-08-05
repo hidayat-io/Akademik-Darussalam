@@ -175,7 +175,7 @@
 
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    <span class="input-group-addon">No.KTP<span class="required">*</span></span>
+                                                    <span class="input-group-addon">No.KTP<span class="required"> *</span></span>
                                                     <div class="input-icon right input-medium">
                                                         <i class="fa"></i><input type="text" class="form-control medium-width" name="txt_no_ktp" id="txt_no_ktp" placeholder="No.KTP" />
                                                     </div>
@@ -307,21 +307,34 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <div class="input-group">
-                                                    <span class="input-group-addon">Mengajar Sejak</span>
-                                                    <input type="text" class="form-control datepicker" placeholder="Tgl.Mulai" name="dtp_ajar_mulai" id="dtp_ajar_mulai" readonly>
-                                                    <span class="input-group-addon" style="text-align: center;">s/d</span>
-                                                    <input type="text" class="form-control datepicker" placeholder="Tgl.Selesai" name="dtp_ajar_akhir" id="dtp_ajar_akhir" readonly>
+                                                    <span class="input-group-addon">
+                                                        Tgl.Masuk
+                                                        <span class="required"> *</span>
+                                                    </span>
+                                                    <div class="input-icon right input-small">
+                                                        <i class="fa"></i><input type="text" class="form-control datepicker" placeholder="Tgl.Masuk" name="dtp_ajar_mulai" id="dtp_ajar_mulai" data-toggle="tooltip" title="Tekan BACKSPACE untuk menghapus text.">
+                                                    </div>                                                   
+                                                </div>                                                                                                                                                
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Tgl.Keluar</span>
+                                                    <div class="input-icon right input-small">
+                                                        <input type="text" class="form-control datepicker" placeholder="Tgl.Keluar" name="dtp_ajar_akhir" id="dtp_ajar_akhir" data-toggle="tooltip" title="Tekan BACKSPACE untuk menghapus text.">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
+
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    <span class="input-group-addon">Status</span>
-                                                    <select name="opt_status" id="opt_status" class="form-control input-medium">
+                                                    <span class="input-group-addon">Status *</span>
+                                                    <select name="opt_status" id="opt_status" class="form-control input-medium"
+														onchange="validateStatusGuru(this.value)">
                                                         <option value="">- Belum Dipilih -</option>
                                                         <option value="Pengabdian">Pengabdian</option>
                                                         <option value="Tetap">Tetap</option>
@@ -330,6 +343,29 @@
                                             </div>
 
                                             <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Tugas Utama</span>
+                                                    <?php
+
+                                                        $att_tugas_utama = 'class="form-control input-medium" id="opt_tugas_utama"';
+                                                        echo form_dropdown('opt_tugas_utama', $opt_tugas_utama, null, $att_tugas_utama);
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Status Penugasan</span>
+                                                    <?php 
+                                                        $att_sts_penugasan = 'class="form-control input-medium" id="opt_status_penugasan"';
+                                                        echo form_dropdown('opt_status_penugasan', $opt_status_penugasan, null, $att_sts_penugasan);
+                                                    ?>
+                                                </div>
+                                            </div>
+
+                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Jabatan Struktural</span>
                                                     <?php
@@ -344,8 +380,12 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    <span class="input-group-addon">Kesra / Gapok</span>
-                                                    <input type="text" class="form-control input-medium numbers-only" placeholder="Gapok" name="txt_gapok" id="txt_gapok">
+                                                    <span class="input-group-addon">Status Pegawai</span>
+                                                    <?php
+
+                                                        $att_sts_pegawai = 'class="form-control input-medium" id="opt_status_pegawai"';
+                                                        echo form_dropdown('opt_status_pegawai', $opt_status_pegawai, null, $att_sts_pegawai);
+                                                    ?>
                                                 </div>
                                             </div>
 
@@ -360,30 +400,33 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    <span class="input-group-addon">Ijazah Terakhir</span>
-                                                    <select class="form-control select2 input-medium" id="opt_ijazah_terakhir" name="opt_ijazah_terakhir"></select>
-                                                </div>
+                                                    <span class="input-group-addon">Pendidikan Terakhir</span>
+                                                    <?php
+                                                        
+                                                        $att_ijazah_terakhir = 'class="form-control input-medium" id="opt_ijazah_terakhir" ';
+                                                        echo form_dropdown('opt_ijazah_terakhir', $opt_ijazah_terakhir, null, $att_ijazah_terakhir);
+                                                    ?>
+                                                </div>                                            
                                             </div>
 
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Bidang Keahlian</span>
+                                                    <?php
+
+                                                        $att_mapel = 'class="form-control select2-multiple input-xlarge" id="opt_mapel" multiple';
+                                                        echo form_dropdown('opt_mapel[]', $opt_mapel, null, $att_mapel);
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Gelar Akademik</span>
                                                     <input type="text" class="form-control input-medium" placeholder="Gelar Akademik" name="txt_gelar" id="txt_gelar">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">Materi yang diampu</span>
-                                                    <?php
-
-                                                        $att_mapel = 'class="form-control select2 input-medium" id="opt_mapel"';
-                                                        echo form_dropdown('opt_mapel', $opt_mapel, null, $att_mapel);
-                                                    ?>
-                                                    <!-- <textarea name="txa_materi" id="txa_materi" rows="4" cols="50" class="form-control" placeholder="Materi yang diampu"></textarea> -->
-                                                </div>
+                                                </div>    
                                             </div>
                                         </div>
 
@@ -852,7 +895,7 @@
                             <div class="col-md-9">
                                 <div class="input-group input-large datepicker input-daterange">
                                     <input type="text" class="form-control" name="dtp_sajar_start">
-                                    <span class="input-group-addon">to</span>
+                                    <span class="input-group-addon" style="min-width:0px">to</span>
                                     <input type="text" class="form-control" name="dtp_sajar_end">
                                 </div>
                             </div>

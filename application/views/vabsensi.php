@@ -22,14 +22,10 @@
                 <table class="table table-striped table-bordered table-hover" id="tb-list">
                     <thead>
                         <tr>
-                            <th>Kode Kelas</th>
-                            <th>Nama Kelas</th>
                             <th>Tingkat</th>
                             <th>Tipe Kelas</th>
-                            <th>Hari</th>
-                            <th>Jam</th>
-                            <th>Mata Pelajaran</th>
-                            <th>Guru</th>
+                            <th>Kode Kelas</th>
+                            <th>Nama Kelas</th>
                             <th>Edit</th>                   
                         </tr>
                     </thead>
@@ -51,7 +47,7 @@
                     <form id="form_absensi" enctype="multipart/form-data">
 						<input type="text" class="hidden" name="hid_list_siswa" id="hid_list_siswa" value="" />
 						<input type="text" class="hidden" name="hid_id_absen_header" id="hid_id_absen_header" value="" />
-						<input type="text" class="hidden" name="hid_id_jadwal" id="hid_id_jadwal" value="" />
+						<input type="text" class="hidden" name="hid_id_kelasdt" id="hid_id_kelasdt" value="" />
 						<input type="text" class="hidden" name="hid_id_guru" id="hid_id_guru" value="" />
                         <h4 style="font-size:90%">
                             <strong>Absensi Siswa</strong>
@@ -63,18 +59,15 @@
                                             value="<?php echo date('d-m-Y')?>" onchange="getDayName(this.value);loadDataAbsensiSiswa()">
                                     </td>
 									<td><strong>Hari : </strong><label id="lbl_hari"></label></td>
-                                    <!-- <td>
-                                        <strong>Tahun Ajaran : </strong><label id="lbl_tahun_ajar"></label>
-                                    </td>
-                                    <td><strong>Semester : </strong><label id="lbl_tahun_ajar"></label></td> -->
+									<td><strong style="padding-left:10px">Kelas :&nbsp;</strong><label id="lbl_nama_kelas"></label></td>
                                 </tr>
                             </table>
                         </h4>
-                        <hr style="margin: 20px 0px 0px;">
+                        <!-- <hr style="margin: 20px 0px 0px;">
                         <div style="float:right;color:blue">
                             <strong>Guru :&nbsp;</strong><label id="lbl_nama_guru"></label>
                             <strong style="padding-left:10px">Kelas :&nbsp;</strong><label id="lbl_nama_kelas"></label>
-                        </div>
+                        </div> -->
                         <table width="100%" class="table table-striped table-bordered table-hover" id="tb_absensi">
                             <thead>
                                 <tr>
