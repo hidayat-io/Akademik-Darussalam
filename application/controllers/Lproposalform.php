@@ -58,18 +58,18 @@ class lproposalform extends IO_Controller
 		$this->excel->getActiveSheet()->setTitle('FORM A');
         
         #reggion header
-		$this->excel->getActiveSheet()->setCellValue('A1', "KOP SURAT LEMBAGA KESEJAHTERAAN SOSIAL ANAK (LKSA)");
-		$this->excel->getActiveSheet()->mergeCells('A1:Y1');
-		$this->excel->getActiveSheet()->getStyle('A1:Y1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-		$this->excel->getActiveSheet()->setCellValue('G2', "PROPOSAL");
-		$this->excel->getActiveSheet()->setCellValue('G3', "FORM A");
+            $this->excel->getActiveSheet()->setCellValue('A1', "KOP SURAT LEMBAGA KESEJAHTERAAN SOSIAL ANAK (LKSA)");
+            $this->excel->getActiveSheet()->mergeCells('A1:W1');
+            $this->excel->getActiveSheet()->getStyle('A1:W1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $this->excel->getActiveSheet()->setCellValue('G2', "PROPOSAL");
+            $this->excel->getActiveSheet()->setCellValue('G3', "FORM A");
 
-		$this->excel->getActiveSheet()->getStyle('A1:Y1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $this->excel->getActiveSheet()->getStyle('A1:W1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $this->excel->getActiveSheet()->getRowDimension('7')->setRowHeight(105);
             $this->excel->getActiveSheet()->setCellValue('A4', "KETERANGAN ANAK BINAAN LKSA");
-                $this->excel->getActiveSheet()->mergeCells('A4:Y4');
-                $this->excel->getActiveSheet()->getStyle('A4:Y4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                $this->excel->getActiveSheet()->getStyle('A4:Y4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->mergeCells('A4:W4');
+                $this->excel->getActiveSheet()->getStyle('A4:W4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('A4:W4')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
             $this->excel->getActiveSheet()->setCellValue('A6', "NO");
                 $this->excel->getActiveSheet()->mergeCells('A6:A7');
@@ -267,14 +267,198 @@ class lproposalform extends IO_Controller
 		  )
 		);
 		$i = $i-1;
-		$cell_to = "Y".$i;
+		$cell_to = "W".$i;
 		$this->excel->getActiveSheet()->getStyle('A6:'.$cell_to)->applyFromArray($styleArray);
 		$this->excel->getActiveSheet()->getStyle('G2:G3')->applyFromArray($styleArray2);
-		$this->excel->getActiveSheet()->getStyle('A1:Y4')->getFont()->setBold(true);
-		$this->excel->getActiveSheet()->getStyle('A4:Y4')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-		$this->excel->getActiveSheet()->getStyle('A4:Y4')->getFill()->getStartColor()->setRGB('2CC30B');
+		$this->excel->getActiveSheet()->getStyle('A1:W4')->getFont()->setBold(true);
+		$this->excel->getActiveSheet()->getStyle('A4:W4')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+		$this->excel->getActiveSheet()->getStyle('A4:W4')->getFill()->getStartColor()->setRGB('2CC30B');
 
 		$filename='FORM A.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0');//no cache
+
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		$objWriter->save('php://output');
+    }
+    
+    function export_form_b(){
+        //load our new PHPExcel library
+		$this->load->library('excel');
+		//activate worksheet number 1
+		$this->excel->setActiveSheetIndex(0);
+		//name the worksheet
+		$this->excel->getActiveSheet()->setTitle('FORM A');
+        
+        #reggion header
+		$this->excel->getActiveSheet()->setCellValue('D1', "KOP SURAT LEMBAGA KESEJAHTERAAN SOSIAL ANAK (LKSA)");
+		$this->excel->getActiveSheet()->mergeCells('D1:K1');
+		$this->excel->getActiveSheet()->getStyle('D1:K1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('D2', "DATA PEGAWAI LEMBAGA KESEJAHTERAAN SOSIAL ANAK (LKSA)");
+		$this->excel->getActiveSheet()->mergeCells('D2:K2');
+		$this->excel->getActiveSheet()->getStyle('D2:K2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setCellValue('B1', "PROPOSAL");
+		$this->excel->getActiveSheet()->setCellValue('B2', "FORM B");
+        $this->excel->getActiveSheet()->setCellValue('B3', "Daftar Pegawai LKSA");
+
+            $this->excel->getActiveSheet()->getRowDimension('5')->setRowHeight(45);
+
+            $this->excel->getActiveSheet()->setCellValue('A5', "NO");
+                $this->excel->getActiveSheet()->mergeCells('A5:A5');
+                $this->excel->getActiveSheet()->getStyle('A5:A5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('A5:A5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $this->excel->getActiveSheet()->setCellValue('B5', "Nama");
+                $this->excel->getActiveSheet()->getColumnDimension('B')->setWidth(27);
+                $this->excel->getActiveSheet()->getStyle('B5:B5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('B5:B5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);         
+            $this->excel->getActiveSheet()->setCellValue('C5', "Nomor Induk Kependudukan");
+                $this->excel->getActiveSheet()->getColumnDimension('C')->setWidth(27);
+                $this->excel->getActiveSheet()->getStyle('C5:C5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('C5:C5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+                $this->excel->getActiveSheet()->getStyle('C5:C5')->getAlignment()->setWrapText(true); 
+            $this->excel->getActiveSheet()->setCellValue('D5', "Jenis Kelamin");
+                $this->excel->getActiveSheet()->getStyle('D5:D5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('D5:D5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('D5:D5')->getAlignment()->setWrapText(true); 
+                $this->excel->getActiveSheet()->getColumnDimension('D')->setWidth(10); 
+            $this->excel->getActiveSheet()->setCellValue('E5', "Tempat Lahir");
+                $this->excel->getActiveSheet()->getColumnDimension('C')->setWidth(15);
+                $this->excel->getActiveSheet()->getStyle('E5:E5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('E5:E5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+                $this->excel->getActiveSheet()->getStyle('E5:E5')->getAlignment()->setWrapText(true); 
+                $this->excel->getActiveSheet()->getColumnDimension('E')->setWidth(11);
+            $this->excel->getActiveSheet()->setCellValue('F5', "Tanggal Lahir");
+                $this->excel->getActiveSheet()->getColumnDimension('F')->setWidth(15);
+                $this->excel->getActiveSheet()->getStyle('F5:F5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('F5:F5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('F5:F5')->getAlignment()->setWrapText(true); 
+            $this->excel->getActiveSheet()->setCellValue('G5', "Mulai Bekerja Di Panti");
+                $this->excel->getActiveSheet()->getColumnDimension('G')->setWidth(11);
+                $this->excel->getActiveSheet()->getStyle('G5:G5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('G5:G5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('G5:G5')->getAlignment()->setWrapText(true); 
+            $this->excel->getActiveSheet()->setCellValue('H5', "Jabatan");
+                $this->excel->getActiveSheet()->getStyle('H5:H5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('H5:H5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);          
+            $this->excel->getActiveSheet()->setCellValue('I5', "Status Kepegawaian");
+                $this->excel->getActiveSheet()->getColumnDimension('I')->setWidth(13);
+                $this->excel->getActiveSheet()->getStyle('I5:I5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('I5:I5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+                $this->excel->getActiveSheet()->getStyle('I5:I5')->getAlignment()->setWrapText(true);
+            $this->excel->getActiveSheet()->setCellValue('J5', "Latar Belakang Pendidikan Terakhir");
+                $this->excel->getActiveSheet()->getColumnDimension('J')->setWidth(20);
+                $this->excel->getActiveSheet()->getStyle('J5:J5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('J5:J5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+                $this->excel->getActiveSheet()->getStyle('J5:J5')->getAlignment()->setWrapText(true);
+            $this->excel->getActiveSheet()->setCellValue('K5', "Pelatihan Yang Pernah Diikuti");
+                $this->excel->getActiveSheet()->getColumnDimension('K')->setWidth(27);
+                $this->excel->getActiveSheet()->getStyle('K5:K5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('K5:K5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+                $this->excel->getActiveSheet()->getStyle('K5:K5')->getAlignment()->setWrapText(true);
+        #endreggion header
+        #region rowdata
+            // $data       =$this->model->get_data_fa();
+            // $i  	    = 8;
+            // $tdk_ada    ='-';
+            // if($data != null){
+            //     $jk =array("L"=>"1","P"=>"2");
+            //     foreach($data as $row){
+            //         $no_registrasi_santri = $row->no_registrasi;
+                    
+            //         //get data orangTua
+            //             $ayah_kandung	= $this->model->get_data_orgtua($no_registrasi_santri,'ayah');
+            //             if ($ayah_kandung!=null) {
+            //                 $ayah           =   $ayah_kandung->nama;
+            //             }else{                    
+            //                 $ayah           =   "Tidak Diketahui";
+            //             }
+            //             $ibu_kandung			= $this->model->get_data_orgtua($no_registrasi_santri,'ibu');
+            //             if ($ibu_kandung!=null) {
+            //                 $ibu           =   $ibu_kandung->nama;
+            //             }else{                    
+            //                 $ibu           =    "Tidak Diketahui";
+            //             }
+
+            //         $this->excel->getActiveSheet()->setCellValue('A'.$i, $i-7);
+            //         $this->excel->getActiveSheet()->setCellValue('B'.$i, $tdk_ada);
+            //         $this->excel->getActiveSheet()->setCellValue('C'.$i, $tdk_ada);
+            //         $this->excel->getActiveSheet()->setCellValue('D'.$i, $tdk_ada);
+            //         $this->excel->getActiveSheet()->setCellValue('E'.$i, $tdk_ada);
+            //         $this->excel->getActiveSheet()->setCellValue('F'.$i, $row->alamat);
+            //         $this->excel->getActiveSheet()->setCellValue('G'.$i, $row->nama_donatur);
+            //         $this->excel->getActiveSheet()->setCellValue('H'.$i, $row->nama_lengkap);
+            //         $this->excel->getActiveSheet()->setCellValue('I'.$i, $row->nik);
+            //         $this->excel->getActiveSheet()->setCellValue('J'.$i, $jk[$row->jenis_kelamin]);
+            //         $this->excel->getActiveSheet()->setCellValue('K'.$i, $row->tempat_lahir);
+            //         $this->excel->getActiveSheet()->setCellValue('L'.$i, $row->tgl_lahir);
+            //         $this->excel->getActiveSheet()->setCellValue('M'.$i, $row->umur);
+            //         $this->excel->getActiveSheet()->setCellValue('N'.$i, $tdk_ada);
+            //         $this->excel->getActiveSheet()->setCellValue('O'.$i, $tdk_ada);
+            //         $this->excel->getActiveSheet()->setCellValue('P'.$i, $tdk_ada);
+            //         $this->excel->getActiveSheet()->setCellValue('Q'.$i, $tdk_ada);
+            //         $this->excel->getActiveSheet()->setCellValue('R'.$i, $tdk_ada);
+            //         $this->excel->getActiveSheet()->setCellValue('S'.$i, $tdk_ada);
+            //         $this->excel->getActiveSheet()->setCellValue('T'.$i, $tdk_ada);
+            //         $this->excel->getActiveSheet()->setCellValue('U'.$i, $ayah);
+            //         $this->excel->getActiveSheet()->setCellValue('V'.$i, $ibu);
+            //         $this->excel->getActiveSheet()->setCellValue('W'.$i, $tdk_ada);
+                    
+            //         $i++;
+            //     }
+            // }
+            #endregion rowdata
+         $i = 7;  
+         $ittd = $i+4; 
+            $this->excel->getActiveSheet()->setCellValue('J'.$ittd, "TANDA TANGAN KEPALA LKSA");
+                $this->excel->getActiveSheet()->mergeCells('J'.$ittd.':K'.$ittd);
+                $this->excel->getActiveSheet()->getStyle('J'.$ittd.':K'.$ittd)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('J'.$ittd.':K'.$ittd)->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $ictt = $i;
+            $this->excel->getActiveSheet()->setCellValue('B'.$ictt, "Catatan:");
+                $this->excel->getActiveSheet()->mergeCells('B'.$ictt.':C'.$ictt);
+                $this->excel->getActiveSheet()->getStyle('B'.$ictt.':C'.$ictt)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+                $this->excel->getActiveSheet()->getStyle('B'.$ictt.':C'.$ictt)->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $istt = $i+2;
+            $this->excel->getActiveSheet()->setCellValue('B'.$istt, "*)Status Kepegawaian: 1.Tetap; 2.Kontrak; 3.Relawan");
+                $this->excel->getActiveSheet()->mergeCells('B'.$istt.':D'.$istt);
+                $this->excel->getActiveSheet()->getStyle('B'.$istt.':D'.$istt)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('B'.$istt.':D'.$istt)->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            
+                // for($col = 'A'; $col !== 'Y'; $col++) {
+                
+                //     $this->excel->getActiveSheet()
+                //         ->getColumnDimension($col)
+            //         ->setAutoSize(true);
+            // }
+            
+            $styleArray = array(
+                'borders' => array(
+                    'allborders' => array(
+                        'style' => PHPExcel_Style_Border::BORDER_THIN
+                        )
+                        )
+                    );
+                    $styleArray2 = array(
+                        'borders' => array(
+                            'allborders' => array(
+                                'style' => PHPExcel_Style_Border::BORDER_THICK
+                                )
+                                )
+                            );
+                            
+		$i = $i-1;
+		$cell_to = "K".$i;
+		$this->excel->getActiveSheet()->getStyle('A5:'.$cell_to)->applyFromArray($styleArray);
+		$this->excel->getActiveSheet()->getStyle('B1:B2')->applyFromArray($styleArray2);
+		$this->excel->getActiveSheet()->getStyle('D1:K1')->getFont()->setBold(true);
+		// $this->excel->getActiveSheet()->getStyle('A4:Y4')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+		// $this->excel->getActiveSheet()->getStyle('A4:Y4')->getFill()->getStartColor()->setRGB('2CC30B');
+
+		$filename='FORM B.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
 		header('Cache-Control: max-age=0');//no cache
