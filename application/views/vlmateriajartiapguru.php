@@ -1,0 +1,91 @@
+<!-- بسم الله الرحمن الرحیم -->
+<style type="text/css">.thumb-image{float:left;width:200px;position:relative;padding:5px;}</style>
+<script src="<?php echo base_url(); ?>js/jlmateriajartiapguru.js"></script>
+<!-- page -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet box green-jungle">
+                <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-database"></i>Laporan Materi Ajar
+                        </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="clearfix">
+                        <div class="btn-group" >
+                            <label class="btn blue active" onclick="rbtn_lmateriajartiapguru_action()">
+                                <input type="radio" class="toggle" name="rbtn_lmateriajartiapguru" id="r_all" checked > SEMUA</label>
+                            <label class="btn blue" onclick="rbtn_lmateriajartiapguru_action()">
+                                <input type="radio" class="toggle" name="rbtn_lmateriajartiapguru" id="r_idguru"> ID GURU </label>
+                        </div>                                                            
+                    </div>
+                    <div class="form-body">                                
+                        <!-- BEGIN FORM-->
+                        <form action="#" id="form_lmateriajartiapguru">
+                                <div class="row">
+                                    <!--span-->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label"></label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    Kurikulum
+                                                </span>
+                                                <?php
+                                                    $att_item = ' type="text" class="form-control select" style="width: 90%;" id="id_thn_ajar" onchange="add_tohide()" required';
+                                                    echo form_dropdown('select_thnajar', $kode_deskripsi, $id_thn_ajar, $att_item);
+                                                ?>
+                                                <input type="" class="form-control hidden" name="hide_Kurikulum" id="hide_Kurikulum" value="<?php echo $id_thn_ajar ?>" >
+                                            </div>
+                                        </div>    
+                                    </div>
+                                    <!--span-->
+                                    <!--span-->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label"></label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    Semester
+                                                </span>
+                                                <select class="form-control select" style="width: 90%;" name="semester" id="semester" required>
+                                                    <option value=""></option>
+                                                    <option value="1" <?php if ($semester_aktif == '1') echo ' selected="selected"'; ?>>1</option>
+                                                    <option value="2"<?php if ($semester_aktif == '2') echo ' selected="selected"'; ?>>2</option>
+                                                </select>
+                                            </div>
+                                        </div>    
+                                    </div>                                  
+                                </div>            
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label"></label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    Guru
+                                                </span>
+                                                <?php
+                                                    $att_item = ' type="text" class="form-control select2" style="width: 100%;" id="id_guru" disabled="true" required';
+                                                    echo form_dropdown('select_guru', $data_guru, null, $att_item);
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--span-->  
+                                </div> 
+                            <!--end inputbox-->
+                            <div class="modal-footer">
+                                <div class="m-grid-col-center">
+                                    <button type="button" class="btn btn-lg red" id="print_button" onclick="print_lmateriajartiapguru()" style="width: 100%;"><i class="glyphicon glyphicon-print"></i> PRINT <?php echo $title ?></button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- END FORM-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- page end -->
