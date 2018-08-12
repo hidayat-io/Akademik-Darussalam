@@ -81,7 +81,7 @@ class Mcommon extends CI_Model {
         $this->db->from('ms_kelasdt');
         $this->db->join('ms_kelashd', 'ms_kelasdt.id_kelas = ms_kelashd.id_kelas');
         $this->db->order_by('ms_kelasdt.nama');
-        return $this->db->get();
+        return $this->db->get();        
     }
 
     function mget_list_tingkat(){

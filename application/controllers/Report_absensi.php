@@ -36,13 +36,19 @@ class Report_absensi extends IO_Controller
         //get Kelas
 		$select_kelas= $this->mcommon->mget_list_kelas()->result();
             
-		$vdata['kode_kelas'][NULL] = '';
+		$vdata['kode_kelas'][NULL] = '- Semua Kelas -';
 		foreach ($select_kelas as $b) {
 
-			$vdata['kode_kelas'][$b->kode_kelas]
-			=$b->kode_kelas." | ".$b->nama;
-			// $vdata['kode_kelas'][$b->kode_kelas."#".$b->nama."#".$b->tingkat."#".$b->tipe_kelas]
-			// =$b->nama." | ".$b->tingkat." | ".$b->tipe_kelas;
+			$vdata['kode_kelas'][$b->kode_kelas] = $b->kode_kelas." - ".$b->nama;
+		}
+
+        //get santri
+		$select_santri= $this->mcommon->query_list_santri();
+            
+		$vdata['select_santri'][NULL] = '- Semua Santri -';
+		foreach ($select_santri as $s) {
+
+			$vdata['select_santri'][$s->no_registrasi] = $s->no_registrasi." - ".$s->nama_lengkap;
 		}
 
 		//cek hakAkses
@@ -83,40 +89,15 @@ class Report_absensi extends IO_Controller
 		return $sys_param_value;
 	}
 
-	function print_rapor($action,$hide_Kurikulum,$semester,$id_kelas=0,$no_registrasi=0){
-		//GET TAHUN AJAR
-		$kurikulum = $this->model->get_kurikulum($hide_Kurikulum);
-		$data['tahun_ajar'] = $kurikulum->deskripsi;
-		$thnajar = $kurikulum->deskripsi;
-		$data['semester'] = $semester;
-		// var_dump($action);
-		// exit();
+	function unduh($str_param){
+
+		$iparam = json_decode(base64_decode($str_param));
 		
-		if ($action =='perkelas'){
-			$data['data_bid_studi'] = $this->model->get_data_byidkelas($hide_Kurikulum,$semester,$id_kelas);
-			// $data['data_bid_studi'] = 'ini perkelas';
-		}elseif ($action =='pernoregister'){
-			// $data['data_bid_studi'] = 'ini pernoregister' ;
-			$data['data_bid_studi'] = $this->model->get_data_byidnoregistrasi($hide_Kurikulum,$semester,$no_registrasi);
-			
+		foreach($iparam as $i){
+
+			var_dump($i);
+			echo "<br />";
 		}
-			// $data['data_bid_studi'] = $this->model->get_bid_studi();
-			// $data['data_matpal'] = $this->model->get_matpal();
-		$data['action']  = $action;
-		// $filenameattc = "RAPOR TAHUN AJAR";
-		$filenameattc = "RAPOR TAHUN AJAR $thnajar SEMESTER $semester";
-		// var_dump($filenameattc);
-		// exit();
-		// $this->load->view('vPrintRapor');
-		// $this->load->view('vPrintRapor',$data);
-		// $this->pdf->load_view('vPrintRapor');
-		$this->pdf->load_view('vPrintRapor',$data);
-		$this->pdf->set_paper("A4", "potrait");
-		$this->pdf->render();
-		$this->pdf->stream("'$filenameattc'.pdf",array("Attachment"=>0));
+		
 	}
 }
-
-	
-
-	
