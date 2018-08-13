@@ -18,8 +18,7 @@
                     <div class="form-body">                                
                         <!-- BEGIN FORM-->
                         <form action="#" id="form_report">
-                                <div class="row">
-                                    <!--span-->
+                                <!-- <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label"></label>
@@ -28,15 +27,13 @@
                                                     Kurikulum
                                                 </span>
                                                 <?php
-                                                    $att_item = ' type="text" class="form-control select" style="width: 90%;" id="id_thn_ajar" onchange="add_tohide()" required';
-                                                    echo form_dropdown('select_thnajar', $kode_deskripsi, $id_thn_ajar, $att_item);
+                                                    // $att_item = ' type="text" class="form-control select" style="width: 90%;" id="id_thn_ajar" onchange="add_tohide()" required';
+                                                    // echo form_dropdown('select_thnajar', $kode_deskripsi, $id_thn_ajar, $att_item);
                                                 ?>
                                                 <input type="" class="form-control hidden" name="hide_Kurikulum" id="hide_Kurikulum" value="<?php echo $id_thn_ajar ?>" >
                                             </div>
                                         </div>    
                                     </div>
-                                    <!--span-->
-                                    <!--span-->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label"></label>
@@ -46,13 +43,13 @@
                                                 </span>
                                                 <select class="form-control select" style="width: 90%;" name="semester" id="semester" required>
                                                     <option value=""></option>
-                                                    <option value="1" <?php if ($semester_aktif == '1') echo ' selected="selected"'; ?>>1</option>
-                                                    <option value="2"<?php if ($semester_aktif == '2') echo ' selected="selected"'; ?>>2</option>
+                                                    <option value="1" <?php //if ($semester_aktif == '1') echo ' selected="selected"'; ?>>1</option>
+                                                    <option value="2"<?php //if ($semester_aktif == '2') echo ' selected="selected"'; ?>>2</option>
                                                 </select>
                                             </div>
                                         </div>    
                                     </div>                                  
-                                </div>            
+                                </div>             -->
                                 <div class="row">                                                                      
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -76,26 +73,6 @@
                                             <label class="control-label"></label>
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    No.Reg Santri
-                                                </span>
-                                                <div class="input-icon right">
-                                                    <?php
-                                                    
-                                                        $att_item = ' type="text" class="form-control select2"  style="width: 90%;" id="select_santri" required';
-                                                        echo form_dropdown('select_santri', $select_santri, null, $att_item);
-                                                    ?>
-                                                </div>                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--span-->  
-                                </div> 
-                                <div class="row">                                                                      
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label"></label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
                                                     Tanggal Absensi
                                                 </span>
                                                 <div class="input-icon right" style="width: 90%;">
@@ -112,6 +89,25 @@
                                     </div>
                                     <!--span-->  
                                 </div> 
+                                <!-- <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label"></label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    No.Reg Santri
+                                                </span>
+                                                <div class="input-icon right">
+                                                    <?php
+                                                    
+                                                        //$att_item = ' type="text" class="form-control select2"  style="width: 90%;" id="select_santri" required';
+                                                        //echo form_dropdown('select_santri', $select_santri, null, $att_item);
+                                                    ?>
+                                                </div>                                                
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>  -->
                             <!--end inputbox-->
                             <div class="modal-footer">
                                 <div class="m-grid-col-center">
