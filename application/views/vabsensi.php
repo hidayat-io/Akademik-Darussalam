@@ -12,11 +12,11 @@
                 <div class="caption">
                     <i class="fa fa-calendar-check-o"></i><?php echo $title;?> 
                 </div>
-                <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">                    
+                <!-- <div class="btn-group btn-group-sm button-tools pull-right" style="padding-top: 7px">                    
                     <button type="button" class="btn btn-default" title="Export Data to Excel" onclick="downloadExcel()">
                         <i class="fa fa-file-excel-o"></i>&nbsp;Report
                     </button>
-                </div>
+                </div> -->
             </div>
             <div class="portlet-body">
                 <table class="table table-striped table-bordered table-hover" id="tb-list">
