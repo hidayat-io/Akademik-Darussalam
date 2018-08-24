@@ -58,7 +58,7 @@
                                 <!--span-->
                             <div class="modal-footer">
                                 <div class="m-grid-col-center">
-                                    <button type="button" class="btn btn-lg green-jungle" id="export_button_sku" onclick="export_skurikulum()" style="width: 100%;"><i class="glyphicon glyphicon-share"></i> EXPORT KURIKULUM</button>
+                                    <button type="button" class="btn btn-lg green-jungle" id="export_button_sku" onclick="export_skurikulum()" style="width: 100%;"><i class="glyphicon glyphicon-share"></i> EXPORT JADWAL PELAJARAN</button>
                                 </div>
                             </div>
                         </form>

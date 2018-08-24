@@ -108,18 +108,10 @@ class ljadwalpelajaran extends IO_Controller
 		//name the worksheet
 		$this->excel->getActiveSheet()->setTitle('JP '.$santri.' '.$thnajar);
 		$this->excel->getActiveSheet()->setCellValue('A1', "JADWAL PELAJARAN ".$santri." TAHUN AJAR ".$thnajar." SEMESTER ".$semester);
-		$this->excel->getActiveSheet()->mergeCells('A1:G1');
-		$this->excel->getActiveSheet()->getStyle('A1:G1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 	#regionheader1
         $this->excel->getActiveSheet()->setCellValue('A3', "HARI");
-            // $this->excel->getActiveSheet()->mergeCells('A3:A5');
-            $this->excel->getActiveSheet()->getStyle('A3:A3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $this->excel->getActiveSheet()->getStyle('A3:A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $this->excel->getActiveSheet()->setCellValue('B3', "JAM");
-                    // $this->excel->getActiveSheet()->mergeCells('B3:B5');
-            $this->excel->getActiveSheet()->getStyle('B3:B3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-			$this->excel->getActiveSheet()->getStyle('B3:B3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		
 			//data hari
 			$colom_hari 	= 0;
@@ -132,9 +124,6 @@ class ljadwalpelajaran extends IO_Controller
 			$harilenght		=count($hari);
 			for($x = 0; $x < $harilenght; $x++) {	
  			$this->excel->getActiveSheet()->setCellValueByColumnAndRow($colom_hari,$row_hari, $hari[$x]);
-            // $this->excel->getActiveSheet()->mergeCells($colom_hari.$row_hari);
-            $this->excel->getActiveSheet()->getStyle()->getAlignment($colom_hari,$row_hari)->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-			$this->excel->getActiveSheet()->getStyle()->getAlignment($colom_hari,$row_hari)->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 			
 			
 			$jam			= array("I","II","III","IV","V","VI");
@@ -142,8 +131,6 @@ class ljadwalpelajaran extends IO_Controller
 					//data jam
 					for($xjam = 0; $xjam < $jamlenght; $xjam++) {	
 						$this->excel->getActiveSheet()->setCellValueByColumnAndRow($colom_jam,$row_jam, $jam[$xjam]);
-						$this->excel->getActiveSheet()->getStyle()->getAlignment($colom_jam,$row_jam,$colom_jam,$row_jam)->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-						$this->excel->getActiveSheet()->getStyle()->getAlignment($colom_jam,$row_jam,$colom_jam,$row_jam)->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 						//data kelas array dan SM
 						$col_kdkelas = 2;
@@ -157,9 +144,7 @@ class ljadwalpelajaran extends IO_Controller
 							$jam_data		= $jam[$xjam];
 							
 							$this->excel->getActiveSheet()->setCellValueByColumnAndRow($col_kdkelas, $row, $kode_kelas);
-							$this->excel->getActiveSheet()->getStyle($col_kdkelas,$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 							$this->excel->getActiveSheet()->setCellValueByColumnAndRow($col_cd, $row, 'CD');
-							$this->excel->getActiveSheet()->getStyle($col_cd,$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 							$datarow= $this->model->mget_datarow($id_thn_ajar,$semester,$santri,$kode_kelas,$hari_data,$jam_data);
 							foreach($datarow as $rowdatafield){
 									if($rowdatafield->id_mapel ==''){
@@ -173,9 +158,7 @@ class ljadwalpelajaran extends IO_Controller
 										$no_reg =$rowdatafield->no_reg;
 									}
 							$this->excel->getActiveSheet()->setCellValueByColumnAndRow($col_kdkelas, $row_jam, $id_mapel);
-							$this->excel->getActiveSheet()->getStyle($col_kdkelas, $row_jam)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 							$this->excel->getActiveSheet()->setCellValueByColumnAndRow($col_cd, $row_jam, $no_reg);
-							$this->excel->getActiveSheet()->getStyle($col_cd, $row_jam)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 							
 							}
 						$col_kdkelas = $col_kdkelas+2;
@@ -186,17 +169,23 @@ class ljadwalpelajaran extends IO_Controller
 				$row_hari	=$row_hari	+6;
 			}
 
-   
+		$col_cd=$col_cd-1;	
+		$col_cd--;
+		//----------------------Sytle merge untuk title
+		$rowtitle = 0;
+		$this->excel->getActiveSheet()->mergeCells($this->cellsByColRow($rowtitle,$col_cd,1));
 		$fdate 	= "d-m-Y";
 
 		
 
-		// for($col = 'A'; $col !== 'G'; $col++) {
+		$last_column = PHPExcel_Cell::stringFromColumnIndex($col_cd);
+		
+		for($cols = 'A'; $cols <= $last_column; $cols++) {
 
-		//     $this->excel->getActiveSheet()
-		//         ->getColumnDimension($col)
-		//         ->setAutoSize(true);
-		// }
+		    $this->excel->getActiveSheet()
+		        ->getColumnDimension($cols)
+		        ->setAutoSize(true);
+		}
 
 		$styleArray = array(
 		  'borders' => array(
@@ -204,13 +193,17 @@ class ljadwalpelajaran extends IO_Controller
 		      'style' => PHPExcel_Style_Border::BORDER_THIN
 		    )
 		  )
+		);	
+		
+		$style = array(//semua rata tengah
+			'alignment' => array(
+				'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+				)
 		);
-		// $i = $i-1;
-		// $cell_to = "G".$i;
-		// $this->excel->getActiveSheet()->getStyleByColumnAndRow($col.$row)->applyFromArray($styleArray);
-		// $this->excel->getActiveSheet()->getStyle('A1:G3')->getFont()->setBold(true);
-		// $this->excel->getActiveSheet()->getStyle('A3:G3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-		// $this->excel->getActiveSheet()->getStyle('A3:G3')->getFill()->getStartColor()->setRGB('2CC30B');
+			
+		$this->excel->getDefaultStyle()->applyFromArray($style);
+		$row_hari--;
+		$this->excel->getActiveSheet()->getStyle('A3:'.$last_column.$row_hari)->applyFromArray($styleArray);
 
 		$filename='JADWAL PELAJARAN '.$santri.' '.$thnajar.' '.$semester.'.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
@@ -222,6 +215,17 @@ class ljadwalpelajaran extends IO_Controller
 		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
 		//force user to download the Excel file without writing it to server's HD
 		$objWriter->save('php://output');
+	}
+
+	function cellsByColRow($start = -1, $end = -1, $row = -1){
+
+		$merge = 'A1:A1';
+		if($start>=0 && $end>=0 && $row>=0){
+			$start = PHPExcel_Cell::stringFromColumnIndex($start);
+			$end = PHPExcel_Cell::stringFromColumnIndex($end);
+			$merge = "$start{$row}:$end{$row}";
+		}
+		return $merge;
 	}
 
 }
