@@ -7,7 +7,7 @@ class nilai extends IO_Controller
 {
 
 	public function __construct() {
-			$this->modul = 17;
+			$this->modul = 24;
 			parent::__construct($this->modul);
 		 	$this->load->model('mnilai','model');
 	}
@@ -85,6 +85,8 @@ class nilai extends IO_Controller
 	}
 
 	function load_grid() {
+		$user_id			= $this->session->userdata('logged_in')['uid'];
+
 		$sys_param			= $this->kurikulum_aktif();
 		$isys_param 		= explode('#',$sys_param);
 		$thn_ajar_aktif		= $isys_param[0];
@@ -97,7 +99,7 @@ class nilai extends IO_Controller
 		$sort_type 		= $_REQUEST['order'][0]['dir'];
 
 
-		$data 				= $this->model->get_list_data($string_param,$sort_by,$sort_type,$thn_ajar_aktif);
+		$data 				= $this->model->get_list_data($string_param,$sort_by,$sort_type,$thn_ajar_aktif,$user_id);
 		$iTotalRecords  	= count($data);
 		$iDisplayLength 	= intval($_REQUEST['length']);
 		$iDisplayLength 	= $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
@@ -112,7 +114,6 @@ class nilai extends IO_Controller
 		$fdate = 'd-m-Y';
 
 		//cek hakAkses
-		$user_id			= $this->session->userdata('logged_in')['uid'];
 		$modul_id			= $this->modul;
 		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
 		$add				= $HakAkses->add;

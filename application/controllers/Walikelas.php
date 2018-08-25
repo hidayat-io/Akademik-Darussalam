@@ -19,7 +19,7 @@ class walikelas extends IO_Controller
         $vdata['msguru'][NULL] = '-';
         foreach ($select_guru as $b) {
 
-            $vdata['msguru'][$b->no_reg."#".$b->nama_lengkap]
+            $vdata['msguru'][$b->id_guru."#".$b->no_reg."#".$b->nama_lengkap]
                 =$b->no_reg." | ".$b->nama_lengkap;
 		}
 		
@@ -148,7 +148,8 @@ class walikelas extends IO_Controller
 				// $data[$i]->id,
 				$id_thn_ajar_value->deskripsi,
 				$data[$i]->kode_kelas,
-				$data[$i]->id_guru,
+				// $data[$i]->id_guru,
+				$data[$i]->no_reg,
 				$data[$i]->nama_lengkap,
                 $act
 		   );

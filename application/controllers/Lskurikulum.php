@@ -90,6 +90,14 @@ class lskurikulum extends IO_Controller
 		return $kurikulum;
 	}
 
+	function cek_trans_kurikulum($id_thn_ajar,$kategori){
+		$id_thn_ajar	= urldecode($id_thn_ajar);
+		$kategori		= urldecode($kategori);
+		$data			= $this->model->mcek_trans_kurikulum($id_thn_ajar,$kategori);
+		// var_dump($data);
+		// exit();
+		echo json_encode($data);
+	}
 
 	function cprint_skurikulum_nontingkat($id_thn_ajar,$kategori,$tingkat){
        	//GET TAHUN AJAR
@@ -106,24 +114,24 @@ class lskurikulum extends IO_Controller
 		//activate worksheet number 1
 		$this->excel->setActiveSheetIndex(0);
 		//name the worksheet
-		$this->excel->getActiveSheet()->setTitle('STRUKTUR '.$tingkat.' '.$thnajar);
-		$this->excel->getActiveSheet()->setCellValue('A1', "STRUKTUR KURIKULUM DAN ALOKASI WAKTU DI TMI PELAJARAN".$tingkat." ".$thnajar);
-		$this->excel->getActiveSheet()->mergeCells('A1:G1');
-		$this->excel->getActiveSheet()->getStyle('A1:G1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$this->excel->getActiveSheet()->setTitle('STRUKTUR '.$kategori.' '.$thnajar);
+		$this->excel->getActiveSheet()->setCellValue('A1', "STRUKTUR KURIKULUM DAN ALOKASI WAKTU DI TMI PELAJARAN ".$kategori." ".$thnajar);
+		// $this->excel->getActiveSheet()->mergeCells('A1:G1');
+		// $this->excel->getActiveSheet()->getStyle('A1:G1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
         //header
         $this->excel->getActiveSheet()->setCellValue('A3', "NO");
             $this->excel->getActiveSheet()->mergeCells('A3:A5');
-            $this->excel->getActiveSheet()->getStyle('A3:A5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $this->excel->getActiveSheet()->getStyle('A3:A5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            // $this->excel->getActiveSheet()->getStyle('A3:A5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            // $this->excel->getActiveSheet()->getStyle('A3:A5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $this->excel->getActiveSheet()->setCellValue('B3', "BIDANG STUDI");
                     $this->excel->getActiveSheet()->mergeCells('B3:B5');
-            $this->excel->getActiveSheet()->getStyle('B3:B5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $this->excel->getActiveSheet()->getStyle('B3:B5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            // $this->excel->getActiveSheet()->getStyle('B3:B5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            // $this->excel->getActiveSheet()->getStyle('B3:B5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $this->excel->getActiveSheet()->setCellValue('C3', "MATA PELAJARAN");
                     $this->excel->getActiveSheet()->mergeCells('C3:C5');
-            $this->excel->getActiveSheet()->getStyle('C3:C5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $this->excel->getActiveSheet()->getStyle('C3:C5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            // $this->excel->getActiveSheet()->getStyle('C3:C5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            // $this->excel->getActiveSheet()->getStyle('C3:C5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
            
 		$i = 6;  
@@ -160,17 +168,17 @@ class lskurikulum extends IO_Controller
 					$datasm= $this->model->mget_datasm($id_thn_ajar,$dt_tingkat,$dt_tipe_kelas,$dt_id_mapel);
 					foreach($datasm as $rowdatasm){
 						$this->excel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data_field);
-						// echo "colom ".$col." row ".$row." kelasnya ".$data_field."<br>";
-					$this->excel->getActiveSheet()->getStyle($col,$row,$col,$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-					$this->excel->getActiveSheet()->setCellValueByColumnAndRow($col_sm1, $row_sm, 'SM 1');
-					$this->excel->getActiveSheet()->getStyle($col_sm1,$row_sm,$col_sm1,$row_sm)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-					$this->excel->getActiveSheet()->setCellValueByColumnAndRow($col_sm2, $row_sm, 'SM 2');
-					$this->excel->getActiveSheet()->getStyle($col_sm2,$row_sm,$col_sm2,$row_sm)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-					//bodydata
-					$this->excel->getActiveSheet()->setCellValueByColumnAndRow($col_sm1, $row_dtsm, $rowdatasm->sm_1);
-					// $this->excel->getActiveSheet()->getStyle($col_sm1,$row_sm,$col_sm1,$row_sm)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-					$this->excel->getActiveSheet()->setCellValueByColumnAndRow($col_sm2, $row_dtsm, $rowdatasm->sm_2);
-					// $this->excel->getActiveSheet()->getStyle($col_sm2,$row_sm,$col_sm2,$row_sm)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+						$this->excel->getActiveSheet()->mergeCells($this->cellsByColRow($col_sm1, $col_sm2,4));
+						// $this->excel->getActiveSheet()->getStyle($col,$row,$col,$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+						// $this->excel->getActiveSheet()->getStyle($col,$row,$col,$row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+						
+						$this->excel->getActiveSheet()->setCellValueByColumnAndRow($col_sm1, $row_sm, 'SM 1');
+						// $this->excel->getActiveSheet()->getStyle($col_sm1,$row_sm,$col_sm1,$row_sm)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+						$this->excel->getActiveSheet()->setCellValueByColumnAndRow($col_sm2, $row_sm, 'SM 2');
+						// $this->excel->getActiveSheet()->getStyle($col_sm2,$row_sm,$col_sm2,$row_sm)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+						//bodydata
+						$this->excel->getActiveSheet()->setCellValueByColumnAndRow($col_sm1, $row_dtsm, $rowdatasm->sm_1);
+						$this->excel->getActiveSheet()->setCellValueByColumnAndRow($col_sm2, $row_dtsm, $rowdatasm->sm_2);
 					
 					
 				}
@@ -180,24 +188,32 @@ class lskurikulum extends IO_Controller
 				}
 				// exit();
 				$row_dtsm++;
+
 			}
 		}
 
 		//header kelas
+		$col--;
 		$colkelas = 3;
-			$rowkelas = 3;
+		$rowkelas = 3;
+		$rowtitle = 0;
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow($colkelas, $rowkelas, 'KELAS');
-            $this->excel->getActiveSheet()->getStyle($col,$rowkelas,$col,$rowkelas)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $this->excel->getActiveSheet()->getStyle($col,$rowkelas,$col,$rowkelas)->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-   
-		$fdate 	= "d-m-Y";
+			$this->excel->getActiveSheet()->mergeCells($this->cellsByColRow($colkelas,$col,3));
+            // $this->excel->getActiveSheet()->getStyle($col,$colkelas,$col,$colkelas)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            // $this->excel->getActiveSheet()->getStyle($col,$colkelas,$col,$colkelas)->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			//----------------------Sytle merge untuk title
+			$this->excel->getActiveSheet()->mergeCells($this->cellsByColRow($rowtitle,$col,1));
+
+			$fdate 	= "d-m-Y";
 
 		
 
-		for($col = 'A'; $col !== 'G'; $col++) {
+		$last_column = PHPExcel_Cell::stringFromColumnIndex($col);
+		
+		for($cols = 'A'; $cols <= $last_column; $cols++) {
 
 		    $this->excel->getActiveSheet()
-		        ->getColumnDimension($col)
+		        ->getColumnDimension($cols)
 		        ->setAutoSize(true);
 		}
 
@@ -207,13 +223,18 @@ class lskurikulum extends IO_Controller
 		      'style' => PHPExcel_Style_Border::BORDER_THIN
 		    )
 		  )
-		);
-		$i = $i-1;
-		$cell_to = "G".$i;
-		// $this->excel->getActiveSheet()->getStyleByColumnAndRow($col.$row)->applyFromArray($styleArray);
-		// $this->excel->getActiveSheet()->getStyle('A1:G3')->getFont()->setBold(true);
-		// $this->excel->getActiveSheet()->getStyle('A3:G3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-		// $this->excel->getActiveSheet()->getStyle('A3:G3')->getFill()->getStartColor()->setRGB('2CC30B');
+		);	
+		
+		$style = array(//semua rata tengah
+			'alignment' => array(
+				'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+				)
+			);
+			
+		$this->excel->getDefaultStyle()->applyFromArray($style);
+		$row_dtsm--;
+		$this->excel->getActiveSheet()->getStyle('A3:'.$last_column.$row_dtsm)->applyFromArray($styleArray);
+		
 
 		$filename='STRUKTUR KURIKULUM DAN ALOKASI WAKTU DI TMI PELAJARAN '.$kategori.' '.$thnajar.'.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
@@ -225,6 +246,17 @@ class lskurikulum extends IO_Controller
 		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
 		//force user to download the Excel file without writing it to server's HD
 		$objWriter->save('php://output');
+	}
+
+	function cellsByColRow($start = -1, $end = -1, $row = -1){
+
+		$merge = 'A1:A1';
+		if($start>=0 && $end>=0 && $row>=0){
+			$start = PHPExcel_Cell::stringFromColumnIndex($start);
+			$end = PHPExcel_Cell::stringFromColumnIndex($end);
+			$merge = "$start{$row}:$end{$row}";
+		}
+		return $merge;
 	}
 }
 

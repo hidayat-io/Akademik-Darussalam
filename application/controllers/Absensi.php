@@ -40,20 +40,16 @@ class Absensi extends IO_Controller{
 
 		for($i = $iDisplayStart; $i < $end; $i++) {
 
-			$btn = '<button type="button" class="btn blue btn-xs" title="LIHAT & EDIT DATA" onclick="modalEdit(\''.$data[$i]->id_jadwal.'\')">
+			$btn = '<button type="button" class="btn blue btn-xs" title="LIHAT & EDIT DATA" onclick="modalEdit(\''.$data[$i]->id_mskelasdt.'\')">
 	                	<i class="fa fa-edit"></i>
 	                </button>';
 
 			$records["data"][] = array(
 
-				$data[$i]->kode_kelas,
-				$data[$i]->nama,
 				$data[$i]->tingkat,
 				$data[$i]->tipe_kelas,
-				$data[$i]->hari,
-				$data[$i]->jam,
-				$data[$i]->nama_matpal,
-				$data[$i]->nama_lengkap,
+				$data[$i]->kode_kelas,
+				$data[$i]->nama,
 				$btn
 			);
 		}
@@ -65,13 +61,20 @@ class Absensi extends IO_Controller{
 		echo json_encode($records);
 	}
 
-	function build_param($param){ //merubah hasil json menjadi parameter Query
+	function build_param($param=""){ //merubah hasil json menjadi parameter Query
 
-		$string_param = NULL;
+		$config = $this->mcommon->get_kurikulum_aktif();
+		
+		if($config!=null){
 
-		if($param!=null){
+			$config_val 	= explode("#",$config->param_value);
+			$kurikulum 		= $config_val[0];
+			$semester 		= $config_val[1];
+			$string_param 	= " kur.id_thn_ajar = $kurikulum AND kur.sm_$semester > 0 ";
+		}
+		else{
 
-			if(isset($param->nama)) $string_param .= "nama_lengkap LIKE '%".$param->nama."%' ";
+			$string_param = "";
 		}
 
 		return $string_param;
@@ -82,11 +85,11 @@ class Absensi extends IO_Controller{
 		$login_user 		= $this->session->userdata('logged_in')['uid'];
 		$input_tgl_absensi 	= $this->input->get('tgl_absensi');
 		$tgl_absensi 		= io_return_date('d-m-Y',$input_tgl_absensi);
-		$id_jadwal 			= $this->input->get('id_jadwal');
+		$id_kelasdt			= $this->input->get('id_kelasdt');
 		$tgl_server 		= date('Y/m/d');
 		$group 				= $this->mcommon->get_hak_akses($login_user,$this->modul);
 
-		$data = $this->model->mget_data_absensi($id_jadwal,$tgl_absensi)->result();
+		$data = $this->model->mget_data_absensi($id_kelasdt,$tgl_absensi)->result();
 
 		$isToday 	= 0;
 		$date1 		= new DateTime($tgl_absensi);
@@ -111,11 +114,10 @@ class Absensi extends IO_Controller{
 	function save_absen(){
 
 		$login_user = $this->session->userdata('logged_in')['uid'];
-		$id_jadwal 	= $this->input->post('hid_id_jadwal');
+		$id_kelasdt	= $this->input->post('hid_id_kelasdt');
 		$tgl_absen 	= $this->input->post('dtp_tgl_absensi');
 		$tgl_absen 	= io_return_date('d-m-Y',$this->input->post('dtp_tgl_absensi'));
 		$id_absen_h = $this->input->post('hid_id_absen_header');
-		$id_guru 	= $this->input->post('hid_id_guru');
 		$list_siswa = $this->input->post('hid_list_siswa');
 		$list_siswa = explode(",",$list_siswa);
 
@@ -125,9 +127,8 @@ class Absensi extends IO_Controller{
 		//save header absen
 		$header_absen = array(
 
-			'id_jadwal'		=> $id_jadwal,
+			'id_mskelasdt'	=> $id_kelasdt,
 			'tgl_absensi'	=> $tgl_absen,
-			'id_guru'		=> $id_guru,
 			'upd_by'		=> $login_user
 		);
 
@@ -147,5 +148,35 @@ class Absensi extends IO_Controller{
 		}
 
 		echo 1; // 1 mean success
+	}
+
+	function coba(){
+
+		$jam  = array('I','II','III','IV','V','VI');
+		$hari = array('SABTU','AHAD','SENIN','SELASA','RABU','KAMIS','JUMAT');
+
+		$table = "<table border='1'>";
+		$table .= "<tr><th>JAM / HARI</th>";
+
+		foreach($hari as $hh){ $table.= "<th>$hh</th>"; }
+
+		$table .= "</tr>";
+
+		foreach($jam as $j){
+
+			$table .= "<tr><td>$j</td>";
+
+			foreach($hari as $h){
+
+				$sql = " SELECT * FROM tjadwal WHERE hari='$h' AND jam='$j' ";
+				$table .= "<td>$sql</td>";
+			}
+
+			$table .= "</tr>";
+		}
+
+		$table .= "</table>";
+
+		echo $table;
 	}
 }

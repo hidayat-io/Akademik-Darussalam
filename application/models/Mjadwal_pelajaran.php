@@ -93,6 +93,7 @@ class Mjadwal_pelajaran extends CI_Model
 								WHERE santri = '$santri'
 								AND id_thn_ajar = '$id_thn_ajar'
 								AND semester = '$semester'
+								AND kategori = 'UTAMA'
 								AND kode_kelas = '$kode_kelas'")->row_array();
 								return $data;
 	}
@@ -109,6 +110,7 @@ class Mjadwal_pelajaran extends CI_Model
 								and a.tipe_kelas = '$tipe_kelas'
 								AND e.kode_kelas = '$kode_kelas' 
 								AND e.santri ='$santri'
+								and a.kategori = 'UTAMA'
 								and a.sm_1 > 0
 								ORDER BY b.id, e.id_mapel, e.kode_kelas, e.santri")->result_array();
 		// $data=$this->db->query("SELECT b.deskripsi, a.id_mapel, c.nama_matpal, a.tingkat, a.tipe_kelas,  a.sm_1, a.sm_2  

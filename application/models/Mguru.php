@@ -31,22 +31,22 @@ class Mguru extends CI_Model {
 		$this->db->update('ms_guru',$data);
 	}
 
-	function mget_new_no(){
+	// function mget_new_no(){
 
-		$this->db->select('nomor_terakhir');
-		$this->db->from('sequence');
-		$this->db->where('nama_field','no_reg_guru');
+	// 	$this->db->select('nomor_terakhir');
+	// 	$this->db->from('sequence');
+	// 	$this->db->where('nama_field','no_reg_guru');
 
-		$no = $this->db->get()->row()->nomor_terakhir;
+	// 	$no = $this->db->get()->row()->nomor_terakhir;
 
-		$ino = (int)$no;
-		$ino = $ino+=1;
+	// 	$ino = (int)$no;
+	// 	$ino = $ino+=1;
 
-		$this->db->where('nama_field','no_reg_guru');
-		$this->db->update('sequence',array('nomor_terakhir'=>$ino));
+	// 	$this->db->where('nama_field','no_reg_guru');
+	// 	$this->db->update('sequence',array('nomor_terakhir'=>$ino));
 
-		return $no;
-	}
+	// 	return $no;
+	// }
 
 	function mdelete_detail($table,$id){
 
@@ -69,7 +69,13 @@ class Mguru extends CI_Model {
 	function mdelete_jabatan($id){
 
 		$this->db->where('id_guru',$id);
-		$this->db->delete('ms_guru_struktural');
+		$this->db->delete('trans_guru_struktural');
+	}
+
+	function mdelete_bidang_keahlian($id){
+
+		$this->db->where('id_guru',$id);
+		$this->db->delete('trans_guru_bidang_keahlian');
 	}
 
 	function mget_bio_guru($id_guru){
@@ -115,7 +121,13 @@ class Mguru extends CI_Model {
 	function mget_guru_structure($id_guru){
 
 		$this->db->where('id_guru',$id_guru);
-		return $this->db->get('ms_guru_struktural')->result_array();
+		return $this->db->get('trans_guru_struktural')->result_array();
+	}
+
+	function mget_guru_mapel($id_guru){
+
+		$this->db->where('id_guru',$id_guru);
+		return $this->db->get('trans_guru_bidang_keahlian')->result_array();
 	}
 
 	function mdelete_data_guru($id_guru){
@@ -123,5 +135,44 @@ class Mguru extends CI_Model {
 		$this->db->where('id_guru',$id_guru);
 		$this->db->set('is_delete','1');
 		$this->db->update('ms_guru');
+	}
+
+	function mget_noreg($idguru){
+
+		$data = $this->db->get_where('trans_noreg_guru',array('id_guru'=>$idguru));
+		return $data->row();
+	}
+
+	function mget_last_noreg($status){
+
+		$this->db->where('nama_field','no_reg_guru');
+		$this->db->where('remark',strtolower($status));
+
+		return $this->db->get('sequence')->row();
+	}
+
+	function mupdate_noreg($id,$status,$no_reg){
+
+		if($status=='Pengabdian'){
+
+			$no_tetap 	= "`no_reg_tetap`";
+			$no_abdi 	= "'".$no_reg."'";
+		}
+		elseif($status=='Tetap'){
+
+			$no_tetap 	= "'".$no_reg."'";
+			$no_abdi 	= "`no_reg_pengabdian`";
+		}
+
+		$sql = "INSERT INTO `trans_noreg_guru` VALUES(".$id.",".$no_tetap.",".$no_abdi.") 
+					ON DUPLICATE KEY UPDATE no_reg_tetap=".$no_tetap.",no_reg_pengabdian=".$no_abdi;
+		
+		$this->db->query($sql);
+	}
+
+	function mupdate_sequence($param,$new_no){
+
+		$this->db->where($param);
+		$this->db->update('sequence',array('nomor_terakhir'=>$new_no));
 	}
 }

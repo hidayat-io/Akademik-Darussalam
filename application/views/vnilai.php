@@ -26,7 +26,7 @@
             <input type="text" class="hidden" name="hid_param" id="hid_param" />
             <div class="portlet-body">
                     <h3>
-                        Kurikum Aktif: <b><?php echo $thn_ajar_aktif;?></b>
+                        Kurikulum Aktif: <b><?php echo $thn_ajar_aktif;?></b>
                         | Semester Aktif : <b><?php echo $semester_aktif;?></b>
                     </h3>
                 <table class="table table-striped table-bordered table-hover" id="tb_list">

@@ -3,14 +3,14 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class rapor extends IO_Controller
+class lmateriajartiapguru extends IO_Controller
 {
 
 	public function __construct()
 	{
-			$this->modul = 34;
+			$this->modul = 59;
 			parent::__construct($this->modul);
-			 $this->load->model('mrapor','model');
+			 $this->load->model('mlmateriajartiapguru','model');
 			 $this->load->library("pdf");
 	}
 
@@ -33,18 +33,16 @@ class rapor extends IO_Controller
                         foreach ($select_thnajar as $b) {
                             $vdata['kode_deskripsi'][$b->id]
                             =$b->deskripsi;
-                        }
-        //get Kelas
-			$select_kelas= $this->mcommon->mget_list_kelas()->result();
-            
-                        $vdata['kode_kelas'][NULL] = '';
-                        foreach ($select_kelas as $b) {
-            
-							$vdata['kode_kelas'][$b->kode_kelas]
-							=$b->kode_kelas." | ".$b->nama;
-							// $vdata['kode_kelas'][$b->kode_kelas."#".$b->nama."#".$b->tingkat."#".$b->tipe_kelas]
-							// =$b->nama." | ".$b->tingkat." | ".$b->tipe_kelas;
-                        }
+						}
+		//get GURU
+			$select_guru= $this->mcommon->mget_list_master_guru()->result();
+                $vdata['data_guru'][NULL] = '';
+                foreach ($select_guru as $b) {
+    
+                    $vdata['data_guru'][$b->id_guru]
+                    =$b->id_guru." | ".$b->no_reg." | ".$b->nama_lengkap;
+                }	
+
 		//cek hakAkses
 		$user_id			= $this->session->userdata('logged_in')['uid'];
 		$modul_id			= $this->modul;
@@ -71,8 +69,8 @@ class rapor extends IO_Controller
 			$class_delete = 'hidden';
 		}
 		$vdata['class_add']				= $class_add;
-		$vdata['title'] = 'RAPOR';
-	    $data['content'] = $this->load->view('vrapor',$vdata,TRUE);
+		$vdata['title'] = 'MATERI AJAR';
+	    $data['content'] = $this->load->view('vlmateriajartiapguru',$vdata,TRUE);
 	    $this->load->view('main',$data);
 	}
 
@@ -83,34 +81,25 @@ class rapor extends IO_Controller
 		return $sys_param_value;
 	}
 
-	function print_rapor($action,$hide_Kurikulum,$semester,$id_kelas=0,$no_registrasi=0){
+	function print_lmateriajartiapguru($action,$hide_Kurikulum,$semester,$id_guru=0){
 		//GET TAHUN AJAR
 		$kurikulum = $this->model->get_kurikulum($hide_Kurikulum);
 		$data['tahun_ajar'] = $kurikulum->deskripsi;
 		$thnajar = $kurikulum->deskripsi;
 		$data['semester'] = $semester;
-		// var_dump($action);
-		// exit();
 		
-		if ($action =='perkelas'){
-			$data['data_bid_studi'] = $this->model->get_data_byidkelas($hide_Kurikulum,$semester,$id_kelas);
-			// $data['data_bid_studi'] = 'ini perkelas';
-		}elseif ($action =='pernoregister'){
-			// $data['data_bid_studi'] = 'ini pernoregister' ;
-			$data['data_bid_studi'] = $this->model->get_data_byidnoregistrasi($hide_Kurikulum,$semester,$no_registrasi);
+		if ($action =='semua'){
+			$data['materiajar'] = $this->model->get_data_all($hide_Kurikulum,$semester);
+			// $data['data_bid_studi'] = 'ini semua';
+		}elseif ($action =='byidguru'){
+			// $data['data_bid_studi'] = 'ini byidguru' ;
+			$data['materiajar'] = $this->model->get_data_byidguru($hide_Kurikulum,$semester,$id_guru);
 			
 		}
-			// $data['data_bid_studi'] = $this->model->get_bid_studi();
-			// $data['data_matpal'] = $this->model->get_matpal();
 		$data['action']  = $action;
-		// $filenameattc = "RAPOR TAHUN AJAR";
-		$filenameattc = "RAPOR TAHUN AJAR $thnajar SEMESTER $semester";
-		// var_dump($filenameattc);
-		// exit();
-		// $this->load->view('vPrintRapor');
-		// $this->load->view('vPrintRapor',$data);
-		// $this->pdf->load_view('vPrintRapor');
-		$this->pdf->load_view('vPrintRapor',$data);
+		$filenameattc = "MATERI AJAR TIAP GURU TAHUN AJAR $thnajar SEMESTER $semester";
+		// $this->load->view('vPrintlmateriajartiapguru',$data);
+		$this->pdf->load_view('vPrintlmateriajartiapguru',$data);
 		$this->pdf->set_paper("A4", "potrait");
 		$this->pdf->render();
 		$this->pdf->stream("'$filenameattc'.pdf",array("Attachment"=>0));
