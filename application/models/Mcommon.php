@@ -72,21 +72,21 @@ class Mcommon extends CI_Model {
     function mget_list_kamar(){
 
         $this->db->order_by('nama');
-
         return $this->db->get('ms_kamar');
     }
 
     function mget_list_kelas(){
+
         $this->db->select('ms_kelashd.id_kelas,ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kelasdt.kapasitas');
         $this->db->from('ms_kelasdt');
         $this->db->join('ms_kelashd', 'ms_kelasdt.id_kelas = ms_kelashd.id_kelas');
         $this->db->order_by('ms_kelasdt.nama');
-        return $this->db->get();
+        return $this->db->get();        
     }
 
     function mget_list_tingkat(){
-        $this->db->order_by('tingkat');
 
+        $this->db->order_by('tingkat');
         return $this->db->get('ms_kelashd');
     }
     // function mget_list_kelas(){
@@ -97,16 +97,25 @@ class Mcommon extends CI_Model {
     // }
 
     function mget_list_donatur(){
+
         $this->db->order_by('nama_donatur');
         return $this->db->get('ms_donatur')->result();
     }
 
+    function mget_list_pendidikan(){
+
+        $this->db->order_by('id_pendidikan');
+        return $this->db->get('ms_pendidikan');
+    }
+
     function get_kurikulum_aktif() {
+
 		$this->db->select('param_value');
 		return $this->db->get('sys_param')->row();
     }
     
     function get_thn_ajar(){
+
 		$data = $this->db->query ("SELECT * FROM ms_tahun_ajaran  order by id desc Limit 3 ");
 		// $data = $this->db->query ("SELECT * FROM ms_tahun_ajaran where kategori='UTAMA' order by id desc Limit 2 ");
 		return $data;
@@ -140,4 +149,10 @@ class Mcommon extends CI_Model {
     }
 
     
+    function mget_judul_modul($modul_id){
+
+        $this->db->select('nama_modul');
+        $this->db->where('modul_id',$modul_id);
+        return $this->db->get('modul')->row()->nama_modul;
+    }
 }
