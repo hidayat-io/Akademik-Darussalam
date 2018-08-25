@@ -105,11 +105,6 @@ function clearvalidate_form_lap() {
 	document.getElementById("form_rapor").reset();
 }
 
-function add_tohide(){
-	$id_thn_ajar = $('#id_thn_ajar').val();
-	$('#hide_Kurikulum').val($id_thn_ajar);
-}
-
 function getguru(){
 		$('#id_kelas').attr('disabled', true);
 		// $('#id_kelas').attr('selected', true);
@@ -120,6 +115,7 @@ function getguru(){
 function print_lap_jad() {
 	var id_thn_ajar 		= $('#hide_Kurikulum').val();
 	var semester 			= $('#semester').val();
+	var id_guru 			= $('#opt_guru').val();
 
 
 	if (document.getElementById('r_perkelas').checked) {

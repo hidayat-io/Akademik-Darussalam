@@ -127,6 +127,17 @@ class Mcommon extends CI_Model {
         $this->db->order_by('nama_lengkap');
         return $this->db->get('ms_guru')->result();
     }
+    
+    function query_list_aitam_without_calon(){
+
+        $this->db->order_by('nama_lengkap');
+        $this->db->like('no_registrasi','A');
+        $this->db->not_like('no_registrasi','T');
+        $this->db->not_like('no_registrasi','CA');
+
+        return $this->db->get('ms_santri')->result();
+
+    }
 
     
 }
