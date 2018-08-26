@@ -29,7 +29,7 @@ $.ajax({
 	            $el.empty(); // remove old options
 
 	            $el.append($("<option></option>")
-	                    .attr("value", '').text('- Please Select -'));
+	                    .attr("value", '').text('- Semua Data Guru -'));
 
 
 	            $.each(json, function(index, value) {
@@ -113,30 +113,12 @@ function getguru(){
 }
 
 function print_lap_jad() {
-	var id_thn_ajar 		= $('#hide_Kurikulum').val();
+
+	var id_thn_ajar 		= $('#id_thn_ajar').val();
 	var semester 			= $('#semester').val();
 	var id_guru 			= $('#opt_guru').val();
-
-
-	if (document.getElementById('r_perkelas').checked) {
-		var action = 'perkelas';
-		var id_kelas = $('#id_kelas').val();
-		var no_registrasi = '0';
-	} else if (document.getElementById('r_pernoregister').checked) {
-		var action = 'pernoregister';
-		var id_kelas = '0';
-		var no_registrasi = $('#no_registrasi').val();
-
-	}
 	
-	if ($("#form_lap").valid() == true) {
-		$('#id_kelas').attr('disabled', false);
-		$('#no_registrasi').attr('disabled', false);
-		window.open(base_url + "lap_jadwal/print_lap/" + action + "/" + id_thn_ajar + "/" + semester + "/" + id_kelas + "/" + no_registrasi, '_blank');
-	}
-
-	rbtn_lap_action();
-	// clearvalidate_form_rapor();
+	window.open(base_url + "lap_jadwal/excel_jadwal/" + id_thn_ajar + "/" + semester + "/" + id_guru, '_blank');
 }
 
 

@@ -27,7 +27,6 @@ class lap_jadwal extends IO_Controller
 		 //get Tahun Ajaran Data
 			$select_thnajar= $this->model->get_thn_ajar()->result();
             
-                        $vdata['kode_deskripsi'][NULL] = '';
                         foreach ($select_thnajar as $b) {
                             $vdata['kode_deskripsi'][$b->id]
                             =$b->deskripsi;
@@ -121,8 +120,8 @@ class lap_jadwal extends IO_Controller
 
 	}
 
-		// menampilkan data ke dalam excel
-	function excel_jadwal(){
+	// menampilkan data ke dalam excel
+	function excel_jadwal($kurikulum,$semester,$id_guru=0){
 
 		// hasil decode // 
 		$str = base64_decode($this->uri->segment(3));
@@ -141,61 +140,134 @@ class lap_jadwal extends IO_Controller
 		//activate worksheet number 1
 		$this->excel->setActiveSheetIndex(0);
 		//name the worksheet
+
+		$styleArray = array(
+			'borders' => array(
+			  'allborders' => array(
+				'style' => PHPExcel_Style_Border::BORDER_THIN
+			  )
+			)
+		);
+
 		$this->excel->getActiveSheet()->setTitle('Report-Jadwal');
 		$this->excel->getActiveSheet()->setCellValue('A1', "Report Jadwal Guru");
 		$this->excel->getActiveSheet()->mergeCells('A1:L1');
 
-		//header
-		$this->excel->getActiveSheet()->setCellValue('A3', "JAM");
-		$this->excel->getActiveSheet()->setCellValue('B3', "SABTU");
-		$this->excel->getActiveSheet()->setCellValue('C3', "AHAD");
-		$this->excel->getActiveSheet()->setCellValue('D3', "SENIN");
-		$this->excel->getActiveSheet()->setCellValue('E3', "SELASA");
-		$this->excel->getActiveSheet()->setCellValue('F3', "RABU");
-		$this->excel->getActiveSheet()->setCellValue('G3', "KAMIS");
-		$this->excel->getActiveSheet()->setCellValue('H3', "JUMAT");
-
 		$fdate 	= "d-M-Y";
-		$i  	= 4;
+		$i  	= 3;
 
-		if($data != null){
+		$jam  = array('B.SUBUH','I','II','III','IV','V','VI','B.SORE','B.ASHAR','B.MAGHRIB','B.ISYA');
+    	$hari = array('SABTU','AHAD','SENIN','SELASA','RABU','KAMIS','JUMAT');
 
-			foreach($data as $row){
+    	
+    	$thn_ajar 	= $kurikulum;
+		$semester 	= $semester;
 
+		//Data Guru
+		$data_guru = $this->model->get_data_guru($id_guru)->result();
 
+		foreach($data_guru as $guru){
 
-			//	$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
-			//	$this->excel->getActiveSheet()->setCellValue('B'.$i, io_date_format($row->tgl_infaq,$fdate));
-			//	$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->nama_donatur);
-			//	$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->alamat);
-			//	$this->excel->getActiveSheet()->setCellValue('E'.$i, $tp);
-			//	$this->excel->getActiveSheet()->setCellValue('F'.$i, $row->nominal);
-			//	$this->excel->getActiveSheet()->setCellValue('G'.$i, $row->keterangan); 
+			$id_guru 	= $guru->id_guru;
+			$col_hari 	= 1;
+
+			//HEADER
+			$awal_row_data = $i;
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0,$i,'NAMA PENGAJAR : '.$guru->nama_lengkap);
+			$this->excel->getActiveSheet()->mergeCells('A'.$awal_row_data.':H'.$awal_row_data);
+			$this->excel->getActiveSheet()->getStyle('A'.$awal_row_data.':H'.$awal_row_data)->getFill()->getStartColor()->setRGB('aec2eb');
+			$i++;
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0,$i,'JAM');
+			$this->excel->getActiveSheet()->getStyle('A'.$i.':H'.$i)->getFill()->getStartColor()->setRGB('E0E0E0');
+			$this->excel->getActiveSheet()->getStyle('A'.$awal_row_data.':H'.$i)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+			$this->excel->getActiveSheet()->getStyle('A'.$awal_row_data.':H'.$i)->getFont()->setBold(true);
+
+			foreach($hari as $h){ 
+
+				$this->excel->getActiveSheet()->setCellValueByColumnAndRow($col_hari,$i,$h); 
+				$col_hari++; 
+			}
+			//END HEADER
+
+			//DETAIL DATA PELAJARAN
+			foreach($jam as $j){ //looping berdasarkan JAM
+
+				$col_hari 	= 1;
 				
 				$i++;
+				$ijam 		= str_replace('.', '', $j);
+
+				$this->excel->getActiveSheet()->setCellValue('A'.$i, $j);
+				$this->excel->getActiveSheet()->getStyle('A'.$i.':A'.$i)->getFill()->getStartColor()->setRGB('f7f2f2');
+				$this->excel->getActiveSheet()->getStyle('A'.$i.':A'.$i)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+				$this->excel->getActiveSheet()->getStyle('A'.$i.':A'.$i)->getFont()->setBold(true);
+				$this->excel->getActiveSheet()->getStyle('A'.$i.':A'.$i)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP );
+				
+				foreach($hari as $h){ //looping berdasarkan hari ( cari jadwal perhari pada jam tersebut )
+			
+					$param = array(
+						'id_guru' 	=> $id_guru,
+						'hari' 		=> $h,
+						'jam'		=> $ijam,
+						'thn_ajar'	=> $thn_ajar,
+						'semester'	=> $semester
+					);
+
+					$data_pelajaran = $this->model->get_data_pelajaran($param);
+					$str_pelajaran 	= "";
+
+					if($data_pelajaran->num_rows()>0){
+
+						foreach($data_pelajaran->result() as $p){
+
+							$str_pelajaran .= $p->nama_matpal;
+							$str_pelajaran .= "\r\n";
+						}
+						$str_pelajaran = rtrim($str_pelajaran,"\r\n");
+					}
+
+					$this->excel->getActiveSheet()->setCellValueByColumnAndRow($col_hari,$i,$str_pelajaran);
+
+					$col_hari++;
+				}
 			}
+
+			$akhir_row_data = $i;
+			$this->excel->getActiveSheet()->getStyle('A'.$awal_row_data.':H'.$akhir_row_data)->applyFromArray($styleArray);
+			//END DETAIL DATA PELAJARAN
+			$i=$i+2;
 		}
 
-		for($col = 'A'; $col !== 'G'; $col++) {
+		$this->excel->getActiveSheet()->getStyle('A3:H'.$i)->getAlignment()->setWrapText(true); 
+
+
+		// if($data != null){
+
+		// 	foreach($data as $row){
+
+
+
+		// 	//	$this->excel->getActiveSheet()->setCellValue('A'.$i, $i-3);
+		// 	//	$this->excel->getActiveSheet()->setCellValue('B'.$i, io_date_format($row->tgl_infaq,$fdate));
+		// 	//	$this->excel->getActiveSheet()->setCellValue('C'.$i, $row->nama_donatur);
+		// 	//	$this->excel->getActiveSheet()->setCellValue('D'.$i, $row->alamat);
+		// 	//	$this->excel->getActiveSheet()->setCellValue('E'.$i, $tp);
+		// 	//	$this->excel->getActiveSheet()->setCellValue('F'.$i, $row->nominal);
+		// 	//	$this->excel->getActiveSheet()->setCellValue('G'.$i, $row->keterangan); 
+				
+		// 		$i++;
+		// 	}
+		// }
+
+		for($col = 'A'; $col !== 'I'; $col++) {
 
 		    $this->excel->getActiveSheet()
 		        ->getColumnDimension($col)
 		        ->setAutoSize(true);
 		}
 
-		$styleArray = array(
-		  'borders' => array(
-		    'allborders' => array(
-		      'style' => PHPExcel_Style_Border::BORDER_THIN
-		    )
-		  )
-		);
-		$i = $i-1;
-		$cell_to = "G".$i;
-		$this->excel->getActiveSheet()->getStyle('A3:'.$cell_to)->applyFromArray($styleArray);
-		$this->excel->getActiveSheet()->getStyle('A1:G3')->getFont()->setBold(true);
-		$this->excel->getActiveSheet()->getStyle('A3:G3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-		$this->excel->getActiveSheet()->getStyle('A3:G3')->getFill()->getStartColor()->setRGB('2CC30B');
+		// $this->excel->getActiveSheet()->getStyle('A3:G3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+		// $this->excel->getActiveSheet()->getStyle('A3:G3')->getFill()->getStartColor()->setRGB('2CC30B');
 
 		$filename='report-Ifaq.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
@@ -242,7 +314,10 @@ class lap_jadwal extends IO_Controller
     	echo $table;
   	}
 
+	function print_lap(){
 
+
+	}
 }
 
 	

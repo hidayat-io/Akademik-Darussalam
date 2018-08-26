@@ -41,7 +41,6 @@
                                                     Semester
                                                 </span>
                                                 <select class="form-control select" style="width: 90%;" name="semester" id="semester" required>
-                                                    <option value=""></option>
                                                     <option value="1" <?php if ($semester_aktif == '1') echo ' selected="selected"'; ?>>1</option>
                                                     <option value="2"<?php if ($semester_aktif == '2') echo ' selected="selected"'; ?>>2</option>
                                                 </select>
@@ -72,7 +71,7 @@
                             <!--end inputbox-->
                             <div class="modal-footer">
                                 <div class="m-grid-col-center">
-                                    <button type="button" class="btn btn-lg red" id="print_button" onclick="print_lap_jad()" style="width: 100%;"><i class="glyphicon glyphicon-print"></i> PRINT <?php echo $title ?></button>
+                                    <button type="button" class="btn btn-lg red" id="print_button" onclick="print_lap_jad()" style="width: 100%;"><i class="fa fa-download"></i> DOWNLOAD <?php echo $title ?></button>
                                 </div>
                             </div>
                         </form>
