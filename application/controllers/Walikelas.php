@@ -7,7 +7,7 @@ class walikelas extends IO_Controller
 {
 
 	public function __construct() {
-			$this->modul = 17;
+			$this->modul = 50;
 			parent::__construct($this->modul);
 		 	$this->load->model('mwalikelas','model');
 	}

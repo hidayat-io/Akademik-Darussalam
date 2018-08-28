@@ -8,7 +8,7 @@ class lformuliryatim extends IO_Controller
 
 	public function __construct()
 	{
-			$this->modul = 55;
+			$this->modul = 56;
 			parent::__construct($this->modul);
 			 $this->load->model('mlformuliryatim','model');
 			 $this->load->library("pdf");

@@ -6,7 +6,7 @@ class lap_jadwal extends IO_Controller
 
 	public function __construct()
 	{
-			$this->modul = 53;
+			$this->modul = 54;
 			parent::__construct($this->modul);
 			 $this->load->model('Mlap_jadwal','model');
 			 $this->load->library("pdf");
@@ -269,7 +269,7 @@ class lap_jadwal extends IO_Controller
 		// $this->excel->getActiveSheet()->getStyle('A3:G3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
 		// $this->excel->getActiveSheet()->getStyle('A3:G3')->getFill()->getStartColor()->setRGB('2CC30B');
 
-		$filename='report-Ifaq.xls'; //save our workbook as this file name
+		$filename='report-Jadwal-Guru.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
 		header('Cache-Control: max-age=0');//no cache

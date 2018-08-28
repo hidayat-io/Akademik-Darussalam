@@ -8,7 +8,7 @@ class rapor extends IO_Controller
 
 	public function __construct()
 	{
-			$this->modul = 34;
+			$this->modul = 6;
 			parent::__construct($this->modul);
 			 $this->load->model('mrapor','model');
 			 $this->load->library("pdf");

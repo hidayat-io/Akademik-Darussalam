@@ -8,7 +8,7 @@ class lskurikulum extends IO_Controller
 
 	public function __construct()
 	{
-			$this->modul = 55;
+			$this->modul = 53;
 			parent::__construct($this->modul);
 			 $this->load->model('mlskurikulum','model');
 			 $this->load->library("pdf");

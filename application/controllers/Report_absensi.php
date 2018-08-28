@@ -7,7 +7,7 @@ class Report_absensi extends IO_Controller
 
 	public function __construct()
 	{
-		$this->modul = 54;
+		$this->modul = 60;
 		parent::__construct($this->modul);
 		$this->load->model('mreport_absen','model');
 		$this->load->library("pdf");
