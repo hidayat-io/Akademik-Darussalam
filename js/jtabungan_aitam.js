@@ -7,18 +7,19 @@ $(document).ready(function(){
 	$("#opt_client").select2({
 		dropdownParent: $('#m_add')
 	});
-
-
-
-        
-
-
+	
 	$('.datepicker').datepicker({
-        rtl: App.isRTL(),
-        orientation: "left",
-        autoclose: true,
-        format: 'dd-mm-yyyy'
-    });
+    
+		autoclose: true,
+		format: 'dd-mm-yyyy'
+	});
+
+	$('#startDate').change(function(){
+
+		$('#endDate').val($('#startDate').val());
+
+		console.log("change");
+	});
 
 
 	$('.numbers-only').keypress(function(event) {
@@ -85,8 +86,17 @@ function modalSearch(){
 function searchdata(){
 
 	var nama_santri = $('#txtnamasearch').val();
-	var param 		= {'nama':nama_santri};
-		param 		= JSON.stringify(param);
+	var tgl_awal 	= $('#startDate').val();
+	var tgl_akhir 	= $('#endDate').val();
+
+	var param 		= {
+
+		'nama':nama_santri,
+		'tgl1':tgl_awal,
+		'tgl2':tgl_akhir
+	};
+	
+	param = JSON.stringify(param);
 
 	$('#hid_param').val(param);
 

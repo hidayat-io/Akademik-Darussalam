@@ -94,6 +94,7 @@ class Tabungan_aitam extends IO_Controller
 	function load_grid(){
 
 		$iparam 		= json_decode($_REQUEST['param']);
+
 		$string_param 	= $this->build_param($iparam);
 
 		//sorting
@@ -174,6 +175,14 @@ class Tabungan_aitam extends IO_Controller
 		if($param!=null){
 
 			if(isset($param->nama)) $string_param .= "nama_lengkap LIKE '%".$param->nama."%' ";
+
+			if(trim($param->tgl1)!=''){
+
+				$tgl1 = io_return_date('d-m-Y',$param->tgl1);
+				$tgl2 = io_return_date('d-m-Y',$param->tgl2);
+
+				$string_param .= " AND (a.tgl_tabungan BETWEEN '".$tgl1."' AND '".$tgl2."')";
+			}
 		}
 
 		return $string_param;

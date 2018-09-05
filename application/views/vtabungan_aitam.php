@@ -1,15 +1,4 @@
 <script src="<?php echo base_url(); ?>js/jtabungan_aitam.js"></script>
-<script type="text/javascript">
-$('.startDate').daterangepicker({
-          singleDatePicker: true,
-          startDate: moment().subtract(6, 'days')
-        });
-    $('.endDate').daterangepicker({
-      singleDatePicker: true,
-      startDate: moment()
-    });
-
-</script>
 <input type="hidden" name="hid_param" id="hid_param" value='' />
     <div class="row">
         <div class="col-md-12">
@@ -181,11 +170,11 @@ $('.startDate').daterangepicker({
 
                        <div class="form-group">
                             <label class="control-label col-md-3">Date Range</label>
-                            <div class="col-md-4">
-                                <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
-                                    <input type="text" class="form-control" name="startDate" id="startDate">
-                                    <span class="input-group-addon">to</span>
-                                    <input type="text" class="form-control" name="endDate" id="endDate"> 
+                            <div class="col-md-8">
+                                <div class="input-group input-large">
+                                    <input type="text" class="form-control datepicker" name="startDate" id="startDate" style="text-align:center">
+                                    <span class="input-group-addon" style="min-width:20px">to</span>
+                                    <input type="text" class="form-control datepicker" name="endDate" id="endDate" style="text-align:center"> 
                                 </div>
                             </div>
                         </div>
