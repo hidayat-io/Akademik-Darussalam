@@ -21,8 +21,8 @@ class Mdatasoalujian extends CI_Model
 		
         $cols = array('kode_soal','kurikulum','semester','id_matpal','tingkat','user_id');
 
-		$sql = "SELECT trans_banksoalHD.* ,ms_tahun_ajaran.deskripsi FROM trans_banksoalHD
-				INNER JOIN ms_tahun_ajaran ON trans_banksoalHD.kurikulum = ms_tahun_ajaran.id";
+		$sql = "SELECT trans_banksoalhd.* ,ms_tahun_ajaran.deskripsi FROM trans_banksoalhd
+				INNER JOIN ms_tahun_ajaran ON trans_banksoalhd.kurikulum = ms_tahun_ajaran.id";
                     
 
             if($param!=null){
@@ -41,13 +41,13 @@ class Mdatasoalujian extends CI_Model
 	function _delete_datasoalHD($id)
 	{
 		$this->db->where('id',$id);
-		$this->db->delete('trans_banksoalHD');
+		$this->db->delete('trans_banksoalhd');
 	}
 
 	function _delete_datasoalDT($id_hd)
 	{
 		$this->db->where('id_hd',$id_hd);
-		$this->db->delete('trans_banksoalDT');
+		$this->db->delete('trans_banksoaldt');
 	}
 
 	function get_print_soal_header($id)
@@ -83,7 +83,7 @@ class Mdatasoalujian extends CI_Model
 	function get_banksoal($param)
 	{
 
-			$sql = "SELECT * FROM MS_banksoal
+			$sql = "SELECT * FROM ms_banksoal
 					".$param;
 			
 
