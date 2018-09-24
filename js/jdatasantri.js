@@ -3322,7 +3322,7 @@ function cek_jk() { // cek saat memilih jenis kelamin di modal keluarga
 	var kategori_keluarga = $('#kategori_keluarga').val();
 
 	if (kategori_keluarga == 'AYAH') {
-		$('#jenis_kelamin_keluarga').val('LAKI-LAKI');
+		$('#jenis_kelamin_keluarga').val('L');
 		if ($('#kategori_santri').val() == 'AITAM_ISLAH' || $('#kategori_santri').val() == 'AITAM_JAMIAH') {
 			$('#nama_keluarga').attr('disabled', false);
 			$('#nik_keluarga').attr('disabled', false);
@@ -3390,7 +3390,7 @@ function cek_jk() { // cek saat memilih jenis kelamin di modal keluarga
 			$('#ktp_keluarga').attr('disabled', false);
 		}
 	} else if (kategori_keluarga == 'IBU') {
-		$('#jenis_kelamin_keluarga').val('PEREMPUAN');
+		$('#jenis_kelamin_keluarga').val('P');
 		if ($('#kategori_santri').val() == 'AITAM_ISLAH' || $('#kategori_santri').val() == 'AITAM_JAMIAH') {
 			$('#nama_keluarga').attr('disabled', false);
 			$('#nik_keluarga').attr('disabled', false);
@@ -3458,7 +3458,7 @@ function cek_jk() { // cek saat memilih jenis kelamin di modal keluarga
 			$('#ktp_keluarga').attr('disabled', false);
 		}
 	} else if (kategori_keluarga == 'WALI') {
-		$('#jenis_kelamin_keluarga').val('');
+		// $('#jenis_kelamin_keluarga').val('');
 		if ($('#kategori_santri').val() == 'AITAM_ISLAH' || $('#kategori_santri').val() == 'AITAM_JAMIAH') {
 			$('#nama_keluarga').attr('disabled', false);
 			$('#nik_keluarga').attr('disabled', false);
@@ -3560,7 +3560,7 @@ function cek_jk() { // cek saat memilih jenis kelamin di modal keluarga
 		$('#ktp_keluarga').attr('disabled', true);
 	} else {
 		$('#jenis_kelamin_keluarga').attr('disabled', false);
-		$('#jenis_kelamin_keluarga').val('');
+		// $('#jenis_kelamin_keluarga').val('');
 		if ($('#kategori_santri').val() == 'AITAM_ISLAH' || $('#kategori_santri').val() == 'AITAM_JAMIAH') {
 			$('#nama_keluarga').attr('disabled', false);
 			$('#nik_keluarga').attr('disabled', false);
