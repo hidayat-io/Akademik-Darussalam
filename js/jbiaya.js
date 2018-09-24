@@ -698,6 +698,7 @@ function upperCaseF(a) {
 		$('#Modal_add_potongan').modal('show');
 		$('#save_button_potongan').show();
 		$('#load_save').hide();
+		$('#save_button_potongan').text('SAVE');
 
 	}
 

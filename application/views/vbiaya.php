@@ -466,7 +466,7 @@
                         <i class="glyphicon glyphicon-minus-sign"></i>&nbsp;CLOSE
                         </a>
                         <a href="javascript:;" class="btn btn-sm green-jungle" onclick="SaveDataPotongan()" id="save_button_potongan">
-                             <i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;SAVE
+                             <i class="glyphicon glyphicon-floppy-disk"></i>SAVE
                         </a>
                         <img id="load_save" style="display:none" src="<?php echo base_url(); ?>assets/images/fb-loader.gif" />
                     </div>
