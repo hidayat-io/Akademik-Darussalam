@@ -23,7 +23,7 @@ class Mnilai extends CI_Model
 		function get_list_data($param,$sortby=0,$sorttype='asc',$thn_ajar_aktif,$user_id){
 			//cek admin atau bukan
 			$group=	$this->db->query("SELECT a.user_id, a.nama_lengkap, b.group_id
-										FROM USER a 
+										FROM user a 
 										INNER JOIN group_daftar_user b ON a.user_id = b.user_id
 										where a.user_id = '$user_id'")->row_array();
 			// $group = $this->db->last_query($group);							

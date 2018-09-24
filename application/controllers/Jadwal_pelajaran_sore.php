@@ -35,16 +35,19 @@ class jadwal_pelajaran_sore extends IO_Controller
 						}
 						
 		//json data guru
-			$mguru = $this->mcommon->mget_list_master_guru()->result();
-		
-				foreach ($mguru as $g) {
+		$type ='guru';
+		$mguru = $this->mcommon->mget_list_master_guru($type)->result();
 					
-					$data_guru[] = array(
-		
-						'id_guru' 	=> $g->id_guru,
-						'nama_guru' => $g->nama_lengkap
-					);
-				}
+		$data_guru = array();
+
+		foreach ($mguru as $g) {
+			
+			$data_guru[] = array(
+
+				'id_guru' 	=> $g->id_guru,
+				'nama_guru' => $g->nama_lengkap
+			);
+		}
 		//end json data guru
 		//cek hakAkses
 		$user_id			= $this->session->userdata('logged_in')['uid'];

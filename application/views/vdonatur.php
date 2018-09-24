@@ -144,7 +144,7 @@
                                                         </span>
                                                        <select class="form-control" name="kategori" id="kategori" required >
                                                             <option value=""></option>
-                                                            <option value="AITAM_AR_RAHMAH">UMUM</option>
+                                                            <option value="UMUM">UMUM</option>
                                                             <option value="AITAM_AR_RAHMAH">AITAM AR RAHMAH</option>
                                                             <option value="AITAM_ISLAH ">AITAM ISLAH</option>
                                                             <option value="AITAM_BAITUL_ZAKAT ">AITAM BAITUL ZAKAT</option>

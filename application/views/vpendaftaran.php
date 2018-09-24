@@ -664,12 +664,12 @@
                                                                         <div class="input-icon right">
                                                                         <i class="fa"></i><select class="form-control" name="agama_santri" id="agama_santri" required>
                                                                                 <option value=""></option>
-                                                                                <option value="1#ISLAM">ISLAM</option>
-                                                                                <option value="2#KRISTEN">KRISTEN</option>
-                                                                                <option value="3#KATOLIK">KATOLIK</option>
-                                                                                <option value="4#HINDU">HINDU</option>
-                                                                                <option value="5#BUDHA">BUDHA</option>
-                                                                                <option value="6#KONGHUCU">KONGHUCU</option>
+                                                                                <option value="1-ISLAM">ISLAM</option>
+                                                                                <option value="2-KRISTEN">KRISTEN</option>
+                                                                                <option value="3-KATOLIK">KATOLIK</option>
+                                                                                <option value="4-HINDU">HINDU</option>
+                                                                                <option value="5-BUDHA">BUDHA</option>
+                                                                                <option value="6-KONGHUCU">KONGHUCU</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -830,7 +830,7 @@
                                                                         No Telepon
                                                                         </span>
                                                                             <div class="input-icon right">
-                                                                                <i class="fa"></i><input type class="form-control numbers-only" name="no_tlp" id="no_tlp" required>
+                                                                                <i class="fa"></i><input type class="form-control numbers-only" name="no_tlp" id="no_tlp" >
                                                                             </div>
                                                                         </div>
                                                                     <!-- </div>
@@ -2317,8 +2317,8 @@
                                                                 </span>
                                                                 <select class="form-control" name="jenis_kelamin_keluarga" id="jenis_kelamin_keluarga" required>
                                                                     <option value=""></option>
-                                                                    <option value="LAKI-LAKI">LAKI-LAKI</option>
-                                                                    <option value="PEREMPUAN">PEREMPUAN</option>
+                                                                    <option value="L">LAKI-LAKI</option>
+                                                                    <option value="P">PEREMPUAN</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -2529,6 +2529,7 @@
                                                                     </span>
                                                                     <select class="form-control" name="pendidikan_terakhir" id="pendidikan_terakhir" required>
                                                                         <option value=""></option>
+                                                                        <option value="-">-</option>
                                                                         <option value="TK">TK</option>
                                                                         <option value="SD">SD</option>
                                                                         <option value="SMP/SLTA">SMP/SLTA</option>
@@ -2552,12 +2553,12 @@
                                                                 <div class="input-icon right">
                                                                 <i class="fa"></i><select class="form-control" name="agama_keluarga" id="agama_keluarga" required>
                                                                         <option value=""></option>
-                                                                        <option value="1#ISLAM">ISLAM</option>
-                                                                        <option value="2#KRISTEN">KRISTEN</option>
-                                                                        <option value="3#KATOLIK">KATOLIK</option>
-                                                                        <option value="4#HINDU">HINDU</option>
-                                                                        <option value="5#BUDHA">BUDHA</option>
-                                                                        <option value="6#KONGHUCU">KONGHUCU</option>
+                                                                        <option value="1-ISLAM">ISLAM</option>
+                                                                        <option value="2-KRISTEN">KRISTEN</option>
+                                                                        <option value="3-KATOLIK">KATOLIK</option>
+                                                                        <option value="4-HINDU">HINDU</option>
+                                                                        <option value="5-BUDHA">BUDHA</option>
+                                                                        <option value="6-KONGHUCU">KONGHUCU</option>
                                                                     </select>
                                                                 </div>
                                                             </div>

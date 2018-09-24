@@ -2999,7 +2999,7 @@ function TambahsekolahAitam() {
 					row.cells[1].innerHTML = nama_sekolahAitam;
 					row.cells[2].innerHTML = alamat_sekolahAitam;
 					row.cells[3].innerHTML = kelas_sekolahAitam;
-					row.cells[3].innerHTML = thn_sekolahAitam;
+					row.cells[4].innerHTML = thn_sekolahAitam;
 					row.cells[5].innerHTML = file;
 					row.cells[6].innerHTML = linkfile;
 					row.cells[7].innerHTML = strbutton;

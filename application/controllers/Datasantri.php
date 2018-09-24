@@ -790,7 +790,7 @@ class Datasantri extends IO_Controller
 
 			foreach($data as $row){
 				//set agama untuk kemenag
-				$agama = explode('#',$row->agama);
+				$agama = explode('-',$row->agama);
 				$agama = $agama['0'];
 				// get info ayah kandung
 				$no_registrasi_santri 	= $row->no_registrasi;

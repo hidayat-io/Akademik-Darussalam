@@ -1420,7 +1420,12 @@ function view(no_registrasi) {
 			$('#no_registrasi').val(data['no_registrasi']);
 			$('#no_stambuk').val(data['no_stambuk']);
 			$('#thn_daftar').val(data['thn_daftar']);
-			$('#thn_masuk').val(data['thn_masuk']);
+			if (data['thn_masuk'] =='00-00-0000'){
+				var thnmasuk = ''
+			}else{
+				var thnmasuk = data['thn_masuk'];
+			}
+			$('#thn_masuk').val(thnmasuk);
 			$('#rayon').val(data['rayon']);
 			$('#kamar').val(data['kamar']);
 			$('#bagian').val(data['bagian']);
@@ -3031,7 +3036,7 @@ function TambahsekolahAitam() {
 					row.cells[1].innerHTML = nama_sekolahAitam;
 					row.cells[2].innerHTML = alamat_sekolahAitam;
 					row.cells[3].innerHTML = kelas_sekolahAitam;
-					row.cells[3].innerHTML = thn_sekolahAitam;
+					row.cells[4].innerHTML = thn_sekolahAitam;
 					row.cells[5].innerHTML = file;
 					row.cells[6].innerHTML = linkfile;
 					row.cells[7].innerHTML = strbutton;
@@ -3354,7 +3359,7 @@ function cek_jk() { // cek saat memilih jenis kelamin di modal keluarga
 	var kategori_keluarga = $('#kategori_keluarga').val();
 
 	if (kategori_keluarga == 'AYAH') {
-		$('#jenis_kelamin_keluarga').val('LAKI-LAKI');
+		$('#jenis_kelamin_keluarga').val('L');
 		if ($('#kategori_santri').val() == 'AITAM_ISLAH' || $('#kategori_santri').val() == 'AITAM_JAMIAH') {
 			$('#nama_keluarga').attr('disabled', false);
 			$('#nik_keluarga').attr('disabled', false);
@@ -3422,7 +3427,7 @@ function cek_jk() { // cek saat memilih jenis kelamin di modal keluarga
 			$('#ktp_keluarga').attr('disabled', false);
 		}
 	} else if (kategori_keluarga == 'IBU') {
-		$('#jenis_kelamin_keluarga').val('PEREMPUAN');
+		$('#jenis_kelamin_keluarga').val('P');
 		if ($('#kategori_santri').val() == 'AITAM_ISLAH' || $('#kategori_santri').val() == 'AITAM_JAMIAH') {
 			$('#nama_keluarga').attr('disabled', false);
 			$('#nik_keluarga').attr('disabled', false);
@@ -3490,7 +3495,7 @@ function cek_jk() { // cek saat memilih jenis kelamin di modal keluarga
 			$('#ktp_keluarga').attr('disabled', false);
 		}
 	} else if (kategori_keluarga == 'WALI') {
-		$('#jenis_kelamin_keluarga').val('');
+		// $('#jenis_kelamin_keluarga').val('');
 		if ($('#kategori_santri').val() == 'AITAM_ISLAH' || $('#kategori_santri').val() == 'AITAM_JAMIAH') {
 			$('#nama_keluarga').attr('disabled', false);
 			$('#nik_keluarga').attr('disabled', false);
@@ -3592,7 +3597,7 @@ function cek_jk() { // cek saat memilih jenis kelamin di modal keluarga
 		$('#ktp_keluarga').attr('disabled', true);
 	} else {
 		$('#jenis_kelamin_keluarga').attr('disabled', false);
-		$('#jenis_kelamin_keluarga').val('');
+		// $('#jenis_kelamin_keluarga').val('');
 		if ($('#kategori_santri').val() == 'AITAM_ISLAH' || $('#kategori_santri').val() == 'AITAM_JAMIAH') {
 			$('#nama_keluarga').attr('disabled', false);
 			$('#nik_keluarga').attr('disabled', false);
