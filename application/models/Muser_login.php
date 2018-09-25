@@ -80,7 +80,7 @@ class Muser_login extends CI_Model
     function query_edit_user_login($id_user_login){
         $data = array();
 		$data=$this->db->query("SELECT user.user_id, user.nama_lengkap, group_daftar_user.group_id,groupu.group_name 
-								FROM USER 
+								FROM user 
 								INNER JOIN group_daftar_user ON user.user_id = group_daftar_user.user_id 
 								INNER JOIN groupu ON group_daftar_user.group_id = groupu.group_id 
 								where user.user_id = '$id_user_login'")->row();

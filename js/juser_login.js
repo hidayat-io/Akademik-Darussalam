@@ -262,37 +262,48 @@ function adduser_login(){
 }
 
 function edit(user_id){
-	clearvalidate_add_user_login();
-	var str_url = encodeURI(base_url + "user_login/get_edit_user_login/" + user_id);
-	$('#save_button').text('UPDATE');
-	$("#cls_changePWD").removeClass("hidden");
-	$('#spansearchmskaryawan').hide();
-	$('#password').attr('disabled',true);
-	$('#confirmPassword').attr('disabled', true);
-	
-	$.ajax({
+	if (user_id == 'admin') {
+		$('#spansearchmsgroup').hide();
+	}
+	else {
+		$('#spansearchmsgroup').show();
+	}
+		clearvalidate_add_user_login();
+		var str_url = encodeURI(base_url + "user_login/get_edit_user_login/" + user_id);
+		$('#save_button').text('UPDATE');
+		$("#cls_changePWD").removeClass("hidden");
+		$('#spansearchmskaryawan').hide();
+		$('#password').attr('disabled',true);
+		$('#confirmPassword').attr('disabled', true);
+		
+		$.ajax({
 
-		type:"POST",
-		url:str_url,
-		dataType:"html",
-		success:function(data){
-			
-			var data = $.parseJSON(data);
-			$('#user_id').val(data['user_id']);//untuk membaca kategori saat update
-			$('#nama_user_login').val(data['nama_lengkap']);
-			$('#id_group').val(data['group_id']);
-			$('#group_name').val(data['group_name']);
-			
-			$('#Modal_add_user_login').modal('show');
-			
-			
-		}
-	});
+			type:"POST",
+			url:str_url,
+			dataType:"html",
+			success:function(data){
+				
+				var data = $.parseJSON(data);
+				$('#user_id').val(data['user_id']);//untuk membaca kategori saat update
+				$('#nama_user_login').val(data['nama_lengkap']);
+				$('#id_group').val(data['group_id']);
+				$('#group_name').val(data['group_name']);
+				
+				$('#Modal_add_user_login').modal('show');
+				
+				
+			}
+		});
+	
 	
 }
 
 function hapus(user_id){
-	var str_url = encodeURI(base_url + "user_login/Deluser_login/" + user_id);
+	if(user_id == 'admin'){
+		bootbox.alert("Administrator tidak bisa dihapus!")
+	}
+	else{
+		var str_url = encodeURI(base_url + "user_login/Deluser_login/" + user_id);
 	bootbox.confirm("Anda yakin akan menghapus " + user_id+" ?",
 		function(result){
 			if(result==true){
@@ -315,6 +326,8 @@ function hapus(user_id){
 			}
 		}
 	);
+	}
+	
 	
 }
 
