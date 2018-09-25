@@ -251,6 +251,7 @@ function pilihItemKamar() {
 
 	$('#kamar').val($item[0]);
 	$('#nama_kamar').val($item[1]);
+	$('#kapasitas').val($item[2]);
 	$('#hiddenidKamar').hide();
 	$('#spansearchKamar').show();
 	$('#spansearchcloseKamar').hide();

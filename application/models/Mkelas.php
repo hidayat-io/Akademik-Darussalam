@@ -79,7 +79,7 @@ class Mkelas extends CI_Model
 		
         $cols = array('kode_kelas','tingkat','tipe_kelas','nama','kapasitas','nama_kamar');
 
-        $sql = "SELECT ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kelasdt.kapasitas, ms_kamar.kode_kamar,ms_kamar.nama as nama_kamar
+        $sql = "SELECT ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kamar.kapasitas, ms_kamar.kode_kamar,ms_kamar.nama as nama_kamar
 				FROM ms_kelasdt
 				inner join ms_kelashd on ms_kelasdt.id_kelas = ms_kelashd.id_kelas
 				inner join ms_kamar on ms_kelasdt.kode_kamar = ms_kamar.kode_kamar";
@@ -117,7 +117,7 @@ class Mkelas extends CI_Model
     function query_kelas($kode_kelas){
         $data = array();
 		// $data=$this->db->query("SELECT * from ms_kelas where kode_kelas ='$kode_kelas'")->row_array();
-		$data=$this->db->query("SELECT ms_kelashd.id_kelas, ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kelasdt.kapasitas, ms_kamar.kode_kamar,ms_kamar.nama as nama_kamar
+		$data=$this->db->query("SELECT ms_kelashd.id_kelas, ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kamar.kapasitas, ms_kamar.kode_kamar,ms_kamar.nama as nama_kamar
 				FROM ms_kelasdt
 				inner join ms_kelashd on ms_kelasdt.id_kelas = ms_kelashd.id_kelas 
 				inner join ms_kamar on ms_kelasdt.kode_kamar = ms_kamar.kode_kamar 

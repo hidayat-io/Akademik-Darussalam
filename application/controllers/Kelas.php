@@ -31,8 +31,8 @@ class Kelas extends IO_Controller
 		$vdata['kode_kamar'][NULL] = '-';
 		foreach ($hide_id_Kamar as $b) {
 
-			$vdata['kode_kamar'][$b->kode_kamar."#".$b->nama]
-				=$b->kode_kamar." | ".$b->nama;
+			$vdata['kode_kamar'][$b->kode_kamar."#".$b->nama."#".$b->kapasitas]
+				=$b->kode_kamar." | ".$b->nama." | ".$b->kapasitas;
 		}
 						
 		//cek hakAkses
@@ -386,7 +386,6 @@ class Kelas extends IO_Controller
 		$kode_kelas 		= $this->input->post('kode_kelas');
 		$id_kelas 			= $this->input->post('select_tingkat');
 		$nama  		        = $this->input->post('nama');
-		$kapasitas  		= $this->input->post('kapasitas');
 		$kode_kamar  		= $this->input->post('kamar');
 	    $userid 			= $this->session->userdata('logged_in')['uid'];
 
@@ -394,7 +393,6 @@ class Kelas extends IO_Controller
 			'kode_kelas' 			=> $kode_kelas,
 			'id_kelas' 				=> $id_kelas,
 			'nama' 		            => $nama,
-			'kapasitas' 		    => $kapasitas,
 			'kode_kamar' 		    => $kode_kamar,
 			'userid' 				=> $userid
 		);

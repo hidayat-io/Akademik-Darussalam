@@ -264,20 +264,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                      <!--span-->
-                                                      <!--span-->
-                                                    <div class="form-group">
-                                                        <label class="control-label"></label>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                            Kapasitas
-                                                            </span>
-                                                            <div class="input-icon right">
-                                                                <i class="fa"></i>  
-                                                                <input type="number" class="form-control" name="kapasitas" id="kapasitas" maxlength="2" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>   
+                                                      <!--span-->  
                                                     <div class="form-group">
                                                         <label class="control-label"></label>
                                                         <div class="input-group">
@@ -320,7 +307,20 @@
                                                             <div class="input-icon right">
                                                             <i class="fa"></i><input type class="form-control" name="nama_kamar" id="nama_kamar" readonly="true">
                                                             </div>
-                                                         </div> 
+                                                         </div>                                                          
+                                                      <!--span-->
+                                                    <div class="form-group">
+                                                        <label class="control-label"></label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                            Kapasitas
+                                                            </span>
+                                                            <div class="input-icon right">
+                                                                <i class="fa"></i>  
+                                                                <input type="number" class="form-control" name="kapasitas" id="kapasitas" readonly="true">
+                                                            </div>
+                                                        </div>
+                                                    </div> 
                                                     </div>
                                             <!--end inputbox-->
                                             <div class="modal-footer">
