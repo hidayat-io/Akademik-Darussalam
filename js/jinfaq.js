@@ -49,6 +49,11 @@ $(document).ready(function(){
 	});
 
 });
+function OtomatisKapital(a) {
+	setTimeout(function () {
+		a.value = a.value.toUpperCase();
+	}, 1);
+}
 
 function populateSelectdonatur(){
 

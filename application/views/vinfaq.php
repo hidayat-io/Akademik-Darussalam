@@ -121,7 +121,7 @@
                                                 <div class="col-md-9">
                                                     <div class="input-group">
                                                         <sspan class="input-group-addon">Keterangan</span>
-                                                        <textarea class="form-control" rows="2" name="txtketerangan" id="txtketerangan"></textarea>
+                                                        <textarea class="form-control" rows="2" name="txtketerangan" id="txtketerangan" onkeydown="OtomatisKapital(this)"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -188,7 +188,7 @@
                                                 <div class="col-md-9">
                                                     <div class="input-group">
                                                         <sspan class="input-group-addon">Keterangan</span>
-                                                        <textarea class="form-control" rows="2" name="txtketerangankl" id="txtketerangankl"></textarea>
+                                                        <textarea class="form-control" rows="2" name="txtketerangankl" id="txtketerangankl" onkeydown="OtomatisKapital(this)"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
