@@ -175,4 +175,15 @@ class Mguru extends CI_Model {
 		$this->db->where($param);
 		$this->db->update('sequence',array('nomor_terakhir'=>$new_no));
 	}
+
+	function mget_select_bidangkeahlian(){
+
+		$this->db->select('a.nama_bidang,b.id_matpal,b.nama_matpal');
+		$this->db->from('ms_bidang_study a');
+		$this->db->join('ms_mata_pelajaran b','a.id_bidang=b.id_bidang');
+		$this->db->order_by('a.nama_bidang');
+		$this->db->order_by('b.nama_matpal');
+
+		return $this->db->get();
+	}
 }

@@ -7,6 +7,13 @@ $(document).ready(function(){
     validationFormpnonformal();
     validationFormSKAngkat();
 
+    //make all input uppercase on keyup
+    var all_inputs = $( ":input" );
+
+    $( ":input" ).keyup(function(){
+        this.value = this.value.toUpperCase();
+    });
+
     $('[data-toggle="tooltip"]').tooltip(); 
 
     $('.datepicker').datepicker({

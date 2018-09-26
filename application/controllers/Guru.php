@@ -30,13 +30,13 @@ class Guru extends IO_Controller{
 		}
 
 		//data master mata pelajaran
-		$mpelajaran = $this->mcommon->mget_list_mata_pelajaran()->result();
+		$mpelajaran = $this->model->mget_select_bidangkeahlian()->result();
 
 		if($mpelajaran!=null){
 
 			foreach ($mpelajaran as $p) {
 			
-				$vdata['opt_mapel'][$p->id_matpal] = $p->id_matpal.' - '.$p->nama_matpal;
+				$vdata['opt_mapel'][$p->id_matpal] = $p->nama_bidang.' - '.$p->nama_matpal;
 			}
 		}
 		else{
@@ -149,7 +149,7 @@ class Guru extends IO_Controller{
 		$pend_terakhir 			= isset($input['opt_ijazah_terakhir'])?$input['opt_ijazah_terakhir']:null;
 		$start_ajar 			= $input['dtp_ajar_mulai']==''?null:io_return_date('d-m-Y',$input['dtp_ajar_mulai']);
 		$end_ajar 				= $input['dtp_ajar_akhir']==''?null:io_return_date('d-m-Y',$input['dtp_ajar_akhir']);
-		$mapel 					= isset($input['opt_mapel'])?$input['opt_mapel']:'';
+		// $mapel 					= isset($input['opt_mapel'])?$input['opt_mapel']:'';
 		$ispengajar 			= $input['opt_tugas_utama']=="1#Pendidik"?1:0;
 
 		$data = array(
@@ -183,7 +183,7 @@ class Guru extends IO_Controller{
 			"sertifikasi"			=> $input['txt_sertifikasi'],
 			"no_sk"					=> $input['txt_sk_angkat'],
 			"tgl_sk"				=> $tgl_sk,
-			"materi_diampu"  		=> $mapel,
+			// "materi_diampu"  		=> $mapel,
 			"userid"				=> $this->session->userdata('logged_in')['uid'],
 			"recdate" 				=> date('Y-m-d H:i:s'),
 			"status_aktif"			=> '1',
@@ -232,20 +232,6 @@ class Guru extends IO_Controller{
 
 		//update trans_noreg_guru
 		$this->model->mupdate_noreg($id,$input['opt_status'],$no_reg);
-
-		//save history data gapok
-		// if(floatval($input['hid_old_gapok']) != floatval($input['txt_gapok'])){
-
-		// 	$gapok = array(
-
-		// 		'id_guru'	=> $id,
-		// 		'nominal'	=> floatval($input['txt_gapok']),
-		// 		'userid' 	=> $this->session->userdata('logged_in')['uid'],
-		// 		'recdate'	=> date('Y-m-d H:i:s')
-		// 	);
-
-		// 	$this->model->minsert_detail('ms_guru_gapok',$gapok);
-		// }
 
 		//save data anak
 		$ar_anak = json_decode($input['hid_anak']);
