@@ -485,7 +485,7 @@ function hapus(kode_daftarulang) {
                                                     size: 'small',
                                                     callback: function () {
 
-                                                        // window.location = base_url + 'daftarulang';
+                                                        window.location = base_url + 'daftarulang';
                                                     }
                                                 });
                                             }
