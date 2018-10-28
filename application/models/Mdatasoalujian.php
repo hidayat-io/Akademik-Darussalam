@@ -15,6 +15,48 @@ class Mdatasoalujian extends CI_Model
 		return $data;
 	}
 
+	function mget_list_mata_pelajaran($user_id){
+			//cek admin atau bukan
+			$group=	$this->db->query("SELECT a.user_id, a.nama_lengkap, b.group_id
+										FROM user a 
+										INNER JOIN group_daftar_user b ON a.user_id = b.user_id
+										where a.user_id = '$user_id'")->row_array();
+			// $group = $this->db->last_query($group);							
+			$groupid = $group['group_id'];
+			// var_dump($groupid);
+			// exit();
+			
+					
+			// $sql = "SELECT * 
+			// 		from ms_mata_pelajaran
+			// 		from trans_jadwal_pelajaran
+			// 		inner join ms_kelasdt on trans_jadwal_pelajaran.kode_kelas = ms_kelasdt.kode_kelas and trans_jadwal_pelajaran.id_thn_ajar = '$thn_ajar_aktif'
+			// 		inner join ms_kelashd on ms_kelasdt.id_kelas = ms_kelashd.id_kelas
+			// 		inner join ms_guru on trans_jadwal_pelajaran.id_guru = ms_guru.id_guru
+			// 		inner join ms_mata_pelajaran on trans_jadwal_pelajaran.id_mapel = ms_mata_pelajaran.id_matpal
+			// 		inner join ms_tahun_ajaran on trans_jadwal_pelajaran.id_thn_ajar = ms_tahun_ajaran.id";
+
+
+				if ($groupid != 1){
+					$sql = "SELECT a.id_matpal, a.nama_matpal
+					from ms_mata_pelajaran a
+					inner join trans_jadwal_pelajaran b on a.id_matpal = b.id_mapel
+					where b.id_guru = '$user_id' and a.status = 1";
+
+				}
+				else{
+					$sql = "SELECT * 
+					from ms_mata_pelajaran
+					where status=1";
+
+				}
+
+			
+			// echo "$sql";
+			// 			exit();
+			return $this->db->query($sql)->result();
+		}
+
     function get_list_data($param,$sortby=0,$sorttype='desc'){
         // var_dump($param);
         // exit();

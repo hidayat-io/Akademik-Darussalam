@@ -15,6 +15,7 @@ class datasoalujian extends IO_Controller
 
 	function index()
 	{
+		$user_id			= $this->session->userdata('logged_in')['uid'];
         //get Tahun Ajaran Data
 			$select_thnajar= $this->model->get_thn_ajar()->result();
             
@@ -33,7 +34,15 @@ class datasoalujian extends IO_Controller
 						=$b->tingkat;
 					}
        //get Mata Pelajaran
-			$mt_pelajaran= $this->mcommon->mget_list_mata_pelajaran()->result();
+			// $mt_pelajaran= $this->mcommon->mget_list_mata_pelajaran()->result();
+            
+            //             $vdata['mat_pal'][NULL] = '';
+            //             foreach ($mt_pelajaran as $b) {
+            
+			// 				$vdata['mat_pal'][$b->id_matpal]
+			// 				=$b->id_matpal." | ".$b->nama_matpal;
+            //             }
+			$mt_pelajaran= $this->model->mget_list_mata_pelajaran($user_id);
             
                         $vdata['mat_pal'][NULL] = '';
                         foreach ($mt_pelajaran as $b) {
@@ -42,7 +51,7 @@ class datasoalujian extends IO_Controller
 							=$b->id_matpal." | ".$b->nama_matpal;
                         }
 		//cek hakAkses
-		$user_id			= $this->session->userdata('logged_in')['uid'];
+		
 		$modul_id			= $this->modul;
 		$HakAkses			= $this->mcommon->get_hak_akses($user_id,$modul_id);
 		$add				= $HakAkses->add;
