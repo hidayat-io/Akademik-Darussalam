@@ -120,6 +120,173 @@ class Mdatasoalujian extends CI_Model
 								// exit();
 		return $data;
 	}
+
+	#region PRINT soalujian
+	function query_get_data_soal_ujian($id) {
+			
+			$data_soalujianHD = array();
+			$data_soalujianHD=$this->db->query("SELECT trans_banksoalhd.id, trans_banksoalhd.kode_soal, ms_tahun_ajaran.deskripsi , trans_banksoalhd.semester, trans_banksoalhd.tingkat, ms_mata_pelajaran.nama_matpal,
+								ms_banksoal.soal, ms_banksoal.jwb_a, ms_banksoal.jwb_b, ms_banksoal.jwb_c, ms_banksoal.jwb_d
+								FROM trans_banksoalhd
+								INNER JOIN ms_tahun_ajaran ON trans_banksoalhd.kurikulum = ms_tahun_ajaran.id
+								INNER JOIN ms_mata_pelajaran ON trans_banksoalhd.id_matpal = ms_mata_pelajaran.id_matpal
+								INNER JOIN trans_banksoaldt ON trans_banksoalhd.id = trans_banksoaldt.id_hd
+								INNER JOIN ms_banksoal ON trans_banksoaldt.id_soal = ms_banksoal.id_soal
+								where trans_banksoalhd.id = '$id'")->result_array();
+								// echo $this->db->last_query();
+								// exit();
+
+			$output ='				
+				<table border="0" width="100%">
+					<tr>
+						<td align="left" valign="middle">
+							<img src="'.base_url().'assets/images/logo.png" class="thumb-image" border="0">
+						</td>
+						<td width="100%" align="center" valign="center">
+							<span style="font-size:16" class="title-2"> 							
+                            	SOAL UJIAN '.$data_soalujianHD[0]['nama_matpal'].'								
+							</span>
+						</td>
+						<td align="right" valign="middle">
+						</td>
+					</tr>
+					<tr>                    
+						<td colspan="3" width="100%"   align="center" valign="center">
+						<span style="font-size:10" class="title-3"> 	
+								<small>
+									TAHUN AJARAN '.$data_soalujianHD[0]['deskripsi'].'
+								</small>
+							</span>
+						</td>
+					</tr>
+					<tr>                    
+						<td colspan="3" width="100%"   align="center" valign="center">
+						<span style="font-size:10" class="title-3"> 	
+								<small>
+									SEMESTER '.$data_soalujianHD[0]['semester'].'
+									TINGKAT '.$data_soalujianHD[0]['tingkat'].'
+								</small>
+							</span>
+						</td>
+					</tr>
+					<tr>                    
+						<td colspan="3" width="100%"   align="center" valign="center">
+						<span style="font-size:10" class="title-3"> 	
+								<small>									
+									KODE SOAL '.$data_soalujianHD[0]['kode_soal'].'
+								</small>
+							</span>
+						</td>
+					</tr>
+				</table>
+				<hr>
+				<br>
+				<table border="0" width="100%">
+					<tr>                    
+						<td colspan="3" width="10%"   align="left" valign="center">
+						<span style="font-size:10" class="title-3"> 	
+								<small>
+									NAMA
+								</small>
+							</span>
+						</td>
+						<td colspan="3" width="100%"   align="left" valign="center">
+						<span style="font-size:10" class="title-3"> 	
+								<small>
+									:_______________________
+								</small>
+							</span>
+						</td>
+					</tr>
+					<tr>                    
+						<td colspan="3" width="10%"   align="left" valign="center">
+							<span style="font-size:10" class="title-3"> 	
+								<small>
+									KELAS
+								</small>
+							</span>
+						</td>
+						<td colspan="3" width="100%"   align="left" valign="center">
+							<span style="font-size:10" class="title-3"> 	
+								<small>
+									:_______________________
+								</small>
+							</span>
+						</td>
+					</tr>
+				</table>
+				<br>';
+				$no=1;
+			foreach ($data_soalujianHD as $row) {;
+				$output .='<table border="0" width="100%">
+					<tr>                    
+						<td colspan="3" width="3%"   align="left" valign="center">
+						<span style="font-size:10" class="title-3"> 	
+								<small>
+									'.$no.'.
+								</small>
+							</span>
+						</td>
+						<td colspan="3" width="100%"   align="left" valign="center">
+						<span style="font-size:10" class="title-3"> 	
+								<small>
+									'.$row['soal'].'
+								</small>
+							</span>
+						</td>
+					</tr>
+				</table>
+				<table border="0" width="100%">
+					<tr>                    
+						<td colspan="3" width="5%"   align="left" valign="center">
+						
+						</td>
+						<td colspan="3" width="50%"   align="left" valign="center">
+						<span style="font-size:10" class="title-3"> 	
+								<small>
+									A.'.$row['jwb_a'].'
+								</small>
+							</span>
+						</td>
+						<td colspan="3" width="50%"   align="left" valign="center">
+						<span style="font-size:10" class="title-3"> 	
+								<small>
+									B.'.$row['jwb_b'].'
+								</small>
+							</span>
+						</td>
+					</tr>
+					<tr>                    
+						<td colspan="3" width="5%"   align="left" valign="center">
+						
+						</td>
+						<td colspan="3" width="50%"   align="left" valign="center">
+						<span style="font-size:10" class="title-3"> 	
+								<small>
+									C.'.$row['jwb_c'].'
+								</small>
+							</span>
+						</td>
+						<td colspan="3" width="50%"   align="left" valign="center">
+						<span style="font-size:10" class="title-3"> 	
+								<small>
+									D.'.$row['jwb_d'].'
+								</small>
+							</span>
+						</td>
+					</tr>
+				</table>
+				<br>
+				';
+				$no++;
+			};
+
+					// <br>
+
+			return $output;
+		}
+
+
 	
 	#region model
 	function get_banksoal($param)

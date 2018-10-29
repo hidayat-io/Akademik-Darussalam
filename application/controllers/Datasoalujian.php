@@ -10,7 +10,8 @@ class datasoalujian extends IO_Controller
 	{
 			$this->modul = 42;
 			parent::__construct($this->modul);
-		 	$this->load->model('mdatasoalujian','model');
+			 $this->load->model('mdatasoalujian','model');
+			 $this->load->library("pdf");
 	}
 
 	function index()
@@ -278,23 +279,24 @@ class datasoalujian extends IO_Controller
 	function PrintSoal($id)
 	{
 
-		$this->load->library("pdf");
+		// $this->load->library("pdf");
 
-		// $data['data'] = $this->model->get_print_soal($id)->result();
-		$data['dataheader'] = $this->model->get_print_soal_header($id);
-		$data['databody'] 	= $this->model->get_print_soal($id);
+		// $data['dataheader'] = $this->model->get_print_soal_header($id);
+		// $data['databody'] 	= $this->model->get_print_soal($id);
 
-		// print_r($data);
-		// exit();
+		// $this->pdf->load_view('vPrintSoal',$data);
+		// $this->pdf->set_paper("A4", "potrait");
+		// $this->pdf->render();
+		// $this->pdf->stream("name-file.pdf",array("Attachment"=>0));
+		$data['soal_ujian'] = $this->model->query_get_data_soal_ujian($id);
 
-		// echo $this->load->view('vPrintSoal',$data,true);
-		// exit();
-
-		$this->pdf->load_view('vPrintSoal',$data);
-		// $this->load->view('vPrintSoal');
+		$filenameattc = "SOAL_UJIAN $id";
+		// $this->load->view('vPrintlsuratpermohonan');
+		// $this->load->view('vPrintsoalujian',$data);
+		$this->pdf->load_view('vPrintsoalujian',$data);
 		$this->pdf->set_paper("A4", "potrait");
 		$this->pdf->render();
-		$this->pdf->stream("name-file.pdf",array("Attachment"=>0));
+		$this->pdf->stream("'$filenameattc'.pdf",array("Attachment"=>0));
 	}
 
 	#region model

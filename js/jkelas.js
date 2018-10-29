@@ -339,7 +339,9 @@ function clearvalidate_add_kelas() {
 
 function svKelas() {
 	if ($("#add_kelas").valid() == true) {
+		//cek kelas
 		$kode_kelas = $('#kode_kelas').val();
+		$kamar = $('#kamar').val();
 		$status = $('#save_button').text();
 		var str_url = encodeURI(base_url + "kelas/get_data_kelas/" + $kode_kelas);
 		$.ajax({
@@ -349,7 +351,7 @@ function svKelas() {
 			success: function (data) {
 				$data = $.parseJSON(data);
 				if ($data != null & $status == 'SAVE') {
-					bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>SUDAH ADA DI DATABASE! </div>",
+					bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>Data kelas sudah ada!</div>",
 						function (result) {
 							if (result == true) {
 							}
@@ -358,33 +360,53 @@ function svKelas() {
 
 				}
 				else {
-					var iform = $('#add_kelas')[0];
-					var data = new FormData(iform);
-					if ($status == 'UPDATE') {
-						msg = "Update Data Berhasil"
-					}
-					else {
-						msg = "Simpan Data Berhasil"
-					}
+					var str_url = encodeURI(base_url + "kelas/get_data_kamar/" + $kamar);
 					$.ajax({
-
 						type: "POST",
-						url: base_url + "kelas/simpan_kelas/" + $status,
-						enctype: 'multipart/form-data',
-						// dataType:"JSON",
-						contentType: false,
-						processData: false,
-						data: data,
+						url: str_url,
+						dataType: "html",
 						success: function (data) {
+							$data = $.parseJSON(data);
+							if ($data != null & $status == 'SAVE') {
+								bootbox.alert("<div class='callout callout-danger'><span class='glyphicon glyphicon-exclamation-sign'></span>Kode ruang sudah dipakai dikelas lain.! </div>",
+									function (result) {
+										if (result == true) {
+										}
+									}
+								);
 
-							bootbox.alert({
-								message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;" + msg + "!!",
-								size: 'small',
-								callback: function () {
+							}
+							else {
+									var iform = $('#add_kelas')[0];
+									var data = new FormData(iform);
+									if ($status == 'UPDATE') {
+										msg = "Update Data Berhasil"
+									}
+									else {
+										msg = "Simpan Data Berhasil"
+									}
+									$.ajax({
 
-									window.location = base_url + 'kelas';
-								}
-							});
+										type: "POST",
+										url: base_url + "kelas/simpan_kelas/" + $status,
+										enctype: 'multipart/form-data',
+										// dataType:"JSON",
+										contentType: false,
+										processData: false,
+										data: data,
+										success: function (data) {
+
+											bootbox.alert({
+												message: "<span class='glyphicon glyphicon-ok-sign'></span>&nbsp;" + msg + "!!",
+												size: 'small',
+												callback: function () {
+
+													window.location = base_url + 'kelas';
+												}
+											});
+										}
+									});
+							}
 						}
 					});
 				}
@@ -396,6 +418,7 @@ function svKelas() {
 function addkelas() {
 	$('#save_button').text('SAVE');
 	// kosong();
+	$('#spansearchKamar').show();
 	clearvalidate_add_kelas();
 	$('#kode_kelas').attr('readonly', false);
 	$('#Modal_add_kelas').modal('show');
@@ -406,6 +429,7 @@ function edit(kode_kelas) {
 	var str_url = encodeURI(base_url + "kelas/get_data_kelas/" + kode_kelas);
 	$('#save_button').text('UPDATE');
 	$('#kode_kelas').attr('readonly', true);
+	$('#spansearchKamar').hide();
 	$.ajax({
 
 		type: "POST",
