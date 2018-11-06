@@ -49,6 +49,7 @@ $(document).ready(function(){
 	});
 
 });
+
 function OtomatisKapital(a) {
 	setTimeout(function () {
 		a.value = a.value.toUpperCase();
@@ -135,7 +136,8 @@ function populateSelectdonatur_src(){
 
 
 function pnladd(){
-
+	kosong();
+	clearForm();
 	$('#hid_data_saldo').val('');
 	$('#txtsaldotabungan').val('');
 	$('#txtnama').val('');
@@ -144,7 +146,7 @@ function pnladd(){
 	$('#txtnominal').val('');
 	$('#txtketerangan').val('');
 	$('#lbl_titel').text('TAMBAH INFAQ');
-	kosong();
+	
 	$('#m_add').modal('show');
 }
 
@@ -154,12 +156,12 @@ function modalSearch(){
 	$('#m_search').modal('show');
 }
 
-// java script buat clear form nama pada form tabungan
+// java script buat clear form nama pada form infaq
 function clearForm(){
 	$('#hid_id_data').val('');
 	$('#hid_data_saldo').val('');
 	$('#hid_data_nm_awl').val('');
-    $("#txttgl").val('');
+    $("#txttglkl").val('');
     $('#txtnominal').val('');
     $('#txtketerangan').val('');    
 }
@@ -282,11 +284,14 @@ function simpaninfaq(){
 		type: 'post',
 		success: function(){
 
+			clearForm();
+			kosong();
+			
 			var table = $('#tb-list').DataTable();
 			table.ajax.reload( null, false );
 			table.draw();
 			
-			clearForm();
+			
 			$('#m_add').modal('toggle');
 		}
 	});
@@ -374,7 +379,6 @@ function editdata(id){
 	});
 }
 
-
 function displaysaldo(){
 	var id_donatur = $('#opt_donatur2').val();
 
@@ -452,11 +456,13 @@ function kosong() {
 	$('#txttgl').val('');
 	$('#txtnominal').val('');
 	$('#txtketerangan').val('');
+	$("#opt_donatur").val('');
 
 	// ini field data unt
 	$('#txttglkl').val('');
 	$('#txtnominalkl').val('');
 	$('#txtketerangankl').val('');
+
 }
 
 function downloadExcel(){
