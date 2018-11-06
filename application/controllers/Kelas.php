@@ -419,6 +419,12 @@ class Kelas extends IO_Controller
     	echo json_encode($data);
 	}
 
+	function get_data_kamar($kamar){
+		$kamar = urldecode($kamar);
+		$data = $this->model->query_kamar($kamar);
+    	echo json_encode($data);
+	}
+
 	function DelKelas($kode_kelas){
 		$kode_kelas = urldecode($kode_kelas);
 		$this->model->delete_kelas($kode_kelas);

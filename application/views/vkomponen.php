@@ -53,10 +53,10 @@
 
                     <!--inputbbox-->
                     <div class="row" id="nm">
-                        <div class="col-md-9">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label col-md-3"></label>
-                                    <div class="col-md-9">
+                                    <div class="col-md-12">
                                         <div class="input-group">
                                             <span class="input-group-addon">Nama Komponen</span>
                                             <input type="text" class="form-control spinner" onkeydown="OtomatisKapital(this)" name="txtnama" id="txtnama">

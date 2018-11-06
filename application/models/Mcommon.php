@@ -77,7 +77,7 @@ class Mcommon extends CI_Model {
 
     function mget_list_kelas(){
 
-        $this->db->select('ms_kelashd.id_kelas,ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kelasdt.kapasitas');
+        $this->db->select('ms_kelashd.id_kelas,ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama');
         $this->db->from('ms_kelasdt');
         $this->db->join('ms_kelashd', 'ms_kelasdt.id_kelas = ms_kelashd.id_kelas');
         $this->db->order_by('ms_kelasdt.nama');

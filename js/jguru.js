@@ -11,7 +11,11 @@ $(document).ready(function(){
     var all_inputs = $( ":input" );
 
     $( ":input" ).keyup(function(){
-        this.value = this.value.toUpperCase();
+
+        if(this.id!='txt_email'){
+            
+            this.value = this.value.toUpperCase();
+        }
     });
 
     $('[data-toggle="tooltip"]').tooltip(); 

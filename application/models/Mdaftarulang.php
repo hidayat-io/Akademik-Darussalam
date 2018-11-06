@@ -28,7 +28,7 @@ class Mdaftarulang extends CI_Model
 	}
 
 	function get_kelas(){
-		$data = $this->db->query ("SELECT ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama, ms_kelasdt.kapasitas
+		$data = $this->db->query ("SELECT ms_kelashd.tingkat, ms_kelashd.tipe_kelas, ms_kelasdt.kode_kelas, ms_kelasdt.nama
 				FROM ms_kelasdt
 				inner join ms_kelashd on ms_kelasdt.id_kelas = ms_kelashd.id_kelas ORDER BY ms_kelasdt.kode_kelas");
 		return $data;
@@ -82,7 +82,7 @@ class Mdaftarulang extends CI_Model
         $data = array();
 		$data=$this->db->query("SELECT trans_tagihan.id_tagihan  
 								from trans_tagihan 
-								INNER JOIN trans_pembayaran on trans_tagihan.id_tagihan = trans_pembayaran.id_tagihan
+								INNER JOIN trans_pembayaranhd on trans_tagihan.id_tagihan = trans_pembayaranhd.id_pembayaran 
 								Where trans_tagihan.id_thn_ajar ='$id_thn_ajar' and trans_tagihan.no_registrasi = '$no_registrasi'")->row_array();
 		return $data;
 	}
@@ -98,7 +98,7 @@ class Mdaftarulang extends CI_Model
 	}  
 	
     function query_data_tagihan($id_thn_ajar,$tipe_tagihan){
-		$data=$this->db->query("select sum(nominal) as total_tagihan from ms_biaya where id_thn_ajar ='3' and kategori ='$tipe_tagihan'")->row();
+		$data=$this->db->query("select sum(nominal) as total_tagihan from ms_biaya where id_thn_ajar ='$id_thn_ajar' and kategori ='$tipe_tagihan'")->row();
 		return $data;
 	}
 

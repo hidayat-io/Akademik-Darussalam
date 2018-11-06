@@ -358,8 +358,10 @@ function svpembayaran() {
 		else{
 			var jumlah_bayar = $('#jumlah_bayar').val();
 			var sisa_tagihan = $('#sisa_tagihan').val();
+			var jumlah_bayarx = jumlah_bayar.replace(/,/g, "");
+			var sisa_tagihanx = sisa_tagihan.replace(/,/g, "");
 			
-			if (parseFloat(jumlah_bayar) > parseFloat(sisa_tagihan)){
+			if (parseFloat(jumlah_bayarx) > parseFloat(sisa_tagihanx)){
 				bootbox.alert("Jumlah Bayar melebihi sisa tagihan");
 				return false;
 			}

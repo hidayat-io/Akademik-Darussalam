@@ -350,9 +350,11 @@ class pembayaran extends IO_Controller
 		$data['dataheader'] = $this->model->get_print_pembayaran_header($id_pembayaran);
 		$data['databody'] 	= $this->model->get_print_pembayaran($id_pembayaran);
 
-		$this->pdf->set_paper("A4", "potrait");
-		$this->pdf->filename = "Pembayaran".$id_pembayaran.".pdf";
+		$filenameattc = "Pembayaran $id_pembayaran";
 		$this->pdf->load_view('vPrintPembayaran',$data);
+		$this->pdf->set_paper("A4", "potrait");
+		$this->pdf->render();
+		$this->pdf->stream("'$filenameattc'.pdf",array("Attachment"=>0));
 		
 	}
 	
